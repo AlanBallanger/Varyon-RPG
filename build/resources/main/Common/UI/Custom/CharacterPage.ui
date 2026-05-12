@@ -1,4 +1,4 @@
-// Classic Fantasy Parchment + Ink (Codex theme)
+﻿// Classic Fantasy Parchment + Ink (Codex theme)
 @FubsysRpgParchmentBg = #E4D2B1(0.98); // slightly darker aged paper
 @FubsysRpgInk = #2B241A;
 @FubsysRpgInkStrong = #2B241A(0.92);
@@ -2296,72 +2296,72 @@ Group {
             AssetImage #SkillTreeEdgeGlowSeg254 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Visible: false; }
             AssetImage #SkillTreeEdgeGlowSeg255 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Visible: false; }
 
-            AssetImage #SkillTreeNode0Slot { Anchor: (Left: 354, Top: 64, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode0Unlocked { Anchor: (Left: 354, Top: 64, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode0Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode0Slot { Anchor: (Left: 354, Top: 64, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode0Unlocked { Anchor: (Left: 357, Top: 67, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode0Icon { Anchor: (Left: 372, Top: 82, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode0Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode0 { Anchor: (Left: 360, Top: 70, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode1Slot { Anchor: (Left: 434, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode1Unlocked { Anchor: (Left: 434, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode1Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode1Slot { Anchor: (Left: 434, Top: 154, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode1Unlocked { Anchor: (Left: 437, Top: 157, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode1Icon { Anchor: (Left: 452, Top: 172, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode1Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode1 { Anchor: (Left: 440, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode2Slot { Anchor: (Left: 594, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode2Unlocked { Anchor: (Left: 594, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode2Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode2Slot { Anchor: (Left: 594, Top: 154, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode2Unlocked { Anchor: (Left: 597, Top: 157, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode2Icon { Anchor: (Left: 612, Top: 172, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode2Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode2 { Anchor: (Left: 600, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode3Slot { Anchor: (Left: 524, Top: 474, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode3Unlocked { Anchor: (Left: 524, Top: 474, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode3Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode3Slot { Anchor: (Left: 524, Top: 474, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode3Unlocked { Anchor: (Left: 527, Top: 477, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode3Icon { Anchor: (Left: 542, Top: 492, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode3Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode3 { Anchor: (Left: 530, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode4Slot { Anchor: (Left: 354, Top: 544, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode4Unlocked { Anchor: (Left: 354, Top: 544, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode4Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode4Slot { Anchor: (Left: 354, Top: 544, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode4Unlocked { Anchor: (Left: 357, Top: 547, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode4Icon { Anchor: (Left: 372, Top: 562, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode4Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode4 { Anchor: (Left: 360, Top: 550, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode5Slot { Anchor: (Left: 184, Top: 474, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode5Unlocked { Anchor: (Left: 184, Top: 474, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode5Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode5Slot { Anchor: (Left: 184, Top: 474, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode5Unlocked { Anchor: (Left: 187, Top: 477, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode5Icon { Anchor: (Left: 202, Top: 492, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode5Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode5 { Anchor: (Left: 190, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode6Slot { Anchor: (Left: 114, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode6Unlocked { Anchor: (Left: 114, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode6Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode6Slot { Anchor: (Left: 114, Top: 154, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode6Unlocked { Anchor: (Left: 117, Top: 157, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode6Icon { Anchor: (Left: 132, Top: 172, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode6Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode6 { Anchor: (Left: 120, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode7Slot { Anchor: (Left: 274, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode7Unlocked { Anchor: (Left: 274, Top: 154, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode7Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode7Slot { Anchor: (Left: 274, Top: 154, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode7Unlocked { Anchor: (Left: 277, Top: 157, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode7Icon { Anchor: (Left: 292, Top: 172, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode7Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode7 { Anchor: (Left: 280, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode8Slot { Anchor: (Left: 594, Top: 264, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode8Unlocked { Anchor: (Left: 594, Top: 264, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode8Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode8Slot { Anchor: (Left: 594, Top: 264, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode8Unlocked { Anchor: (Left: 597, Top: 267, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode8Icon { Anchor: (Left: 612, Top: 282, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode8Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode8 { Anchor: (Left: 600, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
 
-            AssetImage #SkillTreeNode9Slot { Anchor: (Left: 114, Top: 264, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode9Unlocked { Anchor: (Left: 114, Top: 264, Width: 76, Height: 76); Visible: false; }
-            AssetImage #SkillTreeNode9Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+            Group #SkillTreeNode9Slot { Anchor: (Left: 114, Top: 264, Width: 76, Height: 76); Visible: false; }
+            Group #SkillTreeNode9Unlocked { Anchor: (Left: 117, Top: 267, Width: 70, Height: 70); Visible: false; }
+            Group #SkillTreeNode9Icon { Anchor: (Left: 132, Top: 282, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode9Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
             Button #SkillTreeNode9 { Anchor: (Left: 120, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
             }
