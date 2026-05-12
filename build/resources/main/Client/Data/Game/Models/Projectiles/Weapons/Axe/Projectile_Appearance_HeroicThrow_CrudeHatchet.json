@@ -1,0 +1,51 @@
+{
+  "EyeHeight": 0.2,
+  "HitBox": {
+    "Max": {
+      "X": 0.08,
+      "Y": 0.08,
+      "Z": 0.08
+    },
+    "Min": {
+      "X": -0.08,
+      "Y": -0.08,
+      "Z": -0.08
+    }
+  },
+  "MinScale": 1.4,
+  "MaxScale": 1.4,
+  "Trails": [
+    {
+      "FixedRotation": false,
+      "PositionOffset": {
+        "X": 0.65,
+        "Y": -0.25,
+        "Z": 0
+      },
+      "TargetNodeName": "Handle",
+      "TrailId": "Small_Projectile",
+      "RotationOffset": {
+        "Yaw": 0,
+        "Pitch": 0,
+        "Roll": 90
+      }
+    }
+  ],
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Diagonal/Spin_Pitch_Diagonal_Down_Left.blockyanim"
+        }
+      ]
+    }
+  },
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Tools/Hatchet/Crude.blockymodel",
+      "Texture": "Items/Tools/Hatchet/Crude_Texture.png"
+    }
+  ],
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png"
+}

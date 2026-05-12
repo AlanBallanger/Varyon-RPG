@@ -1,0 +1,587 @@
+// Classic Fantasy Parchment + Ink (Codex theme)
+@FubsysRpgParchmentBg = #E4D2B1(0.98); // slightly darker aged paper
+@FubsysRpgInk = #2B241A;
+@FubsysRpgInkStrong = #2B241A(0.92);
+@FubsysRpgInkMuted = #2B241A(0.72);
+@FubsysRpgInkFaint = #2B241A(0.55);
+@FubsysRpgLeatherBg = #6B4E2E(0.12);
+@FubsysRpgPanelShade = #6B4E2E(0.08);
+@FubsysRpgGold = #D4AF37(0.92);
+@FubsysRpgGoldSoft = #D4AF37(0.74);
+@FubsysRpgGoldHighlight = #F7E6A5(0.62);
+@FubsysRpgGoldShadow = #6B4E2E(0.22);
+@FubsysRpgAging = #8A7A5A(0.22);
+@FubsysRpgParchmentMottle = #8A7A5A(0.05);
+@FubsysRpgGrainLight = #8A7A5A(0.04);
+@FubsysRpgGrainDark = #2B241A(0.02);
+@FubsysRpgEdge1 = #8A7A5A(0.06);
+@FubsysRpgEdge2 = #8A7A5A(0.04);
+@FubsysRpgEdge3 = #2B241A(0.02);
+@FubsysRpgDivider = #2B241A(0.14);
+@FubsysRpgBackdrop = #2B241A(0.42);
+
+@HeadingStyle = (
+  FontSize: 24,
+  TextColor: @FubsysRpgInk,
+  RenderBold: true
+);
+
+@SubHeadingStyle = (
+  FontSize: 18,
+  TextColor: @FubsysRpgInkStrong,
+  RenderBold: true
+);
+
+@MetaStyle = (
+  FontSize: 16,
+  TextColor: @FubsysRpgInkMuted
+);
+
+@ClassButtonStyle = (
+  Default: (
+    Background: @FubsysRpgPanelShade
+  ),
+  Hovered: (
+    Background: #6B4E2E(0.12)
+  ),
+  Pressed: (
+    Background: #6B4E2E(0.16)
+  ),
+  Disabled: (
+    Background: #6B4E2E(0.06)
+  )
+);
+
+@ClassBlockedButtonStyle = (
+  Default: (
+    Background: #6B4E2E(0.06)
+  ),
+  Hovered: (
+    Background: #6B4E2E(0.06)
+  ),
+  Pressed: (
+    Background: #6B4E2E(0.06)
+  ),
+  Disabled: (
+    Background: #6B4E2E(0.06)
+  )
+);
+
+@FubsysRpgPageWidth = 1376;
+@FubsysRpgPageHeight = 904;
+@FubsysRpgPagePadding = 36;
+
+Group {
+  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+  Background: @FubsysRpgBackdrop;
+  LayoutMode: Middle;
+
+  Group {
+    Anchor: (Width: @FubsysRpgPageWidth, Height: @FubsysRpgPageHeight);
+    Background: @FubsysRpgParchmentBg;
+    LayoutMode: Full;
+
+    // Background parchment image (set via AssetPath from the server).
+    AssetImage #PaperBack { Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0); }
+
+    // Paper texture (multi-scale organic layers; center stays calm)
+    Group #PaperTexture {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      Visible: false;
+
+      // 1) Fibers (tiny, directional; broken diagonal dithers, very low contrast)
+      Group #PaperFibers {
+        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+
+        // Top-left cluster
+        Group { Anchor: (Left: 22, Top: 64, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 26, Top: 66, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 30, Top: 68, Width: 5, Height: 1); Background: #2B241A(0.010); }
+
+        Group { Anchor: (Left: 48, Top: 92, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 52, Top: 94, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 56, Top: 96, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
+
+        Group { Anchor: (Left: 84, Top: 132, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 88, Top: 134, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 92, Top: 136, Width: 4, Height: 1); Background: #2B241A(0.010); }
+
+        // Top-right cluster
+        Group { Anchor: (Left: 1296, Top: 72, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 1292, Top: 74, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 1288, Top: 76, Width: 5, Height: 1); Background: #2B241A(0.010); }
+
+        Group { Anchor: (Left: 1258, Top: 118, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 1254, Top: 120, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 1250, Top: 122, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
+
+        Group { Anchor: (Left: 1220, Top: 158, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 1216, Top: 160, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 1212, Top: 162, Width: 4, Height: 1); Background: #2B241A(0.010); }
+
+        // Bottom-left cluster
+        Group { Anchor: (Left: 28, Top: 780, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 32, Top: 782, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 36, Top: 784, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
+
+        Group { Anchor: (Left: 72, Top: 828, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 76, Top: 830, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 80, Top: 832, Width: 4, Height: 1); Background: #2B241A(0.010); }
+
+        // Bottom-right cluster
+        Group { Anchor: (Left: 1312, Top: 792, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 1308, Top: 794, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 1304, Top: 796, Width: 5, Height: 1); Background: #2B241A(0.010); }
+
+        Group { Anchor: (Left: 1268, Top: 844, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
+        Group { Anchor: (Left: 1264, Top: 846, Width: 6, Height: 1); Background: #2B241A(0.010); }
+        Group { Anchor: (Left: 1260, Top: 848, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
+
+        // A few calm-center fibers (very sparse)
+        Group { Anchor: (Left: 620, Top: 240, Width: 8, Height: 1); Background: #8A7A5A(0.010); }
+        Group { Anchor: (Left: 624, Top: 242, Width: 6, Height: 1); Background: #2B241A(0.008); }
+        Group { Anchor: (Left: 742, Top: 548, Width: 7, Height: 1); Background: #8A7A5A(0.010); }
+        Group { Anchor: (Left: 746, Top: 550, Width: 5, Height: 1); Background: #2B241A(0.008); }
+      }
+
+      // 2) Blotches (medium clusters; varied sizes; dithered edges by layering)
+      Group #PaperBlotches {
+        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+
+        // TL blotch cluster
+        Group { Anchor: (Left: 18, Top: 18, Width: 120, Height: 90); Background: #8A7A5A(0.040); }
+        Group { Anchor: (Left: 52, Top: 42, Width: 64, Height: 46); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 34, Top: 96, Width: 38, Height: 16); Background: #2B241A(0.010); }
+
+        // TR blotch cluster
+        Group { Anchor: (Left: 1230, Top: 20, Width: 130, Height: 96); Background: #8A7A5A(0.038); }
+        Group { Anchor: (Left: 1260, Top: 58, Width: 72, Height: 44); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 1300, Top: 104, Width: 34, Height: 14); Background: #2B241A(0.010); }
+
+        // BL blotch cluster
+        Group { Anchor: (Left: 14, Top: 708, Width: 150, Height: 112); Background: #8A7A5A(0.042); }
+        Group { Anchor: (Left: 54, Top: 748, Width: 84, Height: 52); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 30, Top: 684, Width: 44, Height: 18); Background: #2B241A(0.010); }
+
+        // BR blotch cluster
+        Group { Anchor: (Left: 1212, Top: 694, Width: 160, Height: 122); Background: #8A7A5A(0.042); }
+        Group { Anchor: (Left: 1256, Top: 740, Width: 90, Height: 54); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 1316, Top: 828, Width: 40, Height: 18); Background: #2B241A(0.010); }
+      }
+
+      // 3) Edge wear (irregular, corner-heavy, with occasional bite marks inward)
+      Group #PaperEdgeWear {
+        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+
+        // Uneven top wear
+        Group { Anchor: (Left: 0, Top: 0, Width: 260, Height: 26); Background: #8A7A5A(0.040); }
+        Group { Anchor: (Left: 300, Top: 0, Width: 420, Height: 18); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 780, Top: 0, Width: 260, Height: 22); Background: #8A7A5A(0.034); }
+        Group { Anchor: (Left: 1080, Top: 0, Width: 296, Height: 30); Background: #8A7A5A(0.042); }
+
+        // Uneven left wear (thicker at top; thinner mid)
+        Group { Anchor: (Left: 0, Top: 0, Width: 24, Height: 220); Background: #8A7A5A(0.040); }
+        Group { Anchor: (Left: 0, Top: 260, Width: 16, Height: 260); Background: #8A7A5A(0.026); }
+        Group { Anchor: (Left: 0, Top: 560, Width: 22, Height: 320); Background: #8A7A5A(0.038); }
+
+        // Uneven right wear (corner-heavy)
+        Group { Anchor: (Left: 1350, Top: 0, Width: 26, Height: 260); Background: #8A7A5A(0.040); }
+        Group { Anchor: (Left: 1360, Top: 320, Width: 16, Height: 240); Background: #8A7A5A(0.026); }
+        Group { Anchor: (Left: 1352, Top: 600, Width: 24, Height: 304); Background: #8A7A5A(0.040); }
+
+        // Bottom wear (heavier, but broken up)
+        Group { Anchor: (Left: 0, Top: 872, Width: 340, Height: 32); Background: #8A7A5A(0.044); }
+        Group { Anchor: (Left: 420, Top: 884, Width: 380, Height: 20); Background: #8A7A5A(0.030); }
+        Group { Anchor: (Left: 900, Top: 876, Width: 476, Height: 28); Background: #8A7A5A(0.046); }
+
+        // Bite marks inward (darkened nicks)
+        Group { Anchor: (Left: 212, Top: 34, Width: 28, Height: 10); Background: #2B241A(0.014); }
+        Group { Anchor: (Left: 686, Top: 26, Width: 22, Height: 10); Background: #2B241A(0.012); }
+        Group { Anchor: (Left: 1110, Top: 36, Width: 30, Height: 12); Background: #2B241A(0.014); }
+        Group { Anchor: (Left: 26, Top: 248, Width: 12, Height: 26); Background: #2B241A(0.012); }
+        Group { Anchor: (Left: 40, Top: 640, Width: 14, Height: 30); Background: #2B241A(0.012); }
+        Group { Anchor: (Left: 1336, Top: 308, Width: 14, Height: 30); Background: #2B241A(0.014); }
+        Group { Anchor: (Left: 1342, Top: 668, Width: 12, Height: 26); Background: #2B241A(0.012); }
+        Group { Anchor: (Left: 256, Top: 850, Width: 34, Height: 12); Background: #2B241A(0.014); }
+        Group { Anchor: (Left: 970, Top: 852, Width: 36, Height: 12); Background: #2B241A(0.014); }
+      }
+    }
+
+    // Jewelry frame (9-slice textures): real pixel-art filigree + transparent center.
+    Group #FiligreeBorder {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      Background: #000000(0.0);
+
+      // Frame rail + separate ornate corner sprites (baroque leaf + scroll).
+      // All images use AssetPath set from the server (matches the working pattern you provided).
+      AssetImage #FrameRail {
+        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      }
+
+      // Corner cast shadows (offset +2,+3).
+      AssetImage #CornerFlourishShadowTL { Anchor: (Left: -10, Top: -13, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishShadowTR { Anchor: (Right: -10, Top: -13, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishShadowBL { Anchor: (Left: -10, Bottom: -19, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishShadowBR { Anchor: (Right: -10, Bottom: -19, Width: 128, Height: 128); }
+
+      // Corner flourishes (allow outward protrusion; overlap inward stays limited in the sprite art).
+      AssetImage #CornerFlourishTL { Anchor: (Left: -8, Top: -16, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishTR { Anchor: (Right: -8, Top: -16, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishBL { Anchor: (Left: -8, Bottom: -16, Width: 128, Height: 128); }
+      AssetImage #CornerFlourishBR { Anchor: (Right: -8, Bottom: -16, Width: 128, Height: 128); }
+    }
+
+    Group {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      Padding: (Full: @FubsysRpgPagePadding);
+      LayoutMode: Top;
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 44);
+        Background: @FubsysRpgLeatherBg;
+        Padding: (Left: 12, Right: 16, Top: 8, Bottom: 8);
+
+        Label {
+          Style: (...@MetaStyle, FontSize: 14, RenderUppercase: true, RenderBold: true, TextColor: @FubsysRpgInkStrong);
+          Text: "Fubsy's RPG";
+        }
+
+        Group { FlexWeight: 1; }
+
+        Label {
+          Style: (...@MetaStyle, FontSize: 14);
+          Text: "Press Esc to close";
+        }
+
+        Group { Anchor: (Left: 0, Right: 0, Bottom: 0, Height: 2); Background: @FubsysRpgGoldSoft; }
+      }
+
+      Group {
+        FlexWeight: 1;
+        Anchor: (Top: 12);
+        LayoutMode: Top;
+
+        Group #WelcomeScreen {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          LayoutMode: Middle;
+          Visible: true;
+
+          Group {
+            Anchor: (Width: 760, Height: 172, Top: 260);
+            LayoutMode: Top;
+
+            Label {
+              Anchor: (Height: 60);
+              Style: (FontSize: 52, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center);
+              Text: "Fubsy's RPG";
+            }
+
+            Group { Anchor: (Height: 60); }
+
+            Group {
+              LayoutMode: Left;
+              Anchor: (Left: 0, Right: 0, Height: 52);
+
+              Group { FlexWeight: 1; }
+
+              Button #WelcomeStartButton {
+                Anchor: (Width: 280, Height: 52);
+                Style: @ClassButtonStyle;
+
+                Label {
+                  Style: (...@MetaStyle, FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+                  Text: "Click Here to Start";
+                }
+              }
+
+              Group { FlexWeight: 1; }
+            }
+          }
+        }
+
+        Group #IntroScreen {
+          LayoutMode: Top;
+          FlexWeight: 1;
+          Visible: false;
+
+          Label {
+            Style: @HeadingStyle;
+            Text: "Introduction";
+          }
+
+          Group { Anchor: (Height: 1, Top: 10, Bottom: 10); Background: @FubsysRpgDivider; }
+
+          Group {
+            LayoutMode: Top;
+            FlexWeight: 1;
+            Background: @FubsysRpgPanelShade;
+            Padding: (Full: 16);
+
+            Group #IntroPage0 {
+              LayoutMode: Top;
+              Visible: true;
+
+              Label { Style: (...@SubHeadingStyle, FontSize: 18); Text: "1) Starting and Attribute Progression"; }
+              Label { Anchor: (Top: 10); Style: (...@MetaStyle, FontSize: 14); Text: "- /rpg start sets your class profile at Level 1. Re-selecting class later resets RPG progression."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Each level grants +3 Attribute Points and +1 Class Skill Point."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Spend points in /rpg character to scale your build (damage, survivability, crit, and utility stats)."; }
+            }
+
+            Group #IntroPage1 {
+              LayoutMode: Top;
+              Visible: false;
+
+              Label { Style: (...@SubHeadingStyle, FontSize: 18); Text: "2) Classes, Skills, and Class Resources"; }
+              Label { Anchor: (Top: 10); Style: (...@MetaStyle, FontSize: 14); Text: "- Classes: Warrior, Thief, Mage, Cleric, Ranger. Each has its own tree and specialization path."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Unlock active/passive nodes with Class Skill Points, then bind actives to Ability1/Ability2/Ability3."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Skills spend class resources tracked per profile (for example Rage, Mana, Focus, Faith, Overload)."; }
+            }
+
+            Group #IntroPage2 {
+              LayoutMode: Top;
+              Visible: false;
+
+              Label { Style: (...@SubHeadingStyle, FontSize: 18); Text: "3) XP, Mob Levels, and Zone Scaling"; }
+              Label { Anchor: (Top: 10); Style: (...@MetaStyle, FontSize: 14); Text: "- Kill XP scales with level gap: about +/-8% per level difference, clamped to safe min/max multipliers."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Passive mobs give reduced XP (20% baseline), while elite mobs give bonus XP (2x baseline)."; }
+              Label { Anchor: (Top: 4); Style: (...@MetaStyle, FontSize: 14); Text: "- Mob levels roll from zone context: Zone 1-3 use 10-level bands; Zone 4+ use 15-level bands (cap 60)."; }
+            }
+          }
+
+          Group {
+            LayoutMode: Full;
+            Anchor: (Top: 10, Height: 36);
+
+            Group {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              LayoutMode: Left;
+
+              Button #IntroPrevButton {
+                Anchor: (Width: 110, Height: 32);
+                Style: @ClassButtonStyle;
+
+                Label { Style: (...@MetaStyle, FontSize: 14, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "< Back"; }
+              }
+
+              Group { FlexWeight: 1; }
+
+              Button #IntroNextButton {
+                Anchor: (Width: 110, Height: 32);
+                Style: @ClassButtonStyle;
+
+                Label { Style: (...@MetaStyle, FontSize: 14, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Next >"; }
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Button #IntroChooseClassButton {
+                Anchor: (Width: 140, Height: 32);
+                Style: @ClassButtonStyle;
+                Visible: false;
+
+                Label { Style: (...@MetaStyle, FontSize: 14, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Choose Class"; }
+              }
+            }
+
+            Label #IntroPageLabel {
+              Anchor: (Left: 0, Right: 0, Height: 32);
+              Style: (...@MetaStyle, FontSize: 14, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "";
+            }
+          }
+        }
+
+        Group #ClassSelectScreen {
+          LayoutMode: Top;
+          FlexWeight: 1;
+          Visible: false;
+
+          Group {
+            LayoutMode: Top;
+            Padding: (Top: 16, Bottom: 12);
+
+            Label {
+              Style: @HeadingStyle;
+              Text: "Choose Your Class";
+            }
+
+            Label {
+              Style: (...@MetaStyle, TextColor: @FubsysRpgInkMuted);
+              Text: "Selecting a class will reset your RPG profile and start you at level 1.";
+            }
+          }
+
+          Group {
+            Anchor: (Height: 1, Top: 8, Bottom: 8);
+            Background: @FubsysRpgDivider;
+          }
+
+          Group {
+            LayoutMode: Top;
+            FlexWeight: 1;
+            Anchor: (Top: 4);
+
+            Button #StartWarriorButton {
+              LayoutMode: Top;
+              Anchor: (Height: 76);
+              Style: @ClassButtonStyle;
+              Padding: (Full: 12);
+
+              Label {
+                Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkStrong, RenderBold: true);
+                Text: "Warrior";
+              }
+
+              Label {
+                Anchor: (Top: 4);
+                Style: @MetaStyle;
+                Text: "Front-Line Melee Attacker, with a balance of damage and survivability. Capable of tanking and drawing aggro";
+              }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Button #StartThiefButton {
+              LayoutMode: Top;
+              Anchor: (Height: 76);
+              Style: @ClassBlockedButtonStyle;
+              TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
+              TooltipText: "Work In Progress";
+              Padding: (Full: 12);
+
+              Label {
+                Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkFaint, RenderBold: true);
+                Text: "Thief";
+              }
+
+              Label {
+                Anchor: (Top: 4);
+                Style: (...@MetaStyle, TextColor: @FubsysRpgInkFaint);
+                Text: "An elusive melee burst damage dealer, capable of maneuveing the battlefield and striking to deal massive damage.";
+              }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Button #StartMageButton {
+              LayoutMode: Top;
+              Anchor: (Height: 76);
+              Style: @ClassBlockedButtonStyle;
+              TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
+              TooltipText: "Work In Progress";
+              Padding: (Full: 12);
+
+              Label {
+                Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkFaint, RenderBold: true);
+                Text: "Mage";
+              }
+
+              Label {
+                Anchor: (Top: 4);
+                Style: (...@MetaStyle, TextColor: @FubsysRpgInkFaint);
+                Text: "A wielder of the arcane arts, drawing upon ancient knowledge to deal damage and control the battlefield.";
+              }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Button #StartPriestButton {
+              LayoutMode: Top;
+              Anchor: (Height: 76);
+              Style: @ClassBlockedButtonStyle;
+              TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
+              TooltipText: "Work In Progress";
+              Padding: (Full: 12);
+
+              Label {
+                Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkFaint, RenderBold: true);
+                Text: "Cleric";
+              }
+
+              Label {
+                Anchor: (Top: 4);
+                Style: (...@MetaStyle, TextColor: @FubsysRpgInkFaint);
+                Text: "A divine practitioner, capable of calling down blessings from the gods to change the tide of battle";
+              }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Button #StartRangerButton {
+              LayoutMode: Top;
+              Anchor: (Height: 76);
+              Style: @ClassBlockedButtonStyle;
+              TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
+              TooltipText: "Work In Progress";
+              Padding: (Full: 12);
+
+              Label {
+                Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkFaint, RenderBold: true);
+                Text: "Ranger";
+              }
+
+              Label {
+                Anchor: (Top: 4);
+                Style: (...@MetaStyle, TextColor: @FubsysRpgInkFaint);
+                Text: "A Long ranged damage dealer, snipe enemies from afar and chip away at the enemy";
+              }
+            }
+          }
+        }
+      }
+    }
+
+    Group #ClassConfirmDialog {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      Background: #2B241A(0.50);
+      LayoutMode: Middle;
+      Visible: false;
+
+      Group {
+        Anchor: (Width: 520, Height: 190);
+        Background: @FubsysRpgParchmentBg;
+        LayoutMode: Top;
+        Padding: (Left: 20, Right: 20, Top: 18, Bottom: 18);
+
+        Group { Anchor: (Left: 0, Right: 0, Top: 0, Height: 1); Background: @FubsysRpgGoldSoft; }
+
+        Label #ClassConfirmText {
+          Anchor: (Top: 16, Height: 40);
+          Style: (...@SubHeadingStyle, FontSize: 22, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Text: "Confirm Class?";
+        }
+
+        Group { FlexWeight: 1; }
+
+        Group {
+          Anchor: (Left: 0, Right: 0, Height: 34);
+          LayoutMode: Left;
+
+          Button #ClassConfirmNoButton {
+            Anchor: (Width: 130, Height: 34);
+            Style: @ClassButtonStyle;
+
+            Label {
+              Style: (...@MetaStyle, FontSize: 14, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "No";
+            }
+          }
+
+          Group { FlexWeight: 1; }
+
+          Button #ClassConfirmYesButton {
+            Anchor: (Width: 130, Height: 34);
+            Style: @ClassButtonStyle;
+
+            Label {
+              Style: (...@MetaStyle, FontSize: 14, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "Yes";
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

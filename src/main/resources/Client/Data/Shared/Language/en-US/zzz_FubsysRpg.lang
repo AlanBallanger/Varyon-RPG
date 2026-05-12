@@ -1,0 +1,5 @@
+itemTooltip.stats.Defense = Armor
+itemTooltip.resistance = Armor:
+inventory.character.stats.defense = Armor
+itemTooltip.stats.MagicResistance = ​
+inventory.character.stats.magicResistance = Magic Resistance

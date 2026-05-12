@@ -1,0 +1,763 @@
+@SlotSize = 68;
+@SlotSpacing = 14;
+@HudPadding = 8;
+
+// Skill Revolver layout (6 slots around a center slot).
+// Positions: 12, 2, 4, 6, 8, 10 o'clock.
+@NameHeight = 1; // reserved (server still writes Name.Text)
+@RevolverRadius = 80;
+@RevolverDiagX = 70;
+@RevolverDiagY = 40;
+@RevolverHudSize = @SlotSize + (@RevolverRadius * 2);
+@RevolverCenter = @RevolverRadius + (@SlotSize / 2);
+@HudWidth = @RevolverHudSize;
+@HudHeight = @RevolverHudSize;
+
+@Slot12Left = @RevolverCenter - (@SlotSize / 2);
+@Slot12Top = @RevolverCenter - @RevolverRadius - (@SlotSize / 2);
+@Slot2Left = @RevolverCenter + @RevolverDiagX - (@SlotSize / 2);
+@Slot2Top = @RevolverCenter - @RevolverDiagY - (@SlotSize / 2);
+@Slot4Left = @RevolverCenter + @RevolverDiagX - (@SlotSize / 2);
+@Slot4Top = @RevolverCenter + @RevolverDiagY - (@SlotSize / 2);
+@Slot6Left = @RevolverCenter - (@SlotSize / 2);
+@Slot6Top = @RevolverCenter + @RevolverRadius - (@SlotSize / 2);
+@Slot8Left = @RevolverCenter - @RevolverDiagX - (@SlotSize / 2);
+@Slot8Top = @RevolverCenter + @RevolverDiagY - (@SlotSize / 2);
+@Slot10Left = @RevolverCenter - @RevolverDiagX - (@SlotSize / 2);
+@Slot10Top = @RevolverCenter - @RevolverDiagY - (@SlotSize / 2);
+
+@RevolverCenterSlotSize = 56;
+@RevolverCenterSlotLeft = @RevolverCenter - (@RevolverCenterSlotSize / 2);
+@RevolverCenterSlotTop = @RevolverCenter - (@RevolverCenterSlotSize / 2);
+
+@SlotBackgroundColor = #0b0f14(0.60);
+@SlotCircleOutlineColor = #000000(0.75);
+@CooldownShadeColor = #000000(0.55);
+
+@NameStyle = (
+  FontSize: 12,
+  TextColor: #ffffff(0.88),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: true
+);
+
+@KeyStyle = (
+  FontSize: 12,
+  TextColor: #ffffe6,
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: #000000(0.5)
+);
+
+@CooldownShadowStyle = (
+  RenderBold: true,
+  Alignment: Center,
+  TextColor: #000000(0.80),
+  FontName: "Secondary",
+  FontSize: 24
+);
+
+@CooldownTextStyle = (
+  RenderBold: true,
+  Alignment: Center,
+  TextColor: #ffffe6,
+  FontName: "Secondary",
+  FontSize: 24
+);
+
+@RevolverResourceLabelStyle = (
+  FontSize: 10,
+  TextColor: #ffffff(0.80),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: #000000(0.70)
+);
+
+@RevolverResourceValueStyle = (
+  FontSize: 18,
+  TextColor: #ffffff(0.92),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: #000000(0.80)
+);
+
+@RevolverResourceSubtleStyle = (
+  FontSize: 9,
+  TextColor: #ffffff(0.78),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: #000000(0.75)
+);
+
+@FubsysRpgShieldFillSegmentCount = 53;
+@FubsysRpgShieldFillSegmentWidth = 6;
+@FubsysRpgShieldFillTotalWidth = @FubsysRpgShieldFillSegmentCount * @FubsysRpgShieldFillSegmentWidth;
+
+// Vanilla HUD positioning constants (copied from base-game UI so this custom HUD stays standalone).
+// Common.ui: DefaultItemSlotsPerRow=9, DefaultItemSlotSize=74; Hotbar.ui: HotbarSlotSpacingHud=4.
+@FubsysRpgHudHotbarWidth = 702;
+@FubsysRpgHudHotbarHeight = 78;
+@FubsysRpgHudInventoryClosedContainerMargin = 36;
+@FubsysRpgHudHealthRowBottom = @FubsysRpgHudInventoryClosedContainerMargin + @FubsysRpgHudHotbarHeight + 6;
+@FubsysRpgXpGainToastLeft = 66; // Vanilla Mana.ui: 48 - BarStructureImagePadding + 20
+@FubsysRpgManaBarWidth = 340;
+@FubsysRpgManaBarHeight = 29;
+@FubsysRpgManaBarLeft = @FubsysRpgXpGainToastLeft;
+@FubsysRpgManaBarBottom = 148; // Vanilla Mana.ui bottom
+@FubsysRpgXpGainToastWidth = 140;
+@FubsysRpgXpGainToastHeight = 22;
+@FubsysRpgXpGainToastBottom = @FubsysRpgManaBarBottom + @FubsysRpgManaBarHeight + 64;
+@FubsysRpgManaFillColor = #4aa3ff(0.85);
+@FubsysRpgManaBackColor = #000000(0.30);
+@FubsysRpgManaTextStyle = (
+  FontSize: 10,
+  TextColor: #ffffff(0.88),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: #000000(0.85)
+);
+
+@FubsysRpgShieldFillColor = #4aa3ff(0.85);
+@FubsysRpgHealthFillColor = #ff3b3b(0.80);
+@FubsysRpgHealthBackColor = #000000(0.25);
+@FubsysRpgHealthIconColor = #ff3b3b(0.95);
+
+@FubsysRpgTargetHudWidth = 380;
+@FubsysRpgTargetHudHeight = 90;
+@FubsysRpgTargetHudBackColor = #000000(0.0);
+@FubsysRpgTargetHudBorderColor = #000000(0.75);
+@FubsysRpgTargetTextOutlineColor = #000000(0.85);
+@FubsysRpgTargetBarOutlineColor = #000000(0.80);
+
+@FubsysRpgTargetBarLeft = 12;
+@FubsysRpgTargetBarTop = 34;
+@FubsysRpgTargetBarOutlineInset = 1;
+@FubsysRpgTargetBarOutlineLeft = @FubsysRpgTargetBarLeft - @FubsysRpgTargetBarOutlineInset;
+@FubsysRpgTargetBarOutlineTop = @FubsysRpgTargetBarTop - @FubsysRpgTargetBarOutlineInset;
+@FubsysRpgTargetBarOutlineWidth = @FubsysRpgTargetBarWidth + (@FubsysRpgTargetBarOutlineInset * 2);
+@FubsysRpgTargetBarOutlineHeight = @FubsysRpgTargetBarHeight + (@FubsysRpgTargetBarOutlineInset * 2);
+@FubsysRpgTargetNameStyle = (
+  FontSize: 14,
+  TextColor: #ffffff(0.92),
+  RenderBold: true,
+  HorizontalAlignment: Start,
+  VerticalAlignment: Center,
+  Wrap: false,
+  OutlineColor: @FubsysRpgTargetTextOutlineColor
+);
+@FubsysRpgTargetLevelStyle = (
+  FontSize: 12,
+  TextColor: #f2c14b(0.92),
+  RenderBold: true,
+  HorizontalAlignment: Start,
+  VerticalAlignment: Center,
+  Wrap: false,
+  OutlineColor: @FubsysRpgTargetTextOutlineColor
+);
+@FubsysRpgTargetBarWidth = 318;
+@FubsysRpgTargetBarHeight = 12;
+@FubsysRpgTargetBarSegmentWidth = 6;
+@FubsysRpgTargetHpFillColor = #ff3b3b(0.86);
+@FubsysRpgTargetHpBackColor = #0b0f14(0.28);
+@FubsysRpgTargetStatusIconSize = 32;
+@FubsysRpgTargetStatusIconGap = 4;
+@FubsysRpgTargetStatusIconStep = @FubsysRpgTargetStatusIconSize + @FubsysRpgTargetStatusIconGap;
+@FubsysRpgTargetStatusStyle = (
+  FontSize: 10,
+  TextColor: #ffffff(0.85),
+  RenderBold: true,
+  Alignment: Center,
+  Wrap: false,
+  OutlineColor: @FubsysRpgTargetTextOutlineColor
+);
+
+@IconSize = 54;
+@IconLeft = (@SlotSize - @IconSize) / 2;
+@IconTop = (@SlotSize - @IconSize) / 2;
+@KeySize = 18;
+@KeyInset = 4;
+@KeyTop = @SlotSize - @KeySize - @KeyInset;
+
+@IconPixel = 2;
+@IconArtSize = 40;
+@IconArtLeft = (@IconSize - @IconArtSize) / 2;
+@IconArtTop = (@IconSize - @IconArtSize) / 2;
+@IconPngLeft = @IconLeft + @IconArtLeft;
+@IconPngTop = @IconTop + @IconArtTop;
+
+@IconOutlineColor = #000000(0.65);
+@IconSteelColor = #e7eef7(0.92);
+@IconSteelDarkColor = #b7c3d1(0.92);
+@IconGoldColor = #f2c14b(0.92);
+@IconWoodColor = #8b5a2b(0.92);
+@IconShieldFillColor = #4aa3ff(0.85);
+
+Group #FubsysRpgHudRoot {
+  LayoutMode: Full;
+  Padding: (Full: 0);
+
+  // Optional replacement crosshair (used when we hide HudComponent.Reticle to suppress interaction hints).
+  Group #FubsysRpgCrosshair {
+    LayoutMode: Center;
+    Anchor: (Width: 20, Height: 20);
+    Visible: false;
+
+    Group { Anchor: (Width: 2, Height: 8, Left: 9, Top: 0); Background: #ffffff(0.85); }
+    Group { Anchor: (Width: 2, Height: 8, Left: 9, Top: 12); Background: #ffffff(0.85); }
+    Group { Anchor: (Width: 8, Height: 2, Left: 0, Top: 9); Background: #ffffff(0.85); }
+    Group { Anchor: (Width: 8, Height: 2, Left: 12, Top: 9); Background: #ffffff(0.85); }
+    Group { Anchor: (Width: 2, Height: 2, Left: 9, Top: 9); Background: #ffffff(0.90); }
+  }
+
+  // Enemy target HUD (replaces compass while aiming at a mob).
+  Group #FubsysRpgTargetHudContainer {
+    LayoutMode: Top;
+    Anchor: (Top: 12, Width: @FubsysRpgTargetHudWidth, Height: @FubsysRpgTargetHudHeight);
+    Visible: false;
+
+    Group #FubsysRpgTargetHudRoot {
+      LayoutMode: Full;
+      Anchor: (Left: 0, Top: 0, Width: @FubsysRpgTargetHudWidth, Height: @FubsysRpgTargetHudHeight);
+
+      Group {
+        Anchor: (Left: 0, Top: 0, Width: @FubsysRpgTargetHudWidth, Height: @FubsysRpgTargetHudHeight);
+        Background: @FubsysRpgTargetHudBackColor;
+      }
+
+      Label #FubsysRpgTargetLevel { Anchor: (Left: 12, Top: 8, Width: 58, Height: 20); Style: @FubsysRpgTargetLevelStyle; Text: ""; }
+      Label #FubsysRpgTargetName { Anchor: (Left: 74, Top: 8, Width: 256, Height: 20); Style: @FubsysRpgTargetNameStyle; Text: ""; }
+
+      // Health bar outline (drawn behind the bar contents).
+      Group #FubsysRpgTargetHealthBarOutline {
+        Anchor: (Left: @FubsysRpgTargetBarOutlineLeft, Top: @FubsysRpgTargetBarOutlineTop, Width: @FubsysRpgTargetBarOutlineWidth, Height: @FubsysRpgTargetBarOutlineHeight);
+        Background: @FubsysRpgTargetBarOutlineColor;
+      }
+
+      Group #FubsysRpgTargetHealthBar {
+        Anchor: (Left: @FubsysRpgTargetBarLeft, Top: @FubsysRpgTargetBarTop, Width: @FubsysRpgTargetBarWidth, Height: @FubsysRpgTargetBarHeight);
+        LayoutMode: Full;
+        Background: @FubsysRpgTargetHpBackColor;
+      }
+
+      // Segment fill (texture-free). Width=318, 53 segments of 6px.
+      Group #FubsysRpgTargetHpSeg1  { Anchor: (Left: 12,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg2  { Anchor: (Left: 18,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg3  { Anchor: (Left: 24,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg4  { Anchor: (Left: 30,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg5  { Anchor: (Left: 36,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg6  { Anchor: (Left: 42,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg7  { Anchor: (Left: 48,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg8  { Anchor: (Left: 54,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg9  { Anchor: (Left: 60,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg10 { Anchor: (Left: 66,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg11 { Anchor: (Left: 72,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg12 { Anchor: (Left: 78,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg13 { Anchor: (Left: 84,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg14 { Anchor: (Left: 90,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg15 { Anchor: (Left: 96,  Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg16 { Anchor: (Left: 102, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg17 { Anchor: (Left: 108, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg18 { Anchor: (Left: 114, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg19 { Anchor: (Left: 120, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg20 { Anchor: (Left: 126, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg21 { Anchor: (Left: 132, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg22 { Anchor: (Left: 138, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg23 { Anchor: (Left: 144, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg24 { Anchor: (Left: 150, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg25 { Anchor: (Left: 156, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg26 { Anchor: (Left: 162, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg27 { Anchor: (Left: 168, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg28 { Anchor: (Left: 174, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg29 { Anchor: (Left: 180, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg30 { Anchor: (Left: 186, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg31 { Anchor: (Left: 192, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg32 { Anchor: (Left: 198, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg33 { Anchor: (Left: 204, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg34 { Anchor: (Left: 210, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg35 { Anchor: (Left: 216, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg36 { Anchor: (Left: 222, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg37 { Anchor: (Left: 228, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg38 { Anchor: (Left: 234, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg39 { Anchor: (Left: 240, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg40 { Anchor: (Left: 246, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg41 { Anchor: (Left: 252, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg42 { Anchor: (Left: 258, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg43 { Anchor: (Left: 264, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg44 { Anchor: (Left: 270, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg45 { Anchor: (Left: 276, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg46 { Anchor: (Left: 282, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg47 { Anchor: (Left: 288, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg48 { Anchor: (Left: 294, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg49 { Anchor: (Left: 300, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg50 { Anchor: (Left: 306, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg51 { Anchor: (Left: 312, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg52 { Anchor: (Left: 318, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+      Group #FubsysRpgTargetHpSeg53 { Anchor: (Left: 324, Top: @FubsysRpgTargetBarTop, Width: 6, Height: @FubsysRpgTargetBarHeight); Background: @FubsysRpgTargetHpFillColor; Visible: false; }
+
+      Group #FubsysRpgTargetStatusRow {
+        LayoutMode: Full;
+        Anchor: (Left: 12, Top: 52, Width: @FubsysRpgTargetBarWidth, Height: @FubsysRpgTargetStatusIconSize);
+
+        AssetImage #FubsysRpgTargetStatusIcon1 { Anchor: (Left: 0,                           Top: 0, Width: @FubsysRpgTargetStatusIconSize, Height: @FubsysRpgTargetStatusIconSize); Visible: false; }
+        AssetImage #FubsysRpgTargetStatusIcon2 { Anchor: (Left: @FubsysRpgTargetStatusIconStep, Top: 0, Width: @FubsysRpgTargetStatusIconSize, Height: @FubsysRpgTargetStatusIconSize); Visible: false; }
+        AssetImage #FubsysRpgTargetStatusIcon3 { Anchor: (Left: @FubsysRpgTargetStatusIconStep * 2, Top: 0, Width: @FubsysRpgTargetStatusIconSize, Height: @FubsysRpgTargetStatusIconSize); Visible: false; }
+        AssetImage #FubsysRpgTargetStatusIcon4 { Anchor: (Left: @FubsysRpgTargetStatusIconStep * 3, Top: 0, Width: @FubsysRpgTargetStatusIconSize, Height: @FubsysRpgTargetStatusIconSize); Visible: false; }
+        AssetImage #FubsysRpgTargetStatusIcon5 { Anchor: (Left: @FubsysRpgTargetStatusIconStep * 4, Top: 0, Width: @FubsysRpgTargetStatusIconSize, Height: @FubsysRpgTargetStatusIconSize); Visible: false; }
+      }
+    }
+  }
+
+  Group #FubsysRpgAbilityHudRoot {
+    LayoutMode: Full;
+    Anchor: (Width: @HudWidth, Height: @HudHeight, Right: 40, Bottom: 40);
+    Padding: (Full: 0);
+
+    // Center resource slot (RAGE/MANA/FOCUS); driven by server.
+    Group #FubsysRpgRevolverResourceSlot {
+      Anchor: (Left: @RevolverCenterSlotLeft, Top: @RevolverCenterSlotTop, Width: @RevolverCenterSlotSize, Height: @RevolverCenterSlotSize);
+      Visible: false;
+      Background: #000000(0.0);
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/GildedRevolverResourceSlot56.ui PREFIX=FubsysRpgRevolverResource LEFT=0 TOP=0
+
+      AssetImage #FubsysRpgRevolverResourceFullIcon {
+        Anchor: (Left: 13, Top: 11, Width: 30, Height: 34);
+        AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverResourceFull_F.png";
+        Visible: false;
+      }
+
+      Label #FubsysRpgRevolverResourceLabel {
+        Anchor: (Top: 4, Width: @RevolverCenterSlotSize, Height: 14);
+        Style: @RevolverResourceSubtleStyle;
+        Visible: false;
+        Text: "";
+      }
+
+      Label #FubsysRpgRevolverResourceValue {
+        Anchor: (Top: 18, Width: @RevolverCenterSlotSize, Height: 26);
+        Style: @RevolverResourceValueStyle;
+        Visible: false;
+        Text: "";
+      }
+    }
+
+    // Next cycle (inactive) slots.
+
+    // Ability4 (next-cycle Ability1) at 6 o'clock.
+    Group #FubsysRpgAbility4Overlay {
+      Anchor: (Left: @Slot6Left, Top: @Slot6Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility4 LEFT=0 TOP=0
+      Label #FubsysRpgAbility4Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility4IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility4 TOP=0
+      AssetImage #FubsysRpgAbility4ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility4CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility4ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility4CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility4Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Visible: false; Text: ""; }
+    }
+
+    // Ability5 (next-cycle Ability2) at 4 o'clock.
+    Group #FubsysRpgAbility5Overlay {
+      Anchor: (Left: @Slot4Left, Top: @Slot4Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility5 LEFT=0 TOP=0
+      Label #FubsysRpgAbility5Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility5IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility5 TOP=0
+      AssetImage #FubsysRpgAbility5ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility5CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility5ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility5CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility5Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Visible: false; Text: ""; }
+    }
+
+    // Ability6 (next-cycle Ability3) at 2 o'clock.
+    Group #FubsysRpgAbility6Overlay {
+      Anchor: (Left: @Slot2Left, Top: @Slot2Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility6 LEFT=0 TOP=0
+      Label #FubsysRpgAbility6Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility6IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility6 TOP=0
+      AssetImage #FubsysRpgAbility6ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility6CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility6ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility6CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility6Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Visible: false; Text: ""; }
+    }
+
+    // Dim the inactive (next-cycle) half of the revolver so the active half reads more clearly.
+    // Drawn above next-cycle slots, below active-cycle slots.
+    AssetImage #FubsysRpgRevolverInactiveCycleShade {
+      Anchor: (Left: 0, Top: 0, Width: @HudWidth, Height: @HudHeight);
+      AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverInactiveHalfDonut.png";
+      Visible: false;
+    }
+
+    // Active cycle slots.
+
+    // Ability3 at 12 o'clock.
+    Group #FubsysRpgAbility3Overlay {
+      Anchor: (Left: @Slot12Left, Top: @Slot12Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility3 LEFT=0 TOP=0
+      Label #FubsysRpgAbility3Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility3IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility3 TOP=0
+      AssetImage #FubsysRpgAbility3ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility3CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility3ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility3CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility3Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Text: "R"; }
+    }
+
+    // Ability2 at 10 o'clock.
+    Group #FubsysRpgAbility2Overlay {
+      Anchor: (Left: @Slot10Left, Top: @Slot10Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility2 LEFT=0 TOP=0
+      Label #FubsysRpgAbility2Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility2IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility2 TOP=0
+      AssetImage #FubsysRpgAbility2ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility2CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility2ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility2CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility2Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Text: "E"; }
+    }
+
+  // Ability1 at 8 o'clock.
+  Group #FubsysRpgAbility1Overlay {
+      Anchor: (Left: @Slot8Left, Top: @Slot8Top, Width: @SlotSize, Height: @SlotSize);
+      LayoutMode: Full;
+
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotBackground.ui PREFIX=FubsysRpgAbility1 LEFT=0 TOP=0
+      Label #FubsysRpgAbility1Name { Anchor: (Top: 0, Width: @SlotSize, Height: @NameHeight); Style: @NameStyle; Visible: false; Text: ""; }
+
+      AssetImage #FubsysRpgAbility1IconPng { Anchor: (Width: @IconArtSize, Height: @IconArtSize, Left: @IconPngLeft, Top: @IconPngTop); Visible: false; }
+      // Texture-free cooldown "wipe": 12 grouped segments that hide over time.
+      // Keep these AFTER icons so they render on top.
+      // @include Client/Data/Game/Interface/Common/FubsysRpg/Slots/CircularSlotCooldownWipe.ui PREFIX=FubsysRpgAbility1 TOP=0
+      AssetImage #FubsysRpgAbility1ToggledOutline { Anchor: (Left: 0, Top: 0, Width: @SlotSize, Height: @SlotSize); AssetPath: "UI/Custom/Pages/FubsysRpg/Frames/RevolverToggledOutline_00.png"; Visible: false; }
+
+      Group #FubsysRpgAbility1CooldownTimerContainer {
+        Anchor: (Top: 0, Width: @SlotSize, Height: @SlotSize);
+        Visible: false;
+        Label #FubsysRpgAbility1ShadowCooldownTimer { Padding: (Top: 10); Style: @CooldownShadowStyle; Text: ""; }
+        Label #FubsysRpgAbility1CooldownTimer { Padding: (Top: 6); Style: @CooldownTextStyle; Text: ""; }
+      }
+
+      Label #FubsysRpgAbility1Key { Anchor: (Width: @KeySize, Height: @KeySize, Left: @KeyInset, Top: @KeyTop); Style: @KeyStyle; Text: "Q"; }
+    }
+  }
+
+  // XP gain toast (slides in/out; driven by server via UI commands).
+  Group #FubsysRpgXpGainToastRoot {
+    LayoutMode: Full;
+    Anchor: (Left: @FubsysRpgXpGainToastLeft, Bottom: @FubsysRpgXpGainToastBottom, Width: @FubsysRpgXpGainToastWidth, Height: @FubsysRpgXpGainToastHeight);
+    Visible: false;
+
+    Group {
+      Anchor: (Left: 0, Top: 0, Width: @FubsysRpgXpGainToastWidth, Height: @FubsysRpgXpGainToastHeight);
+      Background: #000000(0.55);
+    }
+
+    Label #FubsysRpgXpGainToastText {
+      Anchor: (Left: 0, Top: 0, Width: @FubsysRpgXpGainToastWidth, Height: @FubsysRpgXpGainToastHeight);
+      Style: (FontSize: 14, TextColor: #45ff67(0.95), RenderBold: true, Alignment: Center, Wrap: false, OutlineColor: #000000(0.80));
+      Text: "";
+    }
+
+    Group { Anchor: (Left: 0, Right: 0, Bottom: 0, Height: 2); Background: #45ff67(0.65); }
+  }
+
+  // Mana bar (custom; vanilla Mana component is hidden alongside Health so the RPG HUD owns vitals).
+  Group #FubsysRpgManaBarRoot {
+    LayoutMode: Full;
+    Anchor: (Left: @FubsysRpgManaBarLeft, Bottom: @FubsysRpgManaBarBottom, Width: @FubsysRpgManaBarWidth, Height: @FubsysRpgManaBarHeight);
+    Visible: false;
+
+    Group { Anchor: (Left: 0, Top: 0, Width: @FubsysRpgManaBarWidth, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaBackColor; }
+
+    Group #FubsysRpgManaSeg1  { Anchor: (Left: 0,   Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg2  { Anchor: (Left: 17,  Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg3  { Anchor: (Left: 34,  Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg4  { Anchor: (Left: 51,  Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg5  { Anchor: (Left: 68,  Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg6  { Anchor: (Left: 85,  Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg7  { Anchor: (Left: 102, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg8  { Anchor: (Left: 119, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg9  { Anchor: (Left: 136, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg10 { Anchor: (Left: 153, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg11 { Anchor: (Left: 170, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg12 { Anchor: (Left: 187, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg13 { Anchor: (Left: 204, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg14 { Anchor: (Left: 221, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg15 { Anchor: (Left: 238, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg16 { Anchor: (Left: 255, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg17 { Anchor: (Left: 272, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg18 { Anchor: (Left: 289, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg19 { Anchor: (Left: 306, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+    Group #FubsysRpgManaSeg20 { Anchor: (Left: 323, Top: 0, Width: 17, Height: @FubsysRpgManaBarHeight); Background: @FubsysRpgManaFillColor; Visible: false; }
+
+    Label #FubsysRpgManaText { Anchor: (Left: 0, Top: 0, Width: @FubsysRpgManaBarWidth, Height: @FubsysRpgManaBarHeight); Style: @FubsysRpgManaTextStyle; Text: ""; }
+  }
+
+// Absorb shield overlay rendered on top of the vanilla HP bar (no textures; driven by UI set commands).
+Group #FubsysRpgShieldOverlayRoot {
+  LayoutMode: Bottom;
+  Anchor: (Bottom: @FubsysRpgHudHealthRowBottom, Width: @FubsysRpgHudHotbarWidth, Height: 12);
+
+  Group {
+    LayoutMode: Left;
+
+    // Icon slot (24px + 4px margin).
+    Group #FubsysRpgHealthIconSlot {
+      Anchor: (Left: 0, Width: 24, Height: 24, Right: 4, Top: -8);
+      Background: #000000(0.0);
+
+      // Blocky heart (texture-free), 11x11 grid of 2px squares (22px total, centered with 1px padding).
+      // Row 0: 00110001100
+      Group { Anchor: (Left: 5,  Top: 1, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 1, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 1, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 1, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 1: 01111011110
+      Group { Anchor: (Left: 3,  Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 5,  Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 19, Top: 3, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 2: 11111111111
+      Group { Anchor: (Left: 1,  Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 3,  Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 5,  Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 19, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 21, Top: 5, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 3: 11111111111
+      Group { Anchor: (Left: 1,  Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 3,  Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 5,  Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 19, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 21, Top: 7, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 4: 01111111110
+      Group { Anchor: (Left: 3,  Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 5,  Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 19, Top: 9, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 5: 00111111100
+      Group { Anchor: (Left: 5,  Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 7,  Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 17, Top: 11, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 6: 00011111000
+      Group { Anchor: (Left: 7,  Top: 13, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 9,  Top: 13, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 13, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 13, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 15, Top: 13, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 7: 00001110000
+      Group { Anchor: (Left: 9,  Top: 15, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 11, Top: 15, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+      Group { Anchor: (Left: 13, Top: 15, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+
+      // Row 8: 00000100000
+      Group { Anchor: (Left: 11, Top: 17, Width: 2, Height: 2); Background: @FubsysRpgHealthIconColor; }
+    }
+
+    Group #FubsysRpgShieldBar {
+      Anchor: (Left: 0, Width: @FubsysRpgShieldFillTotalWidth, Height: 12);
+      Background: #000000(0.0);
+      Visible: true;
+
+      Group #FubsysRpgHealthBar {
+        Anchor: (Left: 0, Top: 0, Width: @FubsysRpgShieldFillTotalWidth, Height: 12);
+        Background: @FubsysRpgHealthBackColor;
+        Visible: true;
+
+        Group #FubsysRpgHealthSeg1  { Anchor: (Left: 0,   Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg2  { Anchor: (Left: 6,   Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg3  { Anchor: (Left: 12,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg4  { Anchor: (Left: 18,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg5  { Anchor: (Left: 24,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg6  { Anchor: (Left: 30,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg7  { Anchor: (Left: 36,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg8  { Anchor: (Left: 42,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg9  { Anchor: (Left: 48,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg10 { Anchor: (Left: 54,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg11 { Anchor: (Left: 60,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg12 { Anchor: (Left: 66,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg13 { Anchor: (Left: 72,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg14 { Anchor: (Left: 78,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg15 { Anchor: (Left: 84,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg16 { Anchor: (Left: 90,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg17 { Anchor: (Left: 96,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg18 { Anchor: (Left: 102, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg19 { Anchor: (Left: 108, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg20 { Anchor: (Left: 114, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg21 { Anchor: (Left: 120, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg22 { Anchor: (Left: 126, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg23 { Anchor: (Left: 132, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg24 { Anchor: (Left: 138, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg25 { Anchor: (Left: 144, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg26 { Anchor: (Left: 150, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg27 { Anchor: (Left: 156, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg28 { Anchor: (Left: 162, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg29 { Anchor: (Left: 168, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg30 { Anchor: (Left: 174, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg31 { Anchor: (Left: 180, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg32 { Anchor: (Left: 186, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg33 { Anchor: (Left: 192, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg34 { Anchor: (Left: 198, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg35 { Anchor: (Left: 204, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg36 { Anchor: (Left: 210, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg37 { Anchor: (Left: 216, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg38 { Anchor: (Left: 222, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg39 { Anchor: (Left: 228, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg40 { Anchor: (Left: 234, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg41 { Anchor: (Left: 240, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg42 { Anchor: (Left: 246, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg43 { Anchor: (Left: 252, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg44 { Anchor: (Left: 258, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg45 { Anchor: (Left: 264, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg46 { Anchor: (Left: 270, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg47 { Anchor: (Left: 276, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg48 { Anchor: (Left: 282, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg49 { Anchor: (Left: 288, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg50 { Anchor: (Left: 294, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg51 { Anchor: (Left: 300, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg52 { Anchor: (Left: 306, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+        Group #FubsysRpgHealthSeg53 { Anchor: (Left: 312, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgHealthFillColor; Visible: false; }
+      }
+
+      // 53 segments * 6px = 318px (matches vanilla HP bar width).
+      Group #FubsysRpgShieldSeg1  { Anchor: (Left: 0,   Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg2  { Anchor: (Left: 6,   Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg3  { Anchor: (Left: 12,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg4  { Anchor: (Left: 18,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg5  { Anchor: (Left: 24,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg6  { Anchor: (Left: 30,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg7  { Anchor: (Left: 36,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg8  { Anchor: (Left: 42,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg9  { Anchor: (Left: 48,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg10 { Anchor: (Left: 54,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg11 { Anchor: (Left: 60,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg12 { Anchor: (Left: 66,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg13 { Anchor: (Left: 72,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg14 { Anchor: (Left: 78,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg15 { Anchor: (Left: 84,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg16 { Anchor: (Left: 90,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg17 { Anchor: (Left: 96,  Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg18 { Anchor: (Left: 102, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg19 { Anchor: (Left: 108, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg20 { Anchor: (Left: 114, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg21 { Anchor: (Left: 120, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg22 { Anchor: (Left: 126, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg23 { Anchor: (Left: 132, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg24 { Anchor: (Left: 138, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg25 { Anchor: (Left: 144, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg26 { Anchor: (Left: 150, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg27 { Anchor: (Left: 156, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg28 { Anchor: (Left: 162, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg29 { Anchor: (Left: 168, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg30 { Anchor: (Left: 174, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg31 { Anchor: (Left: 180, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg32 { Anchor: (Left: 186, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg33 { Anchor: (Left: 192, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg34 { Anchor: (Left: 198, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg35 { Anchor: (Left: 204, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg36 { Anchor: (Left: 210, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg37 { Anchor: (Left: 216, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg38 { Anchor: (Left: 222, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg39 { Anchor: (Left: 228, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg40 { Anchor: (Left: 234, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg41 { Anchor: (Left: 240, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg42 { Anchor: (Left: 246, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg43 { Anchor: (Left: 252, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg44 { Anchor: (Left: 258, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg45 { Anchor: (Left: 264, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg46 { Anchor: (Left: 270, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg47 { Anchor: (Left: 276, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg48 { Anchor: (Left: 282, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg49 { Anchor: (Left: 288, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg50 { Anchor: (Left: 294, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg51 { Anchor: (Left: 300, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg52 { Anchor: (Left: 306, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+      Group #FubsysRpgShieldSeg53 { Anchor: (Left: 312, Top: 0, Width: 6, Height: 12); Background: @FubsysRpgShieldFillColor; Visible: false; }
+    }
+  }
+}
+}
