@@ -65,15 +65,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final int RAIL = 4;
-    private static final int STEM_DOWN_FROM_PARENT = 15;
-    private static final int STEM_DOWN_TO_CHILD = 13;
-    private static final int STEM_COLUMN = 30;
+    private static final int STEM_DOWN_FROM_PARENT = 12;
+    private static final int STEM_DOWN_TO_CHILD = 10;
+    private static final int STEM_COLUMN = 24;
 
-    private static final int SLOT = 76;
-    private static final int ICON_INSET = 18;
-    private static final int FILL_INSET = 3;
-    private static final int FILL_SIZE = 70;
     private static final int ICON_SIZE = 40;
+    private static final int SLOT = Math.round(76 * 0.8f);
+    private static final int ICON_INSET = (SLOT - ICON_SIZE) / 2;
+    private static final int FILL_INSET = 3;
+    private static final int FILL_SIZE = SLOT - 2 * FILL_INSET;
     private static final int MAX_RANK_PER_NODE = 5;
     private static final int SKILL_POINTS_BUDGET = 35;
     private static final int PROFESSION_CARD_SLOTS = 4;
@@ -114,21 +114,21 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int RANK_LABEL_W = 44;
     private static final int RANK_LABEL_H = 14;
     private static final int RANK_LABEL_GAP_TOP = -1;
-    private static final int RANK_LABEL_SHIFT_RIGHT = 48;
+    private static final int RANK_LABEL_SHIFT_RIGHT = (SLOT - RANK_LABEL_W) / 2;
 
     private static final int[][] SLOT_LT = {
-        {264, 32},
-        {444, 32},
-        {354, 140},
-        {204, 248},
-        {354, 248},
-        {504, 248},
-        {204, 354},
-        {354, 354},
-        {504, 354},
-        {354, 462},
-        {264, 570},
-        {444, 570},
+        {272, 32},
+        {452, 32},
+        {362, 125},
+        {212, 218},
+        {362, 218},
+        {512, 218},
+        {212, 309},
+        {362, 309},
+        {512, 309},
+        {362, 402},
+        {272, 495},
+        {452, 495},
     };
 
     private static final String[][] TREE_NODES = {
