@@ -23,6 +23,21 @@ import java.util.Arrays;
 
 public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
+    private static final int[][] SKILL_TREE_PARENT_GROUPS = new int[][] {
+        {}, // 0
+        {}, // 1
+        {0, 1}, // 2
+        {2}, // 3
+        {2}, // 4
+        {2}, // 5
+        {3}, // 6
+        {4}, // 7
+        {5}, // 8
+        {6, 7, 8}, // 9
+        {9}, // 10
+        {9}, // 11
+    };
+
     private static final String ICON_BASE = "Pages/FubsysRpg/Icons/";
 
     private static final String NODE_FILL = "#1A1F29FF";
@@ -234,6 +249,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
 
         uiBuilder.set("#SkillTreeAttribuerButton.Visible", true);
+        uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
+            !skillTreeParentsAllowSelectedAllocation(skillRanks)
+                || skillRanks[selectedNode] >= MAX_RANK_PER_NODE);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
         eventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
@@ -491,7 +509,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
             sendSkillTreeHoverChromeUpdate();
         } else if ("allocate".equals(data.action)) {
-            if (skillRanks[selectedNode] < MAX_RANK_PER_NODE) {
+            if (skillRanks[selectedNode] < MAX_RANK_PER_NODE
+                && skillTreeParentsAllowSelectedAllocation(skillRanks)) {
                 skillRanks[selectedNode]++;
             }
             rebuild();
@@ -520,5 +539,18 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         private String node;
 
         public Data() {}
+    }
+
+    private boolean skillTreeParentsAllowSelectedAllocation(@Nonnull int[] ranks) {
+        int[] parents = SKILL_TREE_PARENT_GROUPS[selectedNode];
+        if (parents.length == 0) {
+            return true;
+        }
+        for (int p : parents) {
+            if (ranks[p] >= 1) {
+                return true;
+            }
+        }
+        return false;
     }
 }
