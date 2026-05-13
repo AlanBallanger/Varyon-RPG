@@ -1,30 +1,31 @@
-// Classic Fantasy Parchment + Ink (Codex theme)
-@FubsysRpgParchmentBg = #E4D2B1(0.98); // slightly darker aged paper
-@FubsysRpgInk = #2B241A;
-@FubsysRpgInkStrong = #2B241A(0.92);
-@FubsysRpgInkMuted = #2B241A(0.72);
-@FubsysRpgInkFaint = #2B241A(0.55);
-@FubsysRpgLeatherBg = #6B4E2E(0.12);
-@FubsysRpgPanelShade = #6B4E2E(0.08);
-@FubsysRpgCardShade = #6B4E2E(0.10);
+// Skin aligné sur /vp (job_var) : fond Common/ContainerFullPatch + lisibilité sur fond sombre.
+$C = "Common.ui";
+
+@FubsysRpgInk = #E8DCC8;
+@FubsysRpgInkStrong = #F2E8D8;
+@FubsysRpgInkMuted = #C8BEB0;
+@FubsysRpgInkFaint = #A89E90;
+@FubsysRpgLeatherBg = #000000(0.22);
+@FubsysRpgPanelShade = #000000(0.32);
+@FubsysRpgCardShade = #000000(0.26);
 @FubsysRpgGold = #D4AF37(0.92);
 @FubsysRpgGoldSoft = #D4AF37(0.74);
 @FubsysRpgGoldHighlight = #F7E6A5(0.62);
-@FubsysRpgGoldShadow = #6B4E2E(0.22);
-@FubsysRpgActiveGreen = #2E6B3C(0.92);
+@FubsysRpgGoldShadow = #1A1612(0.55);
+@FubsysRpgActiveGreen = #6BCB7A(0.95);
 @FubsysRpgAging = #8A7A5A(0.22);
-@FubsysRpgParchmentMottle = #8A7A5A(0.05);
-@FubsysRpgGrainLight = #8A7A5A(0.04);
-@FubsysRpgGrainDark = #2B241A(0.02);
-@FubsysRpgEdge1 = #8A7A5A(0.06);
-@FubsysRpgEdge2 = #8A7A5A(0.04);
-@FubsysRpgEdge3 = #2B241A(0.02);
-@FubsysRpgDivider = #2B241A(0.14);
-@FubsysRpgDividerSoft = #8A7A5A(0.14);
-@FubsysRpgBackdrop = #2B241A(0.42);
-@FubsysRpgSelectedButtonFill = #D4AF37(0.42);
-@FubsysRpgStatusPillBg = #2B241A(0.34);
-@FubsysRpgStatusPillEdge = #D4AF37(0.22);
+@FubsysRpgParchmentMottle = #FFFFFF(0.03);
+@FubsysRpgGrainLight = #FFFFFF(0.02);
+@FubsysRpgGrainDark = #000000(0.12);
+@FubsysRpgEdge1 = #FFFFFF(0.05);
+@FubsysRpgEdge2 = #FFFFFF(0.03);
+@FubsysRpgEdge3 = #000000(0.20);
+@FubsysRpgDivider = #E8DCC8(0.16);
+@FubsysRpgDividerSoft = #E8DCC8(0.10);
+@FubsysRpgBackdrop = #000000(0.42);
+@FubsysRpgSelectedButtonFill = #D4AF37(0.38);
+@FubsysRpgStatusPillBg = #000000(0.40);
+@FubsysRpgStatusPillEdge = #D4AF37(0.35);
 // Skill tree lighting is now driven by dedicated glow textures (see SkillEdgeGlow.png / SkillNodeGlow.png).
 // Keep these as a fallback tint for any remaining solid-color glow elements.
 @FubsysRpgSkillTreeEdgeGlow = #D4AF37(0.62);
@@ -49,14 +50,14 @@
 
 @SectionTitleStyle = (
   FontSize: 16,
-  TextColor: #6B4E2E(0.92),
+  TextColor: #C8A96E,
   RenderUppercase: true,
   RenderBold: true
 );
 
 @StatLabelStyle = (
   FontSize: 16,
-  TextColor: #6B4E2E(0.85),
+  TextColor: #B8A88C,
   RenderUppercase: true
 );
 
@@ -73,16 +74,16 @@
 
 @PlusButtonStyle = (
   Default: (
-    Background: @FubsysRpgPanelShade
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8)
   ),
   Hovered: (
-    Background: #6B4E2E(0.12)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8)
   ),
   Pressed: (
-    Background: #6B4E2E(0.16)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8)
   ),
   Disabled: (
-    Background: #6B4E2E(0.06)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
   )
 );
 
@@ -103,16 +104,16 @@
 
 @TabButtonStyle = (
   Default: (
-    Background: @FubsysRpgPanelShade
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8)
   ),
   Hovered: (
-    Background: #6B4E2E(0.12)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8)
   ),
   Pressed: (
-    Background: #6B4E2E(0.16)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8)
   ),
   Disabled: (
-    Background: #6B4E2E(0.06)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
   )
 );
 
@@ -211,137 +212,12 @@ Group {
 
   Group {
     Anchor: (Width: @FubsysRpgPageWidth, Height: @FubsysRpgPageHeight);
-    Background: @FubsysRpgParchmentBg;
+    Background: PatchStyle(TexturePath: "Common/ContainerFullPatch.png", Border: 20);
     LayoutMode: Full;
-
-    // Background parchment image (set via AssetPath from the server).
-    AssetImage #PaperBack { Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0); }
-
-    // Paper texture (multi-scale organic layers; center stays calm)
-    Group #PaperTexture {
-      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-      Visible: false;
-
-      // 1) Fibers (tiny, directional; broken diagonal dithers, very low contrast)
-      Group #PaperFibers {
-        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-
-        // Top-left cluster
-        Group { Anchor: (Left: 22, Top: 64, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 26, Top: 66, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 30, Top: 68, Width: 5, Height: 1); Background: #2B241A(0.010); }
-
-        Group { Anchor: (Left: 48, Top: 92, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 52, Top: 94, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 56, Top: 96, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
-
-        Group { Anchor: (Left: 84, Top: 132, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 88, Top: 134, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 92, Top: 136, Width: 4, Height: 1); Background: #2B241A(0.010); }
-
-        // Top-right cluster
-        Group { Anchor: (Left: 1296, Top: 72, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 1292, Top: 74, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 1288, Top: 76, Width: 5, Height: 1); Background: #2B241A(0.010); }
-
-        Group { Anchor: (Left: 1258, Top: 118, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 1254, Top: 120, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 1250, Top: 122, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
-
-        Group { Anchor: (Left: 1220, Top: 158, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 1216, Top: 160, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 1212, Top: 162, Width: 4, Height: 1); Background: #2B241A(0.010); }
-
-        // Bottom-left cluster
-        Group { Anchor: (Left: 28, Top: 780, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 32, Top: 782, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 36, Top: 784, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
-
-        Group { Anchor: (Left: 72, Top: 828, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 76, Top: 830, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 80, Top: 832, Width: 4, Height: 1); Background: #2B241A(0.010); }
-
-        // Bottom-right cluster
-        Group { Anchor: (Left: 1312, Top: 792, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 1308, Top: 794, Width: 6, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 1304, Top: 796, Width: 5, Height: 1); Background: #2B241A(0.010); }
-
-        Group { Anchor: (Left: 1268, Top: 844, Width: 7, Height: 1); Background: #8A7A5A(0.014); }
-        Group { Anchor: (Left: 1264, Top: 846, Width: 6, Height: 1); Background: #2B241A(0.010); }
-        Group { Anchor: (Left: 1260, Top: 848, Width: 5, Height: 1); Background: #8A7A5A(0.014); }
-
-        // A few calm-center fibers (very sparse)
-        Group { Anchor: (Left: 624, Top: 262, Width: 8, Height: 1); Background: #8A7A5A(0.010); }
-        Group { Anchor: (Left: 628, Top: 264, Width: 6, Height: 1); Background: #2B241A(0.008); }
-        Group { Anchor: (Left: 720, Top: 584, Width: 7, Height: 1); Background: #8A7A5A(0.010); }
-        Group { Anchor: (Left: 724, Top: 586, Width: 5, Height: 1); Background: #2B241A(0.008); }
-      }
-
-      // 2) Blotches (medium clusters; varied sizes; dithered edges by layering)
-      Group #PaperBlotches {
-        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-
-        // TL blotch cluster
-        Group { Anchor: (Left: 18, Top: 18, Width: 120, Height: 90); Background: #8A7A5A(0.040); }
-        Group { Anchor: (Left: 52, Top: 42, Width: 64, Height: 46); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 34, Top: 96, Width: 38, Height: 16); Background: #2B241A(0.010); }
-
-        // TR blotch cluster
-        Group { Anchor: (Left: 1230, Top: 20, Width: 130, Height: 96); Background: #8A7A5A(0.038); }
-        Group { Anchor: (Left: 1260, Top: 58, Width: 72, Height: 44); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 1300, Top: 104, Width: 34, Height: 14); Background: #2B241A(0.010); }
-
-        // BL blotch cluster
-        Group { Anchor: (Left: 14, Top: 708, Width: 150, Height: 112); Background: #8A7A5A(0.042); }
-        Group { Anchor: (Left: 54, Top: 748, Width: 84, Height: 52); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 30, Top: 684, Width: 44, Height: 18); Background: #2B241A(0.010); }
-
-        // BR blotch cluster
-        Group { Anchor: (Left: 1212, Top: 694, Width: 160, Height: 122); Background: #8A7A5A(0.042); }
-        Group { Anchor: (Left: 1256, Top: 740, Width: 90, Height: 54); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 1316, Top: 828, Width: 40, Height: 18); Background: #2B241A(0.010); }
-      }
-
-      // 3) Edge wear (irregular, corner-heavy, with occasional bite marks inward)
-      Group #PaperEdgeWear {
-        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-
-        // Uneven top wear
-        Group { Anchor: (Left: 0, Top: 0, Width: 260, Height: 26); Background: #8A7A5A(0.040); }
-        Group { Anchor: (Left: 300, Top: 0, Width: 420, Height: 18); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 780, Top: 0, Width: 260, Height: 22); Background: #8A7A5A(0.034); }
-        Group { Anchor: (Left: 1080, Top: 0, Width: 296, Height: 30); Background: #8A7A5A(0.042); }
-
-        // Uneven left wear (thicker at top; thinner mid)
-        Group { Anchor: (Left: 0, Top: 0, Width: 24, Height: 220); Background: #8A7A5A(0.040); }
-        Group { Anchor: (Left: 0, Top: 260, Width: 16, Height: 260); Background: #8A7A5A(0.026); }
-        Group { Anchor: (Left: 0, Top: 560, Width: 22, Height: 320); Background: #8A7A5A(0.038); }
-
-        // Uneven right wear (corner-heavy)
-        Group { Anchor: (Left: 1350, Top: 0, Width: 26, Height: 260); Background: #8A7A5A(0.040); }
-        Group { Anchor: (Left: 1360, Top: 320, Width: 16, Height: 240); Background: #8A7A5A(0.026); }
-        Group { Anchor: (Left: 1352, Top: 600, Width: 24, Height: 304); Background: #8A7A5A(0.040); }
-
-        // Bottom wear (heavier, but broken up)
-        Group { Anchor: (Left: 0, Top: 872, Width: 340, Height: 32); Background: #8A7A5A(0.044); }
-        Group { Anchor: (Left: 420, Top: 884, Width: 380, Height: 20); Background: #8A7A5A(0.030); }
-        Group { Anchor: (Left: 900, Top: 876, Width: 476, Height: 28); Background: #8A7A5A(0.046); }
-
-        // Bite marks inward (darkened nicks)
-        Group { Anchor: (Left: 212, Top: 34, Width: 28, Height: 10); Background: #2B241A(0.014); }
-        Group { Anchor: (Left: 686, Top: 26, Width: 22, Height: 10); Background: #2B241A(0.012); }
-        Group { Anchor: (Left: 1110, Top: 36, Width: 30, Height: 12); Background: #2B241A(0.014); }
-        Group { Anchor: (Left: 26, Top: 248, Width: 12, Height: 26); Background: #2B241A(0.012); }
-        Group { Anchor: (Left: 40, Top: 640, Width: 14, Height: 30); Background: #2B241A(0.012); }
-        Group { Anchor: (Left: 1336, Top: 308, Width: 14, Height: 30); Background: #2B241A(0.014); }
-        Group { Anchor: (Left: 1342, Top: 668, Width: 12, Height: 26); Background: #2B241A(0.012); }
-        Group { Anchor: (Left: 256, Top: 850, Width: 34, Height: 12); Background: #2B241A(0.014); }
-        Group { Anchor: (Left: 970, Top: 852, Width: 36, Height: 12); Background: #2B241A(0.014); }
-      }
-    }
 
     // Jewelry frame (9-slice textures): real pixel-art filigree + transparent center.
     Group #FiligreeBorder {
+      Visible: false;
       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
       Background: #000000(0.0);
 
@@ -368,21 +244,6 @@ Group {
       Padding: (Full: @FubsysRpgPagePadding);
       LayoutMode: Top;
 
-    Group {
-      LayoutMode: Left;
-      Anchor: (Height: 44);
-      Background: @FubsysRpgLeatherBg;
-      Padding: (Left: 12, Right: 16, Top: 8, Bottom: 8);
-
-      Group { FlexWeight: 1; }
-
-      Label {
-        Style: (...@MetaStyle, FontSize: 14);
-        Text: "Press Esc to close";
-      }
-
-      Group { Anchor: (Left: 0, Right: 0, Bottom: 0, Height: 2); Background: @FubsysRpgGoldSoft; }
-    }
 
     Group {
       FlexWeight: 1;
@@ -405,7 +266,7 @@ Group {
 
           Label {
             Style: @TabLabelStyle;
-            Text: "Character";
+            Text: "Personnage";
           }
         }
 
@@ -423,1289 +284,18 @@ Group {
 
           Label {
             Style: @TabLabelStyle;
-            Text: "Skills";
+            Text: "Compétences";
           }
         }
 
-        Group { Anchor: (Width: 10); }
-
-        Button #TabLoadoutButton {
-          Anchor: (Width: 140, Height: 30);
-          Style: @TabButtonStyle;
-
-          Group #TabLoadoutUnderline {
-            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @FubsysRpgSelectedButtonFill;
-            Visible: false;
-          }
-
-          Label {
-            Style: @TabLabelStyle;
-            Text: "Loadout";
-          }
-        }
       }
 
       Group #CharacterTabContent {
         LayoutMode: Top;
         FlexWeight: 1;
         Visible: true;
-
-        Group {
-          LayoutMode: Top;
-          Padding: (Top: 12, Bottom: 12);
-
-          Label #PlayerName {
-            Style: @HeadingStyle;
-            Text: "";
-          }
-
-          Label #ClassValue {
-            Style: @SubHeadingStyle;
-            Text: "";
-          }
-
-          Label #LevelValue {
-            Style: @MetaStyle;
-            Text: "";
-          }
-
-          Group {
-            LayoutMode: Left;
-            Anchor: (Top: 10, Height: 18);
-
-            Group #XpBar {
-              Anchor: (Left: 0, Width: 340, Height: 10, Top: 4);
-              Background: #2B241A(0.14);
-              Padding: (Full: 1);
-
-              Group #XpBarFill {
-                Anchor: (Left: 0, Top: 0, Bottom: 0, Width: 0);
-                Background: @FubsysRpgGoldSoft;
-              }
-            }
-
-            Group { Anchor: (Width: 12); }
-
-            Label #XpText {
-              Anchor: (Top: 0);
-              Style: (...@MetaStyle, FontSize: 14, RenderUppercase: true);
-              Text: "";
-            }
-          }
-
-          Label #NoProfileHint {
-            Anchor: (Top: 10);
-            Style: (...@MetaStyle, TextColor: @FubsysRpgInkMuted);
-            Text: "";
-            Visible: false;
-          }
-        }
-
-        Group {
-          Anchor: (Height: 1, Top: 8, Bottom: 8);
-          Background: @FubsysRpgDivider;
-        }
-
-        Group {
-          LayoutMode: Left;
-          FlexWeight: 1;
-          Anchor: (Top: 4);
-
-          Group {
-            Anchor: (Width: 420);
-            LayoutMode: Top;
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 22);
-
-              Label {
-                Style: @SectionTitleStyle;
-                Text: "Attributes";
-              }
-
-              Group { FlexWeight: 1; }
-
-              Label {
-                Style: (...@MetaStyle, FontSize: 14, RenderUppercase: true);
-                Text: "Points:";
-              }
-
-              Group { Anchor: (Width: 6); }
-
-              Label #AttributePointsValue {
-                Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true);
-                Text: "0";
-              }
-            }
-
-            Group {
-              LayoutMode: Top;
-              Anchor: (Top: 10);
-
-              Group {
-                LayoutMode: Left;
-                Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "STR";
-              }
-
-              Label #StrValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #StrPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "CON";
-              }
-
-              Label #ConValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #ConPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "DEX";
-              }
-
-              Label #DexValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #DexPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "AGI";
-              }
-
-              Label #AgiValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #AgiPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "INT";
-              }
-
-              Label #IntValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #IntPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "WIL";
-              }
-
-              Label #WilValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #WilPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Height: 32);
-
-              Label {
-                Anchor: (Width: 90);
-                Style: @StatLabelStyle;
-                Text: "CHA";
-              }
-
-              Label #ChaValue {
-                Style: @StatValueStyle;
-                Text: "";
-              }
-
-              Group { FlexWeight: 1; }
-              Group { Anchor: (Width: 8); }
-
-              Button #ChaPlusButton {
-                Anchor: (Width: 28, Height: 24);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "+";
-                }
-              }
-              }
-            }
-          }
-
-          Group { Anchor: (Width: 16); }
-          Group { Anchor: (Width: 1); Background: @FubsysRpgDivider; }
-          Group { Anchor: (Width: 16); }
-
-          Group {
-            FlexWeight: 1;
-            LayoutMode: Left;
-
-            Group #StatsSection {
-              FlexWeight: 1;
-              LayoutMode: Top;
-
-              Label {
-                Style: @SectionTitleStyle;
-                Text: "Stats";
-              }
-
-              Group {
-                LayoutMode: Top;
-                Anchor: (Top: 10);
-
-                Label {
-                  Style: (...@SectionTitleStyle, FontSize: 14);
-                  Text: "Vitals";
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Max Hp";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #HpValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Max Stamina";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #StaminaValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Max Mana";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #ManaValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group { Anchor: (Height: 10); }
-                Group { Anchor: (Height: 1); Background: @FubsysRpgDividerSoft; }
-                Group { Anchor: (Height: 10); }
-
-                Label {
-                  Style: (...@SectionTitleStyle, FontSize: 14);
-                  Text: "Offensive";
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-                  Visible: false;
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Melee";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #MeleeValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Precision";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #PrecisionValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Attack Speed";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #AttackSpeedValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Crit Rate";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #CritValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Crit Dmg";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #CritDamageValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Move Speed";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #MoveSpeedValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group { Anchor: (Height: 10); }
-                Group { Anchor: (Height: 1); Background: @FubsysRpgDividerSoft; }
-                Group { Anchor: (Height: 10); }
-
-                Label {
-                  Style: (...@SectionTitleStyle, FontSize: 14);
-                  Text: "Defensive";
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Armor";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #ArmorValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Magic Resistance";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #MagicResValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-
-                Group {
-                  LayoutMode: Left;
-                  Anchor: (Height: 32);
-
-                  Label {
-                    Anchor: (Width: 120);
-                    Style: @ReadableStatLabelStyle;
-                    Text: "Evasion";
-                  }
-
-                  Group { FlexWeight: 1; }
-
-                  Label #EvasionValue {
-                    Anchor: (Width: 120);
-                    Style: @StatValueStyle;
-                    Text: "";
-                  }
-                }
-              }
-            }
-
-            Group { Anchor: (Width: 16); }
-            Group { Anchor: (Width: 1); Background: @FubsysRpgDivider; }
-            Group { Anchor: (Width: 16); }
-
-            Group #PartySection {
-              FlexWeight: 1;
-              LayoutMode: Top;
-
-              Label {
-                Style: @SectionTitleStyle;
-                Text: "Party (WIP)";
-              }
-
-              Label {
-                Anchor: (Top: 6);
-                Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted);
-                Text: "Coming soon.";
-              }
-            }
-          }
-        }
       }
 
-      Group #LoadoutTabContent {
-        LayoutMode: Left;
-        FlexWeight: 1;
-        Anchor: (Top: 8);
-        Visible: false;
-
-        Group {
-          Anchor: (Width: 260);
-          LayoutMode: Top;
-          Background: @FubsysRpgPanelShade;
-          Padding: (Full: 12);
-
-          Label {
-            Style: @SectionTitleStyle;
-            Text: "Loadout";
-          }
-
-          Label {
-            Anchor: (Top: 6);
-            Style: (...@MetaStyle, FontSize: 14);
-            Text: "Assign unlocked skills to a cycle.";
-          }
-
-          Group {
-            Anchor: (Height: 1, Top: 12, Bottom: 12);
-            Background: @FubsysRpgDivider;
-          }
-
-          Group #LoadoutSkillListContainer {
-            FlexWeight: 1;
-            LayoutMode: Top;
-            Anchor: (Top: 12);
-
-            Button #SkillListItem0 {
-              LayoutMode: Top;
-              Anchor: (Height: 56);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem0Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem0Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem1 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem1Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem1Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem2 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem2Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem2Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem3 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem3Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem3Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem4 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem4Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem4Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem5 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem5Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem5Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem6 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem6Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem6Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem7 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem7Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem7Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem8 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem8Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem8Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem9 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem9Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem9Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem10 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem10Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem10Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-
-            Button #SkillListItem11 {
-              LayoutMode: Top;
-              Anchor: (Height: 56, Top: 8);
-              Style: @TabButtonStyle;
-              Padding: (Full: 10);
-              Visible: false;
-
-              Label #SkillListItem11Title {
-                Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-                Text: "";
-              }
-
-              Label #SkillListItem11Meta {
-                Anchor: (Top: 2);
-                Style: (...@MetaStyle, FontSize: 12);
-                Text: "";
-              }
-            }
-          }
-
-          Group { Anchor: (Height: 1, Top: 12, Bottom: 12); Background: @FubsysRpgDividerSoft; }
-
-          Group #LoadoutSkillPager {
-            LayoutMode: Left;
-            Anchor: (Height: 28);
-            Visible: false;
-
-            Button #LoadoutPrevPageButton {
-              Anchor: (Width: 28, Height: 24);
-              Style: @PlusButtonStyle;
-
-              Label {
-                Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                Text: "<";
-              }
-            }
-
-            Group { Anchor: (Width: 8); }
-            Group { FlexWeight: 1; }
-
-            Label #LoadoutPageLabel {
-              Style: (...@MetaStyle, FontSize: 14, HorizontalAlignment: Center, VerticalAlignment: Center);
-              Text: "";
-            }
-
-            Group { FlexWeight: 1; }
-            Group { Anchor: (Width: 8); }
-
-            Button #LoadoutNextPageButton {
-              Anchor: (Width: 28, Height: 24);
-              Style: @PlusButtonStyle;
-
-              Label {
-                Style: (FontSize: 18, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                Text: ">";
-              }
-            }
-          }
-        }
-
-        Group { Anchor: (Width: 16); }
-
-        Group {
-          FlexWeight: 1;
-          LayoutMode: Top;
-
-          Group {
-            LayoutMode: Left;
-            Anchor: (Height: 28);
-
-            Label {
-              Style: @SectionTitleStyle;
-              Text: "Skill Cycles";
-            }
-
-            Group { FlexWeight: 1; }
-
-            Button #CycleEditButton {
-              Anchor: (Width: 72, Height: 26);
-              Style: @PlusButtonStyle;
-
-              Group #CycleEditButtonUnderline {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Background: @FubsysRpgSelectedButtonFill;
-                Visible: false;
-              }
-
-              Label #CycleEditButtonLabel {
-                Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center, RenderUppercase: true);
-                Text: "Edit";
-              }
-            }
-          }
-
-          Label #SkillCyclesHint {
-            Anchor: (Top: 4);
-            Style: (...@MetaStyle, FontSize: 12);
-            Text: "";
-            Visible: false;
-          }
-
-          Group #SkillCyclesCardRow {
-            LayoutMode: Left;
-            Anchor: (Top: 10, Height: 200);
-
-            Group #CycleCard1 {
-              Anchor: (Width: 172, Height: 200);
-              Background: @FubsysRpgCardShade;
-              Padding: (Full: 10);
-              LayoutMode: Top;
-
-              Group { LayoutMode: Left; Anchor: (Height: 18);
-                Label { Style: @CycleCardTitleStyle; Text: "Cycle 1"; }
-                Group { FlexWeight: 1; }
-                Label #CycleCard1Active { Style: @CycleActiveTagStyle; Text: "Active"; Visible: false; }
-              }
-
-              Group { Anchor: (Height: 1, Top: 8, Bottom: 8); Background: @FubsysRpgDividerSoft; }
-
-              Group { LayoutMode: Top; Anchor: (Height: 144);
-                Group {                   Anchor: (Width: 152, Height: 44);                   LayoutMode: Top;                                    Group {                     Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                     LayoutMode: Full;                                      Button #Cycle1SlotA1Button {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       Style: @CycleSlotButtonStyle;                       Padding: (Full: 6);                       LayoutMode: Top;                                        Label { Style: @CycleSlotKeyStyle; Text: "A1"; }                       Label #Cycle1SlotA1Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                     }                                      Button #Cycle1SlotA1ClearButton {                       Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                       Style: @PlusButtonStyle;                       Visible: false;                                        Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                     }                   }                 }
-                Group { Anchor: (Height: 6); }
-                Group {                   Anchor: (Width: 152, Height: 44);                   LayoutMode: Top;                                    Group {                     Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                     LayoutMode: Full;                                      Button #Cycle1SlotA2Button {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       Style: @CycleSlotButtonStyle;                       Padding: (Full: 6);                       LayoutMode: Top;                                        Label { Style: @CycleSlotKeyStyle; Text: "A2"; }                       Label #Cycle1SlotA2Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                     }                                      Button #Cycle1SlotA2ClearButton {                       Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                       Style: @PlusButtonStyle;                       Visible: false;                                        Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                     }                   }                 }
-                Group { Anchor: (Height: 6); }
-                Group {                   Anchor: (Width: 152, Height: 44);                   LayoutMode: Top;                                    Group {                     Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                     LayoutMode: Full;                                      Button #Cycle1SlotA3Button {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       Style: @CycleSlotButtonStyle;                       Padding: (Full: 6);                       LayoutMode: Top;                                        Label { Style: @CycleSlotKeyStyle; Text: "A3"; }                       Label #Cycle1SlotA3Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                     }                                      Button #Cycle1SlotA3ClearButton {                       Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                       Style: @PlusButtonStyle;                       Visible: false;                                        Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                     }                   }                 }
-              }
-            }
-
-            Group { Anchor: (Width: 8); }
-
-            Group #CycleCard2 {
-              Anchor: (Width: 172, Height: 200);
-              Background: @FubsysRpgCardShade;
-              Padding: (Full: 10);
-              LayoutMode: Full;
-
-              Group #CycleCard2Content {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                LayoutMode: Top;
-
-                Group { LayoutMode: Left; Anchor: (Height: 18);
-                  Label { Style: @CycleCardTitleStyle; Text: "Cycle 2"; }
-                  Group { FlexWeight: 1; }
-                  Label #CycleCard2Active { Style: @CycleActiveTagStyle; Text: "Active"; Visible: false; }
-                  Group { Anchor: (Width: 4); }
-                  Button #CycleCard2DeleteButton {
-                    Anchor: (Width: 18, Height: 18);
-                    Style: @PlusButtonStyle;
-                    Visible: false;
-                    Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }
-                  }
-                }
-
-                Group { Anchor: (Height: 1, Top: 8, Bottom: 8); Background: @FubsysRpgDividerSoft; }
-
-                Group { LayoutMode: Top; Anchor: (Height: 144);
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle2SlotA1Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A1"; }                         Label #Cycle2SlotA1Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle2SlotA1ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle2SlotA2Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A2"; }                         Label #Cycle2SlotA2Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle2SlotA2ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle2SlotA3Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A3"; }                         Label #Cycle2SlotA3Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle2SlotA3ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                }
-              }
-
-              Button #CycleCard2AddButton {
-                Anchor: (Left: 0, Right: 0, Top: 35, Bottom: 0);
-                Style: @TabButtonStyle;
-                LayoutMode: Top;
-                Padding: (Full: 10);
-                Visible: false;
-
-                Group { FlexWeight: 1; }
-                Label { Anchor: (Height: 44); Style: (...@SubHeadingStyle, FontSize: 28, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "+"; }
-                Label { Anchor: (Top: 4, Height: 24); Style: (...@MetaStyle, FontSize: 13, HorizontalAlignment: Center, VerticalAlignment: Center, RenderUppercase: true, RenderBold: true); Text: "Add Cycle"; }
-                Group { FlexWeight: 1; }
-              }
-            }
-
-            Group { Anchor: (Width: 8); }
-
-            Group #CycleCard3 {
-              Anchor: (Width: 172, Height: 200);
-              Background: @FubsysRpgCardShade;
-              Padding: (Full: 10);
-              LayoutMode: Full;
-
-              Group #CycleCard3Content {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                LayoutMode: Top;
-
-                Group { LayoutMode: Left; Anchor: (Height: 18);
-                  Label { Style: @CycleCardTitleStyle; Text: "Cycle 3"; }
-                  Group { FlexWeight: 1; }
-                  Label #CycleCard3Active { Style: @CycleActiveTagStyle; Text: "Active"; Visible: false; }
-                  Group { Anchor: (Width: 4); }
-                  Button #CycleCard3DeleteButton {
-                    Anchor: (Width: 18, Height: 18);
-                    Style: @PlusButtonStyle;
-                    Visible: false;
-                    Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }
-                  }
-                }
-
-                Group { Anchor: (Height: 1, Top: 8, Bottom: 8); Background: @FubsysRpgDividerSoft; }
-
-                Group { LayoutMode: Top; Anchor: (Height: 144);
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle3SlotA1Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A1"; }                         Label #Cycle3SlotA1Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle3SlotA1ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle3SlotA2Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A2"; }                         Label #Cycle3SlotA2Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle3SlotA2ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle3SlotA3Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A3"; }                         Label #Cycle3SlotA3Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle3SlotA3ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                }
-              }
-
-              Button #CycleCard3AddButton {
-                Anchor: (Left: 0, Right: 0, Top: 35, Bottom: 0);
-                Style: @TabButtonStyle;
-                LayoutMode: Top;
-                Padding: (Full: 10);
-                Visible: false;
-
-                Group { FlexWeight: 1; }
-                Label { Anchor: (Height: 44); Style: (...@SubHeadingStyle, FontSize: 28, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "+"; }
-                Label { Anchor: (Top: 4, Height: 24); Style: (...@MetaStyle, FontSize: 13, HorizontalAlignment: Center, VerticalAlignment: Center, RenderUppercase: true, RenderBold: true); Text: "Add Cycle"; }
-                Group { FlexWeight: 1; }
-              }
-            }
-
-            Group { Anchor: (Width: 8); }
-
-            Group #CycleCard4 {
-              Anchor: (Width: 172, Height: 200);
-              Background: @FubsysRpgCardShade;
-              Padding: (Full: 10);
-              LayoutMode: Full;
-
-              Group #CycleCard4Content {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                LayoutMode: Top;
-
-                Group { LayoutMode: Left; Anchor: (Height: 18);
-                  Label { Style: @CycleCardTitleStyle; Text: "Cycle 4"; }
-                  Group { FlexWeight: 1; }
-                  Label #CycleCard4Active { Style: @CycleActiveTagStyle; Text: "Active"; Visible: false; }
-                  Group { Anchor: (Width: 4); }
-                  Button #CycleCard4DeleteButton {
-                    Anchor: (Width: 18, Height: 18);
-                    Style: @PlusButtonStyle;
-                    Visible: false;
-                    Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }
-                  }
-                }
-
-                Group { Anchor: (Height: 1, Top: 8, Bottom: 8); Background: @FubsysRpgDividerSoft; }
-
-                Group { LayoutMode: Top; Anchor: (Height: 144);
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle4SlotA1Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A1"; }                         Label #Cycle4SlotA1Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle4SlotA1ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle4SlotA2Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A2"; }                         Label #Cycle4SlotA2Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle4SlotA2ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle4SlotA3Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A3"; }                         Label #Cycle4SlotA3Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle4SlotA3ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                }
-              }
-
-              Button #CycleCard4AddButton {
-                Anchor: (Left: 0, Right: 0, Top: 35, Bottom: 0);
-                Style: @TabButtonStyle;
-                LayoutMode: Top;
-                Padding: (Full: 10);
-                Visible: false;
-
-                Group { FlexWeight: 1; }
-                Label { Anchor: (Height: 44); Style: (...@SubHeadingStyle, FontSize: 28, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "+"; }
-                Label { Anchor: (Top: 4, Height: 24); Style: (...@MetaStyle, FontSize: 13, HorizontalAlignment: Center, VerticalAlignment: Center, RenderUppercase: true, RenderBold: true); Text: "Add Cycle"; }
-                Group { FlexWeight: 1; }
-              }
-            }
-
-            Group { Anchor: (Width: 8); }
-
-            Group #CycleCard5 {
-              Anchor: (Width: 172, Height: 200);
-              Background: @FubsysRpgCardShade;
-              Padding: (Full: 10);
-              LayoutMode: Full;
-
-              Group #CycleCard5Content {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                LayoutMode: Top;
-
-                Group { LayoutMode: Left; Anchor: (Height: 18);
-                  Label { Style: @CycleCardTitleStyle; Text: "Cycle 5"; }
-                  Group { FlexWeight: 1; }
-                  Label #CycleCard5Active { Style: @CycleActiveTagStyle; Text: "Active"; Visible: false; }
-                  Group { Anchor: (Width: 4); }
-                  Button #CycleCard5DeleteButton {
-                    Anchor: (Width: 18, Height: 18);
-                    Style: @PlusButtonStyle;
-                    Visible: false;
-                    Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }
-                  }
-                }
-
-                Group { Anchor: (Height: 1, Top: 8, Bottom: 8); Background: @FubsysRpgDividerSoft; }
-
-                Group { LayoutMode: Top; Anchor: (Height: 144);
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle5SlotA1Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A1"; }                         Label #Cycle5SlotA1Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle5SlotA1ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle5SlotA2Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A2"; }                         Label #Cycle5SlotA2Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle5SlotA2ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                  Group { Anchor: (Height: 6); }
-                  Group {                     Anchor: (Width: 152, Height: 44);                     LayoutMode: Top;                                        Group {                       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                       LayoutMode: Full;                                          Button #Cycle5SlotA3Button {                         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);                         Style: @CycleSlotButtonStyle;                         Padding: (Full: 6);                         LayoutMode: Top;                                            Label { Style: @CycleSlotKeyStyle; Text: "A3"; }                         Label #Cycle5SlotA3Value { Anchor: (Top: 2); Style: @CycleSlotValueStyle; Text: "Unassigned"; }                       }                                          Button #Cycle5SlotA3ClearButton {                         Anchor: (Top: 4, Right: 4, Width: 16, Height: 16);                         Style: @PlusButtonStyle;                         Visible: false;                                            Label { Style: (FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "-"; }                       }                     }                   }
-                }
-              }
-
-              Button #CycleCard5AddButton {
-                Anchor: (Left: 0, Right: 0, Top: 35, Bottom: 0);
-                Style: @TabButtonStyle;
-                LayoutMode: Top;
-                Padding: (Full: 10);
-                Visible: false;
-
-                Group { FlexWeight: 1; }
-                Label { Anchor: (Height: 44); Style: (...@SubHeadingStyle, FontSize: 28, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "+"; }
-                Label { Anchor: (Top: 4, Height: 24); Style: (...@MetaStyle, FontSize: 13, HorizontalAlignment: Center, VerticalAlignment: Center, RenderUppercase: true, RenderBold: true); Text: "Add Cycle"; }
-                Group { FlexWeight: 1; }
-              }
-            }
-          }
-
-          Group {
-            Anchor: (Height: 1, Top: 12, Bottom: 12);
-            Background: @FubsysRpgDivider;
-          }
-
-          Group #SelectedSkillDetailsGroup {
-            LayoutMode: Top;
-
-            Label #SelectedSkillTitle {
-              Style: (...@SubHeadingStyle, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-              Text: "";
-            }
-
-            Label #SelectedSkillDescription {
-              Anchor: (Top: 4);
-              Style: @MetaStyle;
-              Text: "";
-            }
-
-            Label #SelectedSkillStatus {
-              Anchor: (Top: 10);
-              Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted);
-              Text: "";
-            }
-
-            Label #SelectedSkillAssignStatus {
-              Anchor: (Top: 4);
-              Style: (...@MetaStyle, FontSize: 12, TextColor: @FubsysRpgInkFaint);
-              Text: "";
-            }
-
-            Group {
-              LayoutMode: Left;
-              Anchor: (Top: 10, Height: 28);
-
-              Button #AssignSelectedSkillButton {
-                Anchor: (Width: 110, Height: 26);
-                Style: @PlusButtonStyle;
-
-                Group #AssignSelectedSkillUnderline {
-                  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                  Background: @FubsysRpgSelectedButtonFill;
-                  Visible: false;
-                }
-
-                Label {
-                  Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "Assign";
-                }
-              }
-
-              Group { FlexWeight: 1; }
-
-              Button #UnlockSelectedSkillButton {
-                Anchor: (Width: 110, Height: 26);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "Unlock";
-                }
-              }
-
-              Group { Anchor: (Width: 8); }
-
-              Button #CastSelectedSkillButton {
-                Anchor: (Width: 110, Height: 26);
-                Style: @PlusButtonStyle;
-                Visible: false;
-
-                Label {
-                  Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                  Text: "Cast";
-                }
-              }
-            }
-          }
-
-        }
-      }
 
       Group #SkillsTabContent {
         LayoutMode: Left;
@@ -1721,13 +311,13 @@ Group {
 
           Label {
             Style: @SectionTitleStyle;
-            Text: "Skill Tree";
+            Text: "Arbre de compétences";
           }
 
           Label #SkillTreePointsValue {
             Anchor: (Top: 24);
             Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
-            Text: "Points: 0";
+            Text: "Points investis : 0";
           }
 
           Group #SkillTreeCanvas {
@@ -1770,13 +360,13 @@ Group {
 
             // Specialization placeholder banner (server positions this in the layout/paged tree).
             Group #SkillTreeSpecializationWipRect { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Background: @FubsysRpgCardShade; Visible: false; }
-            Label #SkillTreeSpecializationWipLabel { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Specialization (WIP)"; Visible: false; }
+            Label #SkillTreeSpecializationWipLabel { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Spécialisation (à venir)"; Visible: false; }
 
             Button #SkillTreeAttribuerButton { Anchor: (Right: 8, Top: 4, Width: 118, Height: 28); Style: @PlusButtonStyle; LayoutMode: Middle;
-              Label { Style: (FontSize: 13, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Attribuer"; }
+              Label { Style: (FontSize: 13, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Attribuer"; }
             }
             Button #SkillTreeResetButton { Anchor: (Right: 8, Bottom: 8, Width: 88, Height: 26); Style: @PlusButtonStyle; LayoutMode: Middle;
-              Label { Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "reset"; }
+              Label { Style: (FontSize: 12, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Réinitialiser"; }
             }
 
 
@@ -2311,7 +901,7 @@ Group {
             Group #SkillTreeNode0Veil { Anchor: (Left: 357, Top: 67, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode0RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode0Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode0 { Anchor: (Left: 360, Top: 70, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode0 { Anchor: (Left: 360, Top: 70, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode1Slot { Anchor: (Left: 434, Top: 154, Width: 76, Height: 76); Visible: false; }
@@ -2320,7 +910,7 @@ Group {
             Group #SkillTreeNode1Veil { Anchor: (Left: 437, Top: 157, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode1RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode1Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode1 { Anchor: (Left: 440, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode1 { Anchor: (Left: 440, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode2Slot { Anchor: (Left: 594, Top: 154, Width: 76, Height: 76); Visible: false; }
@@ -2329,7 +919,7 @@ Group {
             Group #SkillTreeNode2Veil { Anchor: (Left: 597, Top: 157, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode2RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode2Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode2 { Anchor: (Left: 600, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode2 { Anchor: (Left: 600, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode3Slot { Anchor: (Left: 524, Top: 474, Width: 76, Height: 76); Visible: false; }
@@ -2338,7 +928,7 @@ Group {
             Group #SkillTreeNode3Veil { Anchor: (Left: 527, Top: 477, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode3RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode3Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode3 { Anchor: (Left: 530, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode3 { Anchor: (Left: 530, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode4Slot { Anchor: (Left: 354, Top: 544, Width: 76, Height: 76); Visible: false; }
@@ -2347,7 +937,7 @@ Group {
             Group #SkillTreeNode4Veil { Anchor: (Left: 357, Top: 547, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode4RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode4Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode4 { Anchor: (Left: 360, Top: 550, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode4 { Anchor: (Left: 360, Top: 550, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode5Slot { Anchor: (Left: 184, Top: 474, Width: 76, Height: 76); Visible: false; }
@@ -2356,7 +946,7 @@ Group {
             Group #SkillTreeNode5Veil { Anchor: (Left: 187, Top: 477, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode5RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode5Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode5 { Anchor: (Left: 190, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode5 { Anchor: (Left: 190, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode6Slot { Anchor: (Left: 114, Top: 154, Width: 76, Height: 76); Visible: false; }
@@ -2365,7 +955,7 @@ Group {
             Group #SkillTreeNode6Veil { Anchor: (Left: 117, Top: 157, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode6RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode6Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode6 { Anchor: (Left: 120, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode6 { Anchor: (Left: 120, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode7Slot { Anchor: (Left: 274, Top: 154, Width: 76, Height: 76); Visible: false; }
@@ -2374,7 +964,7 @@ Group {
             Group #SkillTreeNode7Veil { Anchor: (Left: 277, Top: 157, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode7RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode7Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode7 { Anchor: (Left: 280, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode7 { Anchor: (Left: 280, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode8Slot { Anchor: (Left: 594, Top: 264, Width: 76, Height: 76); Visible: false; }
@@ -2383,7 +973,7 @@ Group {
             Group #SkillTreeNode8Veil { Anchor: (Left: 597, Top: 267, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode8RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode8Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode8 { Anchor: (Left: 600, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode8 { Anchor: (Left: 600, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode9Slot { Anchor: (Left: 114, Top: 264, Width: 76, Height: 76); Visible: false; }
@@ -2392,7 +982,7 @@ Group {
             Group #SkillTreeNode9Veil { Anchor: (Left: 117, Top: 267, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode9RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode9Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode9 { Anchor: (Left: 120, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode9 { Anchor: (Left: 120, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode10Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
@@ -2401,7 +991,7 @@ Group {
             Group #SkillTreeNode10Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode10RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode10Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode10 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode10 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             Group #SkillTreeNode11Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
@@ -2410,371 +1000,371 @@ Group {
             Group #SkillTreeNode11Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
             Label #SkillTreeNode11RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
             AssetImage #SkillTreeNode11Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode11 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode11 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode12Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode12Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode12Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode12Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode12 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode12 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode13Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode13Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode13Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode13Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode13 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode13 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode14Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode14Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode14Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode14Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode14 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode14 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode15Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode15Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode15Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode15Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode15 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode15 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode16Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode16Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode16Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode16Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode16 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode16 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode17Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode17Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode17Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode17Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode17 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode17 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode18Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode18Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode18Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode18Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode18 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode18 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode19Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode19Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode19Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode19Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode19 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode19 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode20Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode20Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode20Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode20Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode20 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode20 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode21Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode21Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode21Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode21Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode21 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode21 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode22Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode22Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode22Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode22Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode22 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode22 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode23Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode23Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode23Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode23Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode23 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode23 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode24Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode24Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode24Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode24Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode24 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode24 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode25Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode25Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode25Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode25Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode25 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode25 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode26Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode26Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode26Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode26Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode26 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode26 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode27Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode27Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode27Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode27Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode27 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode27 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode28Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode28Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode28Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode28Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode28 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode28 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode29Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode29Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode29Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode29Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode29 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode29 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode30Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode30Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode30Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode30Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode30 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode30 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode31Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode31Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode31Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode31Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode31 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode31 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode32Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode32Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode32Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode32Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode32 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode32 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode33Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode33Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode33Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode33Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode33 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode33 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode34Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode34Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode34Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode34Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode34 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode34 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode35Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode35Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode35Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode35Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode35 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode35 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode36Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode36Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode36Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode36Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode36 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode36 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode37Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode37Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode37Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode37Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode37 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode37 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode38Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode38Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode38Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode38Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode38 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode38 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode39Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode39Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode39Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode39Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode39 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode39 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode40Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode40Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode40Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode40Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode40 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode40 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode41Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode41Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode41Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode41Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode41 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode41 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode42Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode42Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode42Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode42Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode42 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode42 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode43Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode43Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode43Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode43Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode43 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode43 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode44Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode44Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode44Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode44Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode44 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode44 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode45Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode45Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode45Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode45Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode45 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode45 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode46Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode46Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode46Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode46Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode46 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode46 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode47Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode47Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode47Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode47Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode47 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode47 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode48Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode48Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode48Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode48Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode48 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode48 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode49Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode49Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode49Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode49Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode49 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode49 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode50Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode50Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode50Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode50Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode50 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode50 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode51Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode51Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode51Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode51Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode51 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode51 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode52Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode52Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode52Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode52Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode52 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode52 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode53Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode53Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode53Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode53Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode53 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode53 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode54Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode54Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode54Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode54Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode54 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode54 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode55Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode55Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode55Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode55Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode55 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode55 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode56Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode56Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode56Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode56Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode56 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode56 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode57Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode57Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode57Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode57Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode57 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode57 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode58Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode58Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode58Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode58Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode58 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode58 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode59Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode59Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode59Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode59Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode59 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode59 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode60Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode60Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode60Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode60Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode60 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode60 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode61Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode61Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode61Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode61Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode61 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode61 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode62Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode62Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode62Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode62Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode62 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode62 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
 
             AssetImage #SkillTreeNode63Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode63Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
             AssetImage #SkillTreeNode63Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
             AssetImage #SkillTreeNode63Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
-            Button #SkillTreeNode63 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; Padding: (Full: 6); LayoutMode: Top; Visible: false;
+            Button #SkillTreeNode63 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
             }
           }
         }
@@ -2789,7 +1379,7 @@ Group {
 
           Label {
             Style: @SectionTitleStyle;
-            Text: "Skill";
+            Text: "Compétence";
           }
 
           Label #SkillTreeSelectedTitle {
@@ -2829,7 +1419,7 @@ Group {
 
               Label #UnlockSkillTreeButtonLabel {
                 Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                Text: "Unlock";
+                Text: "Débloquer";
               }
             }
 
@@ -2842,7 +1432,7 @@ Group {
 
               Label #UnlockSkillTreeButtonDisabledLabel {
                 Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                Text: "Unlocked";
+                Text: "Débloqué";
               }
             }
           }

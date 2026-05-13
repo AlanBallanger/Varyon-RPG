@@ -82,18 +82,18 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final String[][] TREE_NODES = {
-        {"0", "Warrior", "Passive", "Sommet gauche.", "Vue arbre prototype.", "AbilityIconSword_40.png"},
-        {"1", "Weapon Training", "Passive", "Sommet droit.", "Icônes provisoires.", "Weapon_Training_Icon.png"},
-        {"2", "Defense Training", "Passive", "Fusion des deux sommets.", "Placeholder.", "Defense_Training_Icon.png"},
-        {"3", "Precision Training", "Passive", "Colonne gauche — niveau 1.", "Placeholder.", "Precision_Training_Icon.png"},
-        {"4", "Vigor Training", "Passive", "Colonne centre — niveau 1.", "Placeholder.", "Vigor_Training_Icon.png"},
-        {"5", "Warcry", "Active", "Colonne droite — niveau 1.", "Placeholder.", "Warcry_Icon.png"},
-        {"6", "Heavy Swing", "Active", "Colonne gauche — niveau 2.", "Placeholder.", "Heavy_Swing_Icon.png"},
-        {"7", "Brutal Charge", "Active", "Colonne centre — niveau 2.", "Placeholder.", "Brutal_Charge_Icon.png"},
-        {"8", "Warrior Oath", "Passive", "Colonne droite — niveau 2.", "Placeholder.", "Warrior_Oath_Icon.png"},
-        {"9", "Guarded Strike", "Active", "Convergence des trois colonnes.", "Placeholder.", "Guarded_Strike_Icon.png"},
-        {"10", "Second Wind", "Passive", "Sortie gauche.", "Icône dupliquée / libre.", "Second_Wind_Icon.png"},
-        {"11", "Battle Footing", "Passive", "Sortie droite.", "Icône dupliquée / libre.", "Battle_Footing_Icon.png"},
+        {"0", "Guerrier", "Passif", "Sommet gauche.", "Prototype d’arbre.", "AbilityIconSword_40.png"},
+        {"1", "Entraînement aux armes", "Passif", "Sommet droit.", "Icônes provisoires.", "Weapon_Training_Icon.png"},
+        {"2", "Entraînement défensif", "Passif", "Fusion des deux sommets.", "Emplacement réservé.", "Defense_Training_Icon.png"},
+        {"3", "Entraînement de précision", "Passif", "Colonne gauche — palier 1.", "Emplacement réservé.", "Precision_Training_Icon.png"},
+        {"4", "Entraînement à la vigueur", "Passif", "Colonne centre — palier 1.", "Emplacement réservé.", "Vigor_Training_Icon.png"},
+        {"5", "Cri de guerre", "Actif", "Colonne droite — palier 1.", "Emplacement réservé.", "Warcry_Icon.png"},
+        {"6", "Coup puissant", "Actif", "Colonne gauche — palier 2.", "Emplacement réservé.", "Heavy_Swing_Icon.png"},
+        {"7", "Charge brutale", "Actif", "Colonne centre — palier 2.", "Emplacement réservé.", "Brutal_Charge_Icon.png"},
+        {"8", "Serment du guerrier", "Passif", "Colonne droite — palier 2.", "Emplacement réservé.", "Warrior_Oath_Icon.png"},
+        {"9", "Frappe défensive", "Actif", "Convergence des trois colonnes.", "Emplacement réservé.", "Guarded_Strike_Icon.png"},
+        {"10", "Second souffle", "Passif", "Sortie gauche.", "Icône libre à assigner.", "Second_Wind_Icon.png"},
+        {"11", "Position de combat", "Passif", "Sortie droite.", "Icône libre à assigner.", "Battle_Footing_Icon.png"},
     };
 
     private final PlayerRef playerRef;
@@ -116,18 +116,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         uiBuilder.set("#CharacterTabContent.Visible", "character".equals(activeTab));
         uiBuilder.set("#SkillsTabContent.Visible", "skills".equals(activeTab));
-        uiBuilder.set("#LoadoutTabContent.Visible", "loadout".equals(activeTab));
 
         uiBuilder.set("#TabCharacterUnderline.Visible", "character".equals(activeTab));
         uiBuilder.set("#TabSkillsUnderline.Visible", "skills".equals(activeTab));
-        uiBuilder.set("#TabLoadoutUnderline.Visible", "loadout".equals(activeTab));
 
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabCharacterButton",
             EventData.of("Action", "tab").append("Tab", "character"), false);
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabSkillsButton",
             EventData.of("Action", "tab").append("Tab", "skills"), false);
-        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabLoadoutButton",
-            EventData.of("Action", "tab").append("Tab", "loadout"), false);
 
         if ("skills".equals(activeTab)) {
             populateSketchSkillTree(uiBuilder, eventBuilder);
@@ -141,7 +137,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             invested += r;
         }
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
-            Message.raw("Points investis: " + invested));
+            Message.raw("Points investis : " + invested));
 
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
