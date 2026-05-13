@@ -1,0 +1,423 @@
+// Metiers tab - aucun alias @ partage avec CharacterPage (eviter collision merge).
+
+@ProfessionTabSecondaryButton = (
+  Default: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8)
+  ),
+  Hovered: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8)
+  ),
+  Pressed: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8)
+  ),
+  Disabled: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
+  )
+);
+
+
+Group {
+  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+  LayoutMode: Top;
+
+  Label #ProfessionMainTitle {
+    Anchor: (Top: 0);
+    Style: (FontSize: 22, TextColor: #E8DCC8, RenderBold: true);
+    Text: "MES METIERS";
+  }
+
+  Group {
+    Anchor: (Left: 0, Right: 0, Top: 12, Bottom: 0);
+    LayoutMode: Left;
+
+    Group {
+      Anchor: (Width: 300, Top: 0, Bottom: 0);
+      LayoutMode: Top;
+
+      Label #ProfessionSectionSubtitle {
+        Style: (FontSize: 13, TextColor: #C8BEB0, RenderBold: true);
+        Text: "";
+      }
+
+      Group #ProfessionActiveCard0 {
+        Anchor: (Top: 8, Height: 110);
+        LayoutMode: Top;
+        Padding: (Full: 10);
+        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+        Label #ProfessionActiveCard0Name {
+          Anchor: (Top: 0, Height: 24);
+          Style: (FontSize: 18, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
+          Text: "";
+        }
+
+        Label #ProfessionActiveCard0Level {
+          Anchor: (Top: 28, Height: 20);
+          Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+          Text: "";
+        }
+
+        Button #ProfessionActiveCard0Reconvert {
+          Anchor: (Left: 0, Top: 72, Width: 160, Height: 28);
+          Style: @ProfessionTabSecondaryButton;
+          LayoutMode: Middle;
+          Label {
+            Style: (FontSize: 12, TextColor: #FFFFFF, RenderBold: true,
+              HorizontalAlignment: Center, VerticalAlignment: Center);
+            Text: "Reconversion";
+          }
+        }
+      }
+
+      Group { Anchor: (Top: 10, Height: 10); }
+
+      Group #ProfessionActiveCard1 {
+        Anchor: (Top: 0, Height: 110);
+        LayoutMode: Top;
+        Padding: (Full: 10);
+        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+        Label #ProfessionActiveCard1Name {
+          Anchor: (Top: 0, Height: 24);
+          Style: (FontSize: 18, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
+          Text: "";
+        }
+
+        Label #ProfessionActiveCard1Level {
+          Anchor: (Top: 28, Height: 20);
+          Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+          Text: "";
+        }
+
+        Button #ProfessionActiveCard1Reconvert {
+          Anchor: (Left: 0, Top: 72, Width: 160, Height: 28);
+          Style: @ProfessionTabSecondaryButton;
+          LayoutMode: Middle;
+          Label {
+            Style: (FontSize: 12, TextColor: #FFFFFF, RenderBold: true,
+              HorizontalAlignment: Center, VerticalAlignment: Center);
+            Text: "Reconversion";
+          }
+        }
+      }
+
+    }
+
+    Group { Anchor: (Width: 14, Top: 0, Bottom: 0); }
+
+    Group {
+      FlexWeight: 1;
+      LayoutMode: Top;
+
+      Label #ProfessionCatalogBaseTitle {
+        Anchor: (Top: 0);
+        Style: (FontSize: 16, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true);
+        Text: "METIERS DE BASE";
+      }
+
+      Group {
+        Anchor: (Left: 0, Right: 0, Top: 10, Height: 188);
+        LayoutMode: Left;
+
+        Group #ProfessionCatalogCard0 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard0Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard0Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard0Prereq {
+            Anchor: (Top: 60, Bottom: 0);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+
+          Label #ProfessionCatalogCard0Lock {
+            Anchor: (Bottom: 0, Height: 18);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard1 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard1Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard1Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard1Prereq {
+            Anchor: (Top: 60, Bottom: 0);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+
+          Label #ProfessionCatalogCard1Lock {
+            Anchor: (Bottom: 0, Height: 18);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard2 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard2Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard2Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard2Prereq {
+            Anchor: (Top: 60, Bottom: 0);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+
+          Label #ProfessionCatalogCard2Lock {
+            Anchor: (Bottom: 0, Height: 18);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard3 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard3Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard3Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard3Prereq {
+            Anchor: (Top: 60, Bottom: 0);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+
+          Label #ProfessionCatalogCard3Lock {
+            Anchor: (Bottom: 0, Height: 18);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+      }
+
+      Label #ProfessionCatalogSpecTitle {
+        Anchor: (Top: 18);
+        Style: (FontSize: 16, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true);
+        Text: "METIERS SPECIALISES";
+      }
+
+      Group {
+        Anchor: (Left: 0, Right: 0, Top: 10, Height: 208);
+        LayoutMode: Left;
+
+        Group #ProfessionCatalogCard4 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard4Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard4Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard4Prereq {
+            Anchor: (Top: 50, Bottom: 26);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: true;
+          }
+
+          Label #ProfessionCatalogCard4Lock {
+            Anchor: (Bottom: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard5 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard5Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard5Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard5Prereq {
+            Anchor: (Top: 50, Bottom: 26);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: true;
+          }
+
+          Label #ProfessionCatalogCard5Lock {
+            Anchor: (Bottom: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard6 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard6Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard6Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard6Prereq {
+            Anchor: (Top: 50, Bottom: 26);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: true;
+          }
+
+          Label #ProfessionCatalogCard6Lock {
+            Anchor: (Bottom: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+        Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
+
+        Group #ProfessionCatalogCard7 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Full: 10);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+          Label #ProfessionCatalogCard7Name {
+            Anchor: (Top: 0, Height: 22);
+            Style: (FontSize: 15, TextColor: #F2E8D8, RenderBold: true,
+              RenderUppercase: true, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard7Level {
+            Anchor: (Top: 26, Height: 20);
+            Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+          }
+
+          Label #ProfessionCatalogCard7Prereq {
+            Anchor: (Top: 50, Bottom: 26);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: true;
+          }
+
+          Label #ProfessionCatalogCard7Lock {
+            Anchor: (Bottom: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, VerticalAlignment: Center);
+            Text: "";
+            Visible: false;
+          }
+        }
+
+      }
+
+      Group { FlexWeight: 1; }
+    }
+  }
+}

@@ -66,8 +66,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private static final int RAIL = 4;
     private static final int STEM_DOWN_FROM_PARENT = 12;
-    private static final int STEM_DOWN_TO_CHILD = 10;
-    private static final int STEM_COLUMN = 24;
+
+    /** Edge segment slots in CharacterSkillTreePanel.ui (#SkillTreeEdgeSeg0 ..). */
+    private static final int SKILL_TREE_EDGE_SEGMENTS = 48;
 
     private static final int ICON_SIZE = 40;
     private static final int SLOT = Math.round(76 * 0.8f);
@@ -76,45 +77,48 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int FILL_SIZE = SLOT - 2 * FILL_INSET;
     private static final int MAX_RANK_PER_NODE = 5;
     private static final int SKILL_POINTS_BUDGET = 35;
-    private static final int PROFESSION_CARD_SLOTS = 4;
 
-    private static final class ProfessionCardData {
+    private static final int PROFESSION_ACTIVE_SLOTS = 2;
+    private static final int PROFESSION_BASE_COUNT = 4;
 
-        final String label;
-        final String iconFile;
-        final int level;
-        final int xpTowardNext;
-        final int xpForNextLevel;
-        final int talentsUnlocked;
+    private static final String[] PROFESSION_NAMES = {
+        "Mineur",
+        "Fermier",
+        "Forestier",
+        "Chasseur",
+        "Forgeron",
+        "Alchimiste",
+        "Architecte",
+        "Cuisinier",
+    };
 
-        ProfessionCardData(String label,
-                           String iconFile,
-                           int level,
-                           int xpTowardNext,
-                           int xpForNextLevel,
-                           int talentsUnlocked) {
-            this.label = label;
-            this.iconFile = iconFile;
-            this.level = level;
-            this.xpTowardNext = xpTowardNext;
-            this.xpForNextLevel = xpForNextLevel;
-            this.talentsUnlocked = talentsUnlocked;
-        }
-    }
+    /** Demo levels only — replace with persisted progression later. */
+    private static final int[] PROFESSION_DEMO_LEVELS = {
+        12,
+        14,
+        16,
+        10,
+        5,
+        5,
+        8,
+        3,
+    };
 
-    private static final ProfessionCardData[] PROFESSION_DEMO_ROWS = {
-        new ProfessionCardData("Chasseur", "Heavy_Swing_Icon.png", 20,
-            3020, 6510, 3),
-        new ProfessionCardData("Mineur", "Brutal_Charge_Icon.png", 22,
-            4800, 8200, 8),
-        new ProfessionCardData("Forgeron", "Warrior_Oath_Icon.png", 15,
-            1200, 4000, 5),
+    /** Catalog indices shown in the active slots (Mineur + Fermier in demo). */
+    private static final int[] ACTIVE_PROFESSION_INDICES = {0, 1};
+
+    /** Specialized row maps to prerequisite base catalog index and required level. */
+    private static final int[][] SPECIALIZED_PREREQ_BASE_AND_LEVEL = {
+        {0, 15},
+        {1, 15},
+        {2, 15},
+        {3, 15},
     };
 
     private static final int RANK_LABEL_W = 44;
     private static final int RANK_LABEL_H = 14;
     private static final int RANK_LABEL_GAP_TOP = -1;
-    private static final int RANK_LABEL_SHIFT_RIGHT = (SLOT - RANK_LABEL_W) / 2;
+    private static final int RANK_LABEL_SHIFT_RIGHT = (48 * SLOT + 38) / 76;
 
     private static final int[][] SLOT_LT = {
         {272, 32},
@@ -147,7 +151,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private final PlayerRef playerRef;
-    private String activeTab = "skills";
+    private String activeTab = "character";
     private int selectedNode = 2;
     private int hoveredNode = -1;
     private final int[] skillRanks = new int[TREE_NODES.length];
@@ -163,6 +167,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                       @Nonnull UIEventBuilder eventBuilder,
                       @Nonnull Store<EntityStore> store) {
         uiBuilder.append("CharacterPage.ui");
+        uiBuilder.append("#CharacterTabMount", "CharacterTabProfession.ui");
+        uiBuilder.append("#SkillsTabMount", "CharacterTabSkills.ui");
+        uiBuilder.append("#ArtisansTabMount", "CharacterTabArtisans.ui");
+        uiBuilder.append("#ClassementTabMount", "CharacterTabClassement.ui");
 
         uiBuilder.set("#CharacterTabContent.Visible", "character".equals(activeTab));
         uiBuilder.set("#SkillsTabContent.Visible", "skills".equals(activeTab));
@@ -190,42 +198,61 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
     }
 
+    private static final int PROFESSION_CATALOG_SLOTS = 8;
+    private static final int SPECIALIZED_ROW_START_INDEX = PROFESSION_BASE_COUNT;
+
     private void populateCharacterProfessions(@Nonnull UICommandBuilder uiBuilder,
                                               @Nonnull UIEventBuilder eventBuilder) {
+        int activeFilled = Math.min(ACTIVE_PROFESSION_INDICES.length, PROFESSION_ACTIVE_SLOTS);
         uiBuilder.set("#ProfessionSectionSubtitle.TextSpans",
-            Message.raw("Gérez vos métiers et talents."));
-        uiBuilder.set("#ProfessionSectionSubtitle.Visible", true);
+            Message.raw("M\u00e9tiers suivis (" + activeFilled + "/" + PROFESSION_ACTIVE_SLOTS + ")"));
 
-        int shown = Math.min(PROFESSION_DEMO_ROWS.length, PROFESSION_CARD_SLOTS);
-        for (int i = 0; i < PROFESSION_CARD_SLOTS; i++) {
-            boolean visible = i < shown;
-            uiBuilder.set("#ProfessionCard" + i + ".Visible", visible);
-            if (!visible) {
-                continue;
+        for (int i = 0; i < PROFESSION_ACTIVE_SLOTS; i++) {
+            String p = "#ProfessionActiveCard" + i;
+            if (i < activeFilled) {
+                int catalogIndex = ACTIVE_PROFESSION_INDICES[i];
+                uiBuilder.set(p + ".Visible", true);
+                uiBuilder.set(p + "Name.TextSpans", Message.raw(PROFESSION_NAMES[catalogIndex]));
+                uiBuilder.set(p + "Level.TextSpans",
+                    Message.raw("Niveau " + PROFESSION_DEMO_LEVELS[catalogIndex]));
+                uiBuilder.set(p + "Reconvert.Visible", true);
+                eventBuilder.addEventBinding(
+                    CustomUIEventBindingType.Activating,
+                    p + "Reconvert",
+                    EventData.of("Action", "professionReconvert")
+                        .append("ProfessionId", Integer.toString(catalogIndex)),
+                    false
+                );
+            } else {
+                uiBuilder.set(p + ".Visible", false);
+                uiBuilder.set(p + "Reconvert.Visible", false);
             }
-            ProfessionCardData row = PROFESSION_DEMO_ROWS[i];
-            PatchStyle iconStyle = new PatchStyle()
-                .setTexturePath(Value.of(ICON_BASE + row.iconFile));
-            uiBuilder.setObject("#ProfessionCard" + i + "Icon.Background", iconStyle);
-            uiBuilder.set("#ProfessionCard" + i + "Name.TextSpans", Message.raw(row.label));
-            uiBuilder.set("#ProfessionCard" + i + "Level.TextSpans",
-                Message.raw("Nv." + row.level));
-            uiBuilder.set("#ProfessionCard" + i + "XpText.TextSpans",
-                Message.raw(row.xpTowardNext + " / " + row.xpForNextLevel + " XP"));
-            uiBuilder.set("#ProfessionCard" + i + "Talents.TextSpans",
-                Message.raw("Talents débloqués : " + row.talentsUnlocked));
-            double frac = row.xpForNextLevel <= 0
-                ? 0.0
-                : Math.min(1.0, (double) row.xpTowardNext / (double) row.xpForNextLevel);
-            float xpFrac = (float) frac;
-            uiBuilder.set("#ProfessionCard" + i + "Xp.Value", xpFrac);
-            eventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating,
-                "#ProfessionCard" + i + "Reconvert",
-                EventData.of("Action", "professionReconvert")
-                    .append("ProfessionId", Integer.toString(i)),
-                false
-            );
+        }
+
+        for (int i = 0; i < PROFESSION_CATALOG_SLOTS; i++) {
+            String id = "#ProfessionCatalogCard" + i;
+            uiBuilder.set(id + "Name.TextSpans", Message.raw(PROFESSION_NAMES[i]));
+            uiBuilder.set(id + "Level.TextSpans",
+                Message.raw("Niveau " + PROFESSION_DEMO_LEVELS[i]));
+
+            if (i >= SPECIALIZED_ROW_START_INDEX) {
+                int s = i - SPECIALIZED_ROW_START_INDEX;
+                int baseIndex = SPECIALIZED_PREREQ_BASE_AND_LEVEL[s][0];
+                int needLevel = SPECIALIZED_PREREQ_BASE_AND_LEVEL[s][1];
+                String baseName = PROFESSION_NAMES[baseIndex];
+                uiBuilder.set(id + "Prereq.Visible", true);
+                uiBuilder.set(id + "Prereq.TextSpans", Message.raw(
+                    "Pr\u00e9requis : niveau " + needLevel + " " + baseName));
+                boolean unlocked = PROFESSION_DEMO_LEVELS[baseIndex] >= needLevel;
+                uiBuilder.set(id + "Lock.Visible", !unlocked);
+                if (!unlocked) {
+                    uiBuilder.set(id + "Lock.TextSpans",
+                        Message.raw("Verrouill\u00e9 (d\u00e9mo niveaux)"));
+                }
+            } else {
+                uiBuilder.set(id + "Prereq.Visible", false);
+                uiBuilder.set(id + "Lock.Visible", false);
+            }
         }
     }
 
@@ -242,7 +269,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
         }
-        hideEdgeSegmentRange(uiBuilder, 0, 256);
+        hideEdgeSegmentRange(uiBuilder, 0, SKILL_TREE_EDGE_SEGMENTS);
 
         int seg = 0;
 
@@ -278,7 +305,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             cx(SLOT_LT[11]),
             top(SLOT_LT[10]));
 
-        hideEdgeSegmentRange(uiBuilder, seg, 256);
+        hideEdgeSegmentRange(uiBuilder, seg, SKILL_TREE_EDGE_SEGMENTS);
 
         for (int i = 0; i < TREE_NODES.length; i++) {
             String[] node = TREE_NODES[i];
@@ -327,13 +354,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
 
         applySkillTreeSelectionAndHoverChrome(uiBuilder);
-
-        for (int n = TREE_NODES.length; n <= 63; n++) {
-            uiBuilder.set("#SkillTreeNode" + n + "Slot.Visible", false);
-            uiBuilder.set("#SkillTreeNode" + n + ".Visible", false);
-        }
-
-        uiBuilder.set("#SkillTreeAttribuerButton.Visible", true);
         uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
             invested >= SKILL_POINTS_BUDGET
                 || !skillTreeParentsAllowSelectedAllocation(skillRanks)
@@ -468,7 +488,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         showEdge(ui, seg++, vx(cxB), yBotB, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxA, cxB));
         showEdge(ui, seg++, barL, barTop, vx(Math.max(cxA, cxB)) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxMid), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        int stemToChild = yTopMid - barBot;
+        if (stemToChild > 0) {
+            showEdge(ui, seg++, vx(cxMid), barBot, RAIL, stemToChild);
+        }
         return seg;
     }
 
@@ -487,9 +510,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         int barL = vx(Math.min(cxL, Math.min(cxM, cxR)));
         showEdge(ui, seg++, barL, barTop,
             vx(Math.max(cxL, Math.max(cxM, cxR))) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxL), barBot, RAIL, STEM_DOWN_TO_CHILD);
-        showEdge(ui, seg++, vx(cxM), barBot, RAIL, STEM_DOWN_TO_CHILD);
-        showEdge(ui, seg++, vx(cxR), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        int stemToChild = yTopChildRow - barBot;
+        if (stemToChild > 0) {
+            showEdge(ui, seg++, vx(cxL), barBot, RAIL, stemToChild);
+            showEdge(ui, seg++, vx(cxM), barBot, RAIL, stemToChild);
+            showEdge(ui, seg++, vx(cxR), barBot, RAIL, stemToChild);
+        }
         return seg;
     }
 
@@ -498,7 +524,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                                int cx,
                                                int yFrom,
                                                int yTo) {
-        showEdge(ui, seg++, vx(cx), yFrom, RAIL, STEM_COLUMN);
+        int h = yTo - yFrom;
+        if (h > 0) {
+            showEdge(ui, seg++, vx(cx), yFrom, RAIL, h);
+        }
         return seg;
     }
 
@@ -522,7 +551,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         int barL = vx(Math.min(cxA, Math.min(cxB, cxC)));
         showEdge(ui, seg++, barL, barTop,
             vx(Math.max(cxA, Math.max(cxB, cxC))) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxMid), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        int stemToChild = yTopMid - barBot;
+        if (stemToChild > 0) {
+            showEdge(ui, seg++, vx(cxMid), barBot, RAIL, stemToChild);
+        }
         return seg;
     }
 
@@ -539,8 +571,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         showEdge(ui, seg++, vx(cxP), yBotP, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxL, cxR));
         showEdge(ui, seg++, barL, barTop, vx(Math.max(cxL, cxR)) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxL), barBot, RAIL, STEM_DOWN_TO_CHILD);
-        showEdge(ui, seg++, vx(cxR), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        int stemToChild = yTopChildRow - barBot;
+        if (stemToChild > 0) {
+            showEdge(ui, seg++, vx(cxL), barBot, RAIL, stemToChild);
+            showEdge(ui, seg++, vx(cxR), barBot, RAIL, stemToChild);
+        }
         return seg;
     }
 
@@ -607,6 +642,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             rebuild();
         } else if ("resetSkills".equals(data.action)) {
             Arrays.fill(skillRanks, 0);
+            rebuild();
+        } else if ("professionReconvert".equals(data.action)) {
             rebuild();
         }
     }
