@@ -55,18 +55,21 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int STEM_COLUMN = 30;
 
     private static final int SLOT = 76;
-    private static final int BTN_PAD = 6;
     private static final int ICON_INSET = 18;
     private static final int FILL_INSET = 3;
     private static final int FILL_SIZE = 70;
     private static final int ICON_SIZE = 40;
-    private static final int BTN_SIZE = 64;
     private static final int MAX_RANK_PER_NODE = 5;
 
     private static final int RANK_LABEL_W = 44;
     private static final int RANK_LABEL_H = 14;
-    private static final int RANK_LABEL_GAP_TOP = -2;
+    private static final int RANK_LABEL_GAP_TOP = -1;
     private static final int RANK_LABEL_SHIFT_RIGHT = 48;
+
+    private static final int SKILL_NODE_HIT_W =
+        RANK_LABEL_SHIFT_RIGHT + RANK_LABEL_W;
+    private static final int SKILL_NODE_HIT_H =
+        SLOT + RANK_LABEL_GAP_TOP + RANK_LABEL_H;
 
     private static final int[][] SLOT_LT = {
         {264, 32},
@@ -101,6 +104,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private final PlayerRef playerRef;
     private String activeTab = "skills";
     private int selectedNode = 2;
+    private int hoveredNode = -1;
     private final int[] skillRanks = new int[TREE_NODES.length];
 
     public RpgMainUI(@Nonnull PlayerRef playerRef) {
@@ -185,8 +189,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         hideEdgeSegmentRange(uiBuilder, seg, 256);
 
-        String selectedId = TREE_NODES[selectedNode][0];
-
         for (int i = 0; i < TREE_NODES.length; i++) {
             String[] node = TREE_NODES[i];
             String id = node[0];
@@ -199,19 +201,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             String iconPath = ICON_BASE + node[5];
             PatchStyle iconStyle = new PatchStyle().setTexturePath(Value.of(iconPath));
             int allocated = skillRanks[i];
-            boolean nodeSelected = id.equals(selectedId);
-            String borderRgb;
-            if (allocated >= 1) {
-                borderRgb = NODE_BORDER_ALLOCATED;
-            } else if (nodeSelected) {
-                borderRgb = NODE_BORDER_SELECTION;
-            } else {
-                borderRgb = NODE_BORDER;
-            }
-            PatchStyle borderStyle = new PatchStyle().setColor(Value.of(borderRgb));
 
             uiBuilder.set("#SkillTreeNode" + id + "Slot.Visible", true);
-            uiBuilder.setObject("#SkillTreeNode" + id + "Slot.Background", borderStyle);
 
             uiBuilder.set("#SkillTreeNode" + id + "Unlocked.Visible", true);
             uiBuilder.setObject("#SkillTreeNode" + id + "Unlocked.Background", NODE_FILL_STYLE);
@@ -223,10 +214,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             uiBuilder.set("#SkillTreeNode" + id + "RankText.TextSpans",
                 Message.raw(allocated + "/" + MAX_RANK_PER_NODE));
 
-            uiBuilder.set("#SkillTreeNode" + id + "Veil.Visible",
-                !nodeSelected && allocated == 0);
-            uiBuilder.setObject("#SkillTreeNode" + id + "Veil.Background", NODE_VEIL_STYLE);
-
             uiBuilder.set("#SkillTreeNode" + id + ".Visible", true);
             eventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating,
@@ -234,20 +221,26 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 EventData.of("Action", "skill").append("Node", id),
                 false
             );
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.MouseEntered,
+                "#SkillTreeNode" + id,
+                EventData.of("Action", "skillHover").append("Node", id),
+                false
+            );
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.MouseExited,
+                "#SkillTreeNode" + id,
+                EventData.of("Action", "skillHoverEnd").append("Node", id),
+                false
+            );
         }
+
+        applySkillTreeSelectionAndHoverChrome(uiBuilder);
 
         for (int n = TREE_NODES.length; n <= 63; n++) {
             uiBuilder.set("#SkillTreeNode" + n + "Slot.Visible", false);
             uiBuilder.set("#SkillTreeNode" + n + ".Visible", false);
         }
-
-        String[] sel = TREE_NODES[selectedNode];
-        uiBuilder.set("#SkillTreeSelectedTitle.TextSpans", Message.raw(sel[1]));
-        uiBuilder.set("#SkillTreeSelectedStatus.TextSpans", Message.raw(sel[2]));
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans", Message.raw(sel[3]));
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
 
         uiBuilder.set("#SkillTreeAttribuerButton.Visible", true);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
@@ -263,6 +256,46 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             EventData.of("Action", "resetSkills"),
             false
         );
+    }
+
+    private void applySkillTreeSelectionAndHoverChrome(@Nonnull UICommandBuilder uiBuilder) {
+        String selectedId = TREE_NODES[selectedNode][0];
+        String hoverId = hoveredNode >= 0 ? TREE_NODES[hoveredNode][0] : null;
+
+        for (int i = 0; i < TREE_NODES.length; i++) {
+            String id = TREE_NODES[i][0];
+            int allocated = skillRanks[i];
+            boolean nodeSelected = id.equals(selectedId);
+            boolean nodeHovered = hoverId != null && id.equals(hoverId);
+            String borderRgb;
+            if (allocated >= 1) {
+                borderRgb = NODE_BORDER_ALLOCATED;
+            } else if (nodeSelected || nodeHovered) {
+                borderRgb = NODE_BORDER_SELECTION;
+            } else {
+                borderRgb = NODE_BORDER;
+            }
+            PatchStyle borderStyle = new PatchStyle().setColor(Value.of(borderRgb));
+            uiBuilder.setObject("#SkillTreeNode" + id + "Slot.Background", borderStyle);
+            uiBuilder.set("#SkillTreeNode" + id + "Veil.Visible",
+                !nodeSelected && !nodeHovered && allocated == 0);
+            uiBuilder.setObject("#SkillTreeNode" + id + "Veil.Background", NODE_VEIL_STYLE);
+        }
+
+        int panelNode = hoveredNode >= 0 ? hoveredNode : selectedNode;
+        String[] sel = TREE_NODES[panelNode];
+        uiBuilder.set("#SkillTreeSelectedTitle.TextSpans", Message.raw(sel[1]));
+        uiBuilder.set("#SkillTreeSelectedStatus.TextSpans", Message.raw(sel[2]));
+        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
+        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans", Message.raw(sel[3]));
+        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
+        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
+    }
+
+    private void sendSkillTreeHoverChromeUpdate() {
+        UICommandBuilder cmd = new UICommandBuilder();
+        applySkillTreeSelectionAndHoverChrome(cmd);
+        this.sendUpdate(cmd, null, false);
     }
 
     private static int cx(int[] lt) {
@@ -297,7 +330,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         setAnchor(ui, "#SkillTreeNode" + id + "Veil",
             slotLeft + FILL_INSET, slotTop + FILL_INSET, FILL_SIZE, FILL_SIZE);
         setAnchor(ui, "#SkillTreeNode" + id,
-            slotLeft + BTN_PAD, slotTop + BTN_PAD, BTN_SIZE, BTN_SIZE);
+            slotLeft, slotTop, SKILL_NODE_HIT_W, SKILL_NODE_HIT_H);
     }
 
     private static void positionSkillRank(@Nonnull UICommandBuilder ui,
@@ -440,6 +473,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         if ("tab".equals(data.action) && data.tab != null) {
             activeTab = data.tab;
+            hoveredNode = -1;
             rebuild();
         } else if ("skill".equals(data.action) && data.node != null) {
             for (int i = 0; i < TREE_NODES.length; i++) {
@@ -449,6 +483,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 }
             }
             rebuild();
+        } else if ("skillHover".equals(data.action) && data.node != null) {
+            for (int i = 0; i < TREE_NODES.length; i++) {
+                if (TREE_NODES[i][0].equals(data.node)) {
+                    hoveredNode = i;
+                    break;
+                }
+            }
+            sendSkillTreeHoverChromeUpdate();
+        } else if ("skillHoverEnd".equals(data.action) && data.node != null) {
+            for (int i = 0; i < TREE_NODES.length; i++) {
+                if (TREE_NODES[i][0].equals(data.node) && hoveredNode == i) {
+                    hoveredNode = -1;
+                    break;
+                }
+            }
+            sendSkillTreeHoverChromeUpdate();
         } else if ("allocate".equals(data.action)) {
             if (skillRanks[selectedNode] < MAX_RANK_PER_NODE) {
                 skillRanks[selectedNode]++;
