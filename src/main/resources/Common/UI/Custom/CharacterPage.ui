@@ -287,6 +287,42 @@ Group {
             Text: "Talents";
           }
         }
+        Group { Anchor: (Width: 10); }
+
+        Button #TabArtisansButton {
+          Anchor: (Width: 140, Height: 30);
+          Style: @TabButtonStyle;
+
+          Group #TabArtisansUnderline {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Background: @FubsysRpgSelectedButtonFill;
+            Visible: false;
+          }
+
+          Label {
+            Style: @TabLabelStyle;
+            Text: "Artisans";
+          }
+        }
+
+        Group { Anchor: (Width: 10); }
+
+        Button #TabClassementButton {
+          Anchor: (Width: 140, Height: 30);
+          Style: @TabButtonStyle;
+
+          Group #TabClassementUnderline {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Background: @FubsysRpgSelectedButtonFill;
+            Visible: false;
+          }
+
+          Label {
+            Style: @TabLabelStyle;
+            Text: "Classement";
+          }
+        }
+
 
       }
 
@@ -1716,6 +1752,35 @@ Group {
 
         }
       }
+
+      Group #ArtisansTabContent {
+        LayoutMode: Top;
+        FlexWeight: 1;
+        Visible: false;
+        Anchor: (Top: 8);
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Full;
+          Background: @FubsysRpgPanelShade;
+          Padding: (Full: 12);
+        }
+      }
+
+      Group #ClassementTabContent {
+        LayoutMode: Top;
+        FlexWeight: 1;
+        Visible: false;
+        Anchor: (Top: 8);
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Full;
+          Background: @FubsysRpgPanelShade;
+          Padding: (Full: 12);
+        }
+      }
+
     }
     }
 

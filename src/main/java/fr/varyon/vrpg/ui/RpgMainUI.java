@@ -166,14 +166,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         uiBuilder.set("#CharacterTabContent.Visible", "character".equals(activeTab));
         uiBuilder.set("#SkillsTabContent.Visible", "skills".equals(activeTab));
+        uiBuilder.set("#ArtisansTabContent.Visible", "artisans".equals(activeTab));
+        uiBuilder.set("#ClassementTabContent.Visible", "classement".equals(activeTab));
 
         uiBuilder.set("#TabCharacterUnderline.Visible", "character".equals(activeTab));
         uiBuilder.set("#TabSkillsUnderline.Visible", "skills".equals(activeTab));
+        uiBuilder.set("#TabArtisansUnderline.Visible", "artisans".equals(activeTab));
+        uiBuilder.set("#TabClassementUnderline.Visible", "classement".equals(activeTab));
 
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabCharacterButton",
             EventData.of("Action", "tab").append("Tab", "character"), false);
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabSkillsButton",
             EventData.of("Action", "tab").append("Tab", "skills"), false);
+        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabArtisansButton",
+            EventData.of("Action", "tab").append("Tab", "artisans"), false);
+        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabClassementButton",
+            EventData.of("Action", "tab").append("Tab", "classement"), false);
 
         if ("character".equals(activeTab)) {
             populateCharacterProfessions(uiBuilder, eventBuilder);
