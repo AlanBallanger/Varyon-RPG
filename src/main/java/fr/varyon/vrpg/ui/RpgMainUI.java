@@ -17,6 +17,12 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import fr.varyon.vrpg.VaryonRpgPlugin;
+import fr.varyon.vrpg.rpg.PlayerAccount;
+import fr.varyon.vrpg.rpg.Profession;
+import fr.varyon.vrpg.rpg.ProfessionManager;
+import fr.varyon.vrpg.rpg.ProfessionProgress;
+import fr.varyon.vrpg.rpg.XpCurve;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -38,7 +44,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {9}, // 11
     };
 
-    private static final String ICON_BASE = "Pages/FubsysRpg/Icons/";
+    private static final String ICON_BASE = "Pages/VaryonRpg/Icons/";
 
     private static final String NODE_FILL = "#1A1F29FF";
     private static final String NODE_BORDER = "#4E576DFF";
@@ -199,28 +205,56 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     }
 
     private static final int PROFESSION_CATALOG_SLOTS = 8;
-    private static final int SPECIALIZED_ROW_START_INDEX = PROFESSION_BASE_COUNT;
+
+    private static final Profession[] CATALOG_ORDER = {
+        Profession.MINEUR,
+        Profession.FERMIER,
+        Profession.FORESTIER,
+        Profession.CHASSEUR,
+        Profession.FORGERON,
+        Profession.ALCHIMISTE,
+        Profession.ARCHITECTE,
+        Profession.CUISINIER,
+    };
+
+    private PlayerAccount currentAccount() {
+        ProfessionManager m = VaryonRpgPlugin.getInstance().getProfessionManager();
+        if (m == null) return null;
+        m.ensureAccount(playerRef.getUuid(), playerRef.getUsername());
+        return m.getAccount(playerRef.getUuid());
+    }
 
     private void populateCharacterProfessions(@Nonnull UICommandBuilder uiBuilder,
                                               @Nonnull UIEventBuilder eventBuilder) {
-        int activeFilled = Math.min(ACTIVE_PROFESSION_INDICES.length, PROFESSION_ACTIVE_SLOTS);
-        uiBuilder.set("#ProfessionSectionSubtitle.TextSpans",
-            Message.raw("M\u00e9tiers suivis (" + activeFilled + "/" + PROFESSION_ACTIVE_SLOTS + ")"));
+        PlayerAccount acc = currentAccount();
+        Profession[] activeSlots = new Profession[2];
+        if (acc != null) {
+            activeSlots[0] = acc.getActiveSlot0();
+            activeSlots[1] = acc.getActiveSlot1();
+        }
+        int activeFilled = 0;
+        for (Profession s : activeSlots) if (s != null) activeFilled++;
 
-        for (int i = 0; i < PROFESSION_ACTIVE_SLOTS; i++) {
+        uiBuilder.set("#ProfessionSectionSubtitle.TextSpans",
+            Message.raw("M\u00e9tiers actifs (" + activeFilled + "/2)"));
+
+        for (int i = 0; i < 2; i++) {
             String p = "#ProfessionActiveCard" + i;
-            if (i < activeFilled) {
-                int catalogIndex = ACTIVE_PROFESSION_INDICES[i];
+            Profession active = activeSlots[i];
+            if (active != null && acc != null) {
+                ProfessionProgress prog = acc.getProgress(active);
                 uiBuilder.set(p + ".Visible", true);
-                uiBuilder.set(p + "Name.TextSpans", Message.raw(PROFESSION_NAMES[catalogIndex]));
+                uiBuilder.set(p + "Name.TextSpans", Message.raw(active.getDisplayName()));
                 uiBuilder.set(p + "Level.TextSpans",
-                    Message.raw("Niveau " + PROFESSION_DEMO_LEVELS[catalogIndex]));
+                    Message.raw("Niveau " + prog.getLevel()
+                        + " \u2022 " + prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP"));
                 uiBuilder.set(p + "Reconvert.Visible", true);
                 eventBuilder.addEventBinding(
                     CustomUIEventBindingType.Activating,
                     p + "Reconvert",
                     EventData.of("Action", "professionReconvert")
-                        .append("ProfessionId", Integer.toString(catalogIndex)),
+                        .append("ProfessionId", active.getId())
+                        .append("Node", Integer.toString(i)),
                     false
                 );
             } else {
@@ -231,23 +265,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         for (int i = 0; i < PROFESSION_CATALOG_SLOTS; i++) {
             String id = "#ProfessionCatalogCard" + i;
-            uiBuilder.set(id + "Name.TextSpans", Message.raw(PROFESSION_NAMES[i]));
-            uiBuilder.set(id + "Level.TextSpans",
-                Message.raw("Niveau " + PROFESSION_DEMO_LEVELS[i]));
+            Profession p = CATALOG_ORDER[i];
+            uiBuilder.set(id + "Name.TextSpans", Message.raw(p.getDisplayName()));
+            int level = acc == null ? 1 : acc.getProgress(p).getLevel();
+            uiBuilder.set(id + "Level.TextSpans", Message.raw("Niveau " + level));
 
-            if (i >= SPECIALIZED_ROW_START_INDEX) {
-                int s = i - SPECIALIZED_ROW_START_INDEX;
-                int baseIndex = SPECIALIZED_PREREQ_BASE_AND_LEVEL[s][0];
-                int needLevel = SPECIALIZED_PREREQ_BASE_AND_LEVEL[s][1];
-                String baseName = PROFESSION_NAMES[baseIndex];
+            if (p.isSpecialized()) {
+                Profession parent = p.getPrereq();
+                int need = p.getPrereqLevel();
+                String parentName = parent == null ? "?" : parent.getDisplayName();
                 uiBuilder.set(id + "Prereq.Visible", true);
-                uiBuilder.set(id + "Prereq.TextSpans", Message.raw(
-                    "Pr\u00e9requis : niveau " + needLevel + " " + baseName));
-                boolean unlocked = PROFESSION_DEMO_LEVELS[baseIndex] >= needLevel;
+                uiBuilder.set(id + "Prereq.TextSpans",
+                    Message.raw("Pr\u00e9requis : niveau " + need + " " + parentName));
+                boolean unlocked = acc != null && acc.isUnlocked(p);
                 uiBuilder.set(id + "Lock.Visible", !unlocked);
                 if (!unlocked) {
-                    uiBuilder.set(id + "Lock.TextSpans",
-                        Message.raw("Verrouill\u00e9 (d\u00e9mo niveaux)"));
+                    uiBuilder.set(id + "Lock.TextSpans", Message.raw("Verrouill\u00e9"));
                 }
             } else {
                 uiBuilder.set(id + "Prereq.Visible", false);
@@ -256,15 +289,37 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
     }
 
+    private Profession currentTalentProfession() {
+        PlayerAccount acc = currentAccount();
+        if (acc == null) return Profession.MINEUR;
+        Profession slot0 = acc.getActiveSlot0();
+        return slot0 != null ? slot0 : Profession.MINEUR;
+    }
+
+    private void loadSkillRanksFromAccount() {
+        PlayerAccount acc = currentAccount();
+        if (acc == null) {
+            Arrays.fill(skillRanks, 0);
+            return;
+        }
+        Profession prof = currentTalentProfession();
+        for (int i = 0; i < TREE_NODES.length; i++) {
+            skillRanks[i] = acc.getTalentRank(prof, TREE_NODES[i][0]);
+        }
+    }
+
     private void populateSketchSkillTree(@Nonnull UICommandBuilder uiBuilder,
                                          @Nonnull UIEventBuilder eventBuilder) {
+        loadSkillRanksFromAccount();
+        PlayerAccount acc = currentAccount();
+        Profession prof = currentTalentProfession();
         int invested = 0;
-        for (int r : skillRanks) {
-            invested += r;
-        }
-        int remainingPoints = Math.max(0, SKILL_POINTS_BUDGET - invested);
+        for (int r : skillRanks) invested += r;
+        int remainingPoints = acc == null
+            ? Math.max(0, SKILL_POINTS_BUDGET - invested)
+            : acc.availableTalentPoints(prof);
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
-            Message.raw("Points restants : " + remainingPoints));
+            Message.raw("Points restants : " + remainingPoints + " (" + prof.getDisplayName() + ")"));
 
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
@@ -355,7 +410,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         applySkillTreeSelectionAndHoverChrome(uiBuilder);
         uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
-            invested >= SKILL_POINTS_BUDGET
+            remainingPoints <= 0
                 || !skillTreeParentsAllowSelectedAllocation(skillRanks)
                 || skillRanks[selectedNode] >= MAX_RANK_PER_NODE);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
@@ -630,22 +685,51 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
             sendSkillTreeHoverChromeUpdate();
         } else if ("allocate".equals(data.action)) {
-            int spent = 0;
-            for (int r : skillRanks) {
-                spent += r;
-            }
-            if (spent < SKILL_POINTS_BUDGET
-                && skillRanks[selectedNode] < MAX_RANK_PER_NODE
+            loadSkillRanksFromAccount();
+            if (skillRanks[selectedNode] < MAX_RANK_PER_NODE
                 && skillTreeParentsAllowSelectedAllocation(skillRanks)) {
-                skillRanks[selectedNode]++;
+                ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+                if (mgr != null) {
+                    Profession prof = currentTalentProfession();
+                    String nodeId = TREE_NODES[selectedNode][0];
+                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, MAX_RANK_PER_NODE);
+                }
             }
             rebuild();
         } else if ("resetSkills".equals(data.action)) {
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr != null) {
+                mgr.resetTalents(playerRef.getUuid(), currentTalentProfession());
+            }
             Arrays.fill(skillRanks, 0);
             rebuild();
-        } else if ("professionReconvert".equals(data.action)) {
+        } else if ("professionReconvert".equals(data.action) && data.professionId != null) {
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr != null) {
+                Profession active = Profession.fromId(data.professionId);
+                if (active != null) {
+                    PlayerAccount acc = mgr.getAccount(playerRef.getUuid());
+                    if (acc != null) {
+                        int slot = active == acc.getActiveSlot1() ? 1 : 0;
+                        Profession replacement = chooseReconvertTarget(acc, active);
+                        if (replacement != null) {
+                            mgr.setActiveSlot(playerRef.getUuid(), slot, replacement);
+                        }
+                    }
+                }
+            }
             rebuild();
         }
+    }
+
+    private static Profession chooseReconvertTarget(@Nonnull PlayerAccount acc, @Nonnull Profession current) {
+        for (Profession p : Profession.bases()) {
+            if (p == current) continue;
+            if (p == acc.getActiveSlot0()) continue;
+            if (p == acc.getActiveSlot1()) continue;
+            return p;
+        }
+        return null;
     }
 
     public static final class Data {

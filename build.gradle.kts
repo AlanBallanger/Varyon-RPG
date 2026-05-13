@@ -18,6 +18,8 @@ dependencies {
     compileOnly(libs.jetbrains.annotations)
     compileOnly(libs.jspecify)
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+
+    implementation("org.xerial:sqlite-jdbc:3.46.1.3")
 }
 
 hytale {
@@ -51,6 +53,10 @@ val fatJar = tasks.register<Jar>("fatJar") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     from(sourceSets.main.get().output)
+
+    val implementationJars = configurations.runtimeClasspath.get()
+        .filter { it.name.contains("sqlite-jdbc") }
+    from({ implementationJars.map { zipTree(it) } })
 
     exclude("META-INF/versions/**")
     exclude("META-INF/*.DSA")
