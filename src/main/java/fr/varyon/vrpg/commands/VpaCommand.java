@@ -21,7 +21,7 @@ public final class VpaCommand extends AbstractCommandCollection {
 
     @SuppressWarnings("unused")
     public VpaCommand(@Nonnull VaryonRpgPlugin plugin) {
-        super("vpa", "Varyon RPG — Panneau principal");
+        super("vpp", "Varyon RPG — Panneau principal");
         setPermissionGroup(GameMode.Creative);
     }
 

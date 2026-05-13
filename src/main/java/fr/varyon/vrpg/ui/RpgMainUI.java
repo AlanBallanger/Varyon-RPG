@@ -30,7 +30,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String NODE_BORDER_SELECTION = "#FFFFFFFF";
     private static final String NODE_BORDER_ALLOCATED = "#31C677FF";
 
-    private static final String NODE_VEIL = "#14182140";
+    private static final String NODE_VEIL = "#14182166";
 
     private static final PatchStyle NODE_FILL_STYLE =
         new PatchStyle().setColor(Value.of(NODE_FILL));
@@ -65,11 +65,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int RANK_LABEL_H = 14;
     private static final int RANK_LABEL_GAP_TOP = -1;
     private static final int RANK_LABEL_SHIFT_RIGHT = 48;
-
-    private static final int SKILL_NODE_HIT_W =
-        RANK_LABEL_SHIFT_RIGHT + RANK_LABEL_W;
-    private static final int SKILL_NODE_HIT_H =
-        SLOT + RANK_LABEL_GAP_TOP + RANK_LABEL_H;
 
     private static final int[][] SLOT_LT = {
         {264, 32},
@@ -330,7 +325,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         setAnchor(ui, "#SkillTreeNode" + id + "Veil",
             slotLeft + FILL_INSET, slotTop + FILL_INSET, FILL_SIZE, FILL_SIZE);
         setAnchor(ui, "#SkillTreeNode" + id,
-            slotLeft, slotTop, SKILL_NODE_HIT_W, SKILL_NODE_HIT_H);
+            slotLeft, slotTop, SLOT, SLOT);
     }
 
     private static void positionSkillRank(@Nonnull UICommandBuilder ui,

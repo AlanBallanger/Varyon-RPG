@@ -174,10 +174,10 @@
     Background: #000000(0.0)
   ),
   Hovered: (
-    Background: #FFFFFF(0.14)
+    Background: #000000(0.0)
   ),
   Pressed: (
-    Background: #FFFFFF(0.22)
+    Background: #000000(0.0)
   ),
   Disabled: (
     Background: #000000(0.0)
