@@ -284,7 +284,7 @@ Group {
 
           Label {
             Style: @TabLabelStyle;
-            Text: "Compétences";
+            Text: "Talents";
           }
         }
 
@@ -294,6 +294,283 @@ Group {
         LayoutMode: Top;
         FlexWeight: 1;
         Visible: true;
+        Anchor: (Top: 8);
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Full;
+          Background: @FubsysRpgPanelShade;
+          Padding: (Full: 12);
+
+          Label #ProfessionSectionTitle {
+            Style: @SectionTitleStyle;
+            Text: "MES MÉTIERS";
+          }
+
+          Label #ProfessionSectionSubtitle {
+            Anchor: (Top: 8);
+            Style: (FontSize: 13, TextColor: @FubsysRpgInkMuted);
+            Text: "";
+          }
+
+          Group {
+            Anchor: (Top: 14);
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group #ProfessionCard0 {
+              Anchor: (Height: 120);
+              LayoutMode: Full;
+              Background: @FubsysRpgCardShade;
+              Padding: (Full: 2);
+
+              Group #ProfessionCard0Icon {
+                Anchor: (Left: 14, Top: 20, Width: 48, Height: 48);
+                Background: @FubsysRpgPanelShade;
+              }
+
+              Label #ProfessionCard0Name {
+                Anchor: (Left: 74, Top: 18, Right: 200, Height: 28);
+                Style: (FontSize: 20, TextColor: @FubsysRpgInkStrong, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard0Level {
+                Anchor: (Right: 16, Top: 14, Width: 120, Height: 26);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard0XpText {
+                Anchor: (Right: 16, Top: 42, Width: 220, Height: 22);
+                Style: (FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: End);
+                Text: "";
+              }
+
+              Group #ProfessionCard0XpTrack {
+                Anchor: (Left: 74, Right: 250, Top: 64, Height: 10);
+                Background: PatchStyle(TexturePath: "Common/ProgressBarEmpty.png", Border: 4);
+                LayoutMode: Left;
+                Group {
+                  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                  ProgressBar #ProfessionCard0Xp {
+                    BarTexturePath: "Common/ProgressBarFill.png";
+                    Value: 0.0;
+                  }
+                }
+              }
+
+              Label #ProfessionCard0Talents {
+                Anchor: (Left: 74, Top: 86, Right: 200, Height: 22);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Button #ProfessionCard0Reconvert {
+                Anchor: (Right: 14, Top: 82, Width: 132, Height: 26);
+                Style: @PlusButtonStyle;
+                Group {
+                  LayoutMode: Middle;
+                  Label {
+                    Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+                    Text: "Reconversion";
+                  }
+                }
+              }
+            }
+
+            Group { Anchor: (Height: 12); Background: #000000(0); }
+
+            Group #ProfessionCard1 {
+              Anchor: (Height: 120);
+              LayoutMode: Full;
+              Background: @FubsysRpgCardShade;
+              Padding: (Full: 2);
+
+              Group #ProfessionCard1Icon {
+                Anchor: (Left: 14, Top: 20, Width: 48, Height: 48);
+                Background: @FubsysRpgPanelShade;
+              }
+
+              Label #ProfessionCard1Name {
+                Anchor: (Left: 74, Top: 18, Right: 200, Height: 28);
+                Style: (FontSize: 20, TextColor: @FubsysRpgInkStrong, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard1Level {
+                Anchor: (Right: 16, Top: 14, Width: 120, Height: 26);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard1XpText {
+                Anchor: (Right: 16, Top: 42, Width: 220, Height: 22);
+                Style: (FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: End);
+                Text: "";
+              }
+
+              Group #ProfessionCard1XpTrack {
+                Anchor: (Left: 74, Right: 250, Top: 64, Height: 10);
+                Background: PatchStyle(TexturePath: "Common/ProgressBarEmpty.png", Border: 4);
+                LayoutMode: Left;
+                Group {
+                  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                  ProgressBar #ProfessionCard1Xp {
+                    BarTexturePath: "Common/ProgressBarFill.png";
+                    Value: 0.0;
+                  }
+                }
+              }
+
+              Label #ProfessionCard1Talents {
+                Anchor: (Left: 74, Top: 86, Right: 200, Height: 22);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Button #ProfessionCard1Reconvert {
+                Anchor: (Right: 14, Top: 82, Width: 132, Height: 26);
+                Style: @PlusButtonStyle;
+                Group {
+                  LayoutMode: Middle;
+                  Label {
+                    Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+                    Text: "Reconversion";
+                  }
+                }
+              }
+            }
+
+            Group { Anchor: (Height: 12); Background: #000000(0); }
+
+            Group #ProfessionCard2 {
+              Anchor: (Height: 120);
+              LayoutMode: Full;
+              Background: @FubsysRpgCardShade;
+              Padding: (Full: 2);
+
+              Group #ProfessionCard2Icon {
+                Anchor: (Left: 14, Top: 20, Width: 48, Height: 48);
+                Background: @FubsysRpgPanelShade;
+              }
+
+              Label #ProfessionCard2Name {
+                Anchor: (Left: 74, Top: 18, Right: 200, Height: 28);
+                Style: (FontSize: 20, TextColor: @FubsysRpgInkStrong, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard2Level {
+                Anchor: (Right: 16, Top: 14, Width: 120, Height: 26);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard2XpText {
+                Anchor: (Right: 16, Top: 42, Width: 220, Height: 22);
+                Style: (FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: End);
+                Text: "";
+              }
+
+              Group #ProfessionCard2XpTrack {
+                Anchor: (Left: 74, Right: 250, Top: 64, Height: 10);
+                Background: PatchStyle(TexturePath: "Common/ProgressBarEmpty.png", Border: 4);
+                LayoutMode: Left;
+                Group {
+                  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                  ProgressBar #ProfessionCard2Xp {
+                    BarTexturePath: "Common/ProgressBarFill.png";
+                    Value: 0.0;
+                  }
+                }
+              }
+
+              Label #ProfessionCard2Talents {
+                Anchor: (Left: 74, Top: 86, Right: 200, Height: 22);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Button #ProfessionCard2Reconvert {
+                Anchor: (Right: 14, Top: 82, Width: 132, Height: 26);
+                Style: @PlusButtonStyle;
+                Group {
+                  LayoutMode: Middle;
+                  Label {
+                    Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+                    Text: "Reconversion";
+                  }
+                }
+              }
+            }
+
+            Group { Anchor: (Height: 12); Background: #000000(0); }
+
+            Group #ProfessionCard3 {
+              Anchor: (Height: 120);
+              LayoutMode: Full;
+              Background: @FubsysRpgCardShade;
+              Padding: (Full: 2);
+
+              Group #ProfessionCard3Icon {
+                Anchor: (Left: 14, Top: 20, Width: 48, Height: 48);
+                Background: @FubsysRpgPanelShade;
+              }
+
+              Label #ProfessionCard3Name {
+                Anchor: (Left: 74, Top: 18, Right: 200, Height: 28);
+                Style: (FontSize: 20, TextColor: @FubsysRpgInkStrong, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard3Level {
+                Anchor: (Right: 16, Top: 14, Width: 120, Height: 26);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Label #ProfessionCard3XpText {
+                Anchor: (Right: 16, Top: 42, Width: 220, Height: 22);
+                Style: (FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: End);
+                Text: "";
+              }
+
+              Group #ProfessionCard3XpTrack {
+                Anchor: (Left: 74, Right: 250, Top: 64, Height: 10);
+                Background: PatchStyle(TexturePath: "Common/ProgressBarEmpty.png", Border: 4);
+                LayoutMode: Left;
+                Group {
+                  Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                  ProgressBar #ProfessionCard3Xp {
+                    BarTexturePath: "Common/ProgressBarFill.png";
+                    Value: 0.0;
+                  }
+                }
+              }
+
+              Label #ProfessionCard3Talents {
+                Anchor: (Left: 74, Top: 86, Right: 200, Height: 22);
+                Style: (FontSize: 14, TextColor: @FubsysRpgGold, RenderBold: true, VerticalAlignment: Center);
+                Text: "";
+              }
+
+              Button #ProfessionCard3Reconvert {
+                Anchor: (Right: 14, Top: 82, Width: 132, Height: 26);
+                Style: @PlusButtonStyle;
+                Group {
+                  LayoutMode: Middle;
+                  Label {
+                    Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+                    Text: "Reconversion";
+                  }
+                }
+              }
+            }
+          }
+
+        }
+
       }
 
 
@@ -311,13 +588,13 @@ Group {
 
           Label {
             Style: @SectionTitleStyle;
-            Text: "Arbre de compétences";
+            Text: "Arbre de talents";
           }
 
           Label #SkillTreePointsValue {
             Anchor: (Top: 24);
             Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
-            Text: "Points investis : 0";
+            Text: "Points restants : 0";
           }
 
           Group #SkillTreeCanvas {
@@ -1379,7 +1656,7 @@ Group {
 
           Label {
             Style: @SectionTitleStyle;
-            Text: "Compétence";
+            Text: "Talent";
           }
 
           Label #SkillTreeSelectedTitle {

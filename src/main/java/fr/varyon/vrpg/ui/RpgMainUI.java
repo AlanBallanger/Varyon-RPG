@@ -75,6 +75,41 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int FILL_SIZE = 70;
     private static final int ICON_SIZE = 40;
     private static final int MAX_RANK_PER_NODE = 5;
+    private static final int SKILL_POINTS_BUDGET = 35;
+    private static final int PROFESSION_CARD_SLOTS = 4;
+
+    private static final class ProfessionCardData {
+
+        final String label;
+        final String iconFile;
+        final int level;
+        final int xpTowardNext;
+        final int xpForNextLevel;
+        final int talentsUnlocked;
+
+        ProfessionCardData(String label,
+                           String iconFile,
+                           int level,
+                           int xpTowardNext,
+                           int xpForNextLevel,
+                           int talentsUnlocked) {
+            this.label = label;
+            this.iconFile = iconFile;
+            this.level = level;
+            this.xpTowardNext = xpTowardNext;
+            this.xpForNextLevel = xpForNextLevel;
+            this.talentsUnlocked = talentsUnlocked;
+        }
+    }
+
+    private static final ProfessionCardData[] PROFESSION_DEMO_ROWS = {
+        new ProfessionCardData("Chasseur", "Heavy_Swing_Icon.png", 20,
+            3020, 6510, 3),
+        new ProfessionCardData("Mineur", "Brutal_Charge_Icon.png", 22,
+            4800, 8200, 8),
+        new ProfessionCardData("Forgeron", "Warrior_Oath_Icon.png", 15,
+            1200, 4000, 5),
+    };
 
     private static final int RANK_LABEL_W = 44;
     private static final int RANK_LABEL_H = 14;
@@ -140,8 +175,49 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabSkillsButton",
             EventData.of("Action", "tab").append("Tab", "skills"), false);
 
-        if ("skills".equals(activeTab)) {
+        if ("character".equals(activeTab)) {
+            populateCharacterProfessions(uiBuilder, eventBuilder);
+        } else if ("skills".equals(activeTab)) {
             populateSketchSkillTree(uiBuilder, eventBuilder);
+        }
+    }
+
+    private void populateCharacterProfessions(@Nonnull UICommandBuilder uiBuilder,
+                                              @Nonnull UIEventBuilder eventBuilder) {
+        uiBuilder.set("#ProfessionSectionSubtitle.TextSpans",
+            Message.raw("Gérez vos métiers et talents."));
+        uiBuilder.set("#ProfessionSectionSubtitle.Visible", true);
+
+        int shown = Math.min(PROFESSION_DEMO_ROWS.length, PROFESSION_CARD_SLOTS);
+        for (int i = 0; i < PROFESSION_CARD_SLOTS; i++) {
+            boolean visible = i < shown;
+            uiBuilder.set("#ProfessionCard" + i + ".Visible", visible);
+            if (!visible) {
+                continue;
+            }
+            ProfessionCardData row = PROFESSION_DEMO_ROWS[i];
+            PatchStyle iconStyle = new PatchStyle()
+                .setTexturePath(Value.of(ICON_BASE + row.iconFile));
+            uiBuilder.setObject("#ProfessionCard" + i + "Icon.Background", iconStyle);
+            uiBuilder.set("#ProfessionCard" + i + "Name.TextSpans", Message.raw(row.label));
+            uiBuilder.set("#ProfessionCard" + i + "Level.TextSpans",
+                Message.raw("Nv." + row.level));
+            uiBuilder.set("#ProfessionCard" + i + "XpText.TextSpans",
+                Message.raw(row.xpTowardNext + " / " + row.xpForNextLevel + " XP"));
+            uiBuilder.set("#ProfessionCard" + i + "Talents.TextSpans",
+                Message.raw("Talents débloqués : " + row.talentsUnlocked));
+            double frac = row.xpForNextLevel <= 0
+                ? 0.0
+                : Math.min(1.0, (double) row.xpTowardNext / (double) row.xpForNextLevel);
+            float xpFrac = (float) frac;
+            uiBuilder.set("#ProfessionCard" + i + "Xp.Value", xpFrac);
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating,
+                "#ProfessionCard" + i + "Reconvert",
+                EventData.of("Action", "professionReconvert")
+                    .append("ProfessionId", Integer.toString(i)),
+                false
+            );
         }
     }
 
@@ -151,8 +227,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         for (int r : skillRanks) {
             invested += r;
         }
+        int remainingPoints = Math.max(0, SKILL_POINTS_BUDGET - invested);
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
-            Message.raw("Points investis : " + invested));
+            Message.raw("Points restants : " + remainingPoints));
 
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
@@ -250,7 +327,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         uiBuilder.set("#SkillTreeAttribuerButton.Visible", true);
         uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
-            !skillTreeParentsAllowSelectedAllocation(skillRanks)
+            invested >= SKILL_POINTS_BUDGET
+                || !skillTreeParentsAllowSelectedAllocation(skillRanks)
                 || skillRanks[selectedNode] >= MAX_RANK_PER_NODE);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
         eventBuilder.addEventBinding(
@@ -509,7 +587,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
             sendSkillTreeHoverChromeUpdate();
         } else if ("allocate".equals(data.action)) {
-            if (skillRanks[selectedNode] < MAX_RANK_PER_NODE
+            int spent = 0;
+            for (int r : skillRanks) {
+                spent += r;
+            }
+            if (spent < SKILL_POINTS_BUDGET
+                && skillRanks[selectedNode] < MAX_RANK_PER_NODE
                 && skillTreeParentsAllowSelectedAllocation(skillRanks)) {
                 skillRanks[selectedNode]++;
             }
@@ -532,11 +615,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 .addField(new KeyedCodec<>("Node", Codec.STRING),
                     (d, v) -> d.node = v,
                     d -> d.node)
+                .addField(new KeyedCodec<>("ProfessionId", Codec.STRING),
+                    (d, v) -> d.professionId = v,
+                    d -> d.professionId)
                 .build();
 
         private String action;
         private String tab;
         private String node;
+        private String professionId;
 
         public Data() {}
     }
