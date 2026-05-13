@@ -73,7 +73,7 @@ public final class VpaAdminCommand extends AbstractAsyncCommand {
         Profession p = Profession.fromId(id.toLowerCase(Locale.ROOT));
         if (p == null) {
             sender.sendMessage(Message.raw("Métier inconnu : " + id +
-                ". Valides : mineur, fermier, forestier, chasseur, forgeron, alchimiste, architecte, cuisinier.")
+                ". Valides : mineur, fermier, forestier, chasseur, forgeron, alchimiste, artisan, cuisinier, artisan")
                 .color(Color.RED));
         }
         return p;

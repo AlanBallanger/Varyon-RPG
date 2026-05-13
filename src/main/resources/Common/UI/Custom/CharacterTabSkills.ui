@@ -209,19 +209,37 @@ $C = "Common.ui";
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
   LayoutMode: Top;
-    Label {
-      Style: @SectionTitleStyle;
-      Text: "Arbre de talents";
-    }
 
-    Label #SkillTreePointsValue {
-      Anchor: (Top: 24);
-      Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
-      Text: "Points restants : 0";
+  Group {
+    LayoutMode: Left;
+    Anchor: (Left: 0, Right: 0, Height: 48);
+    Padding: (Right: 8, Top: 2);
+
+    Group { FlexWeight: 1; }
+
+    Group {
+      LayoutMode: Top;
+
+      Label {
+        Style: @SectionTitleStyle;
+        Text: "Arbre de talents";
+      }
+
+      Label #SkillTreePointsValue {
+        Anchor: (Top: 2);
+        Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+        Text: "Points restants : 0";
+      }
     }
+  }
+
+  Group {
+    LayoutMode: Left;
+    FlexWeight: 1;
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
 
     Group #SkillTreeCanvas {
-      Anchor: (Left: 0, Right: 0, Top: 56, Bottom: 0);
+      FlexWeight: 1;
       LayoutMode: Full;
 
       Group #SkillTreePager {
@@ -1267,73 +1285,74 @@ Group {
       Button #SkillTreeNode63 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
     }
-  }
 
-  Group { Anchor: (Width: 16); }
-
-  Group {
-    Anchor: (Width: 420);
-    LayoutMode: Top;
-    Background: @FubsysRpgPanelShade;
-    Padding: (Full: 12);
-
-    Label {
-      Style: @SectionTitleStyle;
-      Text: "Talent";
-    }
-
-    Label #SkillTreeSelectedTitle {
-      Anchor: (Top: 10);
-      Style: (...@SubHeadingStyle, FontSize: 22, TextColor: @FubsysRpgInkStrong, RenderBold: true);
-      Text: "";
-    }
-
-    Group #SkillTreeSelectedDescriptionGroup {
-      LayoutMode: Top;
-      Anchor: (Top: 6);
-
-      Label #SkillTreeSelectedDescriptionLine0 { Style: @MetaStyle; Text: ""; Visible: false; }
-      Label #SkillTreeSelectedDescriptionLine1 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-      Label #SkillTreeSelectedDescriptionLine2 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-      Label #SkillTreeSelectedDescriptionLine3 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-      Label #SkillTreeSelectedDescriptionLine4 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-      Label #SkillTreeSelectedDescriptionLine5 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-    }
-
-    Label #SkillTreeSelectedStatus {
-      Anchor: (Top: 10);
-      Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted);
-      Text: "";
-    }
-
-    Group { FlexWeight: 1; }
+    Group { Anchor: (Width: 16); }
 
     Group {
-      LayoutMode: Full;
-      Anchor: (Top: 10, Height: 28);
+      Anchor: (Width: 420);
+      LayoutMode: Top;
+      Background: @FubsysRpgPanelShade;
+      Padding: (Full: 12);
 
-      Button #UnlockSkillTreeButton {
-        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-        Style: @PlusButtonStyle;
-        Visible: false;
-
-        Label #UnlockSkillTreeButtonLabel {
-          Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-          Text: "Débloquer";
-        }
+      Label {
+        Style: @SectionTitleStyle;
+        Text: "Talent";
       }
 
-      Button #UnlockSkillTreeButtonDisabled {
-        Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-        Style: @BlockedButtonStyle;
-        TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
-        TooltipText: "";
-        Visible: false;
+      Label #SkillTreeSelectedTitle {
+        Anchor: (Top: 10);
+        Style: (...@SubHeadingStyle, FontSize: 22, TextColor: @FubsysRpgInkStrong, RenderBold: true);
+        Text: "";
+      }
 
-        Label #UnlockSkillTreeButtonDisabledLabel {
-          Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-          Text: "Débloqué";
+      Group #SkillTreeSelectedDescriptionGroup {
+        LayoutMode: Top;
+        Anchor: (Top: 6);
+
+        Label #SkillTreeSelectedDescriptionLine0 { Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine1 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine2 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine3 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine4 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine5 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+      }
+
+      Label #SkillTreeSelectedStatus {
+        Anchor: (Top: 10);
+        Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted);
+        Text: "";
+      }
+
+      Group { FlexWeight: 1; }
+
+      Group {
+        LayoutMode: Full;
+        Anchor: (Top: 10, Height: 28);
+
+        Button #UnlockSkillTreeButton {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          Style: @PlusButtonStyle;
+          Visible: false;
+
+          Label #UnlockSkillTreeButtonLabel {
+            Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Text: "Débloquer";
+          }
+        }
+
+        Button #UnlockSkillTreeButtonDisabled {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          Style: @BlockedButtonStyle;
+          TextTooltipStyle: (MaxWidth: 340, LabelStyle: (FontSize: 13, Wrap: true));
+          TooltipText: "";
+          Visible: false;
+
+          Label #UnlockSkillTreeButtonDisabledLabel {
+            Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Text: "Débloqué";
+          }
         }
       }
     }
+  }
 }

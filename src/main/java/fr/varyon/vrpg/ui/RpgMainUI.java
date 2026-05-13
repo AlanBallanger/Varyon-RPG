@@ -94,7 +94,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         "Chasseur",
         "Forgeron",
         "Alchimiste",
-        "Architecte",
+        "Artisan",
         "Cuisinier",
     };
 
@@ -213,7 +213,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         Profession.CHASSEUR,
         Profession.FORGERON,
         Profession.ALCHIMISTE,
-        Profession.ARCHITECTE,
+        Profession.ARTISAN,
         Profession.CUISINIER,
     };
 
@@ -245,6 +245,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 ProfessionProgress prog = acc.getProgress(active);
                 uiBuilder.set(p + ".Visible", true);
                 uiBuilder.set(p + "Name.TextSpans", Message.raw(active.getDisplayName()));
+                uiBuilder.set(p + "Icon.ItemId", active.getIconItemId());
                 uiBuilder.set(p + "Level.TextSpans",
                     Message.raw("Niveau " + prog.getLevel()
                         + " \u2022 " + prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP"));
@@ -267,6 +268,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             String id = "#ProfessionCatalogCard" + i;
             Profession p = CATALOG_ORDER[i];
             uiBuilder.set(id + "Name.TextSpans", Message.raw(p.getDisplayName()));
+            uiBuilder.set(id + "Icon.ItemId", p.getIconItemId());
             int level = acc == null ? 1 : acc.getProgress(p).getLevel();
             uiBuilder.set(id + "Level.TextSpans", Message.raw("Niveau " + level));
 

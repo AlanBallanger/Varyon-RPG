@@ -7,35 +7,39 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum Profession {
-    MINEUR     ("mineur",     "Mineur",     true,  null,     0),
-    FERMIER    ("fermier",    "Fermier",    true,  null,     0),
-    FORESTIER  ("forestier",  "Forestier",  true,  null,     0),
-    CHASSEUR   ("chasseur",   "Chasseur",   true,  null,     0),
-    FORGERON   ("forgeron",   "Forgeron",   false, "mineur",    15),
-    ALCHIMISTE ("alchimiste", "Alchimiste", false, "fermier",   15),
-    ARCHITECTE ("architecte", "Architecte", false, "forestier", 15),
-    CUISINIER  ("cuisinier",  "Cuisinier",  false, "chasseur",  15);
+    MINEUR     ("mineur",     "Mineur",     true,  null,        0, "Tool_Pickaxe_Adamantite"),
+    FERMIER    ("fermier",    "Fermier",    true,  null,        0, "Plant_Crop_Wheat_Item"),
+    FORESTIER  ("forestier",  "Forestier",  true,  null,        0, "Tool_Hatchet_Adamantite"),
+    CHASSEUR   ("chasseur",   "Chasseur",   true,  null,        0, "Food_Wildmeat_Raw"),
+    FORGERON   ("forgeron",   "Forgeron",   false, "mineur",    15, "Tool_Hammer_Iron"),
+    ALCHIMISTE ("alchimiste", "Alchimiste", false, "fermier",   15, "Potion_Regen_Mana"),
+    ARTISAN    ("artisan",    "Artisan",    false, "forestier", 15, "Utility_Leather_Backpack"),
+    CUISINIER  ("cuisinier",  "Cuisinier",  false, "chasseur",  15, "Food_Pie_Pumpkin");
 
     private final String id;
     private final String displayName;
     private final boolean base;
     private final String prereqId;
     private final int prereqLevel;
+    private final String iconItemId;
 
     Profession(@Nonnull String id,
                @Nonnull String displayName,
                boolean base,
                @Nullable String prereqId,
-               int prereqLevel) {
+               int prereqLevel,
+               @Nonnull String iconItemId) {
         this.id = id;
         this.displayName = displayName;
         this.base = base;
         this.prereqId = prereqId;
         this.prereqLevel = prereqLevel;
+        this.iconItemId = iconItemId;
     }
 
     @Nonnull public String getId()          { return id; }
     @Nonnull public String getDisplayName() { return displayName; }
+    @Nonnull public String getIconItemId()  { return iconItemId; }
     public boolean isBase()                  { return base; }
     public boolean isSpecialized()           { return !base; }
     public int getPrereqLevel()              { return prereqLevel; }
@@ -51,7 +55,13 @@ public enum Profession {
 
     @Nullable
     public static Profession fromId(@Nullable String id) {
-        return id == null ? null : BY_ID.get(id);
+        if (id == null) {
+            return null;
+        }
+        if ("architecte".equals(id)) {
+            id = "artisan";
+        }
+        return BY_ID.get(id);
     }
 
     @Nonnull

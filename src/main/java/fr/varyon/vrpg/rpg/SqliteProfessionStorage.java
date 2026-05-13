@@ -65,6 +65,7 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                     st.execute("PRAGMA foreign_keys=ON");
                 }
                 createTables();
+                migrateArchitecteToArtisan();
 
                 LOGGER.at(Level.INFO).log("SQLite database ready at %s", dbPath);
             } catch (IOException | SQLException e) {
@@ -109,6 +110,15 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                   PRIMARY KEY (uuid, profession_id, node_id)
                 )
             """);
+        }
+    }
+
+    private void migrateArchitecteToArtisan() throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            st.executeUpdate("UPDATE player_account SET active_slot_0 = 'artisan' WHERE active_slot_0 = 'architecte'");
+            st.executeUpdate("UPDATE player_account SET active_slot_1 = 'artisan' WHERE active_slot_1 = 'architecte'");
+            st.executeUpdate("UPDATE player_profession SET profession_id = 'artisan' WHERE profession_id = 'architecte'");
+            st.executeUpdate("UPDATE player_talent SET profession_id = 'artisan' WHERE profession_id = 'architecte'");
         }
     }
 
