@@ -50,6 +50,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final int RAIL = 4;
+    private static final int STEM_DOWN_FROM_PARENT = 15;
+    private static final int STEM_DOWN_TO_CHILD = 13;
+    private static final int STEM_COLUMN = 30;
+
     private static final int SLOT = 76;
     private static final int BTN_PAD = 6;
     private static final int ICON_INSET = 18;
@@ -61,22 +65,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private static final int RANK_LABEL_W = 44;
     private static final int RANK_LABEL_H = 14;
-    private static final int RANK_LABEL_GAP_TOP = 2;
+    private static final int RANK_LABEL_GAP_TOP = -2;
     private static final int RANK_LABEL_SHIFT_RIGHT = 48;
 
     private static final int[][] SLOT_LT = {
         {264, 32},
         {444, 32},
-        {354, 130},
-        {204, 228},
-        {354, 228},
-        {504, 228},
-        {204, 326},
-        {354, 326},
-        {504, 326},
-        {354, 424},
-        {264, 522},
-        {444, 522},
+        {354, 140},
+        {204, 248},
+        {354, 248},
+        {504, 248},
+        {204, 354},
+        {354, 354},
+        {504, 354},
+        {354, 462},
+        {264, 570},
+        {444, 570},
     };
 
     private static final String[][] TREE_NODES = {
@@ -328,13 +332,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                           int yBotB,
                                           int cxMid,
                                           int yTopMid) {
-        int yH = elbowY(Math.min(yBotA, yBotB), yTopMid);
+        int yBotMin = Math.min(yBotA, yBotB);
+        int barTop = yBotMin + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
 
-        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, yH - yBotA);
-        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, yH - yBotB);
+        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxA, cxB));
-        showEdge(ui, seg++, barL, yH - 2, vx(Math.max(cxA, cxB)) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxMid), yH + 2, RAIL, yTopMid - (yH + 2));
+        showEdge(ui, seg++, barL, barTop, vx(Math.max(cxA, cxB)) - barL + RAIL, RAIL);
+        showEdge(ui, seg++, vx(cxMid), barBot, RAIL, STEM_DOWN_TO_CHILD);
         return seg;
     }
 
@@ -346,15 +352,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                               int cxM,
                                               int cxR,
                                               int yTopChildRow) {
-        int ySplit = elbowY(yBotP, yTopChildRow);
+        int barTop = yBotP + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
 
-        showEdge(ui, seg++, vx(cxP), yBotP, RAIL, ySplit - yBotP);
+        showEdge(ui, seg++, vx(cxP), yBotP, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxL, Math.min(cxM, cxR)));
-        showEdge(ui, seg++, barL, ySplit - 2,
+        showEdge(ui, seg++, barL, barTop,
             vx(Math.max(cxL, Math.max(cxM, cxR))) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxL), ySplit + 2, RAIL, yTopChildRow - (ySplit + 2));
-        showEdge(ui, seg++, vx(cxM), ySplit + 2, RAIL, yTopChildRow - (ySplit + 2));
-        showEdge(ui, seg++, vx(cxR), ySplit + 2, RAIL, yTopChildRow - (ySplit + 2));
+        showEdge(ui, seg++, vx(cxL), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        showEdge(ui, seg++, vx(cxM), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        showEdge(ui, seg++, vx(cxR), barBot, RAIL, STEM_DOWN_TO_CHILD);
         return seg;
     }
 
@@ -363,7 +370,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                                int cx,
                                                int yFrom,
                                                int yTo) {
-        showEdge(ui, seg++, vx(cx), yFrom, RAIL, yTo - yFrom);
+        showEdge(ui, seg++, vx(cx), yFrom, RAIL, STEM_COLUMN);
         return seg;
     }
 
@@ -377,16 +384,17 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                             int yBotC,
                                             int cxMid,
                                             int yTopMid) {
-        int bottomMin = Math.min(yBotA, Math.min(yBotB, yBotC));
-        int yH = elbowY(bottomMin, yTopMid);
+        int yBotMin = Math.min(yBotA, Math.min(yBotB, yBotC));
+        int barTop = yBotMin + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
 
-        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, yH - yBotA);
-        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, yH - yBotB);
-        showEdge(ui, seg++, vx(cxC), yBotC, RAIL, yH - yBotC);
+        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxC), yBotC, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxA, Math.min(cxB, cxC)));
-        showEdge(ui, seg++, barL, yH - 2,
+        showEdge(ui, seg++, barL, barTop,
             vx(Math.max(cxA, Math.max(cxB, cxC))) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxMid), yH + 2, RAIL, yTopMid - (yH + 2));
+        showEdge(ui, seg++, vx(cxMid), barBot, RAIL, STEM_DOWN_TO_CHILD);
         return seg;
     }
 
@@ -397,24 +405,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                           int cxL,
                                           int cxR,
                                           int yTopChildRow) {
-        int yH = elbowY(yBotP, yTopChildRow);
+        int barTop = yBotP + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
 
-        showEdge(ui, seg++, vx(cxP), yBotP, RAIL, yH - yBotP);
+        showEdge(ui, seg++, vx(cxP), yBotP, RAIL, STEM_DOWN_FROM_PARENT);
         int barL = vx(Math.min(cxL, cxR));
-        showEdge(ui, seg++, barL, yH - 2, vx(Math.max(cxL, cxR)) - barL + RAIL, RAIL);
-        showEdge(ui, seg++, vx(cxL), yH + 2, RAIL, yTopChildRow - (yH + 2));
-        showEdge(ui, seg++, vx(cxR), yH + 2, RAIL, yTopChildRow - (yH + 2));
+        showEdge(ui, seg++, barL, barTop, vx(Math.max(cxL, cxR)) - barL + RAIL, RAIL);
+        showEdge(ui, seg++, vx(cxL), barBot, RAIL, STEM_DOWN_TO_CHILD);
+        showEdge(ui, seg++, vx(cxR), barBot, RAIL, STEM_DOWN_TO_CHILD);
         return seg;
-    }
-
-    private static int elbowY(int yBottomRail, int yTopChildRow) {
-        int mid = yBottomRail + (yTopChildRow - yBottomRail) / 2;
-        int lo = yBottomRail + RAIL + 4;
-        int hi = yTopChildRow - RAIL - 6;
-        if (hi <= lo) {
-            return (lo + hi) >>> 1;
-        }
-        return Math.min(Math.max(mid, lo), hi);
     }
 
     private static int vx(int cxCenter) {

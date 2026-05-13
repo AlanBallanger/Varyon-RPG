@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Specification-Title: Varyon-RPG
-Specification-Version: 1.0.0
-Implementation-Title: Varyon-RPG
-Implementation-Version: 1.0.0
-
