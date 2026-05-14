@@ -83,7 +83,7 @@ Group {
         }
 
         Group #ProfessionActiveCard0ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 10);
+          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 14);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard0ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -150,7 +150,7 @@ Group {
         }
 
         Group #ProfessionActiveCard1ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 10);
+          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 14);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard1ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -292,12 +292,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard0ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard0ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard0Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -358,12 +369,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard1ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard1ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard1Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -424,12 +446,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard2ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard2ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard2Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -490,12 +523,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard3ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard3ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard3Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -566,12 +610,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard4ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard4ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard4Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -632,12 +687,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard5ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard5ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard5Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -698,12 +764,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard6ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard6ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard6Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }
@@ -764,12 +841,23 @@ Group {
           }
 
           Group #ProfessionCatalogCard7ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 11);
             Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
             ProgressBar #ProfessionCatalogCard7ProgBarFill {
               Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
               Value: 0.0;
               BarTexturePath: "Elements/Gauge_Fill.png";
+            }
+          }
+
+          Button #ProfessionCatalogCard7Select {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Style: @ProfessionTabSecondaryButton;
+            Visible: false;
+
+            Label {
+              Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+              Text: "SELECTIONNER";
             }
           }
         }

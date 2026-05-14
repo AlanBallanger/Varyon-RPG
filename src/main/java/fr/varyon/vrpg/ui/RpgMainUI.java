@@ -166,6 +166,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private int selectedNode = 2;
     private int hoveredNode = -1;
     private final int[] skillRanks = new int[TREE_NODES.length];
+    private String reconvertSourceId = null;
 
     public RpgMainUI(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, Data.CODEC);
@@ -282,6 +283,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
         }
 
+        boolean selectMode = reconvertSourceId != null
+            && Profession.fromId(reconvertSourceId) != null;
+        if (!selectMode) reconvertSourceId = null;
+
         for (int i = 0; i < PROFESSION_CATALOG_SLOTS; i++) {
             String id = "#ProfessionCatalogCard" + i;
             Profession p = CATALOG_ORDER[i];
@@ -292,9 +297,20 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             uiBuilder.set(id + "Level.TextSpans", Message.raw(("Niveau " + level).toUpperCase(Locale.FRENCH)));
             long catXpInLevel = catProg == null ? 0L : catProg.getXpInLevel();
             long catXpToNext = catProg == null ? 0L : catProg.getXpToNextLevel();
-            applyGaugeBar(uiBuilder,
-                id + "ProgBarFill",
-                catXpInLevel, catXpToNext);
+            applyGaugeBar(uiBuilder, id + "ProgBarFill", catXpInLevel, catXpToNext);
+
+            boolean selectable = selectMode
+                && !p.isSpecialized()
+                && p != activeSlots[0]
+                && p != activeSlots[1];
+            uiBuilder.set(id + "Select.Visible", selectable);
+            if (selectable) {
+                eventBuilder.addEventBinding(CustomUIEventBindingType.Activating,
+                    id + "Select",
+                    EventData.of("Action", "professionReconvertSelect")
+                        .append("ProfessionId", p.getId()),
+                    false);
+            }
 
             if (p.isSpecialized()) {
                 Profession parent = p.getPrereq();
@@ -730,32 +746,30 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             Arrays.fill(skillRanks, 0);
             rebuild();
         } else if ("professionReconvert".equals(data.action) && data.professionId != null) {
+            reconvertSourceId = data.professionId.equals(reconvertSourceId)
+                ? null : data.professionId;
+            rebuild();
+        } else if ("professionReconvertSelect".equals(data.action) && data.professionId != null
+                   && reconvertSourceId != null) {
             ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
             if (mgr != null) {
-                Profession active = Profession.fromId(data.professionId);
-                if (active != null) {
+                Profession source = Profession.fromId(reconvertSourceId);
+                Profession target = Profession.fromId(data.professionId);
+                LOG.info("[RPG-Reconvert] select source=" + source + " target=" + target);
+                if (source != null && target != null) {
                     PlayerAccount acc = mgr.getAccount(playerRef.getUuid());
                     if (acc != null) {
-                        int slot = active == acc.getActiveSlot1() ? 1 : 0;
-                        Profession replacement = chooseReconvertTarget(acc, active);
-                        if (replacement != null) {
-                            mgr.setActiveSlot(playerRef.getUuid(), slot, replacement);
-                        }
+                        int slot = source == acc.getActiveSlot1() ? 1 : 0;
+                        ProfessionManager.ReconvertResult result =
+                            mgr.setActiveSlot(playerRef.getUuid(), slot, target);
+                        LOG.info("[RPG-Reconvert] setActiveSlot slot=" + slot + " result=" + result
+                            + " lastReconvertAt=" + acc.getLastReconvertAt());
                     }
                 }
             }
+            reconvertSourceId = null;
             rebuild();
         }
-    }
-
-    private static Profession chooseReconvertTarget(@Nonnull PlayerAccount acc, @Nonnull Profession current) {
-        for (Profession p : Profession.bases()) {
-            if (p == current) continue;
-            if (p == acc.getActiveSlot0()) continue;
-            if (p == acc.getActiveSlot1()) continue;
-            return p;
-        }
-        return null;
     }
 
     public static final class Data {

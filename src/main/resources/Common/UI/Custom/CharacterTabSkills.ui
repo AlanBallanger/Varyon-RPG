@@ -213,9 +213,7 @@ Group {
   Group {
     LayoutMode: Left;
     Anchor: (Left: 0, Right: 0, Height: 48);
-    Padding: (Right: 8, Top: 2);
-
-    Group { FlexWeight: 1; }
+    Padding: (Left: 8, Top: 2);
 
     Group {
       LayoutMode: Top;
@@ -1289,7 +1287,7 @@ Group {
     Group { Anchor: (Width: 16); }
 
     Group {
-      Anchor: (Width: 420);
+      Anchor: (Top: 0, Bottom: 0, Width: 252);
       LayoutMode: Top;
       Background: @FubsysRpgPanelShade;
       Padding: (Full: 12);

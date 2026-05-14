@@ -186,10 +186,6 @@ public final class ProfessionManager {
             if (newProfession == current) return ReconvertResult.NO_CHANGE;
 
             long now = System.currentTimeMillis();
-            long elapsed = now - acc.getLastReconvertAt();
-            if (acc.getLastReconvertAt() > 0L && elapsed < RECONVERT_COOLDOWN_MS) {
-                return ReconvertResult.COOLDOWN_ACTIVE;
-            }
 
             if (slotIndex == 0) acc.setActiveSlot0(newProfession);
             else                acc.setActiveSlot1(newProfession);
