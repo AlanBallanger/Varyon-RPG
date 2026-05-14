@@ -1,4 +1,3 @@
-// Skin aligné sur /vp (job_var) : fond Common/ContainerFullPatch + lisibilité sur fond sombre.
 $C = "Common.ui";
 
 @FubsysRpgInk = #E8DCC8;
@@ -26,8 +25,6 @@ $C = "Common.ui";
 @FubsysRpgSelectedButtonFill = #D4AF37(0.38);
 @FubsysRpgStatusPillBg = #000000(0.40);
 @FubsysRpgStatusPillEdge = #D4AF37(0.35);
-// Skill tree lighting is now driven by dedicated glow textures (see SkillEdgeGlow.png / SkillNodeGlow.png).
-// Keep these as a fallback tint for any remaining solid-color glow elements.
 @FubsysRpgSkillTreeEdgeGlow = #D4AF37(0.62);
 @FubsysRpgSkillTreeNodeGlow = #D4AF37(0.18);
 
@@ -215,25 +212,20 @@ Group {
     Background: PatchStyle(TexturePath: "Common/ContainerFullPatch.png", Border: 20, Color: #FFFFFFE6);
     LayoutMode: Full;
 
-    // Jewelry frame (9-slice textures): real pixel-art filigree + transparent center.
     Group #FiligreeBorder {
       Visible: false;
       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
       Background: #000000(0.0);
 
-      // Frame rail + separate ornate corner sprites (baroque leaf + scroll).
-      // All images use AssetPath set from the server (matches the working pattern you provided).
       AssetImage #FrameRail {
         Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
       }
 
-      // Corner cast shadows (offset +2,+3).
       AssetImage #CornerFlourishShadowTL { Anchor: (Left: -10, Top: -13, Width: 128, Height: 128); }
       AssetImage #CornerFlourishShadowTR { Anchor: (Right: -10, Top: -13, Width: 128, Height: 128); }
       AssetImage #CornerFlourishShadowBL { Anchor: (Left: -10, Bottom: -19, Width: 128, Height: 128); }
       AssetImage #CornerFlourishShadowBR { Anchor: (Right: -10, Bottom: -19, Width: 128, Height: 128); }
 
-      // Corner flourishes (allow outward protrusion; overlap inward stays limited in the sprite art).
       AssetImage #CornerFlourishTL { Anchor: (Left: -8, Top: -16, Width: 128, Height: 128); }
       AssetImage #CornerFlourishTR { Anchor: (Right: -8, Top: -16, Width: 128, Height: 128); }
       AssetImage #CornerFlourishBL { Anchor: (Left: -8, Bottom: -16, Width: 128, Height: 128); }

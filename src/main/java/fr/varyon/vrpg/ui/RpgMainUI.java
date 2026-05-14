@@ -259,6 +259,279 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         MINEUR_NODE_STAT_VALUES
     );
 
+    private static final String[][] FERMIER_TREE_NODES = {
+        {"0",  "Paniers Trop Pleins",    "Passif", "Les champs donnent davantage à ceux qui savent les écouter.",                     "Chance de doubler les récoltes obtenues.",                                        "AbilityIconSword_40.png"},
+        {"1",  "Mains Terreuses",        "Passif", "Plus tes bottes sont sales, plus tu progresses.",                                  "Augmente l'expérience gagnée en récoltant.",                                      "Weapon_Training_Icon.png"},
+        {"2",  "Maître Arroseur",        "Passif", "Un vrai fermier hydrate ses cultures avec style.",                                  "Débloque les arroseurs automatiques.",                                            "Defense_Training_Icon.png"},
+        {"3",  "Graines Primordiales",   "Passif", "Certaines semences semblent chargées d'une énergie étrange.",                  "Chance d'obtenir des Graines de Fermier lors des récoltes.",                      "Precision_Training_Icon.png"},
+        {"4",  "Bras Long",              "Passif", "Pourquoi marcher jusqu'au champ quand le champ est déjà à portée ?",           "Replante automatiquement sur 5 blocs devant vous après récolte.",                 "Vigor_Training_Icon.png"},
+        {"5",  "Grains Sans Fin",        "Passif", "Le stock de graines devient un concept théorique.",                                "Augmente les chances d'obtenir des Graines Éternelles.",                          "Warcry_Icon.png"},
+        {"6",  "Moissonneuse Infernale", "Passif", "Quand tu commences à récolter, les champs tremblent.",                            "Récolter plusieurs cultures rapidement déclenche un combo augmentant les gains.", "Heavy_Swing_Icon.png"},
+        {"7",  "Seigneur de l'Étable",  "Passif", "Même les bêtes savent reconnaître un maître.",                                  "Augmente les ressources obtenues sur l'élevage.",                                 "Brutal_Charge_Icon.png"},
+        {"8",  "Faucille Éternelle",    "Passif", "Elle coupe encore. Toujours.",                                                      "Réduit l'usure de votre faucille.",                                               "Warrior_Oath_Icon.png"},
+        {"9",  "Casse-Croûte Fermier",  "Passif", "Un bon champ nourrit toujours son maître.",                                        "Récolter des cultures restaure votre faim et votre soif.",                        "Guarded_Strike_Icon.png"},
+        {"10", "Crop Circles",           "Passif", "Les champs commencent à s'organiser sans toi.",                                    "Les arroseurs replantent automatiquement les cultures autour d'eux.",             "Second_Wind_Icon.png"},
+        {"11", "Gardiens des Champs",    "Passif", "Les récoltes les plus riches attirent parfois d'anciens protecteurs.",             "Chance d'invoquer un Gardien des Champs laissant un objet légendaire.",          "Battle_Footing_Icon.png"},
+        {"12", "Terre Nourricière",      "Passif", "La bonne terre, ça s'entretient avant de se mériter.",                          "Débloque des fertilisants de haute qualité boostant la vitesse de croissance des cultures.", "Precision_Training_Icon.png"},
+        {"16", "Besace du Paysan",       "Passif", "Un bon paysan ne rentre jamais les mains vides — ni sans un sac qui suit.",       "Octroie un compartiment supplémentaire dans votre inventaire dédié aux produits de la ferme.", "Precision_Training_Icon.png"},
+    };
+
+    private static final int[][] FERMIER_SLOT_LT = {
+        {272, 32},
+        {452, 32},
+        {212, 125},
+        {362, 125},
+        {512, 125},
+        {362, 218},
+        {512, 218},
+        {362, 309},
+        {512, 309},
+        {362, 402},
+        {272, 495},
+        {452, 495},
+        {212, 218},
+        {212, 32},
+    };
+
+    private static final int[][] FERMIER_PARENT_GROUPS = {
+        {},
+        {},
+        {0},
+        {0, 1},
+        {1},
+        {3},
+        {4},
+        {5},
+        {6},
+        {7, 8},
+        {9},
+        {9},
+        {2},
+        {2},
+    };
+
+    private static final int[] FERMIER_MAX_RANKS = {5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 1, 5, 1, 1};
+
+    private static final String[][] FERMIER_NODE_STAT_VALUES = {
+        {"5% loot",              "10% loot",             "15% loot",             "20% loot",             "25% loot"},
+        {"5% XP",                "10% XP",               "15% XP",               "20% XP",               "25% XP"},
+        {"Arroseur en cuivre",   "Arroseur en fer",      "Arroseur en thorium",  "Arroseur en cobalt",   "Arroseur en adamantite"},
+        {"1% graines",           "1.5% graines",         "2% graines",           "2.5% graines",         "3% graines"},
+        {"Replantation 5 blocs activée"},
+        {"20% graines éternelles", "40% graines éternelles", "60% graines éternelles", "80% graines éternelles", "100% graines éternelles"},
+        {"5% XP & loot",         "10% XP & loot",        "15% XP & loot",        "20% XP & loot",        "25% XP & loot"},
+        {"5% élevage",           "10% élevage",          "15% élevage",          "20% élevage",          "25% élevage"},
+        {"15% durabilité",       "30% durabilité",       "45% durabilité",       "60% durabilité",       "75% durabilité"},
+        {"2% faim/soif",         "4% faim/soif",         "6% faim/soif",         "8% faim/soif",         "10% faim/soif"},
+        {"Replantation auto arroseurs activée"},
+        {"0.5% invocation",      "1% invocation",        "1.5% invocation",      "2% invocation",        "2.5% invocation"},
+        {"Fertilisants haute qualité débloqués"},
+        {"Besace du Paysan activée"},
+    };
+
+    private static final SkillTreeDef FERMIER_TREE = new SkillTreeDef(
+        FERMIER_TREE_NODES, FERMIER_SLOT_LT, FERMIER_PARENT_GROUPS, FERMIER_MAX_RANKS,
+        (ui, seg, lt) -> {
+            seg = layoutFanTwoToThree(ui, seg, cx(lt[0]), bot(lt[0]), cx(lt[1]), bot(lt[1]),
+                cx(lt[2]), cx(lt[3]), cx(lt[4]), top(lt[2]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[2]), bot(lt[2]), top(lt[12]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[3]), bot(lt[3]), top(lt[5]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[4]), bot(lt[4]), top(lt[6]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[5]), bot(lt[5]), top(lt[7]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[6]), bot(lt[6]), top(lt[8]));
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[7]), bot(lt[7]), cx(lt[8]), bot(lt[8]), cx(lt[9]), top(lt[9]));
+            seg = layoutSplitOneToTwo(ui, seg, cx(lt[9]), bot(lt[9]), cx(lt[10]), cx(lt[11]), top(lt[10]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[13]), bot(lt[13]), top(lt[2]));
+            return seg;
+        },
+        FERMIER_NODE_STAT_VALUES
+    );
+
+    private static final String[][] FORESTIER_TREE_NODES = {
+        {"0",  "Bûches Bien Lourdes",       "Passif", "Un arbre vide, c'est juste du mobilier.",                           "Chance de doubler les ressources obtenues en coupant des arbres.",                                           "Precision_Training_Icon.png"},
+        {"1",  "Mains Écorchées",           "Passif", "L'expérience pousse rarement sans échardes.",                       "Augmente l'expérience gagnée en coupant des arbres et en récoltant dans la nature.",                        "Precision_Training_Icon.png"},
+        {"2",  "Sève Primordiale",          "Passif", "Certains troncs saignent encore une magie ancienne.",               "Chance d'obtenir des Essences de Forestier en coupant des arbres.",                                          "Precision_Training_Icon.png"},
+        {"3",  "Hache du Survivant",        "Passif", "Elle coupe encore. Toujours.",                                      "Réduit l'usure de votre hache.",                                                                              "Precision_Training_Icon.png"},
+        {"4",  "Cueilleur des Sous-Bois",   "Passif", "Les meilleures trouvailles poussent loin des chemins.",             "Augmente les ressources obtenues sur les fleurs et champignons.",                                             "Precision_Training_Icon.png"},
+        {"5",  "Bûcheronnage Frénétique",   "Passif", "Quand le rythme part, la forêt suit.",                             "Couper plusieurs arbres rapidement déclenche un combo augmentant les gains.",                                  "Precision_Training_Icon.png"},
+        {"6",  "Rôdeur Sylvestre",          "Passif", "La forêt finit toujours par reconnaître les siens.",                "Augmente votre vitesse dans les forêts et réduit les dégâts de chute.",                                       "Precision_Training_Icon.png"},
+        {"7",  "Pêche Miraculeuse",         "Passif", "Même les poissons veulent finir dans ton sac.",                     "Augmente les chances d'obtenir du loot rare en pêchant.",                                                     "Precision_Training_Icon.png"},
+        {"8",  "Yeux de Hibou",             "Passif", "La nuit appartient à ceux qui voient encore.",                      "Améliore votre vision nocturne dans les forêts.",                                                             "Precision_Training_Icon.png"},
+        {"9",  "Équipement Tridimensionnel","Actif",  "Le sol devient optionnel.",                                         "Débloque un grappin forestier permettant de se déplacer rapidement entre les arbres.",                         "Precision_Training_Icon.png"},
+        {"10", "Gardien Sylvestre",         "Passif", "Les forêts anciennes n'abandonnent jamais leurs protecteurs.",      "Chance d'invoquer un Gardien Sylvestre laissant un objet légendaire à sa mort.",                              "Precision_Training_Icon.png"},
+        {"12", "Retour aux Racines",        "Passif", "Chaque arbre tombé mérite un héritier.",                            "Replante automatiquement un arbre après l'avoir coupé.",                                                      "Precision_Training_Icon.png"},
+        {"13", "Ça Va Tomber",             "Actif",  "Le plus dur dans un arbre, c'est de choisir où il chute.",          "Permet d'abattre un arbre entier en un seul déracinage.",                                                     "Precision_Training_Icon.png"},
+        {"14", "Poumons de Loutre",         "Passif", "Tu passes plus de temps sous l'eau qu'au sec.",                     "Augmente le temps de respiration sous l'eau.",                                                                "Precision_Training_Icon.png"},
+        {"15", "Lit de Fortune",            "Passif", "Même les rôdeurs doivent dormir un jour.",                          "Les lits d'appoint restaurent davantage de vie et d'énergie.",                                               "Precision_Training_Icon.png"},
+    };
+
+    private static final int[][] FORESTIER_SLOT_LT = {
+        {272, 32},
+        {452, 32},
+        {362, 125},
+        {212, 218},
+        {362, 218},
+        {512, 218},
+        {272, 309},
+        {452, 309},
+        {362, 402},
+        {272, 495},
+        {452, 495},
+        {212, 125},
+        {512, 125},
+        {212, 402},
+        {512, 402},
+    };
+
+    private static final int[][] FORESTIER_PARENT_GROUPS = {
+        {},
+        {},
+        {0, 1},
+        {2},
+        {2},
+        {2},
+        {3, 4},
+        {4, 5},
+        {6, 7},
+        {8},
+        {8},
+        {2},
+        {2},
+        {8},
+        {8},
+    };
+
+    private static final int[] FORESTIER_MAX_RANKS = {5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 1, 1, 5, 5};
+
+    private static final String[][] FORESTIER_NODE_STAT_VALUES = {
+        {"5% loot",              "10% loot",              "15% loot",              "20% loot",              "25% loot"},
+        {"5% XP",                "10% XP",                "15% XP",                "20% XP",                "25% XP"},
+        {"1% essence",           "1.5% essence",          "2% essence",            "2.5% essence",          "3% essence"},
+        {"15% durabilité",       "30% durabilité",        "45% durabilité",        "60% durabilité",        "75% durabilité"},
+        {"5% fleurs/champi",     "10% fleurs/champi",     "15% fleurs/champi",     "20% fleurs/champi",     "25% fleurs/champi"},
+        {"5% XP & loot",         "10% XP & loot",         "15% XP & loot",         "20% XP & loot",         "25% XP & loot"},
+        {"4% vit / 10% chute",   "8% vit / 20% chute",   "12% vit / 30% chute",  "16% vit / 40% chute",  "20% vit / 50% chute"},
+        {"5% loot rare",         "10% loot rare",         "15% loot rare",         "20% loot rare",         "25% loot rare"},
+        {"Vision faible",        "Vision modérée",        "Vision renforcée",      "Vision avancée",        "Vision parfaite"},
+        {"Grappin forestier débloqué"},
+        {"0.5% invocation",      "1% invocation",         "1.5% invocation",       "2% invocation",         "2.5% invocation"},
+        {"Replantation auto activée"},
+        {"Déracinage total activé"},
+        {"10% respiration",      "20% respiration",       "30% respiration",       "40% respiration",       "50% respiration"},
+        {"5% récupération",      "10% récupération",      "15% récupération",      "20% récupération",      "25% récupération"},
+    };
+
+    private static final SkillTreeDef FORESTIER_TREE = new SkillTreeDef(
+        FORESTIER_TREE_NODES, FORESTIER_SLOT_LT, FORESTIER_PARENT_GROUPS, FORESTIER_MAX_RANKS,
+        (ui, seg, lt) -> {
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[0]), bot(lt[0]), cx(lt[1]), bot(lt[1]), cx(lt[2]), top(lt[2]));
+            seg = layoutSplitOneToThree(ui, seg, cx(lt[2]), bot(lt[2]), cx(lt[3]), cx(lt[4]), cx(lt[5]), top(lt[3]));
+            seg = layoutFanThreeToTwo(ui, seg, cx(lt[3]), bot(lt[3]), cx(lt[4]), bot(lt[4]), cx(lt[5]), bot(lt[5]),
+                cx(lt[6]), cx(lt[7]), top(lt[6]));
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[6]), bot(lt[6]), cx(lt[7]), bot(lt[7]), cx(lt[8]), top(lt[8]));
+            seg = layoutSplitOneToTwo(ui, seg, cx(lt[8]), bot(lt[8]), cx(lt[9]), cx(lt[10]), top(lt[9]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[2]), top(lt[2]) + SLOT / 2, cx(lt[11]), cx(lt[12]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[8]), top(lt[8]) + SLOT / 2, cx(lt[13]), cx(lt[14]));
+            return seg;
+        },
+        FORESTIER_NODE_STAT_VALUES
+    );
+
+    private static final String[][] CHASSEUR_TREE_NODES = {
+        {"0",  "Poches Pleines",       "Passif", "Une chasse rentable est une chasse réussie.",                                "Chance de doubler les ressources obtenues sur les créatures.",                                   "Precision_Training_Icon.png"},
+        {"1",  "Instinct Sauvage",     "Passif", "Plus la traque dure, plus le prédateur apprend.",                           "Augmente l'expérience gagnée en chassant.",                                                      "Precision_Training_Icon.png"},
+        {"2",  "Sang de Bête",         "Passif", "Certaines créatures laissent derrière elles plus que des carcasses.",       "Chance d'obtenir des Essences de Chasseur sur les créatures.",                                   "Precision_Training_Icon.png"},
+        {"3",  "Arc Renforcé",         "Passif", "Un bon arc encaisse autant que son porteur.",                               "Réduit l'usure de vos armes de chasse.",                                                         "Precision_Training_Icon.png"},
+        {"4",  "Mains du Boucher",     "Passif", "Un vrai chasseur sait où couper.",                                          "Augmente les ressources obtenues sur la viande, le cuir et les plumes.",                        "Precision_Training_Icon.png"},
+        {"5",  "Chasse Frénétique",    "Passif", "Quand la poursuite commence, difficile de s'arrêter.",                     "Éliminer plusieurs créatures rapidement déclenche un combo augmentant les gains.",               "Precision_Training_Icon.png"},
+        {"6",  "Rôdeur des Dunes",     "Passif", "Le désert finit toujours par respecter ceux qui le traversent.",           "Augmente votre vitesse dans les zones désertiques et réduit les dégâts de chute.",               "Precision_Training_Icon.png"},
+        {"7",  "Matériaux Exotiques",  "Passif", "Les créatures rares laissent rarement des matériaux ordinaires.",          "Augmente les chances d'obtenir de la chitine, du venin, des os et de la laine.",                 "Precision_Training_Icon.png"},
+        {"8",  "Second Souffle",       "Passif", "Un chasseur fatigué devient une proie.",                                    "Augmente votre endurance maximale.",                                                              "Precision_Training_Icon.png"},
+        {"9",  "Yeux de Lynx",         "Passif", "La nuit cache les faibles, pas les chasseurs.",                            "Améliore votre vision nocturne.",                                                                 "Precision_Training_Icon.png"},
+        {"10", "Dompteur de Monstres", "Passif", "Certaines créatures préfèrent obéir plutôt que mourir.",                   "Permet d'apprivoiser certaines créatures agressives.",                                           "Precision_Training_Icon.png"},
+        {"11", "Prédateur Alpha",      "Passif", "Même les monstres savent reconnaître le sommet de la chaîne alimentaire.", "Chance d'invoquer un Prédateur Alpha laissant un objet légendaire à sa mort.",                  "Precision_Training_Icon.png"},
+        {"12", "Chasseur_12",          "Passif", "À définir.",                                                                "À définir.",                                                                                      "Precision_Training_Icon.png"},
+        {"13", "Bourse du Traqueur",   "Passif", "Un bon chasseur garde toujours ses trophées près de lui.",                 "Les ressources placées dans votre sac de chasse sont conservées après votre mort.",             "Precision_Training_Icon.png"},
+        {"14", "Chasseur_14",          "Passif", "À définir.",                                                                "À définir.",                                                                                      "Precision_Training_Icon.png"},
+        {"15", "Chasseur_15",          "Passif", "À définir.",                                                                "À définir.",                                                                                      "Precision_Training_Icon.png"},
+    };
+
+    private static final int[][] CHASSEUR_SLOT_LT = {
+        {272, 32},
+        {452, 32},
+        {362, 125},
+        {212, 218},
+        {362, 218},
+        {512, 218},
+        {212, 309},
+        {362, 309},
+        {512, 309},
+        {362, 402},
+        {272, 495},
+        {452, 495},
+        {212, 125},
+        {512, 125},
+        {212, 402},
+        {512, 402},
+    };
+
+    private static final int[][] CHASSEUR_PARENT_GROUPS = {
+        {},
+        {},
+        {0, 1},
+        {2},
+        {2},
+        {2},
+        {3},
+        {4},
+        {5},
+        {6, 7, 8},
+        {9},
+        {9},
+        {2},
+        {2},
+        {9},
+        {9},
+    };
+
+    private static final int[] CHASSEUR_MAX_RANKS = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 1, 1, 1, 1};
+
+    private static final String[][] CHASSEUR_NODE_STAT_VALUES = {
+        {"5% loot",                    "10% loot",                    "15% loot",                    "20% loot",                    "25% loot"},
+        {"5% XP",                      "10% XP",                      "15% XP",                      "20% XP",                      "25% XP"},
+        {"1% essence",                 "1.5% essence",                "2% essence",                  "2.5% essence",                "3% essence"},
+        {"15% durabilité",             "30% durabilité",              "45% durabilité",              "60% durabilité",              "75% durabilité"},
+        {"5% viande/cuir/plumes",      "10% viande/cuir/plumes",      "15% viande/cuir/plumes",      "20% viande/cuir/plumes",      "25% viande/cuir/plumes"},
+        {"5% XP & loot",               "10% XP & loot",               "15% XP & loot",               "20% XP & loot",               "25% XP & loot"},
+        {"4% vit / 10% chute",         "8% vit / 20% chute",          "12% vit / 30% chute",         "16% vit / 40% chute",         "20% vit / 50% chute"},
+        {"5% exotiques",               "10% exotiques",               "15% exotiques",               "20% exotiques",               "25% exotiques"},
+        {"5% endurance",               "10% endurance",               "15% endurance",               "20% endurance",               "25% endurance"},
+        {"Vision faible",              "Vision modérée",              "Vision renforcée",            "Vision avancée",              "Vision parfaite"},
+        {"Apprivoisement activé"},
+        {"0.5% invocation",            "1% invocation",               "1.5% invocation",             "2% invocation",               "2.5% invocation"},
+        {"À définir"},
+        {"Bourse de chasse activée"},
+        {"À définir"},
+        {"À définir"},
+    };
+
+    private static final SkillTreeDef CHASSEUR_TREE = new SkillTreeDef(
+        CHASSEUR_TREE_NODES, CHASSEUR_SLOT_LT, CHASSEUR_PARENT_GROUPS, CHASSEUR_MAX_RANKS,
+        (ui, seg, lt) -> {
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[0]), bot(lt[0]), cx(lt[1]), bot(lt[1]), cx(lt[2]), top(lt[2]));
+            seg = layoutSplitOneToThree(ui, seg, cx(lt[2]), bot(lt[2]), cx(lt[3]), cx(lt[4]), cx(lt[5]), top(lt[3]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[3]), bot(lt[3]), top(lt[6]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[4]), bot(lt[4]), top(lt[7]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[5]), bot(lt[5]), top(lt[8]));
+            seg = layoutMergeThreeToOne(ui, seg, cx(lt[6]), bot(lt[6]), cx(lt[7]), bot(lt[7]), cx(lt[8]), bot(lt[8]), cx(lt[9]), top(lt[9]));
+            seg = layoutSplitOneToTwo(ui, seg, cx(lt[9]), bot(lt[9]), cx(lt[10]), cx(lt[11]), top(lt[10]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[2]), top(lt[2]) + SLOT / 2, cx(lt[12]), cx(lt[13]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[9]), top(lt[9]) + SLOT / 2, cx(lt[14]), cx(lt[15]));
+            return seg;
+        },
+        CHASSEUR_NODE_STAT_VALUES
+    );
+
     private final PlayerRef playerRef;
     private String activeTab = "character";
     private int selectedNode = 0;
@@ -464,7 +737,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     }
 
     private SkillTreeDef currentSkillTree() {
-        return currentTalentProfession() == Profession.MINEUR ? MINEUR_TREE : BASE_TREE;
+        Profession p = currentTalentProfession();
+        if (p == Profession.MINEUR)    return MINEUR_TREE;
+        if (p == Profession.FERMIER)   return FERMIER_TREE;
+        if (p == Profession.FORESTIER) return FORESTIER_TREE;
+        if (p == Profession.CHASSEUR)  return CHASSEUR_TREE;
+        return BASE_TREE;
     }
 
     private void loadSkillRanksFromAccount() {
@@ -569,6 +847,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 EventData.of("Action", "skillHoverEnd").append("Node", id),
                 false
             );
+        }
+
+        for (String xId : new String[]{"12", "13", "14", "15", "16"}) {
+            boolean active = false;
+            for (String[] n : tree.nodes) { if (n[0].equals(xId)) { active = true; break; } }
+            if (!active) {
+            uiBuilder.set("#SkillTreeNode" + xId + "Slot.Visible", false);
+            uiBuilder.set("#SkillTreeNode" + xId + "RankText.Visible", false);
+            uiBuilder.set("#SkillTreeNode" + xId + ".Visible", false);
+            }
         }
 
         applySkillTreeSelectionAndHoverChrome(uiBuilder);
@@ -823,6 +1111,42 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         int rightBarW = (cxRight  - slotHalfL) - rightBarX;
         showEdge(ui, seg++, leftBarX,  barY, leftBarW,  RAIL);
         showEdge(ui, seg++, rightBarX, barY, rightBarW, RAIL);
+        return seg;
+    }
+
+    private static int layoutFanTwoToThree(@Nonnull UICommandBuilder ui, int seg,
+                                           int cxA, int yBotA, int cxB, int yBotB,
+                                           int cxL, int cxM, int cxR, int yTopChildRow) {
+        int barTop = Math.min(yBotA, yBotB) + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
+        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, STEM_DOWN_FROM_PARENT);
+        int barL = vx(cxL);
+        showEdge(ui, seg++, barL, barTop, vx(cxR) - barL + RAIL, RAIL);
+        int stemH = yTopChildRow - barBot;
+        if (stemH > 0) {
+            showEdge(ui, seg++, vx(cxL), barBot, RAIL, stemH);
+            showEdge(ui, seg++, vx(cxM), barBot, RAIL, stemH);
+            showEdge(ui, seg++, vx(cxR), barBot, RAIL, stemH);
+        }
+        return seg;
+    }
+
+    private static int layoutFanThreeToTwo(@Nonnull UICommandBuilder ui, int seg,
+                                           int cxA, int yBotA, int cxB, int yBotB, int cxC, int yBotC,
+                                           int cxL, int cxR, int yTopChildRow) {
+        int barTop = Math.min(yBotA, Math.min(yBotB, yBotC)) + STEM_DOWN_FROM_PARENT;
+        int barBot = barTop + RAIL;
+        showEdge(ui, seg++, vx(cxA), yBotA, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxB), yBotB, RAIL, STEM_DOWN_FROM_PARENT);
+        showEdge(ui, seg++, vx(cxC), yBotC, RAIL, STEM_DOWN_FROM_PARENT);
+        int barL = vx(cxA);
+        showEdge(ui, seg++, barL, barTop, vx(cxC) - barL + RAIL, RAIL);
+        int stemH = yTopChildRow - barBot;
+        if (stemH > 0) {
+            showEdge(ui, seg++, vx(cxL), barBot, RAIL, stemH);
+            showEdge(ui, seg++, vx(cxR), barBot, RAIL, stemH);
+        }
         return seg;
     }
 
