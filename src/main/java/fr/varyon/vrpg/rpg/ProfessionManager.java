@@ -187,6 +187,11 @@ public final class ProfessionManager {
 
             long now = System.currentTimeMillis();
 
+            Profession leaving = current;
+            if (leaving != null && newProfession != null && leaving != newProfession) {
+                acc.resetTalents(leaving);
+            }
+
             if (slotIndex == 0) acc.setActiveSlot0(newProfession);
             else                acc.setActiveSlot1(newProfession);
             acc.setLastReconvertAt(now);

@@ -25,6 +25,7 @@ import fr.varyon.vrpg.rpg.ProfessionProgress;
 import fr.varyon.vrpg.rpg.XpCurve;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -167,6 +168,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private int hoveredNode = -1;
     private final int[] skillRanks = new int[TREE_NODES.length];
     private String reconvertSourceId = null;
+    private int talentTreeSlotIndex = 0;
 
     public RpgMainUI(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, Data.CODEC);
@@ -331,11 +333,37 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
     }
 
+    private void syncTalentTreeSlotIndex(@Nullable PlayerAccount acc) {
+        if (acc == null) {
+            talentTreeSlotIndex = 0;
+            return;
+        }
+        Profession p0 = acc.getActiveSlot0();
+        Profession p1 = acc.getActiveSlot1();
+        if (talentTreeSlotIndex != 0 && talentTreeSlotIndex != 1) {
+            talentTreeSlotIndex = 0;
+        }
+        if (talentTreeSlotIndex == 0 && p0 == null && p1 != null) {
+            talentTreeSlotIndex = 1;
+        } else if (talentTreeSlotIndex == 1 && p1 == null && p0 != null) {
+            talentTreeSlotIndex = 0;
+        }
+    }
+
     private Profession currentTalentProfession() {
         PlayerAccount acc = currentAccount();
-        if (acc == null) return Profession.MINEUR;
-        Profession slot0 = acc.getActiveSlot0();
-        return slot0 != null ? slot0 : Profession.MINEUR;
+        syncTalentTreeSlotIndex(acc);
+        if (acc == null) {
+            return Profession.MINEUR;
+        }
+        Profession p = talentTreeSlotIndex == 0 ? acc.getActiveSlot0() : acc.getActiveSlot1();
+        if (p != null) {
+            return p;
+        }
+        Profession fallback = acc.getActiveSlot0() != null
+            ? acc.getActiveSlot0()
+            : acc.getActiveSlot1();
+        return fallback != null ? fallback : Profession.MINEUR;
     }
 
     private void loadSkillRanksFromAccount() {
@@ -352,8 +380,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private void populateSketchSkillTree(@Nonnull UICommandBuilder uiBuilder,
                                          @Nonnull UIEventBuilder eventBuilder) {
-        loadSkillRanksFromAccount();
         PlayerAccount acc = currentAccount();
+        syncTalentTreeSlotIndex(acc);
+        loadSkillRanksFromAccount();
         Profession prof = currentTalentProfession();
         int invested = 0;
         for (int r : skillRanks) invested += r;
@@ -362,6 +391,29 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             : acc.availableTalentPoints(prof);
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
             Message.raw("Points restants : " + remainingPoints + " (" + prof.getDisplayName() + ")"));
+
+        Profession p0 = acc == null ? null : acc.getActiveSlot0();
+        Profession p1 = acc == null ? null : acc.getActiveSlot1();
+        boolean dualActive = p0 != null && p1 != null;
+        uiBuilder.set("#SkillTreeProfessionPickerRow.Visible", dualActive);
+        if (dualActive) {
+            String label0 = (talentTreeSlotIndex == 0 ? "\u25b6 " : "") + p0.getDisplayName();
+            String label1 = (talentTreeSlotIndex == 1 ? "\u25b6 " : "") + p1.getDisplayName();
+            uiBuilder.set("#SkillTreeTalentSlot0ButtonLabel.TextSpans", Message.raw(label0));
+            uiBuilder.set("#SkillTreeTalentSlot1ButtonLabel.TextSpans", Message.raw(label1));
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating,
+                "#SkillTreeTalentSlot0Button",
+                EventData.of("Action", "talentSlotPick").append("TalentSlot", "0"),
+                false
+            );
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating,
+                "#SkillTreeTalentSlot1Button",
+                EventData.of("Action", "talentSlotPick").append("TalentSlot", "1"),
+                false
+            );
+        }
 
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
@@ -702,6 +754,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             activeTab = data.tab;
             hoveredNode = -1;
             rebuild();
+        } else if ("talentSlotPick".equals(data.action) && data.talentSlot != null) {
+            talentTreeSlotIndex = "1".equals(data.talentSlot) ? 1 : 0;
+            rebuild();
         } else if ("skill".equals(data.action) && data.node != null) {
             for (int i = 0; i < TREE_NODES.length; i++) {
                 if (TREE_NODES[i][0].equals(data.node)) {
@@ -787,12 +842,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 .addField(new KeyedCodec<>("ProfessionId", Codec.STRING),
                     (d, v) -> d.professionId = v,
                     d -> d.professionId)
+                .addField(new KeyedCodec<>("TalentSlot", Codec.STRING),
+                    (d, v) -> d.talentSlot = v,
+                    d -> d.talentSlot)
                 .build();
 
         private String action;
         private String tab;
         private String node;
         private String professionId;
+        private String talentSlot;
 
         public Data() {}
     }
