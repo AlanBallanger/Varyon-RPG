@@ -49,39 +49,31 @@ Group {
           LayoutMode: Left;
           Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
 
-          Group { FlexWeight: 1; }
-
           Group {
-            LayoutMode: Left;
-            Anchor: (Height: 44);
+            Anchor: (Width: 44, Height: 44);
+            LayoutMode: Full;
+            Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
+            Padding: (Full: 3);
 
             Group {
-              Anchor: (Width: 44, Height: 44);
-              LayoutMode: Full;
-              Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
-              Padding: (Full: 3);
+              LayoutMode: Middle;
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Background: #141820(0.82);
 
-              Group {
-                LayoutMode: Middle;
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Background: #141820(0.82);
-
-                ItemIcon #ProfessionActiveCard0Icon {
-                  Anchor: (Width: 32, Height: 32);
-                }
+              ItemIcon #ProfessionActiveCard0Icon {
+                Anchor: (Width: 32, Height: 32);
               }
-            }
-
-            Group { Anchor: (Width: 10); }
-
-            Label #ProfessionActiveCard0Name {
-              Anchor: (Height: 44);
-              Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center);
-              Text: "";
             }
           }
 
-          Group { FlexWeight: 1; }
+          Group { Anchor: (Width: 10); }
+
+          Label #ProfessionActiveCard0Name {
+            FlexWeight: 1;
+            Anchor: (Height: 44);
+            Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
+          }
         }
 
         Label #ProfessionActiveCard0Level {
@@ -91,8 +83,13 @@ Group {
         }
 
         Group #ProfessionActiveCard0ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 30, Height: 5);
-          Background: #6B7280(0.55);
+          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 10);
+          Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+          ProgressBar #ProfessionActiveCard0ProgBarFill {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Value: 0.0;
+            BarTexturePath: "Elements/Gauge_Fill.png";
+          }
         }
 
         Button #ProfessionActiveCard0Reconvert {
@@ -119,39 +116,31 @@ Group {
           LayoutMode: Left;
           Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
 
-          Group { FlexWeight: 1; }
-
           Group {
-            LayoutMode: Left;
-            Anchor: (Height: 44);
+            Anchor: (Width: 44, Height: 44);
+            LayoutMode: Full;
+            Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
+            Padding: (Full: 3);
 
             Group {
-              Anchor: (Width: 44, Height: 44);
-              LayoutMode: Full;
-              Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
-              Padding: (Full: 3);
+              LayoutMode: Middle;
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Background: #141820(0.82);
 
-              Group {
-                LayoutMode: Middle;
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Background: #141820(0.82);
-
-                ItemIcon #ProfessionActiveCard1Icon {
-                  Anchor: (Width: 32, Height: 32);
-                }
+              ItemIcon #ProfessionActiveCard1Icon {
+                Anchor: (Width: 32, Height: 32);
               }
-            }
-
-            Group { Anchor: (Width: 10); }
-
-            Label #ProfessionActiveCard1Name {
-              Anchor: (Height: 44);
-              Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center);
-              Text: "";
             }
           }
 
-          Group { FlexWeight: 1; }
+          Group { Anchor: (Width: 10); }
+
+          Label #ProfessionActiveCard1Name {
+            FlexWeight: 1;
+            Anchor: (Height: 44);
+            Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
+          }
         }
 
         Label #ProfessionActiveCard1Level {
@@ -161,8 +150,13 @@ Group {
         }
 
         Group #ProfessionActiveCard1ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 30, Height: 5);
-          Background: #6B7280(0.55);
+          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 10);
+          Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+          ProgressBar #ProfessionActiveCard1ProgBarFill {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Value: 0.0;
+            BarTexturePath: "Elements/Gauge_Fill.png";
+          }
         }
 
         Button #ProfessionActiveCard1Reconvert {
@@ -298,8 +292,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard0ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard0ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -359,8 +358,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard1ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard1ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -420,8 +424,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard2ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard2ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -481,8 +490,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard3ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard3ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -552,8 +566,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard4ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard4ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -613,8 +632,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard5ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard5ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -674,8 +698,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard6ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard6ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 
@@ -735,8 +764,13 @@ Group {
           }
 
           Group #ProfessionCatalogCard7ProgBar {
-            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 5);
-            Background: #6B7280(0.55);
+            Anchor: (Left: 10, Right: 10, Bottom: 6, Height: 8);
+            Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+            ProgressBar #ProfessionCatalogCard7ProgBarFill {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Value: 0.0;
+              BarTexturePath: "Elements/Gauge_Fill.png";
+            }
           }
         }
 

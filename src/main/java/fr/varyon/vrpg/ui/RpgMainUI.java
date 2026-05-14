@@ -27,8 +27,11 @@ import fr.varyon.vrpg.rpg.XpCurve;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
+
+    private static final Logger LOG = Logger.getLogger(RpgMainUI.class.getName());
 
     private static final int[][] SKILL_TREE_PARENT_GROUPS = new int[][] {
         {}, // 0
@@ -87,6 +90,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private static final int PROFESSION_ACTIVE_SLOTS = 2;
     private static final int PROFESSION_BASE_COUNT = 4;
+
 
     private static final String[] PROFESSION_NAMES = {
         "Mineur",
@@ -225,6 +229,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         return m.getAccount(playerRef.getUuid());
     }
 
+    private static void applyGaugeBar(@Nonnull UICommandBuilder ui,
+                                      @Nonnull String fillId,
+                                      long xpInLevel, long xpToNext) {
+        double ratio = xpToNext > 0 ? Math.min(1.0, (double) xpInLevel / xpToNext) : 1.0;
+        LOG.info("[RPG-Gauge] " + fillId + " xpInLevel=" + xpInLevel
+            + " xpToNext=" + xpToNext + " ratio=" + String.format("%.3f", ratio));
+        ui.set(fillId + ".Value", ratio);
+    }
+
     private void populateCharacterProfessions(@Nonnull UICommandBuilder uiBuilder,
                                               @Nonnull UIEventBuilder eventBuilder) {
         PlayerAccount acc = currentAccount();
@@ -252,6 +265,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                         + " \u2022 " + prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP")
                         .toUpperCase(Locale.FRENCH)));
                 uiBuilder.set(p + "Reconvert.Visible", true);
+                applyGaugeBar(uiBuilder,
+                    p + "ProgBarFill",
+                    prog.getXpInLevel(), prog.getXpToNextLevel());
                 eventBuilder.addEventBinding(
                     CustomUIEventBindingType.Activating,
                     p + "Reconvert",
@@ -271,8 +287,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             Profession p = CATALOG_ORDER[i];
             uiBuilder.set(id + "Name.TextSpans", Message.raw(p.getDisplayName()));
             uiBuilder.set(id + "Icon.ItemId", p.getIconItemId());
-            int level = acc == null ? 1 : acc.getProgress(p).getLevel();
+            ProfessionProgress catProg = acc == null ? null : acc.getProgress(p);
+            int level = catProg == null ? 1 : catProg.getLevel();
             uiBuilder.set(id + "Level.TextSpans", Message.raw(("Niveau " + level).toUpperCase(Locale.FRENCH)));
+            long catXpInLevel = catProg == null ? 0L : catProg.getXpInLevel();
+            long catXpToNext = catProg == null ? 0L : catProg.getXpToNextLevel();
+            applyGaugeBar(uiBuilder,
+                id + "ProgBarFill",
+                catXpInLevel, catXpToNext);
 
             if (p.isSpecialized()) {
                 Profession parent = p.getPrereq();
