@@ -47,6 +47,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {6, 7, 8}, // 9
         {9}, // 10
         {9}, // 11
+        {2}, // 12
+        {2}, // 13
+        {9}, // 14
+        {9}, // 15
     };
 
     private static final String ICON_BASE = "Pages/VaryonRpg/Icons/";
@@ -87,6 +91,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int FILL_INSET = 3;
     private static final int FILL_SIZE = SLOT - 2 * FILL_INSET;
     private static final int MAX_RANK_PER_NODE = 5;
+    private static final int[] NODE_MAX_RANKS = {
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, // nodes 0–11
+        1, 1, 1, 1                             // nodes 12–15
+    };
     private static final int SKILL_POINTS_BUDGET = 35;
 
     private static final int PROFESSION_ACTIVE_SLOTS = 2;
@@ -133,18 +141,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int RANK_LABEL_SHIFT_RIGHT = (48 * SLOT + 38) / 76;
 
     private static final int[][] SLOT_LT = {
-        {272, 32},
-        {452, 32},
-        {362, 125},
-        {212, 218},
-        {362, 218},
-        {512, 218},
-        {212, 309},
-        {362, 309},
-        {512, 309},
-        {362, 402},
-        {272, 495},
-        {452, 495},
+        {272, 32},  // 0
+        {452, 32},  // 1
+        {362, 125}, // 2
+        {212, 218}, // 3
+        {362, 218}, // 4
+        {512, 218}, // 5
+        {212, 309}, // 6
+        {362, 309}, // 7
+        {512, 309}, // 8
+        {362, 402}, // 9
+        {272, 495}, // 10
+        {452, 495}, // 11
+        {212, 125}, // 12 — gauche de 2
+        {512, 125}, // 13 — droite de 2
+        {212, 402}, // 14 — gauche de 9
+        {512, 402}, // 15 — droite de 9
     };
 
     private static final String[][] TREE_NODES = {
@@ -160,6 +172,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"9", "Frappe défensive", "Actif", "Convergence des trois colonnes.", "Emplacement réservé.", "Guarded_Strike_Icon.png"},
         {"10", "Second souffle", "Passif", "Sortie gauche.", "Icône libre à assigner.", "Second_Wind_Icon.png"},
         {"11", "Position de combat", "Passif", "Sortie droite.", "Icône libre à assigner.", "Battle_Footing_Icon.png"},
+        {"12", "Veine gauche", "Passif", "Connexion gauche — palier 2.", "Emplacement réservé.", "Precision_Training_Icon.png"},
+        {"13", "Veine droite", "Passif", "Connexion droite — palier 2.", "Emplacement réservé.", "Precision_Training_Icon.png"},
+        {"14", "Filon gauche", "Passif", "Connexion gauche — palier 5.", "Emplacement réservé.", "Defense_Training_Icon.png"},
+        {"15", "Filon droit", "Passif", "Connexion droite — palier 5.", "Emplacement réservé.", "Defense_Training_Icon.png"},
     };
 
     private final PlayerRef playerRef;
@@ -454,6 +470,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             cx(SLOT_LT[11]),
             top(SLOT_LT[10]));
 
+        seg = layoutHorizontalSiblings(uiBuilder, seg,
+            cx(SLOT_LT[2]), top(SLOT_LT[2]) + SLOT / 2,
+            cx(SLOT_LT[12]), cx(SLOT_LT[13]));
+
+        seg = layoutHorizontalSiblings(uiBuilder, seg,
+            cx(SLOT_LT[9]), top(SLOT_LT[9]) + SLOT / 2,
+            cx(SLOT_LT[14]), cx(SLOT_LT[15]));
+
         hideEdgeSegmentRange(uiBuilder, seg, SKILL_TREE_EDGE_SEGMENTS);
 
         for (int i = 0; i < TREE_NODES.length; i++) {
@@ -479,7 +503,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
             uiBuilder.set("#SkillTreeNode" + id + "RankText.Visible", true);
             uiBuilder.set("#SkillTreeNode" + id + "RankText.TextSpans",
-                Message.raw(allocated + "/" + MAX_RANK_PER_NODE));
+                Message.raw(allocated + "/" + NODE_MAX_RANKS[i]));
 
             uiBuilder.set("#SkillTreeNode" + id + ".Visible", true);
             eventBuilder.addEventBinding(
@@ -506,7 +530,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
             remainingPoints <= 0
                 || !skillTreeParentsAllowSelectedAllocation(skillRanks)
-                || skillRanks[selectedNode] >= MAX_RANK_PER_NODE);
+                || skillRanks[selectedNode] >= NODE_MAX_RANKS[selectedNode]);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
         eventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
@@ -707,6 +731,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         return seg;
     }
 
+    private static int layoutHorizontalSiblings(@Nonnull UICommandBuilder ui,
+                                               int seg,
+                                               int cxCenter, int cyMid,
+                                               int cxLeft, int cxRight) {
+        int slotHalfL = SLOT / 2;
+        int slotHalfR = SLOT - slotHalfL;
+        int barY = cyMid - RAIL / 2;
+        int leftBarX  = cxLeft  + slotHalfR;
+        int leftBarW  = (cxCenter - slotHalfL) - leftBarX;
+        int rightBarX = cxCenter + slotHalfR;
+        int rightBarW = (cxRight  - slotHalfL) - rightBarX;
+        showEdge(ui, seg++, leftBarX,  barY, leftBarW,  RAIL);
+        showEdge(ui, seg++, rightBarX, barY, rightBarW, RAIL);
+        return seg;
+    }
+
     private static int layoutSplitOneToTwo(@Nonnull UICommandBuilder ui,
                                           int seg,
                                           int cxP,
@@ -789,7 +829,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 if (mgr != null) {
                     Profession prof = currentTalentProfession();
                     String nodeId = TREE_NODES[selectedNode][0];
-                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, MAX_RANK_PER_NODE);
+                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, NODE_MAX_RANKS[selectedNode]);
                 }
             }
             rebuild();

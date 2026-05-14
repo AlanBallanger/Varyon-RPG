@@ -952,30 +952,38 @@ Group {
       Button #SkillTreeNode11 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
 
-      AssetImage #SkillTreeNode12Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode12Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode12Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode12Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
+      Group #SkillTreeNode12Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Group #SkillTreeNode12Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode12Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Label #SkillTreeNode12RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode12Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode12 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
 
-      AssetImage #SkillTreeNode13Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode13Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode13Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode13Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
+      Group #SkillTreeNode13Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Group #SkillTreeNode13Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode13Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Label #SkillTreeNode13RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode13Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode13 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
 
-      AssetImage #SkillTreeNode14Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode14Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode14Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode14Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
+      Group #SkillTreeNode14Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Group #SkillTreeNode14Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode14Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Label #SkillTreeNode14RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode14Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode14 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
 
-      AssetImage #SkillTreeNode15Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode15Unlocked { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
-      AssetImage #SkillTreeNode15Icon { Anchor: (Left: 0, Top: 0, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode15Slot { Anchor: (Left: 0, Top: 0, Width: 76, Height: 76); Visible: false; }
+      Group #SkillTreeNode15Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Group #SkillTreeNode15Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
+      Group #SkillTreeNode15Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
+      Label #SkillTreeNode15RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode15Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode15 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
