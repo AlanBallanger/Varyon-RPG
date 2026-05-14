@@ -34,6 +34,31 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private static final Logger LOG = Logger.getLogger(RpgMainUI.class.getName());
 
+    @FunctionalInterface
+    private interface EdgeBuilderFn {
+        int build(@Nonnull UICommandBuilder ui, int seg, int[][] slotLt);
+    }
+
+    private static final class SkillTreeDef {
+        final String[][] nodes;
+        final int[][] slotLt;
+        final int[][] parentGroups;
+        final int[] maxRanks;
+        final EdgeBuilderFn edgeBuilder;
+        @Nullable final String[][] nodeStatValues;
+
+        SkillTreeDef(String[][] nodes, int[][] slotLt, int[][] parentGroups,
+                     int[] maxRanks, EdgeBuilderFn edgeBuilder,
+                     @Nullable String[][] nodeStatValues) {
+            this.nodes = nodes;
+            this.slotLt = slotLt;
+            this.parentGroups = parentGroups;
+            this.maxRanks = maxRanks;
+            this.edgeBuilder = edgeBuilder;
+            this.nodeStatValues = nodeStatValues;
+        }
+    }
+
     private static final int[][] SKILL_TREE_PARENT_GROUPS = new int[][] {
         {}, // 0
         {}, // 1
@@ -160,29 +185,85 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final String[][] TREE_NODES = {
-        {"0", "Guerrier", "Passif", "Sommet gauche.", "Prototype d’arbre.", "AbilityIconSword_40.png"},
-        {"1", "Entraînement aux armes", "Passif", "Sommet droit.", "Icônes provisoires.", "Weapon_Training_Icon.png"},
-        {"2", "Entraînement défensif", "Passif", "Fusion des deux sommets.", "Emplacement réservé.", "Defense_Training_Icon.png"},
-        {"3", "Entraînement de précision", "Passif", "Colonne gauche — palier 1.", "Emplacement réservé.", "Precision_Training_Icon.png"},
-        {"4", "Entraînement à la vigueur", "Passif", "Colonne centre — palier 1.", "Emplacement réservé.", "Vigor_Training_Icon.png"},
-        {"5", "Cri de guerre", "Actif", "Colonne droite — palier 1.", "Emplacement réservé.", "Warcry_Icon.png"},
-        {"6", "Coup puissant", "Actif", "Colonne gauche — palier 2.", "Emplacement réservé.", "Heavy_Swing_Icon.png"},
-        {"7", "Charge brutale", "Actif", "Colonne centre — palier 2.", "Emplacement réservé.", "Brutal_Charge_Icon.png"},
-        {"8", "Serment du guerrier", "Passif", "Colonne droite — palier 2.", "Emplacement réservé.", "Warrior_Oath_Icon.png"},
-        {"9", "Frappe défensive", "Actif", "Convergence des trois colonnes.", "Emplacement réservé.", "Guarded_Strike_Icon.png"},
-        {"10", "Second souffle", "Passif", "Sortie gauche.", "Icône libre à assigner.", "Second_Wind_Icon.png"},
-        {"11", "Position de combat", "Passif", "Sortie droite.", "Icône libre à assigner.", "Battle_Footing_Icon.png"},
-        {"12", "Veine gauche", "Passif", "Connexion gauche — palier 2.", "Emplacement réservé.", "Precision_Training_Icon.png"},
-        {"13", "Veine droite", "Passif", "Connexion droite — palier 2.", "Emplacement réservé.", "Precision_Training_Icon.png"},
-        {"14", "Filon gauche", "Passif", "Connexion gauche — palier 5.", "Emplacement réservé.", "Defense_Training_Icon.png"},
-        {"15", "Filon droit", "Passif", "Connexion droite — palier 5.", "Emplacement réservé.", "Defense_Training_Icon.png"},
+        {"0",  "Poches Pleines",        "Passif", "Un vrai mineur ne repart jamais avec un seul caillou.",                    "Chance de doubler les ressources obtenues en minant.",                             "AbilityIconSword_40.png"},
+        {"1",  "Front Poussiereux",     "Passif", "Chaque coup de pioche laisse une marque. Certaines deviennent du savoir.", "Augmente l’expérience gagnée en minant.",                            "Weapon_Training_Icon.png"},
+        {"2",  "Appel des Profondeurs", "Passif", "Les galeries offrent parfois leurs secrets aux plus obstiés.",         "Chance d’obtenir des Essences de Mineur en récoltant du minerai.",       "Defense_Training_Icon.png"},
+        {"3",  "Pioche de Vétéran",  "Passif", "Les outils bien entretenus survivent aux mineurs.",                         "Réduit les pertes de durabilité de votre pioche.",                        "Precision_Training_Icon.png"},
+        {"4",  "Minerai Immortel",      "Passif", "Certaines veines refusent simplement de disparaître.",                  "Chance qu’un minerai réapparaîsse immédiatement après récolte.", "Vigor_Training_Icon.png"},
+        {"5",  "C-C-Combo",             "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                "Miner plusieurs minerais rapidement déclenche un combo augmentant les gains.", "Warcry_Icon.png"},
+        {"6",  "Incassable !",          "Passif", "Ta pioche a vu pire.",                                                      "Votre pioche récupère progressivement de la durabilité avec le temps.", "Heavy_Swing_Icon.png"},
+        {"7",  "Briseur de Roche",      "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                  "Augmente la résistance de votre équipement lors du minage de pierre.",    "Brutal_Charge_Icon.png"},
+        {"8",  "Chant de la Veine",     "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",           "Permet de miner instantanément toute une veine de minerai.",                  "Warrior_Oath_Icon.png"},
+        {"9",  "Gardien de Pierre",     "Passif", "Sous certaines montagnes sommeillent encore les anciens protecteurs.",     "Chance d’invoquer un Gardien Minéral laissant un objet légendaire.", "Guarded_Strike_Icon.png"},
+        {"10", "Œil du Prospecteur","Passif", "Les cristaux rares brillent différemment pour ceux qui savent regarder.", "Détecte les gemmes rares à proximité.",                          "Second_Wind_Icon.png"},
+        {"11", "Wagon Express",         "Actif",  "Tous les tunnels finissent par mener quelque part.",                       "Débloque une commande pour retourner instantanément à la surface.", "Battle_Footing_Icon.png"},
+        {"12", "Œil de Taupe",           "Passif", "Dans les profondeurs, la lumière finit toujours par suivre les anciens.",      "Équipe un casque de mineur diffusant une lumière permanente autour de vous.",     "Precision_Training_Icon.png"},
+        {"13", "Besace du Foreur",       "Passif", "Même la mort n'ose pas fouiller dans ce sac.",                                    "Les minerais placés dans votre sac de mineur sont conservés après votre mort.",  "Precision_Training_Icon.png"},
+        {"14", "Quatre pour le Prix d'un", "Passif", "Un coup de pioche rentable, enfin.",                                            "Permet de miner les blocs en zone 2×2.",                                          "Defense_Training_Icon.png"},
+        {"15", "Diplomatie Minière",  "Actif",  "Quand la roche refuse de bouger, il existe d'autres arguments.",                 "Permet de déclencher une explosion contrôlée pour terraformer rapidement la zone.", "Defense_Training_Icon.png"},
     };
+
+    private static final String[][] MINEUR_NODE_STAT_VALUES = {
+        {"5% loot",        "10% loot",        "15% loot",        "20% loot",        "25% loot"},           // 0
+        {"5% XP",          "10% XP",          "15% XP",          "20% XP",          "25% XP"},             // 1
+        {"1% essence",     "1.5% essence",    "2% essence",      "2.5% essence",    "3% essence"},          // 2
+        {"7% durabilité",  "14% durabilité",  "21% durabilité",  "28% durabilité",  "35% durabilité"},      // 3
+        {"4% repop",       "8% repop",        "12% repop",       "16% repop",       "20% repop"},           // 4
+        {"5% XP & loot",   "10% XP & loot",   "15% XP & loot",   "20% XP & loot",   "25% XP & loot"},     // 5
+        {"1 dur./60 sec",  "1 dur./45 sec",   "1 dur./30 sec",   "2 dur./30 sec",   "3 dur./30 sec"},       // 6
+        {"20% résistance", "40% résistance",  "60% résistance",  "80% résistance",  "100% résistance"},     // 7
+        {"120 sec recharge", "100 sec recharge", "80 sec recharge", "60 sec recharge", "45 sec recharge"},  // 8
+        {"0.5% invocation", "1% invocation",  "1.5% invocation", "2% invocation",   "2.5% invocation"},    // 9
+        {"12 blocs",       "18 blocs",        "24 blocs",        "30 blocs",        "36 blocs"},            // 10
+        {"3h recharge",    "2h30 recharge",   "2h recharge",     "1h30 recharge",   "1h recharge"},         // 11
+        {"Lumière permanente activée"},    // 12
+        {"Minerais conservés à la mort"}, // 13
+        {"Zone 2×2 débloquée"},           // 14
+        {"Explosion contrôlée débloquée"} // 15
+    };
+
+    private static final String[][] BASE_TREE_NODES = Arrays.copyOfRange(TREE_NODES, 0, 12);
+    private static final int[][] BASE_TREE_SLOT_LT = Arrays.copyOfRange(SLOT_LT, 0, 12);
+    private static final int[][] BASE_TREE_PARENT_GROUPS = Arrays.copyOfRange(SKILL_TREE_PARENT_GROUPS, 0, 12);
+    private static final int[] BASE_TREE_MAX_RANKS = Arrays.copyOfRange(NODE_MAX_RANKS, 0, 12);
+
+    private static final SkillTreeDef BASE_TREE = new SkillTreeDef(
+        BASE_TREE_NODES, BASE_TREE_SLOT_LT, BASE_TREE_PARENT_GROUPS, BASE_TREE_MAX_RANKS,
+        (ui, seg, lt) -> {
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[0]), bot(lt[0]), cx(lt[1]), bot(lt[1]), cx(lt[2]), top(lt[2]));
+            seg = layoutSplitOneToThree(ui, seg, cx(lt[2]), bot(lt[2]), cx(lt[3]), cx(lt[4]), cx(lt[5]), top(lt[3]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[3]), bot(lt[3]), top(lt[6]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[4]), bot(lt[4]), top(lt[7]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[5]), bot(lt[5]), top(lt[8]));
+            seg = layoutMergeThreeToOne(ui, seg, cx(lt[6]), bot(lt[6]), cx(lt[7]), bot(lt[7]), cx(lt[8]), bot(lt[8]), cx(lt[9]), top(lt[9]));
+            seg = layoutSplitOneToTwo(ui, seg, cx(lt[9]), bot(lt[9]), cx(lt[10]), cx(lt[11]), top(lt[10]));
+            return seg;
+        },
+        null
+    );
+
+    private static final SkillTreeDef MINEUR_TREE = new SkillTreeDef(
+        TREE_NODES, SLOT_LT, SKILL_TREE_PARENT_GROUPS, NODE_MAX_RANKS,
+        (ui, seg, lt) -> {
+            seg = layoutMergeTwoToOne(ui, seg, cx(lt[0]), bot(lt[0]), cx(lt[1]), bot(lt[1]), cx(lt[2]), top(lt[2]));
+            seg = layoutSplitOneToThree(ui, seg, cx(lt[2]), bot(lt[2]), cx(lt[3]), cx(lt[4]), cx(lt[5]), top(lt[3]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[3]), bot(lt[3]), top(lt[6]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[4]), bot(lt[4]), top(lt[7]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[5]), bot(lt[5]), top(lt[8]));
+            seg = layoutMergeThreeToOne(ui, seg, cx(lt[6]), bot(lt[6]), cx(lt[7]), bot(lt[7]), cx(lt[8]), bot(lt[8]), cx(lt[9]), top(lt[9]));
+            seg = layoutSplitOneToTwo(ui, seg, cx(lt[9]), bot(lt[9]), cx(lt[10]), cx(lt[11]), top(lt[10]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[2]), top(lt[2]) + SLOT / 2, cx(lt[12]), cx(lt[13]));
+            seg = layoutHorizontalSiblings(ui, seg, cx(lt[9]), top(lt[9]) + SLOT / 2, cx(lt[14]), cx(lt[15]));
+            return seg;
+        },
+        MINEUR_NODE_STAT_VALUES
+    );
 
     private final PlayerRef playerRef;
     private String activeTab = "character";
-    private int selectedNode = 2;
+    private int selectedNode = 0;
     private int hoveredNode = -1;
-    private final int[] skillRanks = new int[TREE_NODES.length];
+    private final int[] skillRanks = new int[32];
     private String reconvertSourceId = null;
     private int talentTreeSlotIndex = 0;
 
@@ -382,15 +463,18 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         return fallback != null ? fallback : Profession.MINEUR;
     }
 
+    private SkillTreeDef currentSkillTree() {
+        return currentTalentProfession() == Profession.MINEUR ? MINEUR_TREE : BASE_TREE;
+    }
+
     private void loadSkillRanksFromAccount() {
+        Arrays.fill(skillRanks, 0);
         PlayerAccount acc = currentAccount();
-        if (acc == null) {
-            Arrays.fill(skillRanks, 0);
-            return;
-        }
+        if (acc == null) return;
         Profession prof = currentTalentProfession();
-        for (int i = 0; i < TREE_NODES.length; i++) {
-            skillRanks[i] = acc.getTalentRank(prof, TREE_NODES[i][0]);
+        SkillTreeDef tree = currentSkillTree();
+        for (int i = 0; i < tree.nodes.length; i++) {
+            skillRanks[i] = acc.getTalentRank(prof, tree.nodes[i][0]);
         }
     }
 
@@ -398,10 +482,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                          @Nonnull UIEventBuilder eventBuilder) {
         PlayerAccount acc = currentAccount();
         syncTalentTreeSlotIndex(acc);
+        SkillTreeDef tree = currentSkillTree();
+        if (selectedNode >= tree.nodes.length) selectedNode = 0;
         loadSkillRanksFromAccount();
         Profession prof = currentTalentProfession();
         int invested = 0;
-        for (int r : skillRanks) invested += r;
+        for (int i = 0; i < tree.nodes.length; i++) invested += skillRanks[i];
         int remainingPoints = acc == null
             ? Math.max(0, SKILL_POINTS_BUDGET - invested)
             : acc.availableTalentPoints(prof);
@@ -436,55 +522,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
         hideEdgeSegmentRange(uiBuilder, 0, SKILL_TREE_EDGE_SEGMENTS);
 
-        int seg = 0;
-
-        seg = layoutMergeTwoToOne(uiBuilder, seg,
-            cx(SLOT_LT[0]), bot(SLOT_LT[0]),
-            cx(SLOT_LT[1]), bot(SLOT_LT[1]),
-            cx(SLOT_LT[2]), top(SLOT_LT[2]));
-
-        seg = layoutSplitOneToThree(uiBuilder, seg,
-            cx(SLOT_LT[2]), bot(SLOT_LT[2]),
-            cx(SLOT_LT[3]),
-            cx(SLOT_LT[4]),
-            cx(SLOT_LT[5]),
-            top(SLOT_LT[3]));
-
-        seg = layoutVerticalConnector(uiBuilder, seg,
-            cx(SLOT_LT[3]), bot(SLOT_LT[3]), top(SLOT_LT[6]));
-        seg = layoutVerticalConnector(uiBuilder, seg,
-            cx(SLOT_LT[4]), bot(SLOT_LT[4]), top(SLOT_LT[7]));
-        seg = layoutVerticalConnector(uiBuilder, seg,
-            cx(SLOT_LT[5]), bot(SLOT_LT[5]), top(SLOT_LT[8]));
-
-        seg = layoutMergeThreeToOne(uiBuilder, seg,
-            cx(SLOT_LT[6]), bot(SLOT_LT[6]),
-            cx(SLOT_LT[7]), bot(SLOT_LT[7]),
-            cx(SLOT_LT[8]), bot(SLOT_LT[8]),
-            cx(SLOT_LT[9]),
-            top(SLOT_LT[9]));
-
-        seg = layoutSplitOneToTwo(uiBuilder, seg,
-            cx(SLOT_LT[9]), bot(SLOT_LT[9]),
-            cx(SLOT_LT[10]),
-            cx(SLOT_LT[11]),
-            top(SLOT_LT[10]));
-
-        seg = layoutHorizontalSiblings(uiBuilder, seg,
-            cx(SLOT_LT[2]), top(SLOT_LT[2]) + SLOT / 2,
-            cx(SLOT_LT[12]), cx(SLOT_LT[13]));
-
-        seg = layoutHorizontalSiblings(uiBuilder, seg,
-            cx(SLOT_LT[9]), top(SLOT_LT[9]) + SLOT / 2,
-            cx(SLOT_LT[14]), cx(SLOT_LT[15]));
-
+        int seg = tree.edgeBuilder.build(uiBuilder, 0, tree.slotLt);
         hideEdgeSegmentRange(uiBuilder, seg, SKILL_TREE_EDGE_SEGMENTS);
 
-        for (int i = 0; i < TREE_NODES.length; i++) {
-            String[] node = TREE_NODES[i];
+        for (int i = 0; i < tree.nodes.length; i++) {
+            String[] node = tree.nodes[i];
             String id = node[0];
-            int sl = SLOT_LT[i][0];
-            int st = SLOT_LT[i][1];
+            int sl = tree.slotLt[i][0];
+            int st = tree.slotLt[i][1];
 
             positionSkillSlot(uiBuilder, id, sl, st);
             positionSkillRank(uiBuilder, id, sl, st);
@@ -503,7 +548,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
             uiBuilder.set("#SkillTreeNode" + id + "RankText.Visible", true);
             uiBuilder.set("#SkillTreeNode" + id + "RankText.TextSpans",
-                Message.raw(allocated + "/" + NODE_MAX_RANKS[i]));
+                Message.raw(allocated + "/" + tree.maxRanks[i]));
 
             uiBuilder.set("#SkillTreeNode" + id + ".Visible", true);
             eventBuilder.addEventBinding(
@@ -529,8 +574,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         applySkillTreeSelectionAndHoverChrome(uiBuilder);
         uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
             remainingPoints <= 0
-                || !skillTreeParentsAllowSelectedAllocation(skillRanks)
-                || skillRanks[selectedNode] >= NODE_MAX_RANKS[selectedNode]);
+                || !skillTreeParentsAllowSelectedAllocation(skillRanks, tree)
+                || skillRanks[selectedNode] >= tree.maxRanks[selectedNode]);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
         eventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
@@ -547,11 +592,13 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     }
 
     private void applySkillTreeSelectionAndHoverChrome(@Nonnull UICommandBuilder uiBuilder) {
-        String selectedId = TREE_NODES[selectedNode][0];
-        String hoverId = hoveredNode >= 0 ? TREE_NODES[hoveredNode][0] : null;
+        SkillTreeDef tree = currentSkillTree();
+        String selectedId = tree.nodes[selectedNode][0];
+        boolean hoverValid = hoveredNode >= 0 && hoveredNode < tree.nodes.length;
+        String hoverId = hoverValid ? tree.nodes[hoveredNode][0] : null;
 
-        for (int i = 0; i < TREE_NODES.length; i++) {
-            String id = TREE_NODES[i][0];
+        for (int i = 0; i < tree.nodes.length; i++) {
+            String id = tree.nodes[i][0];
             int allocated = skillRanks[i];
             boolean nodeSelected = id.equals(selectedId);
             boolean nodeHovered = hoverId != null && id.equals(hoverId);
@@ -570,14 +617,46 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             uiBuilder.setObject("#SkillTreeNode" + id + "Veil.Background", NODE_VEIL_STYLE);
         }
 
-        int panelNode = hoveredNode >= 0 ? hoveredNode : selectedNode;
-        String[] sel = TREE_NODES[panelNode];
+        int panelNode = hoverValid ? hoveredNode : selectedNode;
+        String[] sel = tree.nodes[panelNode];
+        int rank = skillRanks[panelNode];
+        int maxRank = tree.maxRanks[panelNode];
+        String[] stats = (tree.nodeStatValues != null && panelNode < tree.nodeStatValues.length)
+            ? tree.nodeStatValues[panelNode] : null;
+
         uiBuilder.set("#SkillTreeSelectedTitle.TextSpans", Message.raw(sel[1]));
         uiBuilder.set("#SkillTreeSelectedStatus.TextSpans", Message.raw(sel[2]));
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans", Message.raw(sel[3]));
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
-        uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
+
+        if (stats != null) {
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans",
+                Message.raw("« " + sel[3] + " »"));
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.Visible", true);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.TextSpans", Message.raw(""));
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.Visible", true);
+            String currentStat = rank == 0
+                ? "Non investi (0/" + maxRank + ")"
+                : "Rang " + rank + "/" + maxRank + " — " + stats[rank - 1];
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.TextSpans", Message.raw(currentStat));
+            boolean hasNext = rank < maxRank;
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine4.Visible", hasNext);
+            if (hasNext) {
+                uiBuilder.set("#SkillTreeSelectedDescriptionLine4.TextSpans",
+                    Message.raw("Prochain rang : " + stats[rank]));
+            }
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine5.Visible", false);
+        } else {
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans", Message.raw(sel[3]));
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.Visible", false);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.Visible", false);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine4.Visible", false);
+            uiBuilder.set("#SkillTreeSelectedDescriptionLine5.Visible", false);
+        }
     }
 
     private void sendSkillTreeHoverChromeUpdate() {
@@ -793,29 +872,35 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         if ("tab".equals(data.action) && data.tab != null) {
             activeTab = data.tab;
             hoveredNode = -1;
+            selectedNode = 0;
             rebuild();
         } else if ("talentSlotPick".equals(data.action) && data.talentSlot != null) {
             talentTreeSlotIndex = "1".equals(data.talentSlot) ? 1 : 0;
+            selectedNode = 0;
+            hoveredNode = -1;
             rebuild();
         } else if ("skill".equals(data.action) && data.node != null) {
-            for (int i = 0; i < TREE_NODES.length; i++) {
-                if (TREE_NODES[i][0].equals(data.node)) {
+            SkillTreeDef tree = currentSkillTree();
+            for (int i = 0; i < tree.nodes.length; i++) {
+                if (tree.nodes[i][0].equals(data.node)) {
                     selectedNode = i;
                     break;
                 }
             }
             rebuild();
         } else if ("skillHover".equals(data.action) && data.node != null) {
-            for (int i = 0; i < TREE_NODES.length; i++) {
-                if (TREE_NODES[i][0].equals(data.node)) {
+            SkillTreeDef tree = currentSkillTree();
+            for (int i = 0; i < tree.nodes.length; i++) {
+                if (tree.nodes[i][0].equals(data.node)) {
                     hoveredNode = i;
                     break;
                 }
             }
             sendSkillTreeHoverChromeUpdate();
         } else if ("skillHoverEnd".equals(data.action) && data.node != null) {
-            for (int i = 0; i < TREE_NODES.length; i++) {
-                if (TREE_NODES[i][0].equals(data.node) && hoveredNode == i) {
+            SkillTreeDef tree = currentSkillTree();
+            for (int i = 0; i < tree.nodes.length; i++) {
+                if (tree.nodes[i][0].equals(data.node) && hoveredNode == i) {
                     hoveredNode = -1;
                     break;
                 }
@@ -823,13 +908,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             sendSkillTreeHoverChromeUpdate();
         } else if ("allocate".equals(data.action)) {
             loadSkillRanksFromAccount();
-            if (skillRanks[selectedNode] < MAX_RANK_PER_NODE
-                && skillTreeParentsAllowSelectedAllocation(skillRanks)) {
+            SkillTreeDef tree = currentSkillTree();
+            if (skillRanks[selectedNode] < tree.maxRanks[selectedNode]
+                && skillTreeParentsAllowSelectedAllocation(skillRanks, tree)) {
                 ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
                 if (mgr != null) {
                     Profession prof = currentTalentProfession();
-                    String nodeId = TREE_NODES[selectedNode][0];
-                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, NODE_MAX_RANKS[selectedNode]);
+                    String nodeId = tree.nodes[selectedNode][0];
+                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, tree.maxRanks[selectedNode]);
                 }
             }
             rebuild();
@@ -896,15 +982,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         public Data() {}
     }
 
-    private boolean skillTreeParentsAllowSelectedAllocation(@Nonnull int[] ranks) {
-        int[] parents = SKILL_TREE_PARENT_GROUPS[selectedNode];
-        if (parents.length == 0) {
-            return true;
-        }
+    private boolean skillTreeParentsAllowSelectedAllocation(@Nonnull int[] ranks,
+                                                            @Nonnull SkillTreeDef tree) {
+        int[] parents = tree.parentGroups[selectedNode];
+        if (parents.length == 0) return true;
         for (int p : parents) {
-            if (ranks[p] >= 1) {
-                return true;
-            }
+            if (ranks[p] >= 1) return true;
         }
         return false;
     }
