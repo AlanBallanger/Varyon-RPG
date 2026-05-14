@@ -47,22 +47,35 @@ Group {
 
         Group {
           LayoutMode: Left;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 37);
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
 
           Group { FlexWeight: 1; }
 
           Group {
             LayoutMode: Left;
-            Anchor: (Height: 37);
+            Anchor: (Height: 44);
 
-            ItemIcon #ProfessionActiveCard0Icon {
-              Anchor: (Width: 36, Height: 36);
+            Group {
+              Anchor: (Width: 44, Height: 44);
+              LayoutMode: Full;
+              Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
+              Padding: (Full: 3);
+
+              Group {
+                LayoutMode: Middle;
+                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                Background: #141820(0.82);
+
+                ItemIcon #ProfessionActiveCard0Icon {
+                  Anchor: (Width: 32, Height: 32);
+                }
+              }
             }
 
             Group { Anchor: (Width: 10); }
 
             Label #ProfessionActiveCard0Name {
-              Anchor: (Height: 37);
+              Anchor: (Height: 44);
               Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center);
               Text: "";
             }
@@ -104,22 +117,35 @@ Group {
 
         Group {
           LayoutMode: Left;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 37);
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
 
           Group { FlexWeight: 1; }
 
           Group {
             LayoutMode: Left;
-            Anchor: (Height: 37);
+            Anchor: (Height: 44);
 
-            ItemIcon #ProfessionActiveCard1Icon {
-              Anchor: (Width: 36, Height: 36);
+            Group {
+              Anchor: (Width: 44, Height: 44);
+              LayoutMode: Full;
+              Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
+              Padding: (Full: 3);
+
+              Group {
+                LayoutMode: Middle;
+                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+                Background: #141820(0.82);
+
+                ItemIcon #ProfessionActiveCard1Icon {
+                  Anchor: (Width: 32, Height: 32);
+                }
+              }
             }
 
             Group { Anchor: (Width: 10); }
 
             Label #ProfessionActiveCard1Name {
-              Anchor: (Height: 37);
+              Anchor: (Height: 44);
               Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center);
               Text: "";
             }
@@ -197,7 +223,12 @@ Group {
 
     }
 
-    Group { Anchor: (Width: 14, Top: 0, Bottom: 0); }
+    Group #ProfessionColumnSeparator {
+      Anchor: (Width: 2, Top: 0, Bottom: 0);
+      Background: #E8DCC8(0.22);
+    }
+
+    Group { Anchor: (Width: 12, Top: 0, Bottom: 0); }
 
     Group {
       FlexWeight: 1;

@@ -22,7 +22,7 @@ $C = "Common.ui";
 @FubsysRpgEdge3 = #000000(0.20);
 @FubsysRpgDivider = #E8DCC8(0.16);
 @FubsysRpgDividerSoft = #E8DCC8(0.10);
-@FubsysRpgBackdrop = #000000(0.42);
+@FubsysRpgBackdrop = #000000(0.34);
 @FubsysRpgSelectedButtonFill = #D4AF37(0.38);
 @FubsysRpgStatusPillBg = #000000(0.40);
 @FubsysRpgStatusPillEdge = #D4AF37(0.35);
@@ -201,9 +201,9 @@ $C = "Common.ui";
   )
 );
 
-@FubsysRpgPageWidth = 1376;
-@FubsysRpgPageHeight = 904;
-@FubsysRpgPagePadding = 36;
+@FubsysRpgPageWidth = 1170;
+@FubsysRpgPageHeight = 768;
+@FubsysRpgPagePadding = 31;
 
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -212,7 +212,7 @@ Group {
 
   Group {
     Anchor: (Width: @FubsysRpgPageWidth, Height: @FubsysRpgPageHeight);
-    Background: PatchStyle(TexturePath: "Common/ContainerFullPatch.png", Border: 20);
+    Background: PatchStyle(TexturePath: "Common/ContainerFullPatch.png", Border: 20, Color: #FFFFFFE6);
     LayoutMode: Full;
 
     // Jewelry frame (9-slice textures): real pixel-art filigree + transparent center.
@@ -247,7 +247,7 @@ Group {
 
     Group {
       FlexWeight: 1;
-      Anchor: (Top: 12);
+      Anchor: (Top: 2);
       LayoutMode: Top;
 
       Group #Tabs {
@@ -330,7 +330,7 @@ Group {
         LayoutMode: Top;
         FlexWeight: 1;
         Visible: true;
-        Anchor: (Top: 8);
+        Anchor: (Top: 4);
 
         Group {
           FlexWeight: 1;
@@ -349,7 +349,7 @@ Group {
         LayoutMode: Left;
         FlexWeight: 1;
         Visible: false;
-        Anchor: (Top: 8);
+        Anchor: (Top: 4);
 
         Group {
           FlexWeight: 1;
@@ -368,7 +368,7 @@ Group {
         LayoutMode: Top;
         FlexWeight: 1;
         Visible: false;
-        Anchor: (Top: 8);
+        Anchor: (Top: 4);
 
         Group {
           FlexWeight: 1;
@@ -387,7 +387,7 @@ Group {
         LayoutMode: Top;
         FlexWeight: 1;
         Visible: false;
-        Anchor: (Top: 8);
+        Anchor: (Top: 4);
 
         Group {
           FlexWeight: 1;

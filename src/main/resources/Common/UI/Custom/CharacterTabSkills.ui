@@ -201,9 +201,9 @@ $C = "Common.ui";
   )
 );
 
-@FubsysRpgPageWidth = 1376;
-@FubsysRpgPageHeight = 904;
-@FubsysRpgPagePadding = 36;
+@FubsysRpgPageWidth = 1170;
+@FubsysRpgPageHeight = 768;
+@FubsysRpgPagePadding = 31;
 
 
 Group {
