@@ -205,12 +205,16 @@ $C = "Common.ui";
 
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-  LayoutMode: Top;
+  LayoutMode: Left;
+
+  Group {
+    FlexWeight: 1;
+    LayoutMode: Top;
 
   Group {
     LayoutMode: Left;
     Anchor: (Left: 0, Right: 0, Height: 48);
-    Padding: (Left: 8, Top: 2);
+    Padding: (Left: 8, Top: 2, Right: 8);
 
     Group {
       LayoutMode: Top;
@@ -226,45 +230,36 @@ Group {
         Text: "Points restants : 0";
       }
     }
-  }
 
-  Group #SkillTreeProfessionPickerRow {
-    LayoutMode: Left;
-    Anchor: (Left: 0, Right: 0);
-    Padding: (Left: 8, Bottom: 6);
-    Visible: false;
+    Group { FlexWeight: 1; }
 
-    Label {
-      Anchor: (Right: 8, Height: 26);
-      Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
-      Text: "Arbre pour :";
-    }
+    Group #SkillTreeProfessionPickerRow {
+      LayoutMode: Left;
+      Visible: false;
 
-    Button #SkillTreeTalentSlot0Button {
-      Anchor: (Right: 8, Width: 160, Height: 26);
-      Style: @CycleSlotButtonStyle;
-      LayoutMode: Middle;
-      Label #SkillTreeTalentSlot0ButtonLabel {
-        Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-        Text: "-";
+      Button #SkillTreeTalentSlot0Button {
+        Anchor: (Right: 8, Width: 112, Height: 26);
+        Style: @CycleSlotButtonStyle;
+        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
+        LayoutMode: Middle;
+        Label #SkillTreeTalentSlot0ButtonLabel {
+          Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Text: "-";
+        }
       }
-    }
 
-    Button #SkillTreeTalentSlot1Button {
-      Anchor: (Right: 8, Width: 160, Height: 26);
-      Style: @CycleSlotButtonStyle;
-      LayoutMode: Middle;
-      Label #SkillTreeTalentSlot1ButtonLabel {
-        Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-        Text: "-";
+      Button #SkillTreeTalentSlot1Button {
+        Anchor: (Right: 8, Width: 112, Height: 26);
+        Style: @CycleSlotButtonStyle;
+        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
+        LayoutMode: Middle;
+        Label #SkillTreeTalentSlot1ButtonLabel {
+          Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Text: "-";
+        }
       }
     }
   }
-
-  Group {
-    LayoutMode: Left;
-    FlexWeight: 1;
-    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
 
     Group #SkillTreeCanvas {
       FlexWeight: 1;
@@ -1321,42 +1316,103 @@ Group {
       }
     }
 
-    Group { Anchor: (Width: 16); }
+  }
+
+  Group { Anchor: (Width: 16); }
+
+  Group {
+    Anchor: (Top: 0, Bottom: 0, Width: 290);
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
+    Padding: (Full: 2);
 
     Group {
-      Anchor: (Top: 0, Bottom: 0, Width: 252);
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
       LayoutMode: Top;
       Background: @FubsysRpgPanelShade;
-      Padding: (Full: 12);
+      Padding: (Full: 10);
 
       Label {
         Style: @SectionTitleStyle;
         Text: "Talent";
       }
 
-      Label #SkillTreeSelectedTitle {
+      Group {
+        LayoutMode: Left;
         Anchor: (Top: 10);
-        Style: (...@SubHeadingStyle, FontSize: 22, TextColor: @FubsysRpgInkStrong, RenderBold: true);
+
+        Group #SkillSidebarIcon {
+          Anchor: (Width: 52, Height: 52);
+          Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #31C677FF);
+
+          Group #SkillSidebarIconImage {
+            Anchor: (Left: 4, Top: 4, Right: 4, Bottom: 4);
+          }
+        }
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 10);
+
+          Label #SkillTreeSelectedTitle {
+            Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true, Wrap: true);
+            Text: "";
+          }
+
+          Label #SkillTreeSelectedFlavor {
+            Anchor: (Top: 4);
+            Style: (...@MetaStyle, FontSize: 12, TextColor: @FubsysRpgInkFaint, Wrap: true);
+            Text: "";
+          }
+        }
+      }
+
+      Label #SkillTreeSelectedEffect {
+        Anchor: (Top: 10);
+        Style: (...@MetaStyle, FontSize: 14, TextColor: #FFFFFFFF, Wrap: true);
         Text: "";
       }
 
-      Group #SkillTreeSelectedDescriptionGroup {
-        LayoutMode: Top;
-        Anchor: (Top: 6);
+      Group { Anchor: (Top: 10, Height: 1); Background: @FubsysRpgDivider; }
 
-        Label #SkillTreeSelectedDescriptionLine0 { Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine1 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine2 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine3 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine4 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine5 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+      Group {
+        LayoutMode: Left;
+        Anchor: (Top: 8);
+
+        Label {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Text: "Niveau actuel";
+        }
+
+        Group { FlexWeight: 1; }
+
+        Label #SkillTreeCurrentRankValue {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkStrong, RenderBold: true);
+          Text: "0/5";
+        }
       }
 
-      Label #SkillTreeSelectedStatus {
-        Anchor: (Top: 10);
-        Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted);
-        Text: "";
+      Group #SkillTreeNextRankRow {
+        LayoutMode: Left;
+        Anchor: (Top: 4);
+        Visible: false;
+
+        Label {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Text: "Prochain rang";
+        }
+
+        Group { FlexWeight: 1; }
+
+        Label #SkillTreeNextRankValue {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgGoldHighlight, RenderBold: true, Wrap: true);
+          Text: "";
+        }
       }
+
+      Label #SkillTreeTypePassif { Anchor: (Top: 8); Style: (...@MetaStyle, FontSize: 13, TextColor: #6BCB7AFF, RenderBold: true, RenderUppercase: true); Text: "Passif"; Visible: false; }
+      Label #SkillTreeTypeActif  { Anchor: (Top: 8); Style: (...@MetaStyle, FontSize: 13, TextColor: #D4AF37FF, RenderBold: true, RenderUppercase: true); Text: "Actif";  Visible: false; }
+      Label #SkillTreeTypeObjet  { Anchor: (Top: 8); Style: (...@MetaStyle, FontSize: 13, TextColor: #FFFFFFFF, RenderBold: true, RenderUppercase: true); Text: "Objet";  Visible: false; }
 
       Group { FlexWeight: 1; }
 

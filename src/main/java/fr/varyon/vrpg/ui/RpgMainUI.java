@@ -448,7 +448,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"7",  "Matériaux Exotiques",  "Passif", "Les créatures rares laissent rarement des matériaux ordinaires.",          "Augmente les chances d'obtenir de la chitine, du venin, des os et de la laine.",                 "Precision_Training_Icon.png"},
         {"8",  "Second Souffle",       "Passif", "Un chasseur fatigué devient une proie.",                                    "Augmente votre endurance maximale.",                                                              "Precision_Training_Icon.png"},
         {"9",  "Yeux de Lynx",         "Passif", "La nuit cache les faibles, pas les chasseurs.",                            "Améliore votre vision nocturne.",                                                                 "Precision_Training_Icon.png"},
-        {"10", "Dompteur de Monstres", "Passif", "Certaines créatures préfèrent obéir plutôt que mourir.",                   "Permet d'apprivoiser certaines créatures agressives.",                                           "Precision_Training_Icon.png"},
+        {"10", "Dompteur de Monstres", "Actif",  "Certaines créatures préfèrent obéir plutôt que mourir.",                   "Permet d'apprivoiser certaines créatures agressives.",                                           "Precision_Training_Icon.png"},
         {"11", "Prédateur Alpha",      "Passif", "Même les monstres savent reconnaître le sommet de la chaîne alimentaire.", "Chance d'invoquer un Prédateur Alpha laissant un objet légendaire à sa mort.",                  "Precision_Training_Icon.png"},
         {"12", "Chasseur_12",          "Passif", "À définir.",                                                                "À définir.",                                                                                      "Precision_Training_Icon.png"},
         {"13", "Bourse du Traqueur",   "Passif", "Un bon chasseur garde toujours ses trophées près de lui.",                 "Les ressources placées dans votre sac de chasse sont conservées après votre mort.",             "Precision_Training_Icon.png"},
@@ -777,8 +777,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         boolean dualActive = p0 != null && p1 != null;
         uiBuilder.set("#SkillTreeProfessionPickerRow.Visible", dualActive);
         if (dualActive) {
-            String label0 = (talentTreeSlotIndex == 0 ? "\u25b6 " : "") + p0.getDisplayName();
-            String label1 = (talentTreeSlotIndex == 1 ? "\u25b6 " : "") + p1.getDisplayName();
+            String label0 = p0.getDisplayName();
+            String label1 = p1.getDisplayName();
             uiBuilder.set("#SkillTreeTalentSlot0ButtonLabel.TextSpans", Message.raw(label0));
             uiBuilder.set("#SkillTreeTalentSlot1ButtonLabel.TextSpans", Message.raw(label1));
             eventBuilder.addEventBinding(
@@ -913,38 +913,26 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             ? tree.nodeStatValues[panelNode] : null;
 
         uiBuilder.set("#SkillTreeSelectedTitle.TextSpans", Message.raw(sel[1]));
-        uiBuilder.set("#SkillTreeSelectedStatus.TextSpans", Message.raw(sel[2]));
+        uiBuilder.set("#SkillTreeSelectedFlavor.TextSpans", Message.raw("« " + sel[3] + " »"));
+        uiBuilder.set("#SkillTreeSelectedEffect.TextSpans", Message.raw(sel[4]));
 
-        if (stats != null) {
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans",
-                Message.raw("« " + sel[3] + " »"));
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.Visible", true);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.TextSpans", Message.raw(""));
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.Visible", true);
-            String currentStat = rank == 0
-                ? "Non investi (0/" + maxRank + ")"
-                : "Rang " + rank + "/" + maxRank + " — " + stats[rank - 1];
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.TextSpans", Message.raw(currentStat));
-            boolean hasNext = rank < maxRank;
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine4.Visible", hasNext);
-            if (hasNext) {
-                uiBuilder.set("#SkillTreeSelectedDescriptionLine4.TextSpans",
-                    Message.raw("Prochain rang : " + stats[rank]));
-            }
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine5.Visible", false);
-        } else {
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.Visible", true);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine0.TextSpans", Message.raw(sel[3]));
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.Visible", true);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine1.TextSpans", Message.raw(sel[4]));
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine2.Visible", false);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine3.Visible", false);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine4.Visible", false);
-            uiBuilder.set("#SkillTreeSelectedDescriptionLine5.Visible", false);
+        String sidebarIconPath = sel[5].contains("/") ? sel[5] : ICON_BASE + sel[5];
+        uiBuilder.setObject("#SkillSidebarIconImage.Background",
+            new PatchStyle().setTexturePath(Value.of(sidebarIconPath)));
+
+        uiBuilder.set("#SkillTreeCurrentRankValue.TextSpans",
+            Message.raw(rank + "/" + maxRank));
+
+        boolean hasNext = rank < maxRank && stats != null;
+        uiBuilder.set("#SkillTreeNextRankRow.Visible", hasNext);
+        if (hasNext) {
+            uiBuilder.set("#SkillTreeNextRankValue.TextSpans", Message.raw(stats[rank]));
         }
+
+        String type = sel[2];
+        uiBuilder.set("#SkillTreeTypePassif.Visible", "Passif".equals(type));
+        uiBuilder.set("#SkillTreeTypeActif.Visible",  "Actif".equals(type));
+        uiBuilder.set("#SkillTreeTypeObjet.Visible",  "Objet".equals(type));
     }
 
     private void sendSkillTreeHoverChromeUpdate() {
@@ -981,7 +969,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         setAnchor(ui, "#SkillTreeNode" + id + "Unlocked",
             slotLeft + FILL_INSET, slotTop + FILL_INSET, FILL_SIZE, FILL_SIZE);
         setAnchor(ui, "#SkillTreeNode" + id + "Icon",
-            slotLeft + ICON_INSET, slotTop + ICON_INSET, ICON_SIZE, ICON_SIZE);
+            slotLeft + 8, slotTop + 8, SLOT - 16, SLOT - 16);
         setAnchor(ui, "#SkillTreeNode" + id + "Veil",
             slotLeft + FILL_INSET, slotTop + FILL_INSET, FILL_SIZE, FILL_SIZE);
         setAnchor(ui, "#SkillTreeNode" + id,
