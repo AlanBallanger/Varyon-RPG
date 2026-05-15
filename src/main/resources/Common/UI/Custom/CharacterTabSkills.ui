@@ -1344,12 +1344,12 @@ Group {
         LayoutMode: Top;
         Anchor: (Top: 6);
 
-        Label #SkillTreeSelectedDescriptionLine0 { Style: @MetaStyle; Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine1 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine2 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine3 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine4 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
-        Label #SkillTreeSelectedDescriptionLine5 { Anchor: (Top: 2); Style: @MetaStyle; Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine0 { Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine1 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine2 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine3 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine4 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
+        Label #SkillTreeSelectedDescriptionLine5 { Anchor: (Top: 2); Style: (...@MetaStyle, Wrap: true); Text: ""; Visible: false; }
       }
 
       Label #SkillTreeSelectedStatus {

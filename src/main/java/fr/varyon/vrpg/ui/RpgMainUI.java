@@ -185,22 +185,22 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final String[][] TREE_NODES = {
-        {"0",  "Poches Pleines",        "Passif", "Un vrai mineur ne repart jamais avec un seul caillou.",                    "Chance de doubler les ressources obtenues en minant.",                             "AbilityIconSword_40.png"},
-        {"1",  "Front Poussiereux",     "Passif", "Chaque coup de pioche laisse une marque. Certaines deviennent du savoir.", "Augmente l’expérience gagnée en minant.",                            "Weapon_Training_Icon.png"},
-        {"2",  "Appel des Profondeurs", "Passif", "Les galeries offrent parfois leurs secrets aux plus obstiés.",         "Chance d’obtenir des Essences de Mineur en récoltant du minerai.",       "Defense_Training_Icon.png"},
-        {"3",  "Pioche de Vétéran",  "Passif", "Les outils bien entretenus survivent aux mineurs.",                         "Réduit les pertes de durabilité de votre pioche.",                        "Precision_Training_Icon.png"},
-        {"4",  "Minerai Immortel",      "Passif", "Certaines veines refusent simplement de disparaître.",                  "Chance qu’un minerai réapparaîsse immédiatement après récolte.", "Vigor_Training_Icon.png"},
-        {"5",  "C-C-Combo",             "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                "Miner plusieurs minerais rapidement déclenche un combo augmentant les gains.", "Warcry_Icon.png"},
-        {"6",  "Incassable !",          "Passif", "Ta pioche a vu pire.",                                                      "Votre pioche récupère progressivement de la durabilité avec le temps.", "Heavy_Swing_Icon.png"},
-        {"7",  "Briseur de Roche",      "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                  "Augmente la résistance de votre équipement lors du minage de pierre.",    "Brutal_Charge_Icon.png"},
-        {"8",  "Chant de la Veine",     "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",           "Permet de miner instantanément toute une veine de minerai.",                  "Warrior_Oath_Icon.png"},
-        {"9",  "Gardien de Pierre",     "Passif", "Sous certaines montagnes sommeillent encore les anciens protecteurs.",     "Chance d’invoquer un Gardien Minéral laissant un objet légendaire.", "Guarded_Strike_Icon.png"},
-        {"10", "Œil du Prospecteur","Passif", "Les cristaux rares brillent différemment pour ceux qui savent regarder.", "Détecte les gemmes rares à proximité.",                          "Second_Wind_Icon.png"},
-        {"11", "Wagon Express",         "Actif",  "Tous les tunnels finissent par mener quelque part.",                       "Débloque une commande pour retourner instantanément à la surface.", "Battle_Footing_Icon.png"},
-        {"12", "Œil de Taupe",           "Passif", "Dans les profondeurs, la lumière finit toujours par suivre les anciens.",      "Équipe un casque de mineur diffusant une lumière permanente autour de vous.",     "Precision_Training_Icon.png"},
-        {"13", "Besace du Foreur",       "Passif", "Même la mort n'ose pas fouiller dans ce sac.",                                    "Les minerais placés dans votre sac de mineur sont conservés après votre mort.",  "Precision_Training_Icon.png"},
-        {"14", "Quatre pour le Prix d'un", "Passif", "Un coup de pioche rentable, enfin.",                                            "Permet de miner les blocs en zone 2×2.",                                          "Defense_Training_Icon.png"},
-        {"15", "Diplomatie Minière",  "Actif",  "Quand la roche refuse de bouger, il existe d'autres arguments.",                 "Permet de déclencher une explosion contrôlée pour terraformer rapidement la zone.", "Defense_Training_Icon.png"},
+        {"0",  "Poches Pleines",           "Passif", "Un vrai mineur ne repart jamais avec un seul caillou.",                    "Chance de doubler les ressources obtenues en minant.",                             "Jobs_Icons/Ore_Loot.png"},
+        {"1",  "Front Poussiereux",        "Passif", "Chaque coup de pioche laisse une marque. Certaines deviennent du savoir.", "Augmente l’expérience gagnée en minant.",                                          "Jobs_Icons/Xp_Boost.png"},
+        {"2",  "Appel des Profondeurs",    "Passif", "Les galeries offrent parfois leurs secrets aux plus obstiés.",             "Chance d’obtenir des Essences de Mineur en récoltant du minerai.",                "Jobs_Icons/Ore_Special.png"},
+        {"3",  "Pioche de Vétéran",        "Passif", "Les outils bien entretenus survivent aux mineurs.",                       "Réduit les pertes de durabilité de votre pioche.",                                 "Jobs_Icons/Pickaxe_Durability.png"},
+        {"4",  "Minerai Immortel",         "Passif", "Certaines veines refusent simplement de disparaître.",                    "Chance qu’un minerai réapparaîsse immédiatement après récolte.",                  "Jobs_Icons/Ore_Respawn.png"},
+        {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Miner plusieurs minerais rapidement déclenche un combo augmentant les gains.",    "Jobs_Icons/Combo_Mining.png"},
+        {"6",  "Incassable !",             "Passif", "Ta pioche a vu pire.",                                                    "Votre pioche récupère progressivement de la durabilité avec le temps.",           "Jobs_Icons/Sprinkler.png"},
+        {"7",  "Briseur de Roche",         "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                    "Augmente la résistance de votre équipement lors du minage de pierre.",            "Jobs_Icons/Pickaxe_Durability_Stone.png"},
+        {"8",  "Chant de la Veine",        "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",                  "Permet de miner instantanément toute une veine de minerai.",                      "Jobs_Icons/Extract_Drill.png"},
+        {"9",  "Gardien de Pierre",        "Passif", "Sous certaines montagnes sommeillent encore les anciens protecteurs.",    "Chance d’invoquer un Gardien Minéral laissant un objet légendaire.",              "Jobs_Icons/Keeper_Miner.png"},
+        {"10", "Œil du Prospecteur",       "Passif", "Les cristaux rares brillent différemment pour ceux qui savent regarder.", "Détecte les gemmes rares à proximité.",                                          "Jobs_Icons/Radar_Gem.png"},
+        {"11", "Wagon Express",            "Actif",  "Tous les tunnels finissent par mener quelque part.",                      "Débloque une commande pour retourner instantanément à la surface.",               "Jobs_Icons/Back_Surface.png"},
+        {"12", "Œil de Taupe",             "Passif", "Dans les profondeurs, la lumière finit toujours par suivre les anciens.", "Équipe un casque de mineur diffusant une lumière permanente autour de vous.",     "Jobs_Icons/Miner_Helmet.png"},
+        {"13", "Besace du Foreur",         "Passif", "Même la mort n’ose pas fouiller dans ce sac.",                            "Les minerais placés dans votre sac de mineur sont conservés après votre mort.",  "Jobs_Icons/Bag_Rock.png"},
+        {"14", "Quatre pour le Prix d’un", "Passif", "Un coup de pioche rentable, enfin.",                                      "Permet de miner les blocs en zone 2×2.",                                          "Jobs_Icons/Multi_Mining.png"},
+        {"15", "Diplomatie Minière",       "Actif",  "Quand la roche refuse de bouger, il existe d’autres arguments.",         "Permet de déclencher une explosion contrôlée pour terraformer rapidement la zone.", "Jobs_Icons/Rock_Explosion.png"},
     };
 
     private static final String[][] MINEUR_NODE_STAT_VALUES = {
@@ -290,7 +290,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {272, 495},
         {452, 495},
         {212, 218},
-        {212, 32},
+        {212, 309},
     };
 
     private static final int[][] FERMIER_PARENT_GROUPS = {
@@ -307,7 +307,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {9},
         {9},
         {2},
-        {2},
+        {12},
     };
 
     private static final int[] FERMIER_MAX_RANKS = {5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 1, 5, 1, 1};
@@ -341,7 +341,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             seg = layoutVerticalConnector(ui, seg, cx(lt[6]), bot(lt[6]), top(lt[8]));
             seg = layoutMergeTwoToOne(ui, seg, cx(lt[7]), bot(lt[7]), cx(lt[8]), bot(lt[8]), cx(lt[9]), top(lt[9]));
             seg = layoutSplitOneToTwo(ui, seg, cx(lt[9]), bot(lt[9]), cx(lt[10]), cx(lt[11]), top(lt[10]));
-            seg = layoutVerticalConnector(ui, seg, cx(lt[13]), bot(lt[13]), top(lt[2]));
+            seg = layoutVerticalConnector(ui, seg, cx(lt[12]), bot(lt[12]), top(lt[13]));
             return seg;
         },
         FERMIER_NODE_STAT_VALUES
@@ -812,7 +812,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             positionSkillSlot(uiBuilder, id, sl, st);
             positionSkillRank(uiBuilder, id, sl, st);
 
-            String iconPath = ICON_BASE + node[5];
+            String iconPath = node[5].contains("/") ? node[5] : ICON_BASE + node[5];
             PatchStyle iconStyle = new PatchStyle().setTexturePath(Value.of(iconPath));
             int allocated = skillRanks[i];
 
