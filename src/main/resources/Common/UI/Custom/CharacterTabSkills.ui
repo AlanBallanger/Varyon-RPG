@@ -1392,6 +1392,24 @@ Group {
         }
       }
 
+      Group #SkillTreeCurrentBonusRow {
+        LayoutMode: Left;
+        Anchor: (Top: 4);
+        Visible: false;
+
+        Label {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Text: "Bonus actuel";
+        }
+
+        Group { FlexWeight: 1; }
+
+        Label #SkillTreeCurrentBonusValue {
+          Style: (...@MetaStyle, FontSize: 13, TextColor: #31C677FF, RenderBold: true, Wrap: true);
+          Text: "";
+        }
+      }
+
       Group #SkillTreeNextRankRow {
         LayoutMode: Left;
         Anchor: (Top: 4);

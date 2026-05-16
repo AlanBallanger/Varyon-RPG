@@ -1,0 +1,82 @@
+{
+    "PlayerAnimationsId":  "Item",
+    "Categories":  [
+                       "Items.Tools"
+                   ],
+    "MaxStack":  1,
+    "IconProperties":  {
+                           "Scale":  1,
+                           "Rotation":  [
+                                            335,
+                                            128,
+                                            30
+                                        ],
+                           "Translation":  [
+                                               1,
+                                               -8
+                                           ]
+                       },
+    "Model":  "Items/NoCube_Bag_Resource.blockymodel",
+    "Texture":  "Items/NoCube_Bag_Potion.png",
+    "Scale":  1.5,
+    "Tags":  {
+                 "Type":  [
+                              "Utility"
+                          ]
+             },
+    "Container":  {
+                      "Capacity":  27,
+                      "ItemTag":  "Type=Potion"
+                  },
+    "Interactions":  {
+                         "Primary":  {
+                                         "Interactions":  [
+                                                              {
+                                                                  "Type":  "EquipItem"
+                                                              }
+                                                          ]
+                                     },
+                         "Secondary":  {
+                                           "Interactions":  [
+                                                                {
+                                                                    "Type":  "OpenItemStackContainer"
+                                                                },
+                                                                {
+                                                                    "Type":  "Simple",
+                                                                    "Effects":  {
+                                                                                    "LocalSoundEventId":  "SFX_Drop_Armor_Cloth"
+                                                                                }
+                                                                }
+                                                            ]
+                                       }
+                     },
+    "Icon":  "Icons/Items/NoCube_Bag_Potion.png",
+    "Recipe":  {
+                   "Input":  [
+                                 {
+                                     "ItemId":  "Ingredient_Fabric_Scrap_Linen",
+                                     "Quantity":  10
+                                 },
+                                 {
+                                     "ItemId":  "Ingredient_Hide_Medium",
+                                     "Quantity":  2
+                                 },
+                                 {
+                                     "ItemId":  "Potion_Empty",
+                                     "Quantity":  2
+                                 }
+                             ],
+                   "BenchRequirement":  [
+                                            {
+                                                "Type":  "Crafting",
+                                                "Id":  "Workbench",
+                                                "Categories":  [
+                                                                   "Workbench_Tinkering"
+                                                               ]
+                                            }
+                                        ]
+               },
+    "ItemLevel":  20,
+    "ItemSoundSetId":  "ISS_Items_Cloth",
+    "DropOnDeath":  false
+}

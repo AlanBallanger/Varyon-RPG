@@ -1,0 +1,12 @@
+{
+  "Textures": [
+    {
+      "Top": "BlockTextures/Rock_Crystal_Purple_Top.png",
+      "All": "BlockTextures/Rock_Crystal_Purple.png"
+    }
+  ],
+  "Material": "Solid",
+  "Light": {
+    "Color": "#8800ff"
+  }
+}

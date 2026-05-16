@@ -190,16 +190,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"2",  "Appel des Profondeurs",    "Passif", "Les galeries offrent parfois leurs secrets aux plus obstiés.",             "Chance d’obtenir des Essences de Mineur en récoltant du minerai.",                "Jobs_Icons/Ore_Special.png"},
         {"3",  "Pioche de Vétéran",        "Passif", "Les outils bien entretenus survivent aux mineurs.",                       "Réduit les pertes de durabilité de votre pioche.",                                 "Jobs_Icons/Pickaxe_Durability.png"},
         {"4",  "Minerai Immortel",         "Passif", "Certaines veines refusent simplement de disparaître.",                    "Chance qu’un minerai réapparaîsse immédiatement après récolte.",                  "Jobs_Icons/Ore_Respawn.png"},
-        {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Miner plusieurs minerais rapidement déclenche un combo augmentant les gains.",    "Jobs_Icons/Combo_Mining.png"},
-        {"6",  "Incassable !",             "Passif", "Ta pioche a vu pire.",                                                    "Votre pioche récupère progressivement de la durabilité avec le temps.",           "Jobs_Icons/Sprinkler.png"},
-        {"7",  "Briseur de Roche",         "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                    "Augmente la résistance de votre équipement lors du minage de pierre.",            "Jobs_Icons/Pickaxe_Durability_Stone.png"},
-        {"8",  "Chant de la Veine",        "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",                  "Permet de miner instantanément toute une veine de minerai.",                      "Jobs_Icons/Extract_Drill.png"},
+        {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Enchainer les minerais rapport de l'XP et du minerai bonus par combo (Max 10 combo)",    "Jobs_Icons/Combo_Mining.png"},
+        {"6",  "Incassable !",             "Passif", "Ta pioche a vu pire.",                                                    "Chaque coup a une chance de gagner un point de durabilité plutôt que d’en perdre un.", "Jobs_Icons/Pickaxe_Durability.png"},
+        {"7",  "Briseur de Roche",         "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                    "Chance que les coups sur la roche ne consomment pas la durabilité de votre pioche.", "Jobs_Icons/Pickaxe_Durability_Stone.png"},
+        {"8",  "Chant de la Veine",        "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",                  "Permet de miner instantanément toute une veine de minerai.",                      "Jobs_Icons/Combo_Mining.png"},
         {"9",  "Gardien de Pierre",        "Passif", "Sous certaines montagnes sommeillent encore les anciens protecteurs.",    "Chance d’invoquer un Gardien Minéral laissant un objet légendaire.",              "Jobs_Icons/Keeper_Miner.png"},
         {"10", "Œil du Prospecteur",       "Passif", "Les cristaux rares brillent différemment pour ceux qui savent regarder.", "Détecte les gemmes rares à proximité.",                                          "Jobs_Icons/Radar_Gem.png"},
-        {"11", "Wagon Express",            "Actif",  "Tous les tunnels finissent par mener quelque part.",                      "Débloque une commande pour retourner instantanément à la surface.",               "Jobs_Icons/Back_Surface.png"},
+        {"11", "Wagon Express",            "Actif",  "Tous les tunnels finissent par mener quelque part.",                      "Débloque une commande pour retourner instantanément à la surface.",               "Jobs_Icons/Extract_Drill.png"},
         {"12", "Œil de Taupe",             "Passif", "Dans les profondeurs, la lumière finit toujours par suivre les anciens.", "Équipe un casque de mineur diffusant une lumière permanente autour de vous.",     "Jobs_Icons/Miner_Helmet.png"},
         {"13", "Besace du Foreur",         "Passif", "Même la mort n’ose pas fouiller dans ce sac.",                            "Les minerais placés dans votre sac de mineur sont conservés après votre mort.",  "Jobs_Icons/Bag_Rock.png"},
-        {"14", "Quatre pour le Prix d’un", "Passif", "Un coup de pioche rentable, enfin.",                                      "Permet de miner les blocs en zone 2×2.",                                          "Jobs_Icons/Multi_Mining.png"},
+        {"14", "Deux pour le Prix d’un",   "Passif", "Un coup de pioche rentable, enfin.",                                      "Casser un bloc de roche casse également le bloc de roche en dessous.",            "Jobs_Icons/Multi_Mining.png"},
         {"15", "Diplomatie Minière",       "Actif",  "Quand la roche refuse de bouger, il existe d’autres arguments.",         "Permet de déclencher une explosion contrôlée pour terraformer rapidement la zone.", "Jobs_Icons/Rock_Explosion.png"},
     };
 
@@ -209,11 +209,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"1% essence",     "1.5% essence",    "2% essence",      "2.5% essence",    "3% essence"},          // 2
         {"7% durabilité",  "14% durabilité",  "21% durabilité",  "28% durabilité",  "35% durabilité"},      // 3
         {"4% repop",       "8% repop",        "12% repop",       "16% repop",       "20% repop"},           // 4
-        {"5% XP & loot",   "10% XP & loot",   "15% XP & loot",   "20% XP & loot",   "25% XP & loot"},     // 5
-        {"1 dur./60 sec",  "1 dur./45 sec",   "1 dur./30 sec",   "2 dur./30 sec",   "3 dur./30 sec"},       // 6
-        {"20% résistance", "40% résistance",  "60% résistance",  "80% résistance",  "100% résistance"},     // 7
-        {"120 sec recharge", "100 sec recharge", "80 sec recharge", "60 sec recharge", "45 sec recharge"},  // 8
-        {"0.5% invocation", "1% invocation",  "1.5% invocation", "2% invocation",   "2.5% invocation"},    // 9
+        {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"}, // 5
+        {"5% gain dura",   "10% gain dura",   "15% gain dura",   "20% gain dura",   "25% gain dura"},       // 6
+        {"15% durabilité", "30% durabilité",  "45% durabilité",  "60% durabilité",  "75% durabilité"},      // 7
+        {"4min 20s recharge", "3min 20s recharge", "2min 20s recharge", "1min 40s recharge", "1min recharge"},  // 8
+        {"5% invocation",  "10% invocation", "15% invocation",  "20% invocation", "25% invocation"},
         {"12 blocs",       "18 blocs",        "24 blocs",        "30 blocs",        "36 blocs"},            // 10
         {"3h recharge",    "2h30 recharge",   "2h recharge",     "1h30 recharge",   "1h recharge"},         // 11
         {"Lumière permanente activée"},    // 12
@@ -922,6 +922,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         uiBuilder.set("#SkillTreeCurrentRankValue.TextSpans",
             Message.raw(rank + "/" + maxRank));
+
+        boolean hasCurrent = rank > 0 && stats != null;
+        uiBuilder.set("#SkillTreeCurrentBonusRow.Visible", hasCurrent);
+        if (hasCurrent) {
+            uiBuilder.set("#SkillTreeCurrentBonusValue.TextSpans", Message.raw(stats[rank - 1]));
+        }
 
         boolean hasNext = rank < maxRank && stats != null;
         uiBuilder.set("#SkillTreeNextRankRow.Visible", hasNext);

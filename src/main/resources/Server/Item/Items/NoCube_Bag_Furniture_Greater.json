@@ -1,0 +1,47 @@
+{
+    "Parent":  "NoCube_Bag_Potion_Greater",
+    "Icon":  "Icons/Items/NoCube_Bag_Furniture_Greater.png",
+    "Texture":  "Items/NoCube_Bag_Furniture.png",
+    "Container":  {
+                      "Capacity":  36,
+                      "ItemTag":  "Type=Furniture"
+                  },
+    "Recipe":  {
+                   "Input":  [
+                                 {
+                                     "ItemId":  "Ingredient_Fabric_Scrap_Linen",
+                                     "Quantity":  20
+                                 },
+                                 {
+                                     "ItemId":  "Ingredient_Hide_Heavy",
+                                     "Quantity":  2
+                                 },
+                                 {
+                                     "ItemId":  "Ingredient_Stick",
+                                     "Quantity":  2
+                                 }
+                             ],
+                   "BenchRequirement":  [
+                                            {
+                                                "Type":  "Crafting",
+                                                "Id":  "Workbench",
+                                                "Categories":  [
+                                                                   "Workbench_Tinkering"
+                                                               ]
+                                            }
+                                        ]
+               },
+    "IconProperties":  {
+                           "Scale":  1,
+                           "Rotation":  [
+                                            22.5,
+                                            45,
+                                            22.5
+                                        ],
+                           "Translation":  [
+                                               0,
+                                               -8
+                                           ]
+                       },
+    "DropOnDeath":  false
+}

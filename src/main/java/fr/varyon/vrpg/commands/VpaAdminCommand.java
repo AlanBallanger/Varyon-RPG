@@ -9,6 +9,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import fr.varyon.vrpg.VaryonRpgPlugin;
+import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
@@ -31,6 +32,7 @@ public final class VpaAdminCommand extends AbstractAsyncCommand {
         this.addSubCommand(new AddXpSub());
         this.addSubCommand(new ResetSub());
         this.addSubCommand(new SaveSub());
+        this.addSubCommand(new ReloadSub());
     }
 
     @NonNullDecl
@@ -41,6 +43,7 @@ public final class VpaAdminCommand extends AbstractAsyncCommand {
         ctx.sendMessage(Message.raw("  /vpa addxp <player> <profession> <amount>").color(Color.GRAY));
         ctx.sendMessage(Message.raw("  /vpa reset <player> <profession|all>").color(Color.GRAY));
         ctx.sendMessage(Message.raw("  /vpa save").color(Color.GRAY));
+        ctx.sendMessage(Message.raw("  /vpa reload").color(Color.GRAY));
         return CompletableFuture.completedFuture(null);
     }
 
@@ -238,6 +241,27 @@ public final class VpaAdminCommand extends AbstractAsyncCommand {
             return CompletableFuture.runAsync(() -> {
                 m.forceSave();
                 ctx.sendMessage(Message.raw("✓ Données RPG sauvegardées.").color(new Color(50, 205, 50)));
+            });
+        }
+    }
+
+    private static class ReloadSub extends AbstractAsyncCommand {
+        ReloadSub() {
+            super("reload", "Recharge le fichier config.toml à chaud");
+        }
+
+        @NonNullDecl
+        @Override
+        protected CompletableFuture<Void> executeAsync(CommandContext ctx) {
+            VaryonRpgPlugin plugin = VaryonRpgPlugin.getInstance();
+            if (plugin == null) {
+                ctx.sendMessage(Message.raw("Plugin indisponible.").color(Color.RED));
+                return CompletableFuture.completedFuture(null);
+            }
+            return CompletableFuture.runAsync(() -> {
+                VrpgConfig.load(plugin.getPluginDataDirectory());
+                ctx.sendMessage(Message.raw("✓ Config rechargée — debug_talents=" + VrpgConfig.isDebugTalents())
+                    .color(new Color(50, 205, 50)));
             });
         }
     }
