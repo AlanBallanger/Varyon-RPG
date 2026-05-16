@@ -4,15 +4,16 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.util.TargetUtil;
 import fr.varyon.vrpg.VaryonRpgPlugin;
 import fr.varyon.vrpg.profession.mineur.ExplosionTalentSystem;
 import fr.varyon.vrpg.rpg.PlayerAccount;
@@ -67,17 +68,20 @@ public final class VpaBlastCommand extends AbstractAsyncCommand {
             return CompletableFuture.completedFuture(null);
         }
 
+        boolean isOp = player.hasPermission("*");
         long now = System.currentTimeMillis();
-        Long lastUsed = lastUse.get(uuid);
-        if (lastUsed != null) {
-            long remaining = COOLDOWN_MS - (now - lastUsed);
-            if (remaining > 0) {
-                long minutes = remaining / 60_000;
-                long seconds = (remaining % 60_000) / 1_000;
-                sender.sendMessage(Message.raw(
-                    "Diplomatie Minière en rechargement — disponible dans " + minutes + "m " + seconds + "s.")
-                    .color(new Color(255, 165, 0)));
-                return CompletableFuture.completedFuture(null);
+        if (!isOp) {
+            Long lastUsed = lastUse.get(uuid);
+            if (lastUsed != null) {
+                long remaining = COOLDOWN_MS - (now - lastUsed);
+                if (remaining > 0) {
+                    long minutes = remaining / 60_000;
+                    long seconds = (remaining % 60_000) / 1_000;
+                    sender.sendMessage(Message.raw(
+                        "Diplomatie Minière en rechargement — disponible dans " + minutes + "m " + seconds + "s.")
+                        .color(new Color(255, 165, 0)));
+                    return CompletableFuture.completedFuture(null);
+                }
             }
         }
 
@@ -99,15 +103,14 @@ public final class VpaBlastCommand extends AbstractAsyncCommand {
                     return;
                 }
                 Store<EntityStore> store = ref.getStore();
-                TransformComponent tc = store.getComponent(ref, TransformComponent.getComponentType());
-                if (tc == null) {
-                    LOGGER.atWarning().log("[Blast] TransformComponent null");
-                    sender.sendMessage(Message.raw("Erreur lors de l'explosion.").color(Color.RED));
+
+                Vector3i targetBlock = TargetUtil.getTargetBlock(ref, 10.0, store);
+                if (targetBlock == null) {
+                    sender.sendMessage(Message.raw("Aucune cible — visez un bloc.").color(Color.RED));
                     done.complete(null);
                     return;
                 }
-
-                Vector3d pos = tc.getPosition().clone();
+                Vector3d pos = new Vector3d(targetBlock.x + 0.5, targetBlock.y + 0.5, targetBlock.z + 0.5);
                 lastUse.put(uuid, now);
                 explosionSystem.queueExplosion(uuid, pos);
                 sender.sendMessage(Message.raw("Diplomatie Minière !").color(new Color(255, 80, 0)));

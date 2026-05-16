@@ -76,17 +76,20 @@ public final class VpaSurfaceCommand extends AbstractAsyncCommand {
         }
 
         long cooldownMs = COOLDOWN_MS[Math.min(rank, COOLDOWN_MS.length) - 1];
+        boolean isOp = player.hasPermission("*");
         long now = System.currentTimeMillis();
-        Long lastUsed = lastUse.get(uuid);
-        if (lastUsed != null) {
-            long remaining = cooldownMs - (now - lastUsed);
-            if (remaining > 0) {
-                long minutes = remaining / 60_000;
-                long seconds = (remaining % 60_000) / 1_000;
-                sender.sendMessage(Message.raw(
-                    "Wagon Express en rechargement — disponible dans " + minutes + "m " + seconds + "s.")
-                    .color(new Color(255, 165, 0)));
-                return CompletableFuture.completedFuture(null);
+        if (!isOp) {
+            Long lastUsed = lastUse.get(uuid);
+            if (lastUsed != null) {
+                long remaining = cooldownMs - (now - lastUsed);
+                if (remaining > 0) {
+                    long minutes = remaining / 60_000;
+                    long seconds = (remaining % 60_000) / 1_000;
+                    sender.sendMessage(Message.raw(
+                        "Wagon Express en rechargement — disponible dans " + minutes + "m " + seconds + "s.")
+                        .color(new Color(255, 165, 0)));
+                    return CompletableFuture.completedFuture(null);
+                }
             }
         }
 

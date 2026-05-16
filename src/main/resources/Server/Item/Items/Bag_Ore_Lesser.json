@@ -7,7 +7,7 @@
   "Icon": "Icons/Items/NoCube_Bag_Ore_Lesser.png",
   "Texture": "Items/NoCube_Bag_Ore.png",
   "Container": {
-    "Capacity": 18,
+    "Capacity": 2,
     "ItemTag": "Type=Ore"
   },
   "Recipe": {

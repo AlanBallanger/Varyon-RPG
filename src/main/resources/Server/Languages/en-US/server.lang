@@ -1,0 +1,21 @@
+# Varyon-RPG (en-US)
+
+items.Ore_Ghost.name = Ghost Ore
+items.Ore_Ghost.description = This ghostly-looking ore seems highly prized among traders.
+
+items.Bag_Ore_Lesser.name = Lesser Foreur Satchel
+items.Bag_Ore_Lesser.description = A reinforced bag for carrying ores without losing them on death.
+
+items.NoCube_Bag_Ore.name = Foreur Satchel
+items.NoCube_Bag_Ore.description = A sturdy bag for carrying ores without losing them on death.
+
+items.NoCube_Bag_Ore_Greater.name = Greater Foreur Satchel
+items.NoCube_Bag_Ore_Greater.description = A large robust bag for carrying ores without losing them on death.
+
+items.Varyon_Miners_Helmet.name = Miner's Bulwark Helmet
+items.Varyon_Miners_Helmet.description = Reinforced headgear for hostile galleries.
+
+items.Varyon_Guardian_Ore.name = Mineral Guardian Core
+items.Varyon_Guardian_Ore.description = Extremely tough: with comparable pickaxe, expect about five times longer to break than adamantite magma ore.
+
+resourceType.Salvage_Ghost.name = Any metallic ingot

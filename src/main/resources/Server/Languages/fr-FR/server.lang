@@ -1,21 +1,21 @@
 # Varyon-RPG (fr-FR)
 
-server.items.Ore_Ghost.name = Minerai fantôme
-server.items.Ore_Ghost.description = Ce minerai à l'apparence fantomatique semble être très prisé des marchands.
+items.Ore_Ghost.name = Minerai fantôme
+items.Ore_Ghost.description = Ce minerai à l'apparence fantomatique semble être très prisé des marchands.
 
-server.items.Bag_Ore_Lesser.name = Petite Besace du Foreur
-server.items.Bag_Ore_Lesser.description = Un sac renforcé permettant de transporter des minerais sans les perdre à la mort.
+items.Bag_Ore_Lesser.name = Petite Besace du Foreur
+items.Bag_Ore_Lesser.description = Un sac renforcé permettant de transporter des minerais sans les perdre à la mort.
 
-server.items.NoCube_Bag_Ore.name = Besace du Foreur
-server.items.NoCube_Bag_Ore.description = Un sac solide permettant de transporter des minerais sans les perdre à la mort.
+items.NoCube_Bag_Ore.name = Besace du Foreur
+items.NoCube_Bag_Ore.description = Un sac solide permettant de transporter des minerais sans les perdre à la mort.
 
-server.items.NoCube_Bag_Ore_Greater.name = Grande Besace du Foreur
-server.items.NoCube_Bag_Ore_Greater.description = Un grand sac robuste permettant de transporter des minerais sans les perdre à la mort.
+items.NoCube_Bag_Ore_Greater.name = Grande Besace du Foreur
+items.NoCube_Bag_Ore_Greater.description = Un grand sac robuste permettant de transporter des minerais sans les perdre à la mort.
 
-server.items.Varyon_Miners_Helmet.name = Casque du mineur
-server.items.Varyon_Miners_Helmet.description = Casque renforcé pour galeries hostiles.
+items.Varyon_Miners_Helmet.name = Casque du mineur
+items.Varyon_Miners_Helmet.description = Casque renforcé pour galeries hostiles.
 
-server.items.Varyon_Guardian_Ore.name = Cœur de gardien minéral
-server.items.Varyon_Guardian_Ore.description = Extrêmement résistant : à pioche équivalente, il demande environ cinq fois plus longtemps qu'un magma adamantite.
+items.Varyon_Guardian_Ore.name = Cœur de gardien minéral
+items.Varyon_Guardian_Ore.description = Extrêmement résistant : à pioche équivalente, il demande environ cinq fois plus longtemps qu'un magma adamantite.
 
-server.resourceType.Salvage_Ghost.name = Tout lingot métallique
+resourceType.Salvage_Ghost.name = Tout lingot métallique
