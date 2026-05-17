@@ -537,6 +537,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private int selectedNode = 0;
     private int hoveredNode = -1;
     private final int[] skillRanks = new int[32];
+    private boolean isEditMode = false;
+    private int[] pendingRanks = null;
     private String reconvertSourceId = null;
     private int talentTreeSlotIndex = 0;
 
@@ -764,11 +766,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         if (selectedNode >= tree.nodes.length) selectedNode = 0;
         loadSkillRanksFromAccount();
         Profession prof = currentTalentProfession();
-        int invested = 0;
-        for (int i = 0; i < tree.nodes.length; i++) invested += skillRanks[i];
-        int remainingPoints = acc == null
-            ? Math.max(0, SKILL_POINTS_BUDGET - invested)
-            : acc.availableTalentPoints(prof);
+        int remainingPoints = pendingRemainingPoints(acc, prof);
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
             Message.raw("Points restants : " + remainingPoints + " (" + prof.getDisplayName() + ")"));
 
@@ -814,7 +812,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
             String iconPath = node[5].contains("/") ? node[5] : ICON_BASE + node[5];
             PatchStyle iconStyle = new PatchStyle().setTexturePath(Value.of(iconPath));
-            int allocated = skillRanks[i];
+            int allocated = currentRanks()[i];
 
             uiBuilder.set("#SkillTreeNode" + id + "Slot.Visible", true);
 
@@ -836,15 +834,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 false
             );
             eventBuilder.addEventBinding(
-                CustomUIEventBindingType.MouseEntered,
+                CustomUIEventBindingType.RightClicking,
                 "#SkillTreeNode" + id,
-                EventData.of("Action", "skillHover").append("Node", id),
+                EventData.of("Action", "skillRight").append("Node", id),
                 false
             );
             eventBuilder.addEventBinding(
-                CustomUIEventBindingType.MouseExited,
+                CustomUIEventBindingType.MouseEntered,
                 "#SkillTreeNode" + id,
-                EventData.of("Action", "skillHoverEnd").append("Node", id),
+                EventData.of("Action", "skillHover").append("Node", id),
                 false
             );
         }
@@ -860,17 +858,17 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         }
 
         applySkillTreeSelectionAndHoverChrome(uiBuilder);
-        uiBuilder.set("#SkillTreeAttribuerButton.Disabled",
-            remainingPoints <= 0
-                || !skillTreeParentsAllowSelectedAllocation(skillRanks, tree)
-                || skillRanks[selectedNode] >= tree.maxRanks[selectedNode]);
+        uiBuilder.set("#SkillTreeAttribuerButton.Visible", isEditMode);
+        uiBuilder.set("#SkillTreeAttribuerButton.Disabled", false);
         uiBuilder.set("#SkillTreeResetButton.Visible", true);
-        eventBuilder.addEventBinding(
-            CustomUIEventBindingType.Activating,
-            "#SkillTreeAttribuerButton",
-            EventData.of("Action", "allocate"),
-            false
-        );
+        if (isEditMode) {
+            eventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating,
+                "#SkillTreeAttribuerButton",
+                EventData.of("Action", "saveSkills"),
+                false
+            );
+        }
         eventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
             "#SkillTreeResetButton",
@@ -885,16 +883,17 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         boolean hoverValid = hoveredNode >= 0 && hoveredNode < tree.nodes.length;
         String hoverId = hoverValid ? tree.nodes[hoveredNode][0] : null;
 
+        int[] display = currentRanks();
         for (int i = 0; i < tree.nodes.length; i++) {
             String id = tree.nodes[i][0];
-            int allocated = skillRanks[i];
+            int allocated = display[i];
             boolean nodeSelected = id.equals(selectedId);
             boolean nodeHovered = hoverId != null && id.equals(hoverId);
             String borderRgb;
-            if (allocated >= 1) {
-                borderRgb = NODE_BORDER_ALLOCATED;
-            } else if (nodeSelected || nodeHovered) {
+            if (nodeSelected || nodeHovered) {
                 borderRgb = NODE_BORDER_SELECTION;
+            } else if (allocated >= 1) {
+                borderRgb = NODE_BORDER_ALLOCATED;
             } else {
                 borderRgb = NODE_BORDER;
             }
@@ -907,7 +906,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         int panelNode = hoverValid ? hoveredNode : selectedNode;
         String[] sel = tree.nodes[panelNode];
-        int rank = skillRanks[panelNode];
+        int rank = display[panelNode];
         int maxRank = tree.maxRanks[panelNode];
         String[] stats = (tree.nodeStatValues != null && panelNode < tree.nodeStatValues.length)
             ? tree.nodeStatValues[panelNode] : null;
@@ -1191,17 +1190,38 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             activeTab = data.tab;
             hoveredNode = -1;
             selectedNode = 0;
+            exitEditMode();
             rebuild();
         } else if ("talentSlotPick".equals(data.action) && data.talentSlot != null) {
             talentTreeSlotIndex = "1".equals(data.talentSlot) ? 1 : 0;
             selectedNode = 0;
             hoveredNode = -1;
+            exitEditMode();
             rebuild();
         } else if ("skill".equals(data.action) && data.node != null) {
             SkillTreeDef tree = currentSkillTree();
             for (int i = 0; i < tree.nodes.length; i++) {
                 if (tree.nodes[i][0].equals(data.node)) {
                     selectedNode = i;
+                    enterEditMode();
+                    tryPendingAdd(i, tree);
+                    break;
+                }
+            }
+            rebuild();
+        } else if ("skillRight".equals(data.action) && data.node != null) {
+            SkillTreeDef tree = currentSkillTree();
+            for (int i = 0; i < tree.nodes.length; i++) {
+                if (tree.nodes[i][0].equals(data.node)) {
+                    selectedNode = i;
+                    if (!isEditMode) {
+                        PlayerAccount acc = currentAccount();
+                        if (acc != null && acc.availableTalentPoints(currentTalentProfession()) > 0) {
+                            enterEditMode();
+                        }
+                    } else {
+                        tryPendingRemove(i);
+                    }
                     break;
                 }
             }
@@ -1215,29 +1235,27 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 }
             }
             sendSkillTreeHoverChromeUpdate();
-        } else if ("skillHoverEnd".equals(data.action) && data.node != null) {
-            SkillTreeDef tree = currentSkillTree();
-            for (int i = 0; i < tree.nodes.length; i++) {
-                if (tree.nodes[i][0].equals(data.node) && hoveredNode == i) {
-                    hoveredNode = -1;
-                    break;
-                }
-            }
-            sendSkillTreeHoverChromeUpdate();
-        } else if ("allocate".equals(data.action)) {
-            loadSkillRanksFromAccount();
-            SkillTreeDef tree = currentSkillTree();
-            if (skillRanks[selectedNode] < tree.maxRanks[selectedNode]
-                && skillTreeParentsAllowSelectedAllocation(skillRanks, tree)) {
+        } else if ("saveSkills".equals(data.action)) {
+            if (isEditMode && pendingRanks != null) {
                 ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
                 if (mgr != null) {
+                    SkillTreeDef tree = currentSkillTree();
                     Profession prof = currentTalentProfession();
-                    String nodeId = tree.nodes[selectedNode][0];
-                    mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, tree.maxRanks[selectedNode]);
+                    for (int i = 0; i < tree.nodes.length; i++) {
+                        int delta = pendingRanks[i] - skillRanks[i];
+                        if (delta > 0) {
+                            String nodeId = tree.nodes[i][0];
+                            for (int d = 0; d < delta; d++) {
+                                mgr.allocateTalent(playerRef.getUuid(), prof, nodeId, tree.maxRanks[i]);
+                            }
+                        }
+                    }
                 }
             }
+            exitEditMode();
             rebuild();
         } else if ("resetSkills".equals(data.action)) {
+            exitEditMode();
             ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
             if (mgr != null) {
                 mgr.resetTalents(playerRef.getUuid(), currentTalentProfession());
@@ -1300,9 +1318,54 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         public Data() {}
     }
 
-    private boolean skillTreeParentsAllowSelectedAllocation(@Nonnull int[] ranks,
-                                                            @Nonnull SkillTreeDef tree) {
-        int[] parents = tree.parentGroups[selectedNode];
+    private int[] currentRanks() {
+        return (isEditMode && pendingRanks != null) ? pendingRanks : skillRanks;
+    }
+
+    private int pendingRemainingPoints(@Nullable PlayerAccount acc, @Nonnull Profession prof) {
+        if (acc == null) return 0;
+        int real = acc.availableTalentPoints(prof);
+        if (!isEditMode || pendingRanks == null) return real;
+        int spent = 0;
+        for (int i = 0; i < pendingRanks.length; i++) {
+            spent += Math.max(0, pendingRanks[i] - skillRanks[i]);
+        }
+        return real - spent;
+    }
+
+    private void enterEditMode() {
+        if (isEditMode) return;
+        isEditMode = true;
+        pendingRanks = skillRanks.clone();
+    }
+
+    private void exitEditMode() {
+        isEditMode = false;
+        pendingRanks = null;
+    }
+
+    private boolean tryPendingAdd(int nodeIdx, @Nonnull SkillTreeDef tree) {
+        if (pendingRanks == null) return false;
+        if (pendingRanks[nodeIdx] >= tree.maxRanks[nodeIdx]) return false;
+        if (!parentsAllow(pendingRanks, tree, nodeIdx)) return false;
+        PlayerAccount acc = currentAccount();
+        if (acc == null) return false;
+        int pending = 0;
+        for (int i = 0; i < pendingRanks.length; i++) pending += Math.max(0, pendingRanks[i] - skillRanks[i]);
+        if (acc.availableTalentPoints(currentTalentProfession()) - pending <= 0) return false;
+        pendingRanks[nodeIdx]++;
+        return true;
+    }
+
+    private boolean tryPendingRemove(int nodeIdx) {
+        if (pendingRanks == null) return false;
+        if (pendingRanks[nodeIdx] <= skillRanks[nodeIdx]) return false;
+        pendingRanks[nodeIdx]--;
+        return true;
+    }
+
+    private boolean parentsAllow(@Nonnull int[] ranks, @Nonnull SkillTreeDef tree, int nodeIdx) {
+        int[] parents = tree.parentGroups[nodeIdx];
         if (parents.length == 0) return true;
         for (int p : parents) {
             if (ranks[p] >= 1) return true;
