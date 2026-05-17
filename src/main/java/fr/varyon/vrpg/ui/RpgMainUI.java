@@ -82,7 +82,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private static final String NODE_FILL = "#1A1F29FF";
     private static final String NODE_BORDER = "#4E576DFF";
-    private static final String NODE_BORDER_SELECTION = "#FFFFFFFF";
+    private static final String NODE_BORDER_SELECTION = "#B0B8C8FF";
     private static final String NODE_BORDER_ALLOCATED = "#31C677FF";
 
     private static final String NODE_VEIL = "#14182166";
@@ -265,11 +265,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"2",  "Maître Arroseur",        "Passif", "Un vrai fermier hydrate ses cultures avec style.",                                  "Débloque les arroseurs automatiques.",                                            "Jobs_Icons/Sprinkler.png"},
         {"3",  "Graines Fantomatiques",  "Passif", "Ces semences translucides ne poussent que pour les fermiers les plus aguerris.", "Chance d'obtenir des Graines Fantomatiques lors des récoltes.",                   "Jobs_Icons/Seed_Special.png"},
         {"4",  "Bras Long",              "Passif", "Pourquoi marcher jusqu'au champ quand le champ est déjà à portée ?",           "Plante sur 5 blocs de long.",                                                     "Jobs_Icons/Multiple_Crop.png"},
-        {"5",  "Grains Sans Fin",        "Passif", "Le stock de graines devient un concept théorique.",                                "Augmente les chances d'obtenir des Graines Éternelles.",                          "Jobs_Icons/Eternal_Seed_Plus.png"},
-        {"6",  "Moissonneuse Infernale", "Passif", "Quand tu commences à récolter, les champs tremblent.",                            "Récolter plusieurs cultures rapidement déclenche un combo augmentant les gains.", "Jobs_Icons/Combo_Harvsting.png"},
+        {"5",  "Grains Sans Fin",        "Passif", "Le stock de graines devient un concept théorique.",                                "Chance d'obtenir une Graine Éternelle en récoltant n'importe quelle culture.",    "Jobs_Icons/Eternal_Seed_Plus.png"},
+        {"6",  "C-C-Combo",              "Passif", "Plus tu récoltes vite, plus les champs te récompensent.",                         "Enchainer les récoltes rapporte de l'XP et du loot bonus par combo (Max 10 combo).", "Jobs_Icons/Combo_Harvsting.png"},
         {"7",  "Seigneur de l'Étable",  "Passif", "Même les bêtes savent reconnaître un maître.",                                  "Augmente les ressources obtenues sur l'élevage.",                                 "Jobs_Icons/Farm_Animals_Loot.png"},
         {"8",  "Faucille Éternelle",    "Passif", "Elle coupe encore. Toujours.",                                                      "Réduit l'usure de votre faucille.",                                               "Jobs_Icons/Sickle_Durability.png"},
-        {"9",  "Casse-Croûte Fermier",  "Passif", "Un bon champ nourrit toujours son maître.",                                        "Récolter des cultures restaure votre faim et votre soif.",                        "Jobs_Icons/Feed_Hydrate.png"},
+        {"9",  "Casse-Croûte Fermier",  "Passif", "Un bon champ nourrit toujours son maître.",                                        "Récolter une culture a une chance de restaurer votre faim ou votre soif.",        "Jobs_Icons/Feed_Hydrate.png"},
         {"10", "Crop Circles",           "Passif", "Les champs commencent à s'organiser sans toi.",                                    "Débloque les semeurs de graines automatiques.",                                   "Jobs_Icons/Crop_Dispenser.png"},
         {"11", "Gardiens des Champs",    "Passif", "Les récoltes les plus riches attirent parfois d'anciens protecteurs.",             "Chance d'invoquer un Gardien des Champs laissant un objet légendaire.",          "Jobs_Icons/Scarecrow.png"},
         {"12", "Terre Nourricière",      "Passif", "La bonne terre, ça s'entretient avant de se mériter.",                          "Débloque des fertilisants de haute qualité boostant la vitesse de croissance des cultures.", "Jobs_Icons/Fertilizer.png"},
@@ -318,11 +318,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"Arroseur en cuivre",   "Arroseur en fer",      "Arroseur en thorium",  "Arroseur en cobalt",   "Arroseur en adamantite"},
         {"1% graines",           "1.5% graines",         "2% graines",           "2.5% graines",         "3% graines"},
         {"Replantation 5 blocs activée"},
-        {"20% graines éternelles", "40% graines éternelles", "60% graines éternelles", "80% graines éternelles", "100% graines éternelles"},
-        {"5% XP & loot",         "10% XP & loot",        "15% XP & loot",        "20% XP & loot",        "25% XP & loot"},
+        {"0.5% graine éternelle",  "0.75% graine éternelle", "1% graine éternelle",   "1.25% graine éternelle", "1.5% graine éternelle"},
+        {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"},
         {"5% élevage",           "10% élevage",          "15% élevage",          "20% élevage",          "25% élevage"},
         {"15% durabilité",       "30% durabilité",       "45% durabilité",       "60% durabilité",       "75% durabilité"},
-        {"2% faim/soif",         "4% faim/soif",         "6% faim/soif",         "8% faim/soif",         "10% faim/soif"},
+        {"1% faim/soif",         "1.25% faim/soif",      "1.5% faim/soif",       "1.75% faim/soif",      "2% faim/soif"},
         {"Replantation auto arroseurs activée"},
         {"0.5% invocation",      "1% invocation",        "1.5% invocation",      "2% invocation",        "2.5% invocation"},
         {"Fertilisants haute qualité débloqués"},
@@ -890,7 +890,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             boolean nodeSelected = id.equals(selectedId);
             boolean nodeHovered = hoverId != null && id.equals(hoverId);
             String borderRgb;
-            if (nodeSelected || nodeHovered) {
+            if (nodeHovered) {
                 borderRgb = NODE_BORDER_SELECTION;
             } else if (allocated >= 1) {
                 borderRgb = NODE_BORDER_ALLOCATED;
@@ -1203,6 +1203,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             for (int i = 0; i < tree.nodes.length; i++) {
                 if (tree.nodes[i][0].equals(data.node)) {
                     selectedNode = i;
+                    hoveredNode = -1;
                     enterEditMode();
                     tryPendingAdd(i, tree);
                     break;

@@ -29,6 +29,11 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         "NoCube_Bag_Ore", "NoCube_Bag_Ore_Lesser", "NoCube_Bag_Ore_Greater"
     );
 
+    public static final Set<String> CROP_BAG_IDS = Set.of(
+        "Bag_Crop_Lesser",
+        "NoCube_Bag_Plant", "NoCube_Bag_Plant_Lesser", "NoCube_Bag_Plant_Greater"
+    );
+
     private final ProfessionManager professionManager;
     private final ComponentType<EntityStore, PlayerRef> playerRefType = PlayerRef.getComponentType();
 
@@ -54,7 +59,11 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         MaterialQuantity output = recipe.getPrimaryOutput();
         if (output == null) return;
         String outputId = output.getItemId();
-        if (outputId == null || !ORE_BAG_IDS.contains(outputId)) return;
+        if (outputId == null) return;
+
+        boolean isOreBag = ORE_BAG_IDS.contains(outputId);
+        boolean isCropBag = CROP_BAG_IDS.contains(outputId);
+        if (!isOreBag && !isCropBag) return;
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) {
@@ -63,18 +72,22 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         }
 
         PlayerAccount acc = professionManager.getAccount(playerRef.getUuid());
-        boolean allowed = acc != null
-            && acc.isActive(Profession.MINEUR)
-            && acc.getTalentRank(Profession.MINEUR, "13") > 0;
+        boolean allowed;
+        String message;
+        if (isOreBag) {
+            allowed = acc != null && acc.isActive(Profession.MINEUR) && acc.getTalentRank(Profession.MINEUR, "13") > 0;
+            message = "Besace du Foreur — talent Mineur (nœud 13) requis.";
+        } else {
+            allowed = acc != null && acc.isActive(Profession.FERMIER) && acc.getTalentRank(Profession.FERMIER, "16") > 0;
+            message = "Besace du Paysan — talent Fermier (nœud 16) requis.";
+        }
 
         if (!allowed) {
             event.setCancelled(true);
             try {
                 Player player = playerRef.getComponent(Player.getComponentType());
                 if (player != null) {
-                    player.sendMessage(Message.raw(
-                        "Besace du Foreur — talent Mineur (nœud 13) requis."
-                    ).color(new Color(200, 50, 50)));
+                    player.sendMessage(Message.raw(message).color(new Color(200, 50, 50)));
                 }
             } catch (Exception ignored) {}
         }

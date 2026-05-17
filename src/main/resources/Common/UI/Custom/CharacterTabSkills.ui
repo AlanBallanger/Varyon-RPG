@@ -1322,8 +1322,8 @@ Group {
 
   Group {
     Anchor: (Top: 0, Bottom: 0, Width: 290);
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
-    Padding: (Full: 2);
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #FFD700FF);
+    Padding: (Full: 5);
 
     Group {
       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);

@@ -1,47 +1,47 @@
 {
-    "Parent":  "NoCube_Bag_Potion_Lesser",
-    "Icon":  "Icons/Items/NoCube_Bag_Plant_Lesser.png",
-    "Texture":  "Items/NoCube_Bag_Plant.png",
-    "Container":  {
-                      "Capacity":  18,
-                      "ItemTag":  "Type=Plant"
-                  },
-    "Recipe":  {
-                   "Input":  [
-                                 {
-                                     "ItemId":  "Ingredient_Fibre",
-                                     "Quantity":  10
-                                 },
-                                 {
-                                     "ItemId":  "Ingredient_Hide_Light",
-                                     "Quantity":  2
-                                 },
-                                 {
-                                     "ResourceTypeId":  "Fruits",
-                                     "Quantity":  2
-                                 }
-                             ],
-                   "BenchRequirement":  [
-                                            {
-                                                "Type":  "Crafting",
-                                                "Id":  "Workbench",
-                                                "Categories":  [
-                                                                   "Workbench_Tinkering"
-                                                               ]
-                                            }
-                                        ]
-               },
-    "IconProperties":  {
-                           "Scale":  1,
-                           "Rotation":  [
-                                            327,
-                                            162,
-                                            0
-                                        ],
-                           "Translation":  [
-                                               2,
-                                               -10
-                                           ]
-                       },
-    "DropOnDeath":  false
+  "Parent": "NoCube_Bag_Potion_Lesser",
+  "Icon": "Icons/Items/NoCube_Bag_Plant_Lesser.png",
+  "Texture": "Items/NoCube_Bag_Plant.png",
+  "Container": {
+    "Capacity": 18,
+    "ItemTag": "Type=Plant"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Fibre",
+        "Quantity": 10
+      },
+      {
+        "ItemId": "Ingredient_Hide_Light",
+        "Quantity": 2
+      },
+      {
+        "ResourceTypeId": "Fruits",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Workbench",
+        "Categories": [
+          "Workbench_Tinkering"
+        ]
+      }
+    ]
+  },
+  "IconProperties": {
+    "Scale": 1,
+    "Rotation": [
+      327,
+      162,
+      0
+    ],
+    "Translation": [
+      2,
+      -10
+    ]
+  },
+  "DropOnDeath": false
 }

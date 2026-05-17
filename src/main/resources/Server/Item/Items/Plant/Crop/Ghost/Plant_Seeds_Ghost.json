@@ -1,0 +1,25 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Seeds_Ghost.name",
+    "Description": "server.items.Plant_Seeds_Ghost.description"
+  },
+  "Parent": "Template_Seeds",
+  "Quality": "Uncommon",
+  "Texture": "Resources/Plants/Seedbag_Textures/Ghost.png",
+  "Icon": "Icons/ItemsGenerated/Crop_Ghost.png",
+  "IconProperties": {
+    "Scale": 1.1,
+    "Rotation": [
+      0.0,
+      30.0,
+      15.0
+    ],
+    "Translation": [
+      2.5,
+      -11.0
+    ]
+  },
+  "ItemLevel": 2,
+  "MaxStack": 25,
+  "DropOnDeath": true
+}

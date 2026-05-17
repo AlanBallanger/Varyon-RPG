@@ -14,6 +14,12 @@ import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.commands.VpaCommand;
 import fr.varyon.vrpg.commands.VpaAdminCommand;
 import fr.varyon.vrpg.commands.VpaSurfaceCommand;
+import fr.varyon.vrpg.profession.fermier.FarmerAnimalDropSystem;
+import fr.varyon.vrpg.profession.fermier.FarmerBlockBreakSystem;
+import fr.varyon.vrpg.profession.fermier.FarmerComboTracker;
+import fr.varyon.vrpg.profession.fermier.FarmerPlaceCropSystem;
+import fr.varyon.vrpg.profession.fermier.GuardianCropManager;
+import fr.varyon.vrpg.profession.fermier.GuardianCropTickSystem;
 import fr.varyon.vrpg.profession.mineur.BagCraftRestrictionSystem;
 import fr.varyon.vrpg.profession.mineur.ExplosionTalentSystem;
 import fr.varyon.vrpg.profession.mineur.MinerComboTracker;
@@ -38,6 +44,9 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private MiningHelmet miningHelmet;
     private GuardianStoneManager guardianManager;
     private MinerComboTracker comboTracker;
+    private FarmerComboTracker farmerComboTracker;
+    private FarmerAnimalDropSystem farmerAnimalDropSystem;
+    private GuardianCropManager guardianCropManager;
     private VeinCooldownTracker veinCooldownTracker;
     private VpaSurfaceCommand surfaceCommand;
     private VpaBlastCommand blastCommand;
@@ -70,6 +79,9 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.miningHelmet = new MiningHelmet(professionManager);
             this.guardianManager = new GuardianStoneManager();
             this.comboTracker = new MinerComboTracker();
+            this.farmerComboTracker = new FarmerComboTracker();
+            this.farmerAnimalDropSystem = new FarmerAnimalDropSystem(professionManager);
+            this.guardianCropManager = new GuardianCropManager();
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
             this.surfaceCommand = new VpaSurfaceCommand();
@@ -98,19 +110,30 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 ItemStack held = event.getItemInHand();
                 if (held == null) return;
                 String itemId = held.getItemId();
-                if (itemId == null || !BagCraftRestrictionSystem.ORE_BAG_IDS.contains(itemId)) return;
+                if (itemId == null) return;
+                boolean isOreBag = BagCraftRestrictionSystem.ORE_BAG_IDS.contains(itemId);
+                boolean isCropBag = BagCraftRestrictionSystem.CROP_BAG_IDS.contains(itemId);
+                if (!isOreBag && !isCropBag) return;
                 Player player = event.getPlayer();
                 if (player == null) return;
                 PlayerRef ref = player.getPlayerRef();
                 if (ref == null || professionManager == null) { event.setCancelled(true); return; }
                 PlayerAccount acc = professionManager.getAccount(ref.getUuid());
-                boolean ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.MINEUR)
-                    && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.MINEUR, "13") > 0;
+                boolean ok;
+                String msg;
+                if (isOreBag) {
+                    ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.MINEUR)
+                        && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.MINEUR, "13") > 0;
+                    msg = "Besace du Foreur — talent Mineur (nœud 13) requis.";
+                } else {
+                    ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.FERMIER)
+                        && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.FERMIER, "16") > 0;
+                    msg = "Besace du Paysan — talent Fermier (nœud 16) requis.";
+                }
                 if (!ok) {
                     event.setCancelled(true);
-                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                        "Besace du Foreur — talent Mineur (nœud 13) requis."
-                    ).color(new java.awt.Color(200, 50, 50)));
+                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw(msg)
+                        .color(new java.awt.Color(200, 50, 50)));
                 }
             });
             getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
@@ -118,6 +141,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 if (ref != null && professionManager != null) {
                     professionManager.onPlayerDisconnect(ref.getUuid());
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());
+                    if (farmerComboTracker != null) farmerComboTracker.remove(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
                     if (miningHelmet != null) miningHelmet.removePlayer(ref.getUuid());
                     if (surfaceCommand != null) surfaceCommand.clearCooldown(ref.getUuid());
@@ -164,9 +188,34 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         }
 
         try {
+            getEntityStoreRegistry().registerSystem(new FarmerBlockBreakSystem(professionManager, farmerComboTracker, guardianCropManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerBlockBreakSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new GuardianCropTickSystem(guardianCropManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register GuardianCropTickSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new FarmerPlaceCropSystem(professionManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerPlaceCropSystem");
+        }
+
+        try {
             getEntityStoreRegistry().registerSystem(new BagCraftRestrictionSystem(professionManager));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register BagCraftRestrictionSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(farmerAnimalDropSystem.new AttackTagger());
+            getEntityStoreRegistry().registerSystem(farmerAnimalDropSystem.new DropOnDeath());
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerAnimalDropSystem");
         }
     }
 
@@ -180,8 +229,10 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             }
         }
         if (guardianManager != null) guardianManager.clear();
+        if (guardianCropManager != null) guardianCropManager.clear();
         if (veinCooldownTracker != null) veinCooldownTracker.clear();
         if (comboTracker != null) comboTracker.clear();
+        if (farmerComboTracker != null) farmerComboTracker.clear();
         instance = null;
     }
 }
