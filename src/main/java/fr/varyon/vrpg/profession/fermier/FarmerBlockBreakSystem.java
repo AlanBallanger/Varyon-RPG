@@ -100,10 +100,7 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             if (dbg) LOGGER.atInfo().log("[Fermier-DBG] bloc ignoré (pas une culture) id=" + id);
             return;
         }
-
-        if (event.getTargetBlock() != null) {
-            FarmerFKeyHarvestSystem.markManualBreak(event.getTargetBlock().x, event.getTargetBlock().y, event.getTargetBlock().z);
-        }
+        if (id.toLowerCase().contains("eternal")) return;
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) return;

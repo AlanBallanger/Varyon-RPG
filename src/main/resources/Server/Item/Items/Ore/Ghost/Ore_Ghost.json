@@ -6,21 +6,6 @@
   "Categories": [
     "Blocks.Ores"
   ],
-  "Recipe": {
-    "Input": [
-      {
-        "ResourceTypeId": "Salvage_Ghost",
-        "Quantity": 1
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Type": "Processing",
-        "Id": "Salvagebench"
-      }
-    ],
-    "TimeSeconds": 4
-  },
   "Model": "Resources/Ores/Ore_Large.blockymodel",
   "Texture": "Resources/Ores/Ore_Textures/Ghost.png",
   "ItemLevel": 10,

@@ -17,11 +17,12 @@ import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.commands.VpaCommand;
 import fr.varyon.vrpg.commands.VpaAdminCommand;
 import fr.varyon.vrpg.commands.VpaSurfaceCommand;
+import fr.varyon.vrpg.restriction.TalentItemRestrictionSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerAnimalDropSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerBlockBreakSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerComboTracker;
 import fr.varyon.vrpg.profession.fermier.FarmerPlaceCropSystem;
-import fr.varyon.vrpg.profession.fermier.FarmerFKeyHarvestSystem;
+import fr.varyon.vrpg.profession.fermier.FarmerPickupHarvestSystem;
 import fr.varyon.vrpg.profession.fermier.GuardianCropManager;
 import fr.varyon.vrpg.profession.fermier.GuardianCropTickSystem;
 import fr.varyon.vrpg.profession.mineur.BagCraftRestrictionSystem;
@@ -50,7 +51,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private MinerComboTracker comboTracker;
     private FarmerComboTracker farmerComboTracker;
     private FarmerAnimalDropSystem farmerAnimalDropSystem;
-    private FarmerFKeyHarvestSystem farmerFKeyHarvestSystem;
+    private FarmerPickupHarvestSystem farmerPickupHarvestSystem;
     private GuardianCropManager guardianCropManager;
     private VeinCooldownTracker veinCooldownTracker;
     private VpaSurfaceCommand surfaceCommand;
@@ -86,7 +87,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.comboTracker = new MinerComboTracker();
             this.farmerComboTracker = new FarmerComboTracker();
             this.farmerAnimalDropSystem = new FarmerAnimalDropSystem(professionManager);
-            this.farmerFKeyHarvestSystem = new FarmerFKeyHarvestSystem(professionManager, farmerComboTracker);
+            this.farmerPickupHarvestSystem = new FarmerPickupHarvestSystem(professionManager, farmerComboTracker);
             this.guardianCropManager = new GuardianCropManager();
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
@@ -143,6 +144,27 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 }
             });
             getEventRegistry().registerGlobal(PlayerInteractEvent.class, event -> {
+                ItemStack heldRestrict = event.getItemInHand();
+                if (heldRestrict != null) {
+                    String restrictId = heldRestrict.getItemId();
+                    if (restrictId != null && TalentItemRestrictionSystem.getMessage(restrictId) != null) {
+                        Player restrictPlayer = event.getPlayer();
+                        if (restrictPlayer != null) {
+                            PlayerRef restrictRef = restrictPlayer.getPlayerRef();
+                            PlayerAccount restrictAcc = restrictRef != null && professionManager != null
+                                ? professionManager.getAccount(restrictRef.getUuid()) : null;
+                            if (!TalentItemRestrictionSystem.isAllowed(restrictId, restrictAcc)) {
+                                event.setCancelled(true);
+                                restrictPlayer.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                                    TalentItemRestrictionSystem.getMessage(restrictId))
+                                    .color(new java.awt.Color(200, 50, 50)));
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
+            getEventRegistry().registerGlobal(PlayerInteractEvent.class, event -> {
                 InteractionType action = event.getActionType();
                 if (action != InteractionType.Secondary && action != InteractionType.Use) return;
                 Entity targetEnt = event.getTargetEntity();
@@ -162,7 +184,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                     professionManager.onPlayerDisconnect(ref.getUuid());
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());
                     if (farmerComboTracker != null) farmerComboTracker.remove(ref.getUuid());
-                    if (farmerFKeyHarvestSystem != null) farmerFKeyHarvestSystem.removePlayer(ref.getUuid());
+                    if (farmerPickupHarvestSystem != null) farmerPickupHarvestSystem.removePlayer(ref.getUuid());
                     if (farmerAnimalDropSystem != null) farmerAnimalDropSystem.removePlayer(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
                     if (miningHelmet != null) miningHelmet.removePlayer(ref.getUuid());
@@ -222,9 +244,9 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         }
 
         try {
-            getEntityStoreRegistry().registerSystem(farmerFKeyHarvestSystem);
+            getEntityStoreRegistry().registerSystem(farmerPickupHarvestSystem);
         } catch (Exception e) {
-            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerFKeyHarvestSystem");
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerPickupHarvestSystem");
         }
 
         try {
@@ -237,6 +259,12 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new BagCraftRestrictionSystem(professionManager));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register BagCraftRestrictionSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new TalentItemRestrictionSystem(professionManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register TalentItemRestrictionSystem");
         }
 
         try {

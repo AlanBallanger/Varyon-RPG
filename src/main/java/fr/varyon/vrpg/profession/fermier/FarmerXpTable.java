@@ -57,6 +57,25 @@ public final class FarmerXpTable {
         return id.substring(0, idx) + "_Item";
     }
 
+    public static boolean isCropHarvestItem(String rawId) {
+        String id = normalize(rawId);
+        if (id == null || id.isEmpty()) return false;
+        String lower = id.toLowerCase();
+        if (!lower.startsWith("plant_crop_") || !lower.endsWith("_item")) return false;
+        String withoutItem = lower.substring(0, lower.length() - "_item".length());
+        return CROP_PREFIXES.contains(withoutItem);
+    }
+
+    public static String resolveEternalSeedFromItem(String rawId) {
+        String id = normalize(rawId);
+        if (!isCropHarvestItem(id)) return null;
+        int itemIdx = id.lastIndexOf("_Item");
+        if (itemIdx < 0) itemIdx = id.toLowerCase().lastIndexOf("_item");
+        if (itemIdx < 0) return null;
+        String cropName = id.substring("Plant_Crop_".length(), itemIdx);
+        return "Plant_Seeds_" + cropName + "_Eternal";
+    }
+
     public static String resolveEternalSeedId(String rawId) {
         String id = normalize(rawId);
         if (id == null || !id.toLowerCase().startsWith("plant_crop_")) return null;

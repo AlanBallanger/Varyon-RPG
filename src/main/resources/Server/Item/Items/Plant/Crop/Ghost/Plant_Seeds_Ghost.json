@@ -3,7 +3,6 @@
     "Name": "server.items.Plant_Seeds_Ghost.name",
     "Description": "server.items.Plant_Seeds_Ghost.description"
   },
-  "Parent": "Template_Seeds",
   "Quality": "Uncommon",
   "Texture": "Resources/Plants/Seedbag_Textures/Ghost.png",
   "Icon": "Icons/ItemsGenerated/Crop_Ghost.png",
