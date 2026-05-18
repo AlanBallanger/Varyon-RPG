@@ -14,11 +14,16 @@ public final class VrpgConfig {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     private static boolean debugTalents = false;
+    private static boolean debugProfessions = false;
 
     private VrpgConfig() {}
 
     public static boolean isDebugTalents() {
         return debugTalents;
+    }
+
+    public static boolean isDebugProfessions() {
+        return debugProfessions;
     }
 
     public static void load(Path dataDir) {
@@ -30,7 +35,9 @@ public final class VrpgConfig {
             List<String> lines = Files.readAllLines(configFile);
             Map<String, String> values = parseToml(lines);
             debugTalents = parseBoolean(values.getOrDefault("debug_talents", "false"));
-            LOGGER.atInfo().log("[VaryonRPG] Config chargée — debug_talents=" + debugTalents);
+            debugProfessions = parseBoolean(values.getOrDefault("debug_professions", "false"));
+            LOGGER.atInfo().log("[VaryonRPG] Config chargée — debug_talents=" + debugTalents
+                + " debug_professions=" + debugProfessions);
         } catch (IOException e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] Impossible de lire config.toml, valeurs par défaut utilisées");
         }
@@ -42,7 +49,11 @@ public final class VrpgConfig {
             "\n" +
             "# Active les logs de debug pour chaque declenchement de talent Mineur\n" +
             "# Utile pour diagnostiquer les talents qui ne fonctionnent pas\n" +
-            "debug_talents = false\n";
+            "debug_talents = false\n" +
+            "\n" +
+            "# Active les logs de debug pour les jauges XP des metiers (ProfessionActiveCard / ProfessionCatalogCard)\n" +
+            "# Utile pour diagnostiquer l'affichage des barres de progression\n" +
+            "debug_professions = false\n";
         try {
             Files.createDirectories(path.getParent());
             Files.writeString(path, content);

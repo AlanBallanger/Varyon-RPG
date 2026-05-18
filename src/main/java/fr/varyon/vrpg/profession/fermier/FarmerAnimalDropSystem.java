@@ -33,15 +33,18 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class FarmerAnimalDropSystem {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static final Random RANDOM = new Random();
+    private static final long MILK_COOLDOWN_MS = 3000L;
 
     private final ProfessionManager professionManager;
     private final ConcurrentHashMap<Integer, Ref<EntityStore>> lastAttackerByVictim = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, Long> lastMilkTime = new ConcurrentHashMap<>();
 
     public FarmerAnimalDropSystem(@Nonnull ProfessionManager professionManager) {
         this.professionManager = professionManager;
@@ -77,7 +80,13 @@ public final class FarmerAnimalDropSystem {
             NPCEntity npc = chunk.getComponent(index, NPCEntity.getComponentType());
             if (npc == null) return;
             String role = npc.getRoleName();
-            if (role == null || FarmerAnimalTable.getDropItem(role.toLowerCase(Locale.ROOT)) == null) return;
+            String roleLower = role != null ? role.toLowerCase(Locale.ROOT) : null;
+            boolean dbg = VrpgConfig.isDebugTalents();
+            if (roleLower == null || FarmerAnimalTable.resolveDropItemContains(roleLower) == null) {
+                if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] AttackTagger — ignored npc role=" + role);
+                return;
+            }
+            if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] AttackTagger — tagged animal role=" + role);
 
             Ref<EntityStore> victimRef = chunk.getReferenceTo(index);
             lastAttackerByVictim.put(System.identityHashCode(victimRef), attackerRef);
@@ -99,28 +108,43 @@ public final class FarmerAnimalDropSystem {
                 int victimId = System.identityHashCode(ref);
                 Ref<EntityStore> attackerRef = lastAttackerByVictim.remove(victimId);
 
+                boolean dbg = VrpgConfig.isDebugTalents();
+
                 Player killer = resolveKiller(store, commandBuffer, attackerRef, death);
                 if (killer == null) return;
 
                 PlayerRef playerRef = killer.getPlayerRef();
                 if (playerRef == null) return;
                 PlayerAccount acc = professionManager.getAccount(playerRef.getUuid());
-                if (acc == null || !acc.isActive(Profession.FERMIER)) return;
-
-                int rank = acc.getTalentRank(Profession.FERMIER, "7");
-                if (rank <= 0) return;
+                if (acc == null || !acc.isActive(Profession.FERMIER)) {
+                    if (dbg) LOGGER.atInfo().log("[Fermier-DBG] SeigneurEtable — joueur non actif fermier"
+                        + " active0=" + (acc == null ? "null" : acc.getActiveSlot0())
+                        + " active1=" + (acc == null ? "null" : acc.getActiveSlot1()));
+                    return;
+                }
 
                 NPCEntity npc = (NPCEntity) store.getComponent(ref, NPCEntity.getComponentType());
                 if (npc == null) return;
                 String role = npc.getRoleName();
                 if (role == null) return;
-                String dropItem = FarmerAnimalTable.getDropItem(role.toLowerCase(Locale.ROOT));
-                if (dropItem == null) return;
+                String roleLower = role.toLowerCase(Locale.ROOT);
+                String dropItem = FarmerAnimalTable.resolveDropItemContains(roleLower);
+                if (dropItem == null) {
+                    if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] DropOnDeath — no match role=" + role);
+                    return;
+                }
 
-                if (RANDOM.nextDouble() >= rank * 0.05) return;
+                professionManager.addXp(playerRef.getUuid(), Profession.FERMIER, FarmerAnimalTable.BASE_ANIMAL_KILL_XP);
+                if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] DropOnDeath — XP +" + FarmerAnimalTable.BASE_ANIMAL_KILL_XP + " role=" + role);
 
-                if (VrpgConfig.isDebugTalents()) {
-                    LOGGER.atInfo().log("[FarmerAnimalDrop] N7 SeigneurEtable PROC — mob=" + role + " item=" + dropItem + " rank=" + rank);
+                boolean isGuardian = FarmerAnimalTable.GUARDIAN_CROP_ROLE.equals(roleLower);
+                if (!isGuardian) {
+                    int rank = acc.getTalentRank(Profession.FERMIER, "7");
+                    if (rank <= 0) return;
+                    if (RANDOM.nextDouble() >= rank * 0.05) return;
+                    if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] N7 SeigneurEtable PROC — mob=" + role + " item=" + dropItem + " rank=" + rank);
+                } else {
+                    if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] N11 GardienChamps tué — drop garanti item=" + dropItem);
                 }
 
                 TransformComponent transform = (TransformComponent) store.getComponent(ref, TransformComponent.getComponentType());
@@ -156,5 +180,22 @@ public final class FarmerAnimalDropSystem {
             }
             return null;
         }
+    }
+
+    public void onMilkInteract(@Nonnull UUID uuid, @Nonnull String roleLower) {
+        if (!FarmerAnimalTable.isMilkableAnimal(roleLower)) return;
+        long now = System.currentTimeMillis();
+        Long last = lastMilkTime.get(uuid);
+        if (last != null && now - last < MILK_COOLDOWN_MS) return;
+        lastMilkTime.put(uuid, now);
+        PlayerAccount acc = professionManager.getAccount(uuid);
+        if (acc == null || !acc.isActive(Profession.FERMIER)) return;
+        boolean dbg = VrpgConfig.isDebugTalents();
+        professionManager.addXp(uuid, Profession.FERMIER, FarmerAnimalTable.BASE_MILK_XP);
+        if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] Milk XP +" + FarmerAnimalTable.BASE_MILK_XP + " role=" + roleLower);
+    }
+
+    public void removePlayer(@Nonnull UUID uuid) {
+        lastMilkTime.remove(uuid);
     }
 }

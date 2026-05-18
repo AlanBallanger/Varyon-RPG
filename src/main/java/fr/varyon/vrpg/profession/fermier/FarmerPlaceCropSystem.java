@@ -66,8 +66,15 @@ public final class FarmerPlaceCropSystem extends EntityEventSystem<EntityStore, 
         if (playerRef == null) return;
         UUID uuid = playerRef.getUuid();
 
+        boolean dbg = VrpgConfig.isDebugTalents();
+
         PlayerAccount acc = professionManager.getAccount(uuid);
-        if (acc == null || !acc.isActive(Profession.FERMIER)) return;
+        if (acc == null || !acc.isActive(Profession.FERMIER)) {
+            if (dbg) LOGGER.atInfo().log("[Fermier-DBG] BrasLong — joueur non actif fermier seed=" + seedId
+                + " active0=" + (acc == null ? "null" : acc.getActiveSlot0())
+                + " active1=" + (acc == null ? "null" : acc.getActiveSlot1()));
+            return;
+        }
         if (acc.getTalentRank(Profession.FERMIER, "4") <= 0) return;
 
         Player player = null;
@@ -109,7 +116,6 @@ public final class FarmerPlaceCropSystem extends EntityEventSystem<EntityStore, 
         int available = Math.max(0, eventItem.getQuantity() - 1);
         if (available == 0) return;
 
-        boolean dbg = VrpgConfig.isDebugTalents();
         String dbgId = dbg ? "[" + uuid.toString().substring(0, 8) + "|BrasLong] " : null;
 
         int consumed = 0;
@@ -120,7 +126,7 @@ public final class FarmerPlaceCropSystem extends EntityEventSystem<EntityStore, 
                 String belowId = String.valueOf(world.getBlockType(ex, by - 1, ez).getId()).toLowerCase();
                 String atId   = String.valueOf(world.getBlockType(ex, by,     ez).getId()).toLowerCase();
 
-                boolean validSoil = "soil_dirt_tilled".equals(belowId) || belowId.contains("planter");
+                boolean validSoil = belowId.startsWith("soil_dirt_tilled") || belowId.contains("planter");
                 boolean isEmpty   = "empty".equals(atId);
                 if (!validSoil || !isEmpty) continue;
 

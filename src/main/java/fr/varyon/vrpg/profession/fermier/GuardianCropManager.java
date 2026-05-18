@@ -18,6 +18,10 @@ public final class GuardianCropManager {
         return positions.contains(key(x, y, z));
     }
 
+    public java.util.Set<String> getPositions() {
+        return positions;
+    }
+
     public void track(int x, int y, int z) {
         positions.add(key(x, y, z));
     }

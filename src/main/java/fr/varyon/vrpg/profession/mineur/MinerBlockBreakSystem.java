@@ -153,12 +153,14 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
             int comboCount = comboTracker.onOreMined(playerUuid);
             double comboPercent = comboRank > 0 ? (0.005 + (comboRank - 1) * 0.005) : 0.0;
             double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
-            if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N5 CCombo combo=" + comboCount + " bonus=" + String.format("%.1f%%", comboBonus * 100));
+            if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N5 CCombo combo=" + comboCount
+                + " bonus=" + String.format("%.3f%%", comboBonus * 100));
             xpMult += comboBonus;
 
             long finalXp = Math.round(baseXp * xpMult);
             if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
-                + (xpRank > 0 ? " [N1 FrontPoussiereux rank=" + xpRank + " base=" + baseXp + "]" : ""));
+                + " (base=" + baseXp + " × " + String.format("%.3f", xpMult) + ")"
+                + (xpRank > 0 ? " [N1 FrontPoussiereux rank=" + xpRank + "]" : ""));
             professionManager.addXp(playerUuid, Profession.MINEUR, finalXp);
 
             // Node 5 — loot bonus : chance supplémentaire de drop proportionnelle au combo

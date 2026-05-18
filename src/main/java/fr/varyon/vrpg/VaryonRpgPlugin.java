@@ -2,9 +2,12 @@ package fr.varyon.vrpg;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.protocol.InteractionType;
+import com.hypixel.hytale.server.core.entity.Entity;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -18,6 +21,7 @@ import fr.varyon.vrpg.profession.fermier.FarmerAnimalDropSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerBlockBreakSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerComboTracker;
 import fr.varyon.vrpg.profession.fermier.FarmerPlaceCropSystem;
+import fr.varyon.vrpg.profession.fermier.FarmerFKeyHarvestSystem;
 import fr.varyon.vrpg.profession.fermier.GuardianCropManager;
 import fr.varyon.vrpg.profession.fermier.GuardianCropTickSystem;
 import fr.varyon.vrpg.profession.mineur.BagCraftRestrictionSystem;
@@ -46,6 +50,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private MinerComboTracker comboTracker;
     private FarmerComboTracker farmerComboTracker;
     private FarmerAnimalDropSystem farmerAnimalDropSystem;
+    private FarmerFKeyHarvestSystem farmerFKeyHarvestSystem;
     private GuardianCropManager guardianCropManager;
     private VeinCooldownTracker veinCooldownTracker;
     private VpaSurfaceCommand surfaceCommand;
@@ -81,6 +86,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.comboTracker = new MinerComboTracker();
             this.farmerComboTracker = new FarmerComboTracker();
             this.farmerAnimalDropSystem = new FarmerAnimalDropSystem(professionManager);
+            this.farmerFKeyHarvestSystem = new FarmerFKeyHarvestSystem(professionManager, farmerComboTracker);
             this.guardianCropManager = new GuardianCropManager();
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
@@ -136,12 +142,28 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                         .color(new java.awt.Color(200, 50, 50)));
                 }
             });
+            getEventRegistry().registerGlobal(PlayerInteractEvent.class, event -> {
+                InteractionType action = event.getActionType();
+                if (action != InteractionType.Secondary && action != InteractionType.Use) return;
+                Entity targetEnt = event.getTargetEntity();
+                if (!(targetEnt instanceof NPCEntity npc)) return;
+                String role = npc.getRoleName();
+                if (role == null) return;
+                String roleLower = role.toLowerCase(java.util.Locale.ROOT);
+                Player player = event.getPlayer();
+                if (player == null) return;
+                PlayerRef milkRef = player.getPlayerRef();
+                if (milkRef == null || farmerAnimalDropSystem == null) return;
+                farmerAnimalDropSystem.onMilkInteract(milkRef.getUuid(), roleLower);
+            });
             getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 PlayerRef ref = event.getPlayerRef();
                 if (ref != null && professionManager != null) {
                     professionManager.onPlayerDisconnect(ref.getUuid());
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());
                     if (farmerComboTracker != null) farmerComboTracker.remove(ref.getUuid());
+                    if (farmerFKeyHarvestSystem != null) farmerFKeyHarvestSystem.removePlayer(ref.getUuid());
+                    if (farmerAnimalDropSystem != null) farmerAnimalDropSystem.removePlayer(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
                     if (miningHelmet != null) miningHelmet.removePlayer(ref.getUuid());
                     if (surfaceCommand != null) surfaceCommand.clearCooldown(ref.getUuid());
@@ -197,6 +219,12 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new GuardianCropTickSystem(guardianCropManager));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register GuardianCropTickSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(farmerFKeyHarvestSystem);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerFKeyHarvestSystem");
         }
 
         try {

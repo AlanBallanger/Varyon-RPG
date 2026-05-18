@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import fr.varyon.vrpg.VaryonRpgPlugin;
+import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
@@ -322,7 +323,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"},
         {"5% élevage",           "10% élevage",          "15% élevage",          "20% élevage",          "25% élevage"},
         {"15% durabilité",       "30% durabilité",       "45% durabilité",       "60% durabilité",       "75% durabilité"},
-        {"1% faim/soif",         "1.25% faim/soif",      "1.5% faim/soif",       "1.75% faim/soif",      "2% faim/soif"},
+        {"1% de chance",         "1.25% de chance",      "1.5% de chance",       "1.75% de chance",      "2% de chance"},
         {"Replantation auto arroseurs activée"},
         {"0.5% invocation",      "1% invocation",        "1.5% invocation",      "2% invocation",        "2.5% invocation"},
         {"Fertilisants haute qualité débloqués"},
@@ -348,21 +349,21 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     );
 
     private static final String[][] FORESTIER_TREE_NODES = {
-        {"0",  "Bûches Bien Lourdes",       "Passif", "Un arbre vide, c'est juste du mobilier.",                           "Chance de doubler les ressources obtenues en coupant des arbres.",                                           "Precision_Training_Icon.png"},
-        {"1",  "Mains Écorchées",           "Passif", "L'expérience pousse rarement sans échardes.",                       "Augmente l'expérience gagnée en coupant des arbres et en récoltant dans la nature.",                        "Precision_Training_Icon.png"},
-        {"2",  "Sève Primordiale",          "Passif", "Certains troncs saignent encore une magie ancienne.",               "Chance d'obtenir des Essences de Forestier en coupant des arbres.",                                          "Precision_Training_Icon.png"},
-        {"3",  "Hache du Survivant",        "Passif", "Elle coupe encore. Toujours.",                                      "Réduit l'usure de votre hache.",                                                                              "Precision_Training_Icon.png"},
-        {"4",  "Cueilleur des Sous-Bois",   "Passif", "Les meilleures trouvailles poussent loin des chemins.",             "Augmente les ressources obtenues sur les fleurs et champignons.",                                             "Precision_Training_Icon.png"},
-        {"5",  "Bûcheronnage Frénétique",   "Passif", "Quand le rythme part, la forêt suit.",                             "Couper plusieurs arbres rapidement déclenche un combo augmentant les gains.",                                  "Precision_Training_Icon.png"},
-        {"6",  "Rôdeur Sylvestre",          "Passif", "La forêt finit toujours par reconnaître les siens.",                "Augmente votre vitesse dans les forêts et réduit les dégâts de chute.",                                       "Precision_Training_Icon.png"},
-        {"7",  "Pêche Miraculeuse",         "Passif", "Même les poissons veulent finir dans ton sac.",                     "Augmente les chances d'obtenir du loot rare en pêchant.",                                                     "Precision_Training_Icon.png"},
-        {"8",  "Yeux de Hibou",             "Passif", "La nuit appartient à ceux qui voient encore.",                      "Améliore votre vision nocturne dans les forêts.",                                                             "Precision_Training_Icon.png"},
-        {"9",  "Équipement Tridimensionnel","Actif",  "Le sol devient optionnel.",                                         "Débloque un grappin forestier permettant de se déplacer rapidement entre les arbres.",                         "Precision_Training_Icon.png"},
-        {"10", "Gardien Sylvestre",         "Passif", "Les forêts anciennes n'abandonnent jamais leurs protecteurs.",      "Chance d'invoquer un Gardien Sylvestre laissant un objet légendaire à sa mort.",                              "Precision_Training_Icon.png"},
-        {"12", "Retour aux Racines",        "Passif", "Chaque arbre tombé mérite un héritier.",                            "Replante automatiquement un arbre après l'avoir coupé.",                                                      "Precision_Training_Icon.png"},
-        {"13", "Ça Va Tomber",             "Actif",  "Le plus dur dans un arbre, c'est de choisir où il chute.",          "Permet d'abattre un arbre entier en un seul déracinage.",                                                     "Precision_Training_Icon.png"},
-        {"14", "Poumons de Loutre",         "Passif", "Tu passes plus de temps sous l'eau qu'au sec.",                     "Augmente le temps de respiration sous l'eau.",                                                                "Precision_Training_Icon.png"},
-        {"15", "Lit de Fortune",            "Passif", "Même les rôdeurs doivent dormir un jour.",                          "Les lits d'appoint restaurent davantage de vie et d'énergie.",                                               "Precision_Training_Icon.png"},
+        {"0",  "Bûches Bien Lourdes",       "Passif", "Un arbre vide, c'est juste du mobilier.",                           "Chance de doubler les ressources obtenues en coupant des arbres.",                                           "Jobs_Icons/Logs_Loot.png"},
+        {"1",  "Mains Écorchées",           "Passif", "L'expérience pousse rarement sans échardes.",                       "Augmente l'expérience gagnée en coupant des arbres et en récoltant dans la nature.",                        "Jobs_Icons/Xp_Boost.png"},
+        {"2",  "Sève Primordiale",          "Passif", "Certains troncs saignent encore une magie ancienne.",               "Chance d'obtenir des Essences de Forestier en coupant des arbres.",                                          "Jobs_Icons/Log_Special.png"},
+        {"3",  "Hache du Survivant",        "Passif", "Elle coupe encore. Toujours.",                                      "Réduit l'usure de votre hache.",                                                                              "Jobs_Icons/Hatchet_Durability.png"},
+        {"4",  "Cueilleur des Sous-Bois",   "Passif", "Les meilleures trouvailles poussent loin des chemins.",             "Augmente les ressources obtenues sur les fleurs et champignons.",                                             "Jobs_Icons/Mushroom_Loot.png"},
+        {"5",  "Bûcheronnage Frénétique",   "Passif", "Quand le rythme part, la forêt suit.",                             "Couper plusieurs arbres rapidement déclenche un combo augmentant les gains.",                                  "Jobs_Icons/Combo_Logging.png"},
+        {"6",  "Rôdeur Sylvestre",          "Passif", "La forêt finit toujours par reconnaître les siens.",                "Augmente votre vitesse dans les forêts et réduit les dégâts de chute.",                                       "Jobs_Icons/Forest_Runner.png"},
+        {"7",  "Pêche Miraculeuse",         "Passif", "Même les poissons veulent finir dans ton sac.",                     "Augmente les loot en pêchant.",                                                                               "Jobs_Icons/Fishs_Loot.png"},
+        {"8",  "Yeux de Hibou",             "Passif", "La nuit appartient à ceux qui voient encore.",                      "Améliore votre vision nocturne dans les forêts.",                                                             "Jobs_Icons/Night_Vision.png"},
+        {"9",  "Équipement Tridimensionnel","Actif",  "Le sol devient optionnel.",                                         "Débloque un grappin forestier permettant de se déplacer rapidement entre les arbres.",                         "Jobs_Icons/Grappling_Hook.png"},
+        {"10", "Gardien Sylvestre",         "Passif", "Les forêts anciennes n'abandonnent jamais leurs protecteurs.",      "Chance d'invoquer un Gardien Sylvestre laissant un objet légendaire à sa mort.",                              "Jobs_Icons/Wolf.png"},
+        {"12", "Retour aux Racines",        "Passif", "Chaque arbre tombé mérite un héritier.",                            "Replante automatiquement un arbre après l'avoir coupé.",                                                      "Jobs_Icons/Tree_Regrowth.png"},
+        {"13", "Ça Va Tomber",             "Actif",  "Le plus dur dans un arbre, c'est de choisir où il chute.",          "Permet d'abattre les racines en même temps que l'arbre.",                                                     "Jobs_Icons/Roots_Uproot.png"},
+        {"14", "Poumons de Loutre",         "Passif", "Tu passes plus de temps sous l'eau qu'au sec.",                     "Augmente le temps de respiration sous l'eau.",                                                                "Jobs_Icons/Water_Breathing.png"},
+        {"15", "Lit de Fortune",            "Passif", "Même les rôdeurs doivent dormir un jour.",                          "Les lits d'appoint restaurent davantage de vie et d'énergie.",                                               "Jobs_Icons/Bed_Regen.png"},
     };
 
     private static final int[][] FORESTIER_SLOT_LT = {
@@ -608,8 +609,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                       @Nonnull String fillId,
                                       long xpInLevel, long xpToNext) {
         double ratio = xpToNext > 0 ? Math.min(1.0, (double) xpInLevel / xpToNext) : 1.0;
-        LOG.info("[RPG-Gauge] " + fillId + " xpInLevel=" + xpInLevel
-            + " xpToNext=" + xpToNext + " ratio=" + String.format("%.3f", ratio));
+        if (VrpgConfig.isDebugProfessions()) {
+            LOG.info("[RPG-Gauge] " + fillId + " xpInLevel=" + xpInLevel
+                + " xpToNext=" + xpToNext + " ratio=" + String.format("%.3f", ratio));
+        }
         ui.set(fillId + ".Value", ratio);
     }
 

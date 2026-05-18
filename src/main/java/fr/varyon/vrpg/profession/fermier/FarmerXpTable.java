@@ -31,29 +31,39 @@ public final class FarmerXpTable {
 
     private FarmerXpTable() {}
 
+    private static String normalize(String rawId) {
+        if (rawId == null) return null;
+        String s = rawId;
+        if (s.startsWith("hytale:")) s = s.substring(7);
+        if (s.startsWith("*")) s = s.substring(1);
+        return s;
+    }
+
     public static boolean isCrop(String rawId) {
-        if (rawId == null || rawId.isEmpty()) return false;
-        String lower = rawId.toLowerCase();
+        String id = normalize(rawId);
+        if (id == null || id.isEmpty()) return false;
+        String lower = id.toLowerCase();
         if (!lower.startsWith("plant_crop_") || !lower.contains("_block")) return false;
         int blockIdx = lower.indexOf("_block");
         return CROP_PREFIXES.contains(lower.substring(0, blockIdx));
     }
 
     public static String resolveCropItemId(String rawId) {
-        if (rawId == null || rawId.isEmpty()) return null;
-        int idx = rawId.indexOf("_Block");
-        if (idx < 0) idx = rawId.toLowerCase().indexOf("_block");
+        String id = normalize(rawId);
+        if (id == null || id.isEmpty()) return null;
+        int idx = id.indexOf("_Block");
+        if (idx < 0) idx = id.toLowerCase().indexOf("_block");
         if (idx < 0) return null;
-        return rawId.substring(0, idx) + "_Item";
+        return id.substring(0, idx) + "_Item";
     }
 
     public static String resolveEternalSeedId(String rawId) {
-        // "Plant_Crop_Wheat_Block" ou "Plant_Crop_Wheat_Block_Eternal" → "Plant_Seeds_Wheat_Eternal"
-        if (rawId == null || !rawId.toLowerCase().startsWith("plant_crop_")) return null;
-        int blockIdx = rawId.indexOf("_Block");
-        if (blockIdx < 0) blockIdx = rawId.toLowerCase().indexOf("_block");
+        String id = normalize(rawId);
+        if (id == null || !id.toLowerCase().startsWith("plant_crop_")) return null;
+        int blockIdx = id.indexOf("_Block");
+        if (blockIdx < 0) blockIdx = id.toLowerCase().indexOf("_block");
         if (blockIdx < 0) return null;
-        String cropName = rawId.substring("Plant_Crop_".length(), blockIdx);
+        String cropName = id.substring("Plant_Crop_".length(), blockIdx);
         return "Plant_Seeds_" + cropName + "_Eternal";
     }
 }

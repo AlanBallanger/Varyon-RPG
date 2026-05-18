@@ -77,31 +77,46 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         BlockType blockType = event.getBlockType();
         if (blockType == null) return;
 
+        boolean dbg = VrpgConfig.isDebugTalents();
+
         String rawId = String.valueOf(blockType.getId());
         String id = rawId.startsWith("hytale:") ? rawId.substring(7) : rawId;
+        if (id.startsWith("*")) id = id.substring(1);
 
-        // Guardian crop check — before any profession filter, anyone who breaks it triggers the spawn
         if (event.getTargetBlock() != null) {
             int gx = event.getTargetBlock().x;
             int gy = event.getTargetBlock().y;
             int gz = event.getTargetBlock().z;
-            if (guardianCropManager.isGuardian(gx, gy, gz)) {
+            boolean isGuard = guardianCropManager.isGuardian(gx, gy, gz);
+            if (dbg) LOGGER.atInfo().log("[GardienChamps] breakCheck pos(" + gx + "," + gy + "," + gz + ") isGuardian=" + isGuard + " id=" + rawId);
+            if (isGuard) {
                 PlayerRef pr = archetypeChunk.getComponent(index, playerRefType);
                 if (pr != null) handleGuardianCropBreak(event, pr, store, gx, gy, gz);
                 return;
             }
         }
 
-        if (!FarmerXpTable.isCrop(id)) return;
+        if (!FarmerXpTable.isCrop(id)) {
+            if (dbg) LOGGER.atInfo().log("[Fermier-DBG] bloc ignoré (pas une culture) id=" + id);
+            return;
+        }
+
+        if (event.getTargetBlock() != null) {
+            FarmerFKeyHarvestSystem.markManualBreak(event.getTargetBlock().x, event.getTargetBlock().y, event.getTargetBlock().z);
+        }
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) return;
         UUID uuid = playerRef.getUuid();
 
         PlayerAccount acc = professionManager.getAccount(uuid);
-        if (acc == null || !acc.isActive(Profession.FERMIER)) return;
+        if (acc == null || !acc.isActive(Profession.FERMIER)) {
+            if (dbg) LOGGER.atInfo().log("[Fermier-DBG] joueur non actif fermier id=" + id
+                + " active0=" + (acc == null ? "null" : acc.getActiveSlot0())
+                + " active1=" + (acc == null ? "null" : acc.getActiveSlot1()));
+            return;
+        }
 
-        boolean dbg = VrpgConfig.isDebugTalents();
         String dbgId = dbg ? "[" + uuid.toString().substring(0, 8) + "|" + id + "] " : null;
 
         // Node 6 — C-C-Combo : XP et loot bonus par combo (1%/combo au rang 1, +0.5% par rang)
@@ -110,12 +125,13 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         double comboPercent = comboRank > 0 ? (0.01 + (comboRank - 1) * 0.005) : 0.0;
         double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
         if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N6 CCombo combo=" + comboCount
-            + " bonus=" + String.format("%.1f%%", comboBonus * 100));
+            + " bonus=" + String.format("%.3f%%", comboBonus * 100));
 
         int xpRank = acc.getTalentRank(Profession.FERMIER, "1");
         double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
         long finalXp = Math.round(FarmerXpTable.BASE_HARVEST_XP * xpMult);
         if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
+            + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")"
             + (xpRank > 0 ? " [N1 MainsTerreuses rank=" + xpRank + "]" : ""));
         professionManager.addXp(uuid, Profession.FERMIER, finalXp);
 
@@ -220,7 +236,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             }
         }
 
-        // Node 8 — Faucille Éternelle : gère la durabilité (15% par rang d'annuler la perte)
         Inventory inventory = null;
         try {
             Player player = playerRef.getComponent(Player.getComponentType());
@@ -231,10 +246,16 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             try {
                 byte slot = inventory.getActiveHotbarSlot();
                 ItemStack held = inventory.getHotbar().getItemStack((short) slot);
-                if (held != null && held.getMaxDurability() > 0) {
+                String heldId = held != null ? held.getItemId() : null;
+                boolean isSickle = heldId != null && heldId.toLowerCase().contains("sickle");
+                if (dbg) LOGGER.atInfo().log(dbgId + "N8 check item=" + heldId
+                    + " sickle=" + isSickle
+                    + " dur=" + (held != null ? held.getDurability() : "?")
+                    + "/" + (held != null ? held.getMaxDurability() : "?"));
+                if (isSickle) {
                     int faucilleRank = acc.getTalentRank(Profession.FERMIER, "8");
                     boolean skipLoss = faucilleRank > 0 && RANDOM.nextDouble() < faucilleRank * 0.15;
-                    if (dbg && skipLoss) LOGGER.atInfo().log(dbgId + "N8 FaucilleEternelle PROC");
+                    if (dbg) LOGGER.atInfo().log(dbgId + "N8 FaucilleEternelle rank=" + faucilleRank + " proc=" + skipLoss);
                     if (!skipLoss) {
                         inventory.getHotbar().setItemStackForSlot((short) slot,
                             held.withIncreasedDurability(-1.0));
@@ -266,10 +287,14 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                                           @Nonnull PlayerRef playerRef,
                                           @Nonnull Store<EntityStore> store,
                                           int bx, int by, int bz) {
+        LOGGER.atInfo().log("[GardienChamps] handleGuardianCropBreak — pos(" + bx + "," + by + "," + bz + ")");
         try {
             Player player = playerRef.getComponent(Player.getComponentType());
             World world = player != null ? player.getWorld() : null;
-            if (world == null) return;
+            if (world == null) {
+                LOGGER.atWarning().log("[GardienChamps] world null — abandon spawn");
+                return;
+            }
 
             spawnCowUndead(store, new Vector3d(bx + 0.5, by, bz + 0.5));
             try {
@@ -285,20 +310,27 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
     }
 
     private static void spawnCowUndead(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
+        LOGGER.atInfo().log("[GardienChamps] spawnNPC Cow_Undead — pos=" + pos);
         try {
             var pair = NPCPlugin.get().spawnNPC(store, "Cow_Undead", null, pos, new Vector3f(0f, 0f, 0f));
             if (pair == null) {
-                LOGGER.atWarning().log("[GardienChamps] spawnNPC Cow_Undead a retourné null pos=" + pos);
+                LOGGER.atWarning().log("[GardienChamps] spawnNPC retourné null — vérifier le role name 'Cow_Undead'");
                 return;
             }
             Ref<EntityStore> cowRef = pair.left();
             EntityStatMap statMap = store.getComponent(cowRef, EntityStatMap.getComponentType());
-            if (statMap == null) return;
+            if (statMap == null) {
+                LOGGER.atWarning().log("[GardienChamps] EntityStatMap null sur Cow_Undead");
+                return;
+            }
             int healthIdx = DefaultEntityStatTypes.getHealth();
             statMap.putModifier(healthIdx, "guardian_crop_hp",
                 new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.MULTIPLICATIVE, 3.0f));
             statMap.maximizeStatValue(healthIdx);
-        } catch (Exception ignored) {}
+            LOGGER.atInfo().log("[GardienChamps] Cow_Undead spawned OK pos=" + pos);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[GardienChamps] spawnNPC ERREUR pos=" + pos);
+        }
     }
 
     private static void dropItemAtBlock(@Nonnull ComponentAccessor<EntityStore> accessor,
