@@ -130,7 +130,7 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
             + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")"
             + (xpRank > 0 ? " [N1 MainsTerreuses rank=" + xpRank + "]" : ""));
-        professionManager.addXp(uuid, Profession.FERMIER, finalXp);
+        professionManager.addXp(uuid, Profession.FERMIER, finalXp, playerRef);
 
         Ref<EntityStore> ref = null;
 

@@ -134,7 +134,7 @@ public final class FarmerAnimalDropSystem {
                     return;
                 }
 
-                professionManager.addXp(playerRef.getUuid(), Profession.FERMIER, FarmerAnimalTable.BASE_ANIMAL_KILL_XP);
+                professionManager.addXp(playerRef.getUuid(), Profession.FERMIER, FarmerAnimalTable.BASE_ANIMAL_KILL_XP, playerRef);
                 if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] DropOnDeath — XP +" + FarmerAnimalTable.BASE_ANIMAL_KILL_XP + " role=" + role);
 
                 boolean isGuardian = FarmerAnimalTable.GUARDIAN_CROP_ROLE.equals(roleLower);
@@ -182,7 +182,8 @@ public final class FarmerAnimalDropSystem {
         }
     }
 
-    public void onMilkInteract(@Nonnull UUID uuid, @Nonnull String roleLower) {
+    public void onMilkInteract(@Nonnull PlayerRef playerRef, @Nonnull String roleLower) {
+        UUID uuid = playerRef.getUuid();
         if (!FarmerAnimalTable.isMilkableAnimal(roleLower)) return;
         long now = System.currentTimeMillis();
         Long last = lastMilkTime.get(uuid);
@@ -191,7 +192,7 @@ public final class FarmerAnimalDropSystem {
         PlayerAccount acc = professionManager.getAccount(uuid);
         if (acc == null || !acc.isActive(Profession.FERMIER)) return;
         boolean dbg = VrpgConfig.isDebugTalents();
-        professionManager.addXp(uuid, Profession.FERMIER, FarmerAnimalTable.BASE_MILK_XP);
+        professionManager.addXp(uuid, Profession.FERMIER, FarmerAnimalTable.BASE_MILK_XP, playerRef);
         if (dbg) LOGGER.atInfo().log("[FarmerAnimalDrop] Milk XP +" + FarmerAnimalTable.BASE_MILK_XP + " role=" + roleLower);
     }
 

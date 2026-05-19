@@ -1,9 +1,13 @@
 package fr.varyon.vrpg.rpg;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.util.NotificationUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.awt.Color;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -96,6 +101,55 @@ public final class ProfessionManager {
         } finally {
             lock.unlock();
         }
+    }
+
+    public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, long amount, @Nonnull PlayerRef playerRef) {
+        int levelsGained = addXp(uuid, profession, amount);
+        if (amount > 0) scheduleXpNotif(uuid, playerRef, profession, amount);
+        return levelsGained;
+    }
+
+    private static final long XP_NOTIF_DEBOUNCE_MS = 1000L;
+
+    private static final class NotifState {
+        long total;
+        PlayerRef playerRef;
+        ScheduledFuture<?> pending;
+    }
+
+    private final ConcurrentHashMap<UUID, ConcurrentHashMap<Profession, NotifState>> xpNotifMap = new ConcurrentHashMap<>();
+
+    private void scheduleXpNotif(@Nonnull UUID uuid, @Nonnull PlayerRef playerRef,
+                                  @Nonnull Profession profession, long amount) {
+        ConcurrentHashMap<Profession, NotifState> byProf = xpNotifMap.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>());
+        NotifState state = byProf.computeIfAbsent(profession, k -> new NotifState());
+        synchronized (state) {
+            state.total += amount;
+            state.playerRef = playerRef;
+            if (state.pending != null) state.pending.cancel(false);
+            state.pending = scheduler.schedule(() -> flushXpNotif(uuid, profession), XP_NOTIF_DEBOUNCE_MS, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private void flushXpNotif(@Nonnull UUID uuid, @Nonnull Profession profession) {
+        ConcurrentHashMap<Profession, NotifState> byProf = xpNotifMap.get(uuid);
+        if (byProf == null) return;
+        NotifState state = byProf.get(profession);
+        if (state == null) return;
+        long toSend;
+        PlayerRef playerRef;
+        synchronized (state) {
+            toSend = state.total;
+            state.total = 0;
+            state.pending = null;
+            playerRef = state.playerRef;
+        }
+        if (toSend <= 0 || playerRef == null) return;
+        LOGGER.at(Level.INFO).log("[XpNotif] %s %s +%d XP", playerRef.getUsername(), profession.name(), toSend);
+        try {
+            Message msg = Message.raw("+" + toSend + " XP").color(new Color(0x5BFF7F));
+            NotificationUtil.sendNotification(playerRef.getPacketHandler(), msg, null, profession.getIconPath());
+        } catch (Exception ignored) {}
     }
 
     public void setLevel(@Nonnull UUID uuid, @Nonnull Profession profession, int level) {
@@ -217,6 +271,12 @@ public final class ProfessionManager {
         }
         locks.remove(uuid);
         cache.remove(uuid);
+        ConcurrentHashMap<Profession, NotifState> notifByProf = xpNotifMap.remove(uuid);
+        if (notifByProf != null) {
+            for (NotifState s : notifByProf.values()) {
+                synchronized (s) { if (s.pending != null) s.pending.cancel(false); }
+            }
+        }
     }
 
     private void flushDirty() {

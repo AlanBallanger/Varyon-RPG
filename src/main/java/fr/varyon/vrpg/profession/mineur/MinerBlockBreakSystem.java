@@ -161,7 +161,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
             if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
                 + " (base=" + baseXp + " × " + String.format("%.3f", xpMult) + ")"
                 + (xpRank > 0 ? " [N1 FrontPoussiereux rank=" + xpRank + "]" : ""));
-            professionManager.addXp(playerUuid, Profession.MINEUR, finalXp);
+            professionManager.addXp(playerUuid, Profession.MINEUR, finalXp, playerRef);
 
             // Node 5 — loot bonus : chance supplémentaire de drop proportionnelle au combo
             if (comboRank > 0 && comboCount > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < comboBonus) {
@@ -204,7 +204,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                                 if (pos[0] == bx && pos[1] == by && pos[2] == bz) continue;
                                 try {
                                     world.setBlock(pos[0], pos[1], pos[2], "Empty");
-                                    applyVeinBlockDrops(acc, playerUuid, playerEntityRef, commandBuffer,
+                                    applyVeinBlockDrops(acc, playerUuid, playerRef, playerEntityRef, commandBuffer,
                                         rawId, baseXp, xpRankMult, comboRank, pos, dbg, dbgId);
                                 } catch (Exception ignored) {}
                             }
@@ -376,13 +376,14 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
     }
 
     private void applyVeinBlockDrops(@Nonnull PlayerAccount acc, @Nonnull UUID playerUuid,
-            @Nullable Ref<EntityStore> playerEntityRef, @Nonnull CommandBuffer<EntityStore> buffer,
+            @Nonnull PlayerRef playerRef, @Nullable Ref<EntityStore> playerEntityRef,
+            @Nonnull CommandBuffer<EntityStore> buffer,
             @Nonnull String rawId, long baseXp, double xpRankMult, int comboRank,
             int[] pos, boolean dbg, @Nullable String dbgId) {
         int comboCount = comboTracker.onOreMined(playerUuid);
         double comboPercent = comboRank > 0 ? (0.005 + (comboRank - 1) * 0.005) : 0.0;
         double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
-        professionManager.addXp(playerUuid, Profession.MINEUR, Math.round(baseXp * (xpRankMult + comboBonus)));
+        professionManager.addXp(playerUuid, Profession.MINEUR, Math.round(baseXp * (xpRankMult + comboBonus)), playerRef);
 
         String oreItemId = MinerXpTable.resolveOreItemId(rawId);
         if (oreItemId == null || playerEntityRef == null || !playerEntityRef.isValid()) return;

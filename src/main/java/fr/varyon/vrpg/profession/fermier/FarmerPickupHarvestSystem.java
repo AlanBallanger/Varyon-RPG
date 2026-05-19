@@ -101,7 +101,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
         long finalXp = Math.round(FarmerXpTable.BASE_HARVEST_XP * xpMult);
         if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
             + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")");
-        professionManager.addXp(uuid, Profession.FERMIER, finalXp);
+        professionManager.addXp(uuid, Profession.FERMIER, finalXp, playerRef);
 
         TransformComponent tcmp = store.getComponent(ref, TransformComponent.getComponentType());
         if (tcmp == null) return;

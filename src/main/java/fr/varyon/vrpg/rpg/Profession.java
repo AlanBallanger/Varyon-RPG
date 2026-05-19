@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public enum Profession {
     MINEUR     ("mineur",     "Mineur",     true,  null,        0, "Tool_Pickaxe_Adamantite"),
-    FERMIER    ("fermier",    "Fermier",    true,  null,        0, "Plant_Crop_Wheat_Item"),
+    FERMIER    ("fermier",    "Fermier",    true,  null,        0, "Tool_Sickle_Iron"),
     FORESTIER  ("forestier",  "Forestier",  true,  null,        0, "Tool_Hatchet_Adamantite"),
     CHASSEUR   ("chasseur",   "Chasseur",   true,  null,        0, "Food_Wildmeat_Raw"),
     FORGERON   ("forgeron",   "Forgeron",   false, "mineur",    15, "Tool_Hammer_Iron"),
@@ -40,6 +40,18 @@ public enum Profession {
     @Nonnull public String getId()          { return id; }
     @Nonnull public String getDisplayName() { return displayName; }
     @Nonnull public String getIconItemId()  { return iconItemId; }
+    @Nonnull public String getIconPath() {
+        return switch (this) {
+            case MINEUR     -> "Icons/ItemsGenerated/Tool_Pickaxe_Crude.png";
+            case FERMIER    -> "Icons/ItemsGenerated/Tool_Sickle_Crude.png";
+            case FORESTIER  -> "Icons/ItemsGenerated/Tool_Hatchet_Crude.png";
+            case CHASSEUR   -> "Icons/ItemsGenerated/Food_Wildmeat_Raw.png";
+            case FORGERON   -> "Icons/ItemsGenerated/Tool_Hammer_Crude.png";
+            case ALCHIMISTE -> "Icons/ItemsGenerated/Potion_Regen_Mana_Small.png";
+            case ARTISAN    -> "Icons/ItemsGenerated/Utility_Leather_Backpack.png";
+            case CUISINIER  -> "Icons/ItemsGenerated/Food_Pie_Pumpkin.png";
+        };
+    }
     public boolean isBase()                  { return base; }
     public boolean isSpecialized()           { return !base; }
     public int getPrereqLevel()              { return prereqLevel; }

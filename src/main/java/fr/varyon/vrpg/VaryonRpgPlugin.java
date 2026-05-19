@@ -176,7 +176,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 if (player == null) return;
                 PlayerRef milkRef = player.getPlayerRef();
                 if (milkRef == null || farmerAnimalDropSystem == null) return;
-                farmerAnimalDropSystem.onMilkInteract(milkRef.getUuid(), roleLower);
+                farmerAnimalDropSystem.onMilkInteract(milkRef, roleLower);
             });
             getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 PlayerRef ref = event.getPlayerRef();

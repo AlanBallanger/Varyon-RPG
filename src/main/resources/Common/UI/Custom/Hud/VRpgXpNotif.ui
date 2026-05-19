@@ -1,0 +1,105 @@
+Group {
+  Group #VRpgXp0 {
+    Visible: false;
+    Anchor: (Right: 20, Bottom: 20, Width: 260, Height: 48);
+    Background: (Color: #1C2030E6);
+    LayoutMode: Left;
+    Padding: (Vertical: 6, Horizontal: 8);
+
+    ItemGrid #VRpgXpIcon0 {
+      SlotsPerRow: 1;
+      AreItemsDraggable: false;
+      DisplayItemQuantity: false;
+      Anchor: (Width: 36, Height: 36);
+    }
+
+    Label #VRpgXpAmount0 {
+      Text: "";
+      Anchor: (Height: 36, Left: 6);
+      Style: (
+        FontSize: 13,
+        RenderBold: true,
+        TextColor: #5BFF7F,
+        VerticalAlignment: Center
+      );
+    }
+  }
+
+  Group #VRpgXp1 {
+    Visible: false;
+    Anchor: (Right: 20, Bottom: 74, Width: 260, Height: 48);
+    Background: (Color: #1C2030E6);
+    LayoutMode: Left;
+    Padding: (Vertical: 6, Horizontal: 8);
+
+    ItemGrid #VRpgXpIcon1 {
+      SlotsPerRow: 1;
+      AreItemsDraggable: false;
+      DisplayItemQuantity: false;
+      Anchor: (Width: 36, Height: 36);
+    }
+
+    Label #VRpgXpAmount1 {
+      Text: "";
+      Anchor: (Height: 36, Left: 6);
+      Style: (
+        FontSize: 13,
+        RenderBold: true,
+        TextColor: #5BFF7F,
+        VerticalAlignment: Center
+      );
+    }
+  }
+
+  Group #VRpgXp2 {
+    Visible: false;
+    Anchor: (Right: 20, Bottom: 128, Width: 260, Height: 48);
+    Background: (Color: #1C2030E6);
+    LayoutMode: Left;
+    Padding: (Vertical: 6, Horizontal: 8);
+
+    ItemGrid #VRpgXpIcon2 {
+      SlotsPerRow: 1;
+      AreItemsDraggable: false;
+      DisplayItemQuantity: false;
+      Anchor: (Width: 36, Height: 36);
+    }
+
+    Label #VRpgXpAmount2 {
+      Text: "";
+      Anchor: (Height: 36, Left: 6);
+      Style: (
+        FontSize: 13,
+        RenderBold: true,
+        TextColor: #5BFF7F,
+        VerticalAlignment: Center
+      );
+    }
+  }
+
+  Group #VRpgXp3 {
+    Visible: false;
+    Anchor: (Right: 20, Bottom: 182, Width: 260, Height: 48);
+    Background: (Color: #1C2030E6);
+    LayoutMode: Left;
+    Padding: (Vertical: 6, Horizontal: 8);
+
+    ItemGrid #VRpgXpIcon3 {
+      SlotsPerRow: 1;
+      AreItemsDraggable: false;
+      DisplayItemQuantity: false;
+      Anchor: (Width: 36, Height: 36);
+    }
+
+    Label #VRpgXpAmount3 {
+      Text: "";
+      Anchor: (Height: 36, Left: 6);
+      Style: (
+        FontSize: 13,
+        RenderBold: true,
+        TextColor: #5BFF7F,
+        VerticalAlignment: Center
+      );
+    }
+  }
+}
