@@ -235,27 +235,15 @@ Group {
 
     Group #SkillTreeProfessionPickerRow {
       LayoutMode: Left;
-      Visible: false;
+      Visible: true;
 
-      Button #SkillTreeTalentSlot0Button {
-        Anchor: (Right: 8, Width: 112, Height: 26);
+      Button #SkillTreeBackButton {
+        Anchor: (Width: 140, Height: 26);
         Style: @CycleSlotButtonStyle;
-        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
         LayoutMode: Middle;
-        Label #SkillTreeTalentSlot0ButtonLabel {
+        Label {
           Style: (FontSize: 12, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-          Text: "-";
-        }
-      }
-
-      Button #SkillTreeTalentSlot1Button {
-        Anchor: (Right: 8, Width: 112, Height: 26);
-        Style: @CycleSlotButtonStyle;
-        Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
-        LayoutMode: Middle;
-        Label #SkillTreeTalentSlot1ButtonLabel {
-          Style: (FontSize: 12, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-          Text: "-";
+          Text: "Retour";
         }
       }
     }

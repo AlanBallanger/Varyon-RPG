@@ -1,17 +1,17 @@
-// Metiers tab - aucun alias @ partage avec CharacterPage (eviter collision merge).
+/*  */// Metiers tab - aucun alias @ partage avec CharacterPage (eviter collision merge).
 
 @ProfessionTabViewTalentsButton = (
   Default: (
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #3B82F6FF)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8)
   ),
   Hovered: (
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8, Color: #60A5FAFF)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8)
   ),
   Pressed: (
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8, Color: #2563EBFF)
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8)
   ),
   Disabled: (
-    Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8, Color: #3B82F6(0.40))
+    Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
   )
 );
 
@@ -35,14 +35,8 @@ Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
   LayoutMode: Top;
 
-  Label #ProfessionMainTitle {
-    Anchor: (Top: 0);
-    Style: (FontSize: 29, TextColor: #E8DCC8, RenderBold: true);
-    Text: "MES METIERS";
-  }
-
   Group {
-    Anchor: (Left: 0, Right: 0, Top: 12, Bottom: 0);
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
     LayoutMode: Left;
 
     Group {
@@ -50,7 +44,7 @@ Group {
       LayoutMode: Top;
 
       Label {
-        Style: (FontSize: 14, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
+        Style: (FontSize: 21, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
         Text: "Métier principal";
       }
 
@@ -61,11 +55,11 @@ Group {
         Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
 
         Group {
-          LayoutMode: Left;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
+          LayoutMode: Full;
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 60);
 
           Group {
-            Anchor: (Width: 44, Height: 44);
+            Anchor: (Left: 0, Top: 0, Width: 44, Height: 44);
             LayoutMode: Full;
             Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
             Padding: (Full: 3);
@@ -81,46 +75,38 @@ Group {
             }
           }
 
-          Group { Anchor: (Width: 10); }
-
           Label #ProfessionActiveCard0Name {
-            FlexWeight: 1;
-            Anchor: (Height: 44);
-            Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Anchor: (Left: 54, Right: 0, Top: 0, Height: 36);
+            Style: (FontSize: 22, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
             Text: "";
           }
-        }
-
-        Group {
-          Anchor: (Left: 0, Right: 0, Bottom: 44, Height: 26);
-          LayoutMode: Left;
 
           Group {
-            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 4);
-            Padding: (Full: 2);
+            Anchor: (Left: 54, Right: 0, Top: 36, Height: 22);
+            LayoutMode: Left;
 
             Group {
               Background: #31C677(1.0);
               Padding: (Horizontal: 6, Vertical: 2);
 
               Label #ProfessionActiveCard0LevelBadge {
-                Style: (FontSize: 12, TextColor: #FFFFFF, RenderBold: true, VerticalAlignment: Center);
+                Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, VerticalAlignment: Center);
                 Text: "";
               }
             }
-          }
 
-          Group { Anchor: (Width: 8); }
+            Group { Anchor: (Width: 8); }
 
-          Label #ProfessionActiveCard0LevelXp {
-            Anchor: (Height: 26);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Start);
-            Text: "";
+            Label #ProfessionActiveCard0LevelXp {
+              Anchor: (Height: 22);
+              Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Start);
+              Text: "";
+            }
           }
         }
 
         Group #ProfessionActiveCard0ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 20);
+          Anchor: (Left: 0, Right: 0, Top: 62, Bottom: 32);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard0ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -161,7 +147,7 @@ Group {
 
       Label {
         Anchor: (Top: 14);
-        Style: (FontSize: 14, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
+        Style: (FontSize: 21, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
         Text: "Métier secondaire";
       }
 
@@ -172,11 +158,11 @@ Group {
         Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
 
         Group {
-          LayoutMode: Left;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 44);
+          LayoutMode: Full;
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 60);
 
           Group {
-            Anchor: (Width: 44, Height: 44);
+            Anchor: (Left: 0, Top: 0, Width: 44, Height: 44);
             LayoutMode: Full;
             Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
             Padding: (Full: 3);
@@ -192,46 +178,38 @@ Group {
             }
           }
 
-          Group { Anchor: (Width: 10); }
-
           Label #ProfessionActiveCard1Name {
-            FlexWeight: 1;
-            Anchor: (Height: 44);
-            Style: (FontSize: 23, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Anchor: (Left: 54, Right: 0, Top: 0, Height: 36);
+            Style: (FontSize: 22, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
             Text: "";
           }
-        }
-
-        Group {
-          Anchor: (Left: 0, Right: 0, Bottom: 44, Height: 26);
-          LayoutMode: Left;
 
           Group {
-            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 4);
-            Padding: (Full: 2);
+            Anchor: (Left: 54, Right: 0, Top: 36, Height: 22);
+            LayoutMode: Left;
 
             Group {
               Background: #31C677(1.0);
               Padding: (Horizontal: 6, Vertical: 2);
 
               Label #ProfessionActiveCard1LevelBadge {
-                Style: (FontSize: 12, TextColor: #FFFFFF, RenderBold: true, VerticalAlignment: Center);
+                Style: (FontSize: 11, TextColor: #FFFFFF, RenderBold: true, VerticalAlignment: Center);
                 Text: "";
               }
             }
-          }
 
-          Group { Anchor: (Width: 8); }
+            Group { Anchor: (Width: 8); }
 
-          Label #ProfessionActiveCard1LevelXp {
-            Anchor: (Height: 26);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Start);
-            Text: "";
+            Label #ProfessionActiveCard1LevelXp {
+              Anchor: (Height: 22);
+              Style: (FontSize: 13, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Start);
+              Text: "";
+            }
           }
         }
 
         Group #ProfessionActiveCard1ProgBar {
-          Anchor: (Left: 14, Right: 14, Bottom: 28, Height: 20);
+          Anchor: (Left: 0, Right: 0, Top: 62, Bottom: 32);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard1ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -410,6 +388,13 @@ Group {
               Text: "SELECTIONNER";
             }
           }
+
+          Label #ProfessionCatalogCard0Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
+          }
         }
 
         Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
@@ -486,6 +471,13 @@ Group {
               Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
               Text: "SELECTIONNER";
             }
+          }
+
+          Label #ProfessionCatalogCard1Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
           }
         }
 
@@ -564,6 +556,13 @@ Group {
               Text: "SELECTIONNER";
             }
           }
+
+          Label #ProfessionCatalogCard2Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
+          }
         }
 
         Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
@@ -640,6 +639,13 @@ Group {
               Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
               Text: "SELECTIONNER";
             }
+          }
+
+          Label #ProfessionCatalogCard3Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
           }
         }
 
@@ -728,6 +734,13 @@ Group {
               Text: "SELECTIONNER";
             }
           }
+
+          Label #ProfessionCatalogCard4Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
+          }
         }
 
         Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
@@ -804,6 +817,13 @@ Group {
               Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
               Text: "SELECTIONNER";
             }
+          }
+
+          Label #ProfessionCatalogCard5Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
           }
         }
 
@@ -882,6 +902,13 @@ Group {
               Text: "SELECTIONNER";
             }
           }
+
+          Label #ProfessionCatalogCard6Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
+          }
         }
 
         Group { Anchor: (Width: 10, Top: 0, Bottom: 0); }
@@ -958,6 +985,13 @@ Group {
               Style: (FontSize: 13, TextColor: #D4AF37, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
               Text: "SELECTIONNER";
             }
+          }
+
+          Label #ProfessionCatalogCard7Active {
+            Anchor: (Left: 0, Right: 0, Top: 32, Height: 16);
+            Style: (FontSize: 11, TextColor: #31C677, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Text: "Actif";
+            Visible: false;
           }
         }
 

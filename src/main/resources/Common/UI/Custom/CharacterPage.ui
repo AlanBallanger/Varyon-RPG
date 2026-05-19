@@ -258,27 +258,10 @@ Group {
 
           Label {
             Style: @TabLabelStyle;
-            Text: "Personnage";
+            Text: "Métiers";
           }
         }
 
-        Group { Anchor: (Width: 10); }
-
-        Button #TabSkillsButton {
-          Anchor: (Width: 140, Height: 30);
-          Style: @TabButtonStyle;
-
-          Group #TabSkillsUnderline {
-            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @SelectedButtonFill;
-            Visible: false;
-          }
-
-          Label {
-            Style: @TabLabelStyle;
-            Text: "Talents";
-          }
-        }
         Group { Anchor: (Width: 10); }
 
         Button #TabArtisansButton {

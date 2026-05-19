@@ -565,14 +565,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         uiBuilder.set("#ClassementTabContent.Visible", "classement".equals(activeTab));
 
         uiBuilder.set("#TabCharacterUnderline.Visible", "character".equals(activeTab));
-        uiBuilder.set("#TabSkillsUnderline.Visible", "skills".equals(activeTab));
         uiBuilder.set("#TabArtisansUnderline.Visible", "artisans".equals(activeTab));
         uiBuilder.set("#TabClassementUnderline.Visible", "classement".equals(activeTab));
 
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabCharacterButton",
             EventData.of("Action", "tab").append("Tab", "character"), false);
-        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabSkillsButton",
-            EventData.of("Action", "tab").append("Tab", "skills"), false);
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabArtisansButton",
             EventData.of("Action", "tab").append("Tab", "artisans"), false);
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabClassementButton",
@@ -652,7 +649,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 eventBuilder.addEventBinding(
                     CustomUIEventBindingType.Activating,
                     p + "ViewTalents",
-                    EventData.of("Action", "tab").append("Tab", "skills"),
+                    EventData.of("Action", "tab").append("Tab", "skills").append("TalentSlot", Integer.toString(i)),
                     false
                 );
             } else {
@@ -707,6 +704,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set(id + "Prereq.Visible", false);
                 uiBuilder.set(id + "Lock.Visible", false);
             }
+            boolean isActive = p == activeSlots[0] || p == activeSlots[1];
+            uiBuilder.set(id + "Active.Visible", isActive);
         }
     }
 
@@ -775,28 +774,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         uiBuilder.set("#SkillTreePointsValue.TextSpans",
             Message.raw("Points restants : " + remainingPoints + " (" + prof.getDisplayName() + ")"));
 
-        Profession p0 = acc == null ? null : acc.getActiveSlot0();
-        Profession p1 = acc == null ? null : acc.getActiveSlot1();
-        boolean dualActive = p0 != null && p1 != null;
-        uiBuilder.set("#SkillTreeProfessionPickerRow.Visible", dualActive);
-        if (dualActive) {
-            String label0 = p0.getDisplayName();
-            String label1 = p1.getDisplayName();
-            uiBuilder.set("#SkillTreeTalentSlot0ButtonLabel.TextSpans", Message.raw(label0));
-            uiBuilder.set("#SkillTreeTalentSlot1ButtonLabel.TextSpans", Message.raw(label1));
-            eventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating,
-                "#SkillTreeTalentSlot0Button",
-                EventData.of("Action", "talentSlotPick").append("TalentSlot", "0"),
-                false
-            );
-            eventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating,
-                "#SkillTreeTalentSlot1Button",
-                EventData.of("Action", "talentSlotPick").append("TalentSlot", "1"),
-                false
-            );
-        }
+        eventBuilder.addEventBinding(
+            CustomUIEventBindingType.Activating,
+            "#SkillTreeBackButton",
+            EventData.of("Action", "tab").append("Tab", "character"),
+            false
+        );
 
         for (String legacyId : LEGACY_STATIC_EDGE_IDS) {
             uiBuilder.set(legacyId + ".Visible", false);
@@ -1193,6 +1176,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
         if ("tab".equals(data.action) && data.tab != null) {
             activeTab = data.tab;
+            if ("skills".equals(data.tab) && data.talentSlot != null) {
+                talentTreeSlotIndex = "1".equals(data.talentSlot) ? 1 : 0;
+            }
             hoveredNode = -1;
             selectedNode = 0;
             exitEditMode();
