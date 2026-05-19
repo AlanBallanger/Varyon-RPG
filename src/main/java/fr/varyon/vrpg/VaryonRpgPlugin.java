@@ -4,9 +4,14 @@ import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.Entity;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
@@ -37,8 +42,11 @@ import fr.varyon.vrpg.profession.mineur.MiningHelmet;
 import fr.varyon.vrpg.profession.mineur.MiningHelmetTickSystem;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.ProfessionManager;
+import fr.varyon.vrpg.ui.ProfessionXpHud;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class VaryonRpgPlugin extends JavaPlugin {
 
@@ -57,6 +65,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private VpaSurfaceCommand surfaceCommand;
     private VpaBlastCommand blastCommand;
     private ExplosionTalentSystem explosionTalentSystem;
+
+    private final ConcurrentHashMap<UUID, PlayerRef> pendingProfessionHudInit = new ConcurrentHashMap<>();
 
     public VaryonRpgPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -112,6 +122,32 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 PlayerRef ref = event.getHolder().getComponent(PlayerRef.getComponentType());
                 if (player == null || ref == null || professionManager == null) return;
                 professionManager.ensureAccount(ref.getUuid(), ref.getUsername());
+                pendingProfessionHudInit.put(ref.getUuid(), ref);
+            });
+            getEventRegistry().registerGlobal(PlayerReadyEvent.class, event -> {
+                Player player = event.getPlayer();
+                if (player == null || professionManager == null) return;
+                UUID uid = player.getUuid();
+                PlayerRef connectRef = pendingProfessionHudInit.remove(uid);
+                if (connectRef == null) return;
+
+                @SuppressWarnings("rawtypes") Ref entityRef = event.getPlayerRef();
+                if (entityRef == null) return;
+                @SuppressWarnings("rawtypes") Store store = entityRef.getStore();
+                if (store == null) return;
+                World world = ((EntityStore) store.getExternalData()).getWorld();
+                if (world == null) return;
+
+                final Player readyPlayer = player;
+                final PlayerRef readyRef = connectRef;
+                world.execute(() -> {
+                    try {
+                        if (!readyRef.isValid()) return;
+                        ProfessionXpHud.getOrCreate(readyPlayer, readyRef);
+                    } catch (Exception e) {
+                        LOGGER.atWarning().withCause(e).log("[VaryonRPG] init ProfessionXpHud");
+                    }
+                });
             });
             getEventRegistry().registerGlobal(PlayerInteractEvent.class, event -> {
                 ItemStack held = event.getItemInHand();
@@ -180,6 +216,10 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             });
             getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 PlayerRef ref = event.getPlayerRef();
+                if (ref != null) {
+                    pendingProfessionHudInit.remove(ref.getUuid());
+                    ProfessionXpHud.cleanup(ref.getUuid());
+                }
                 if (ref != null && professionManager != null) {
                     professionManager.onPlayerDisconnect(ref.getUuid());
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());

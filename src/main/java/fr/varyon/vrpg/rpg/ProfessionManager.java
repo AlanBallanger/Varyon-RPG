@@ -4,6 +4,7 @@ import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.util.NotificationUtil;
+import fr.varyon.vrpg.ui.ProfessionXpHud;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -105,7 +106,10 @@ public final class ProfessionManager {
 
     public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, long amount, @Nonnull PlayerRef playerRef) {
         int levelsGained = addXp(uuid, profession, amount);
-        if (amount > 0) scheduleXpNotif(uuid, playerRef, profession, amount);
+        if (amount > 0) {
+            scheduleXpNotif(uuid, playerRef, profession, amount);
+            ProfessionXpHud.refreshIfPresent(uuid);
+        }
         return levelsGained;
     }
 
@@ -157,6 +161,7 @@ public final class ProfessionManager {
             PlayerAccount acc = getOrLoad(uuid);
             acc.getProgress(profession).setLevel(level, 0L);
             dirty.add(uuid);
+            ProfessionXpHud.refreshIfPresent(uuid);
         } finally {
             lock.unlock();
         }
@@ -203,6 +208,7 @@ public final class ProfessionManager {
             if (acc.availableTalentPoints(profession) <= 0) return false;
             acc.setTalentRank(profession, nodeId, currentRank + 1);
             dirty.add(uuid);
+            ProfessionXpHud.refreshIfPresent(uuid);
             return true;
         } finally {
             lock.unlock();
@@ -248,6 +254,7 @@ public final class ProfessionManager {
             else                acc.setActiveSlot1(newProfession);
             acc.setLastReconvertAt(now);
             dirty.add(uuid);
+            ProfessionXpHud.refreshIfPresent(uuid);
             return ReconvertResult.SUCCESS;
         } finally {
             lock.unlock();

@@ -1,0 +1,128 @@
+Group {
+  Group #XPPanel {
+    Anchor: (Top: 130, Left: 12, Width: 198, Height: 96);
+    Background: (TexturePath: "Common/DropdownBox.png", Border: 16, Color: #00000052);
+    LayoutMode: Top;
+    Padding: (Horizontal: 8, Vertical: 6);
+
+    Group #Job1Row {
+      Anchor: (Height: 40);
+      LayoutMode: Top;
+
+      Group {
+        Anchor: (Height: 22);
+        LayoutMode: Left;
+
+        Group #Job1LevelBg {
+          Anchor: (Width: 48, Height: 20);
+          Background: #2E7D4FFF;
+          LayoutMode: Middle;
+          Label #Job1Level {
+            Text: " ";
+            Style: (FontSize: 10, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+
+        Group { Anchor: (Width: 4); }
+
+        ItemGrid #Job1Icon {
+          SlotsPerRow: 1;
+          AreItemsDraggable: false;
+          DisplayItemQuantity: false;
+          Anchor: (Width: 20, Height: 20);
+        }
+
+        Group { Anchor: (Width: 4); }
+
+        Label #Job1Name {
+          Anchor: (Height: 20, Width: 47);
+          Text: " ";
+          Style: (FontSize: 11, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
+        }
+
+        Label #Job1XPText {
+          Anchor: (Height: 20, Width: 65);
+          Text: " ";
+          Style: (FontSize: 9, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+        }
+      }
+
+      Group { Anchor: (Height: 4); }
+
+      Group #Job1ProgBar {
+        Anchor: (Left: 0, Right: 0, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+        ProgressBar #Job1ProgBarFill {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          Value: 0.0;
+          BarTexturePath: "Elements/Gauge_Fill.png";
+        }
+      }
+    }
+
+    Group #JobSeparator {
+      Anchor: (Height: 6);
+      LayoutMode: Middle;
+
+      Group {
+        Anchor: (Left: 0, Right: 0, Height: 1);
+        Background: #7A5A10;
+      }
+    }
+
+    Group #Job2Row {
+      Anchor: (Height: 40);
+      LayoutMode: Top;
+
+      Group {
+        Anchor: (Height: 22);
+        LayoutMode: Left;
+
+        Group #Job2LevelBg {
+          Anchor: (Width: 48, Height: 20);
+          Background: #2E7D4FFF;
+          LayoutMode: Middle;
+          Label #Job2Level {
+            Text: " ";
+            Style: (FontSize: 10, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+
+        Group { Anchor: (Width: 4); }
+
+        ItemGrid #Job2Icon {
+          SlotsPerRow: 1;
+          AreItemsDraggable: false;
+          DisplayItemQuantity: false;
+          Anchor: (Width: 20, Height: 20);
+        }
+
+        Group { Anchor: (Width: 4); }
+
+        Label #Job2Name {
+          Anchor: (Height: 20, Width: 47);
+          Text: " ";
+          Style: (FontSize: 11, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
+        }
+
+        Label #Job2XPText {
+          Anchor: (Height: 20, Width: 65);
+          Text: " ";
+          Style: (FontSize: 9, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+        }
+      }
+
+      Group { Anchor: (Height: 4); }
+
+      Group #Job2ProgBar {
+        Anchor: (Left: 0, Right: 0, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+        ProgressBar #Job2ProgBarFill {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          Value: 0.0;
+          BarTexturePath: "Elements/Gauge_Fill.png";
+        }
+      }
+    }
+  }
+}
