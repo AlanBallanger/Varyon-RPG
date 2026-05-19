@@ -40,6 +40,15 @@ public enum Profession {
     @Nonnull public String getId()          { return id; }
     @Nonnull public String getDisplayName() { return displayName; }
     @Nonnull public String getIconItemId()  { return iconItemId; }
+    public long getDebounceMs() {
+        return switch (this) {
+            case MINEUR     -> 3000L;
+            case FERMIER    -> 1500L;
+            case FORESTIER  -> 3000L;
+            case CHASSEUR   -> 2000L;
+            default         -> 1000L;
+        };
+    }
     @Nonnull public String getIconPath() {
         return switch (this) {
             case MINEUR     -> "Icons/ItemsGenerated/Tool_Pickaxe_Crude.png";

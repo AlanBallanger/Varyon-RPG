@@ -624,12 +624,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             activeSlots[0] = acc.getActiveSlot0();
             activeSlots[1] = acc.getActiveSlot1();
         }
-        int activeFilled = 0;
-        for (Profession s : activeSlots) if (s != null) activeFilled++;
-
-        uiBuilder.set("#ProfessionSectionSubtitle.TextSpans",
-            Message.raw("M\u00e9tiers actifs (" + activeFilled + "/2)"));
-
         for (int i = 0; i < 2; i++) {
             String p = "#ProfessionActiveCard" + i;
             Profession active = activeSlots[i];
@@ -638,11 +632,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set(p + ".Visible", true);
                 uiBuilder.set(p + "Name.TextSpans", Message.raw(active.getDisplayName().toUpperCase(Locale.FRENCH)));
                 uiBuilder.set(p + "Icon.ItemId", active.getIconItemId());
-                uiBuilder.set(p + "Level.TextSpans",
-                    Message.raw(("Niveau " + prog.getLevel()
-                        + " \u2022 " + prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP")
-                        .toUpperCase(Locale.FRENCH)));
+                uiBuilder.set(p + "LevelBadge.TextSpans",
+                    Message.raw(("Niveau " + prog.getLevel()).toUpperCase(Locale.FRENCH)));
+                uiBuilder.set(p + "LevelXp.TextSpans",
+                    Message.raw(prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP"));
                 uiBuilder.set(p + "Reconvert.Visible", true);
+                uiBuilder.set(p + "ViewTalents.Visible", true);
                 applyGaugeBar(uiBuilder,
                     p + "ProgBarFill",
                     prog.getXpInLevel(), prog.getXpToNextLevel());
@@ -654,9 +649,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                         .append("Node", Integer.toString(i)),
                     false
                 );
+                eventBuilder.addEventBinding(
+                    CustomUIEventBindingType.Activating,
+                    p + "ViewTalents",
+                    EventData.of("Action", "tab").append("Tab", "skills"),
+                    false
+                );
             } else {
                 uiBuilder.set(p + ".Visible", false);
                 uiBuilder.set(p + "Reconvert.Visible", false);
+                uiBuilder.set(p + "ViewTalents.Visible", false);
             }
         }
 

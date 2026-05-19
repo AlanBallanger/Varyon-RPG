@@ -1,48 +1,48 @@
 $C = "Common.ui";
 
-@FubsysRpgInk = #E8DCC8;
-@FubsysRpgInkStrong = #F2E8D8;
-@FubsysRpgInkMuted = #C8BEB0;
-@FubsysRpgInkFaint = #A89E90;
-@FubsysRpgLeatherBg = #000000(0.22);
-@FubsysRpgPanelShade = #000000(0.32);
-@FubsysRpgCardShade = #000000(0.26);
-@FubsysRpgGold = #D4AF37(0.92);
-@FubsysRpgGoldSoft = #D4AF37(0.74);
-@FubsysRpgGoldHighlight = #F7E6A5(0.62);
-@FubsysRpgGoldShadow = #1A1612(0.55);
-@FubsysRpgActiveGreen = #6BCB7A(0.95);
-@FubsysRpgAging = #8A7A5A(0.22);
-@FubsysRpgParchmentMottle = #FFFFFF(0.03);
-@FubsysRpgGrainLight = #FFFFFF(0.02);
-@FubsysRpgGrainDark = #000000(0.12);
-@FubsysRpgEdge1 = #FFFFFF(0.05);
-@FubsysRpgEdge2 = #FFFFFF(0.03);
-@FubsysRpgEdge3 = #000000(0.20);
-@FubsysRpgDivider = #E8DCC8(0.16);
-@FubsysRpgDividerSoft = #E8DCC8(0.10);
-@FubsysRpgBackdrop = #000000(0.34);
-@FubsysRpgSelectedButtonFill = #D4AF37(0.38);
-@FubsysRpgStatusPillBg = #000000(0.40);
-@FubsysRpgStatusPillEdge = #D4AF37(0.35);
-@FubsysRpgSkillTreeEdgeGlow = #D4AF37(0.62);
-@FubsysRpgSkillTreeNodeGlow = #D4AF37(0.18);
+@Ink = #E8DCC8;
+@InkStrong = #F2E8D8;
+@InkMuted = #C8BEB0;
+@InkFaint = #A89E90;
+@LeatherBg = #000000(0.22);
+@PanelShade = #000000(0.32);
+@CardShade = #000000(0.26);
+@Gold = #D4AF37(0.92);
+@GoldSoft = #D4AF37(0.74);
+@GoldHighlight = #F7E6A5(0.62);
+@GoldShadow = #1A1612(0.55);
+@ActiveGreen = #6BCB7A(0.95);
+@Aging = #8A7A5A(0.22);
+@ParchmentMottle = #FFFFFF(0.03);
+@GrainLight = #FFFFFF(0.02);
+@GrainDark = #000000(0.12);
+@Edge1 = #FFFFFF(0.05);
+@Edge2 = #FFFFFF(0.03);
+@Edge3 = #000000(0.20);
+@Divider = #E8DCC8(0.16);
+@DividerSoft = #E8DCC8(0.10);
+@Backdrop = #000000(0.34);
+@SelectedButtonFill = #D4AF37(0.38);
+@StatusPillBg = #000000(0.40);
+@StatusPillEdge = #D4AF37(0.35);
+@SkillTreeEdgeGlow = #D4AF37(0.62);
+@SkillTreeNodeGlow = #D4AF37(0.18);
 
 @HeadingStyle = (
   FontSize: 24,
-  TextColor: @FubsysRpgInk,
+  TextColor: @Ink,
   RenderBold: true
 );
 
 @SubHeadingStyle = (
   FontSize: 18,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true
 );
 
 @MetaStyle = (
   FontSize: 16,
-  TextColor: @FubsysRpgInkMuted
+  TextColor: @InkMuted
 );
 
 @SectionTitleStyle = (
@@ -65,7 +65,7 @@ $C = "Common.ui";
 
 @StatValueStyle = (
   FontSize: 18,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true
 );
 
@@ -116,7 +116,7 @@ $C = "Common.ui";
 
 @TabLabelStyle = (
   FontSize: 14,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderUppercase: true,
   RenderBold: true,
   HorizontalAlignment: Center,
@@ -125,21 +125,21 @@ $C = "Common.ui";
 
 @CycleCardTitleStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgInkMuted,
+  TextColor: @InkMuted,
   RenderUppercase: true,
   RenderBold: true
 );
 
 @CycleActiveTagStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgActiveGreen,
+  TextColor: @ActiveGreen,
   RenderUppercase: true,
   RenderBold: true
 );
 
 @CycleSlotKeyStyle = (
   FontSize: 10,
-  TextColor: @FubsysRpgInkMuted,
+  TextColor: @InkMuted,
   RenderUppercase: true,
   RenderBold: true,
   VerticalAlignment: Center
@@ -147,14 +147,14 @@ $C = "Common.ui";
 
 @CycleSlotValueStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true,
   VerticalAlignment: Center
 );
 
 @CycleSlotButtonStyle = (
   Default: (
-    Background: @FubsysRpgPanelShade
+    Background: @PanelShade
   ),
   Hovered: (
     Background: #6B4E2E(0.12)
@@ -198,17 +198,17 @@ $C = "Common.ui";
   )
 );
 
-@FubsysRpgPageWidth = 1170;
-@FubsysRpgPageHeight = 768;
-@FubsysRpgPagePadding = 31;
+@PageWidth = 1170;
+@PageHeight = 768;
+@PagePadding = 31;
 
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-  Background: @FubsysRpgBackdrop;
+  Background: @Backdrop;
   LayoutMode: Middle;
 
   Group {
-    Anchor: (Width: @FubsysRpgPageWidth, Height: @FubsysRpgPageHeight);
+    Anchor: (Width: @PageWidth, Height: @PageHeight);
     Background: PatchStyle(TexturePath: "Common/ContainerFullPatch.png", Border: 20, Color: #FFFFFFE6);
     LayoutMode: Full;
 
@@ -233,7 +233,7 @@ Group {
     }
     Group #PageContent {
       Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-      Padding: (Full: @FubsysRpgPagePadding);
+      Padding: (Full: @PagePadding);
       LayoutMode: Top;
 
 
@@ -252,7 +252,7 @@ Group {
 
           Group #TabCharacterUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @FubsysRpgSelectedButtonFill;
+            Background: @SelectedButtonFill;
             Visible: true;
           }
 
@@ -270,7 +270,7 @@ Group {
 
           Group #TabSkillsUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @FubsysRpgSelectedButtonFill;
+            Background: @SelectedButtonFill;
             Visible: false;
           }
 
@@ -287,7 +287,7 @@ Group {
 
           Group #TabArtisansUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @FubsysRpgSelectedButtonFill;
+            Background: @SelectedButtonFill;
             Visible: false;
           }
 
@@ -305,7 +305,7 @@ Group {
 
           Group #TabClassementUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @FubsysRpgSelectedButtonFill;
+            Background: @SelectedButtonFill;
             Visible: false;
           }
 
@@ -327,7 +327,7 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @FubsysRpgPanelShade;
+          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #CharacterTabMount {
@@ -346,7 +346,7 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @FubsysRpgPanelShade;
+          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #SkillsTabMount {
@@ -365,7 +365,7 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @FubsysRpgPanelShade;
+          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #ArtisansTabMount {
@@ -384,7 +384,7 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @FubsysRpgPanelShade;
+          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #ClassementTabMount {
@@ -407,12 +407,12 @@ Group {
       Group #GlobalSkillStatusStrong {
         Anchor: (Width: 620, Height: 34);
         LayoutMode: Full;
-        Background: @FubsysRpgStatusPillBg;
+        Background: @StatusPillBg;
         Padding: (Left: 14, Right: 14, Top: 7, Bottom: 7);
         Visible: false;
 
-        Group { Anchor: (Left: 0, Right: 0, Top: 0, Height: 1); Background: @FubsysRpgStatusPillEdge; }
-        Label #SkillCastStatusStrong { Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgGoldHighlight, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: ""; }
+        Group { Anchor: (Left: 0, Right: 0, Top: 0, Height: 1); Background: @StatusPillEdge; }
+        Label #SkillCastStatusStrong { Style: (...@MetaStyle, FontSize: 13, TextColor: @GoldHighlight, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: ""; }
       }
 
       Group #GlobalSkillStatusMedium {

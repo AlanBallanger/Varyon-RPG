@@ -1,48 +1,48 @@
 $C = "Common.ui";
 
-@FubsysRpgInk = #E8DCC8;
-@FubsysRpgInkStrong = #F2E8D8;
-@FubsysRpgInkMuted = #C8BEB0;
-@FubsysRpgInkFaint = #A89E90;
-@FubsysRpgLeatherBg = #000000(0.22);
-@FubsysRpgPanelShade = #000000(0.32);
-@FubsysRpgCardShade = #000000(0.26);
-@FubsysRpgGold = #D4AF37(0.92);
-@FubsysRpgGoldSoft = #D4AF37(0.74);
-@FubsysRpgGoldHighlight = #F7E6A5(0.62);
-@FubsysRpgGoldShadow = #1A1612(0.55);
-@FubsysRpgActiveGreen = #6BCB7A(0.95);
-@FubsysRpgAging = #8A7A5A(0.22);
-@FubsysRpgParchmentMottle = #FFFFFF(0.03);
-@FubsysRpgGrainLight = #FFFFFF(0.02);
-@FubsysRpgGrainDark = #000000(0.12);
-@FubsysRpgEdge1 = #FFFFFF(0.05);
-@FubsysRpgEdge2 = #FFFFFF(0.03);
-@FubsysRpgEdge3 = #000000(0.20);
-@FubsysRpgDivider = #E8DCC8(0.16);
-@FubsysRpgDividerSoft = #E8DCC8(0.10);
-@FubsysRpgBackdrop = #000000(0.42);
-@FubsysRpgSelectedButtonFill = #D4AF37(0.38);
-@FubsysRpgStatusPillBg = #000000(0.40);
-@FubsysRpgStatusPillEdge = #D4AF37(0.35);
-@FubsysRpgSkillTreeEdgeGlow = #D4AF37(0.62);
-@FubsysRpgSkillTreeNodeGlow = #D4AF37(0.18);
+@Ink = #E8DCC8;
+@InkStrong = #F2E8D8;
+@InkMuted = #C8BEB0;
+@InkFaint = #A89E90;
+@LeatherBg = #000000(0.22);
+@PanelShade = #000000(0.32);
+@CardShade = #000000(0.26);
+@Gold = #D4AF37(0.92);
+@GoldSoft = #D4AF37(0.74);
+@GoldHighlight = #F7E6A5(0.62);
+@GoldShadow = #1A1612(0.55);
+@ActiveGreen = #6BCB7A(0.95);
+@Aging = #8A7A5A(0.22);
+@ParchmentMottle = #FFFFFF(0.03);
+@GrainLight = #FFFFFF(0.02);
+@GrainDark = #000000(0.12);
+@Edge1 = #FFFFFF(0.05);
+@Edge2 = #FFFFFF(0.03);
+@Edge3 = #000000(0.20);
+@Divider = #E8DCC8(0.16);
+@DividerSoft = #E8DCC8(0.10);
+@Backdrop = #000000(0.42);
+@SelectedButtonFill = #D4AF37(0.38);
+@StatusPillBg = #000000(0.40);
+@StatusPillEdge = #D4AF37(0.35);
+@SkillTreeEdgeGlow = #D4AF37(0.62);
+@SkillTreeNodeGlow = #D4AF37(0.18);
 
 @HeadingStyle = (
   FontSize: 24,
-  TextColor: @FubsysRpgInk,
+  TextColor: @Ink,
   RenderBold: true
 );
 
 @SubHeadingStyle = (
   FontSize: 18,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true
 );
 
 @MetaStyle = (
   FontSize: 16,
-  TextColor: @FubsysRpgInkMuted
+  TextColor: @InkMuted
 );
 
 @SectionTitleStyle = (
@@ -65,7 +65,7 @@ $C = "Common.ui";
 
 @StatValueStyle = (
   FontSize: 18,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true
 );
 
@@ -116,7 +116,7 @@ $C = "Common.ui";
 
 @TabLabelStyle = (
   FontSize: 14,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderUppercase: true,
   RenderBold: true,
   HorizontalAlignment: Center,
@@ -125,21 +125,21 @@ $C = "Common.ui";
 
 @CycleCardTitleStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgInkMuted,
+  TextColor: @InkMuted,
   RenderUppercase: true,
   RenderBold: true
 );
 
 @CycleActiveTagStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgActiveGreen,
+  TextColor: @ActiveGreen,
   RenderUppercase: true,
   RenderBold: true
 );
 
 @CycleSlotKeyStyle = (
   FontSize: 10,
-  TextColor: @FubsysRpgInkMuted,
+  TextColor: @InkMuted,
   RenderUppercase: true,
   RenderBold: true,
   VerticalAlignment: Center
@@ -147,14 +147,14 @@ $C = "Common.ui";
 
 @CycleSlotValueStyle = (
   FontSize: 12,
-  TextColor: @FubsysRpgInkStrong,
+  TextColor: @InkStrong,
   RenderBold: true,
   VerticalAlignment: Center
 );
 
 @CycleSlotButtonStyle = (
   Default: (
-    Background: @FubsysRpgPanelShade
+    Background: @PanelShade
   ),
   Hovered: (
     Background: #6B4E2E(0.12)
@@ -198,9 +198,9 @@ $C = "Common.ui";
   )
 );
 
-@FubsysRpgPageWidth = 1170;
-@FubsysRpgPageHeight = 768;
-@FubsysRpgPagePadding = 31;
+@PageWidth = 1170;
+@PageHeight = 768;
+@PagePadding = 31;
 
 
 Group {
@@ -226,7 +226,7 @@ Group {
 
       Label #SkillTreePointsValue {
         Anchor: (Top: 2);
-        Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+        Style: (...@MetaStyle, FontSize: 13, TextColor: @InkMuted, RenderBold: true);
         Text: "Points restants : 0";
       }
     }
@@ -243,7 +243,7 @@ Group {
         Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
         LayoutMode: Middle;
         Label #SkillTreeTalentSlot0ButtonLabel {
-          Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Style: (FontSize: 12, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
           Text: "-";
         }
       }
@@ -254,7 +254,7 @@ Group {
         Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #E2B161FF);
         LayoutMode: Middle;
         Label #SkillTreeTalentSlot1ButtonLabel {
-          Style: (FontSize: 12, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Style: (FontSize: 12, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
           Text: "-";
         }
       }
@@ -268,7 +268,7 @@ Group {
       Group #SkillTreePager {
         Anchor: (Right: 0, Top: 0, Width: 64, Height: 90);
         LayoutMode: Full;
-        Background: @FubsysRpgPanelShade;
+        Background: @PanelShade;
         Padding: (Full: 6);
         Visible: false;
 
@@ -277,7 +277,7 @@ Group {
           Style: @PlusButtonStyle;
 
           Label {
-            Style: (FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Style: (FontSize: 16, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
             Text: "^";
           }
         }
@@ -293,14 +293,14 @@ Group {
           Style: @PlusButtonStyle;
 
           Label {
-            Style: (FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Style: (FontSize: 16, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
             Text: "v";
           }
         }
       }
 
-      Group #SkillTreeSpecializationWipRect { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Background: @FubsysRpgCardShade; Visible: false; }
-      Label #SkillTreeSpecializationWipLabel { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Spécialisation (à venir)"; Visible: false; }
+      Group #SkillTreeSpecializationWipRect { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Background: @CardShade; Visible: false; }
+      Label #SkillTreeSpecializationWipLabel { Anchor: (Left: 0, Top: 0, Width: 720, Height: 34); Style: (...@MetaStyle, FontSize: 14, TextColor: @InkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Spécialisation (à venir)"; Visible: false; }
 
       Button #SkillTreeAttribuerButton { Anchor: (Right: 8, Top: 4, Width: 118, Height: 28); Style: @PlusButtonStyle; LayoutMode: Middle;
         Label { Style: (FontSize: 13, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Attribuer"; }
@@ -310,271 +310,271 @@ Group {
       }
 
 
-      Group #SkillTreeEdgeRootStem { Anchor: (Left: 390, Top: 134, Width: 4, Height: 16); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeRootBranch { Anchor: (Left: 152, Top: 150, Width: 480, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeRootToNode6 { Anchor: (Left: 150, Top: 150, Width: 4, Height: 10); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeRootToNode7 { Anchor: (Left: 310, Top: 150, Width: 4, Height: 10); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeRootToNode1 { Anchor: (Left: 470, Top: 150, Width: 4, Height: 10); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeRootToNode2 { Anchor: (Left: 630, Top: 150, Width: 4, Height: 10); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeNode6ToNode9 { Anchor: (Left: 150, Top: 224, Width: 4, Height: 46); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeNode2ToNode8 { Anchor: (Left: 630, Top: 224, Width: 4, Height: 46); Background: @FubsysRpgDivider; Visible: false; }
+      Group #SkillTreeEdgeRootStem { Anchor: (Left: 390, Top: 134, Width: 4, Height: 16); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeRootBranch { Anchor: (Left: 152, Top: 150, Width: 480, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeRootToNode6 { Anchor: (Left: 150, Top: 150, Width: 4, Height: 10); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeRootToNode7 { Anchor: (Left: 310, Top: 150, Width: 4, Height: 10); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeRootToNode1 { Anchor: (Left: 470, Top: 150, Width: 4, Height: 10); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeRootToNode2 { Anchor: (Left: 630, Top: 150, Width: 4, Height: 10); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeNode6ToNode9 { Anchor: (Left: 150, Top: 224, Width: 4, Height: 46); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeNode2ToNode8 { Anchor: (Left: 630, Top: 224, Width: 4, Height: 46); Background: @Divider; Visible: false; }
 
-      Group #SkillTreeEdgeSeg0 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg1 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg2 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg3 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg4 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg5 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg6 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg7 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg8 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg9 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg10 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg11 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg12 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg13 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg14 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg15 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg16 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg17 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg18 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg19 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg20 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg21 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg22 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg23 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg24 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg25 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg26 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg27 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg28 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg29 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg30 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg31 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg32 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg33 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg34 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg35 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg36 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg37 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg38 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg39 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg40 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg41 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg42 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg43 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg44 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg45 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg46 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg47 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg48 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg49 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg50 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg51 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg52 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg53 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg54 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg55 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg56 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg57 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg58 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg59 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg60 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg61 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg62 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg63 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg64 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg65 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg66 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg67 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg68 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg69 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg70 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg71 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg72 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg73 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg74 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg75 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg76 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg77 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg78 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg79 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg80 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg81 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg82 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg83 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg84 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg85 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg86 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg87 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg88 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg89 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg90 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg91 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg92 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg93 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg94 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg95 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg96 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg97 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg98 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg99 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg100 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg101 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg102 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg103 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg104 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg105 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg106 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg107 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg108 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg109 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg110 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg111 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg112 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg113 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg114 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg115 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg116 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg117 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg118 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg119 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg120 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg121 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg122 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg123 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg124 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg125 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg126 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg127 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg128 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg129 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg130 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg131 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg132 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg133 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg134 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg135 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg136 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg137 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg138 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg139 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg140 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg141 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg142 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg143 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg144 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg145 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg146 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg147 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg148 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg149 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg150 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg151 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg152 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg153 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg154 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg155 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg156 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg157 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg158 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg159 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg160 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg161 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg162 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg163 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg164 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg165 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg166 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg167 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg168 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg169 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg170 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg171 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg172 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg173 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg174 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg175 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg176 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg177 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg178 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg179 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg180 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg181 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg182 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg183 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg184 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg185 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg186 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg187 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg188 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg189 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg190 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg191 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg192 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg193 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg194 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg195 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg196 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg197 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg198 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg199 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg200 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg201 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg202 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg203 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg204 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg205 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg206 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg207 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg208 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg209 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg210 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg211 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg212 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg213 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg214 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg215 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg216 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg217 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg218 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg219 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg220 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg221 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg222 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg223 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg224 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg225 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg226 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg227 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg228 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg229 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg230 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg231 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg232 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg233 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg234 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg235 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg236 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg237 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg238 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg239 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg240 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg241 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg242 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg243 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg244 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg245 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg246 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg247 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg248 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg249 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg250 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg251 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg252 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg253 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg254 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
-      Group #SkillTreeEdgeSeg255 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @FubsysRpgDivider; Visible: false; }
+      Group #SkillTreeEdgeSeg0 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg1 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg2 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg3 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg4 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg5 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg6 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg7 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg8 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg9 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg10 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg11 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg12 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg13 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg14 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg15 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg16 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg17 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg18 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg19 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg20 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg21 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg22 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg23 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg24 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg25 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg26 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg27 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg28 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg29 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg30 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg31 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg32 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg33 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg34 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg35 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg36 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg37 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg38 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg39 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg40 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg41 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg42 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg43 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg44 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg45 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg46 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg47 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg48 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg49 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg50 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg51 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg52 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg53 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg54 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg55 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg56 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg57 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg58 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg59 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg60 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg61 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg62 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg63 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg64 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg65 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg66 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg67 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg68 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg69 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg70 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg71 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg72 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg73 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg74 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg75 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg76 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg77 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg78 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg79 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg80 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg81 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg82 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg83 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg84 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg85 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg86 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg87 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg88 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg89 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg90 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg91 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg92 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg93 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg94 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg95 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg96 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg97 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg98 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg99 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg100 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg101 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg102 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg103 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg104 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg105 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg106 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg107 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg108 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg109 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg110 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg111 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg112 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg113 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg114 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg115 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg116 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg117 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg118 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg119 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg120 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg121 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg122 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg123 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg124 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg125 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg126 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg127 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg128 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg129 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg130 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg131 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg132 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg133 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg134 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg135 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg136 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg137 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg138 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg139 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg140 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg141 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg142 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg143 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg144 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg145 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg146 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg147 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg148 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg149 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg150 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg151 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg152 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg153 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg154 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg155 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg156 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg157 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg158 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg159 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg160 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg161 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg162 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg163 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg164 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg165 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg166 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg167 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg168 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg169 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg170 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg171 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg172 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg173 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg174 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg175 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg176 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg177 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg178 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg179 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg180 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg181 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg182 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg183 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg184 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg185 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg186 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg187 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg188 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg189 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg190 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg191 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg192 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg193 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg194 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg195 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg196 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg197 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg198 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg199 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg200 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg201 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg202 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg203 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg204 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg205 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg206 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg207 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg208 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg209 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg210 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg211 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg212 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg213 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg214 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg215 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg216 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg217 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg218 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg219 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg220 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg221 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg222 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg223 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg224 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg225 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg226 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg227 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg228 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg229 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg230 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg231 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg232 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg233 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg234 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg235 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg236 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg237 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg238 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg239 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg240 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg241 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg242 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg243 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg244 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg245 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg246 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg247 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg248 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg249 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg250 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg251 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg252 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg253 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg254 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
+      Group #SkillTreeEdgeSeg255 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Background: @Divider; Visible: false; }
 
       AssetImage #SkillTreeEdgeGlowSeg0 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Visible: false; }
       AssetImage #SkillTreeEdgeGlowSeg1 { Anchor: (Left: 0, Top: 0, Width: 4, Height: 4); Visible: false; }
@@ -837,7 +837,7 @@ Group {
       Group #SkillTreeNode0Unlocked { Anchor: (Left: 357, Top: 67, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode0Icon { Anchor: (Left: 372, Top: 82, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode0Veil { Anchor: (Left: 357, Top: 67, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode0RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode0RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode0Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode0 { Anchor: (Left: 360, Top: 70, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -846,7 +846,7 @@ Group {
       Group #SkillTreeNode1Unlocked { Anchor: (Left: 437, Top: 157, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode1Icon { Anchor: (Left: 452, Top: 172, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode1Veil { Anchor: (Left: 437, Top: 157, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode1RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode1RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode1Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode1 { Anchor: (Left: 440, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -855,7 +855,7 @@ Group {
       Group #SkillTreeNode2Unlocked { Anchor: (Left: 597, Top: 157, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode2Icon { Anchor: (Left: 612, Top: 172, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode2Veil { Anchor: (Left: 597, Top: 157, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode2RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode2RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode2Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode2 { Anchor: (Left: 600, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -864,7 +864,7 @@ Group {
       Group #SkillTreeNode3Unlocked { Anchor: (Left: 527, Top: 477, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode3Icon { Anchor: (Left: 542, Top: 492, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode3Veil { Anchor: (Left: 527, Top: 477, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode3RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode3RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode3Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode3 { Anchor: (Left: 530, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -873,7 +873,7 @@ Group {
       Group #SkillTreeNode4Unlocked { Anchor: (Left: 357, Top: 547, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode4Icon { Anchor: (Left: 372, Top: 562, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode4Veil { Anchor: (Left: 357, Top: 547, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode4RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode4RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode4Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode4 { Anchor: (Left: 360, Top: 550, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -882,7 +882,7 @@ Group {
       Group #SkillTreeNode5Unlocked { Anchor: (Left: 187, Top: 477, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode5Icon { Anchor: (Left: 202, Top: 492, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode5Veil { Anchor: (Left: 187, Top: 477, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode5RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode5RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode5Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode5 { Anchor: (Left: 190, Top: 480, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -891,7 +891,7 @@ Group {
       Group #SkillTreeNode6Unlocked { Anchor: (Left: 117, Top: 157, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode6Icon { Anchor: (Left: 132, Top: 172, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode6Veil { Anchor: (Left: 117, Top: 157, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode6RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode6RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode6Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode6 { Anchor: (Left: 120, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -900,7 +900,7 @@ Group {
       Group #SkillTreeNode7Unlocked { Anchor: (Left: 277, Top: 157, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode7Icon { Anchor: (Left: 292, Top: 172, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode7Veil { Anchor: (Left: 277, Top: 157, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode7RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode7RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode7Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode7 { Anchor: (Left: 280, Top: 160, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -909,7 +909,7 @@ Group {
       Group #SkillTreeNode8Unlocked { Anchor: (Left: 597, Top: 267, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode8Icon { Anchor: (Left: 612, Top: 282, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode8Veil { Anchor: (Left: 597, Top: 267, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode8RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode8RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode8Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode8 { Anchor: (Left: 600, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -918,7 +918,7 @@ Group {
       Group #SkillTreeNode9Unlocked { Anchor: (Left: 117, Top: 267, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode9Icon { Anchor: (Left: 132, Top: 282, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode9Veil { Anchor: (Left: 117, Top: 267, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode9RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode9RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode9Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode9 { Anchor: (Left: 120, Top: 270, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -927,7 +927,7 @@ Group {
       Group #SkillTreeNode10Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode10Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode10Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode10RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode10RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode10Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode10 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -936,7 +936,7 @@ Group {
       Group #SkillTreeNode11Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode11Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode11Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode11RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
+      Label #SkillTreeNode11RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/5"; }
       AssetImage #SkillTreeNode11Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode11 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -945,7 +945,7 @@ Group {
       Group #SkillTreeNode12Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode12Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode12Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode12RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
+      Label #SkillTreeNode12RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode12Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode12 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -954,7 +954,7 @@ Group {
       Group #SkillTreeNode13Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode13Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode13Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode13RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
+      Label #SkillTreeNode13RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode13Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode13 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -963,7 +963,7 @@ Group {
       Group #SkillTreeNode14Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode14Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode14Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode14RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
+      Label #SkillTreeNode14RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode14Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode14 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -972,7 +972,7 @@ Group {
       Group #SkillTreeNode15Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode15Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode15Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode15RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
+      Label #SkillTreeNode15RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode15Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode15 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -981,7 +981,7 @@ Group {
       Group #SkillTreeNode16Unlocked { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
       Group #SkillTreeNode16Icon { Anchor: (Left: 18, Top: 18, Width: 40, Height: 40); Visible: false; }
       Group #SkillTreeNode16Veil { Anchor: (Left: 3, Top: 3, Width: 70, Height: 70); Visible: false; }
-      Label #SkillTreeNode16RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
+      Label #SkillTreeNode16RankText { Anchor: (Left: 0, Top: 0, Width: 44, Height: 14); Visible: false; Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; }
       AssetImage #SkillTreeNode16Rank { Anchor: (Left: 0, Top: 0, Width: 20, Height: 14); Visible: false; }
       Button #SkillTreeNode16 { Anchor: (Left: 0, Top: 0, Width: 64, Height: 64); Style: @SkillNodeButtonStyle; LayoutMode: Top; Visible: false;
       }
@@ -1322,14 +1322,17 @@ Group {
 
   Group {
     Anchor: (Top: 0, Bottom: 0, Width: 290);
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8, Color: #FFD700FF);
-    Padding: (Full: 5);
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
 
     Group {
-      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-      LayoutMode: Top;
-      Background: @FubsysRpgPanelShade;
-      Padding: (Full: 10);
+      Anchor: (Left: 3, Right: 3, Top: 3, Bottom: 3);
+      Background: @Gold;
+
+      Group {
+        Anchor: (Left: 2, Right: 2, Top: 2, Bottom: 2);
+        LayoutMode: Top;
+        Background: #16191F;
+        Padding: (Full: 10);
 
       Label {
         Style: @SectionTitleStyle;
@@ -1355,13 +1358,13 @@ Group {
           Padding: (Left: 10);
 
           Label #SkillTreeSelectedTitle {
-            Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @FubsysRpgInkStrong, RenderBold: true, Wrap: true);
+            Style: (...@SubHeadingStyle, FontSize: 16, TextColor: @InkStrong, RenderBold: true, Wrap: true);
             Text: "";
           }
 
           Label #SkillTreeSelectedFlavor {
             Anchor: (Top: 4);
-            Style: (...@MetaStyle, FontSize: 12, TextColor: @FubsysRpgInkFaint, Wrap: true);
+            Style: (...@MetaStyle, FontSize: 12, TextColor: @InkFaint, Wrap: true);
             Text: "";
           }
         }
@@ -1373,21 +1376,21 @@ Group {
         Text: "";
       }
 
-      Group { Anchor: (Top: 10, Height: 1); Background: @FubsysRpgDivider; }
+      Group { Anchor: (Top: 10, Height: 1); Background: @Divider; }
 
       Group {
         LayoutMode: Left;
         Anchor: (Top: 8);
 
         Label {
-          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @InkMuted, RenderBold: true);
           Text: "Niveau actuel";
         }
 
         Group { FlexWeight: 1; }
 
         Label #SkillTreeCurrentRankValue {
-          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkStrong, RenderBold: true);
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @InkStrong, RenderBold: true);
           Text: "0/5";
         }
       }
@@ -1398,7 +1401,7 @@ Group {
         Visible: false;
 
         Label {
-          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @InkMuted, RenderBold: true);
           Text: "Bonus actuel";
         }
 
@@ -1416,14 +1419,14 @@ Group {
         Visible: false;
 
         Label {
-          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgInkMuted, RenderBold: true);
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @InkMuted, RenderBold: true);
           Text: "Prochain rang";
         }
 
         Group { FlexWeight: 1; }
 
         Label #SkillTreeNextRankValue {
-          Style: (...@MetaStyle, FontSize: 13, TextColor: @FubsysRpgGoldHighlight, RenderBold: true, Wrap: true);
+          Style: (...@MetaStyle, FontSize: 13, TextColor: @GoldHighlight, RenderBold: true, Wrap: true);
           Text: "";
         }
       }
@@ -1444,7 +1447,7 @@ Group {
           Visible: false;
 
           Label #UnlockSkillTreeButtonLabel {
-            Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Style: (...@MetaStyle, FontSize: 14, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
             Text: "Débloquer";
           }
         }
@@ -1457,10 +1460,11 @@ Group {
           Visible: false;
 
           Label #UnlockSkillTreeButtonDisabledLabel {
-            Style: (...@MetaStyle, FontSize: 14, TextColor: @FubsysRpgInkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+            Style: (...@MetaStyle, FontSize: 14, TextColor: @InkMuted, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
             Text: "Débloqué";
           }
         }
+      }
       }
     }
   }

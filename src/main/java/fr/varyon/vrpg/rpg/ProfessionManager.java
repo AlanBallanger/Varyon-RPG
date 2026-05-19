@@ -109,8 +109,6 @@ public final class ProfessionManager {
         return levelsGained;
     }
 
-    private static final long XP_NOTIF_DEBOUNCE_MS = 1000L;
-
     private static final class NotifState {
         long total;
         PlayerRef playerRef;
@@ -127,7 +125,7 @@ public final class ProfessionManager {
             state.total += amount;
             state.playerRef = playerRef;
             if (state.pending != null) state.pending.cancel(false);
-            state.pending = scheduler.schedule(() -> flushXpNotif(uuid, profession), XP_NOTIF_DEBOUNCE_MS, TimeUnit.MILLISECONDS);
+            state.pending = scheduler.schedule(() -> flushXpNotif(uuid, profession), profession.getDebounceMs(), TimeUnit.MILLISECONDS);
         }
     }
 
