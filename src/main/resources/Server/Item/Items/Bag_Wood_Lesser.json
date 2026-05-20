@@ -1,14 +1,14 @@
 {
   "Parent": "NoCube_Bag_Potion_Lesser",
   "TranslationProperties": {
-    "Name": "server.items.Bag_Soil_Lesser.name",
-    "Description": "server.items.Bag_Soil_Lesser.description"
+    "Name": "server.items.Bag_Wood_Lesser.name",
+    "Description": "server.items.Bag_Wood_Lesser.description"
   },
-  "Icon": "Icons/Items/NoCube_Bag_Soil_Lesser.png",
-  "Texture": "Items/NoCube_Bag_Soil.png",
+  "Icon": "Icons/Items/NoCube_Bag_Wood_Lesser.png",
+  "Texture": "Items/NoCube_Bag_Wood.png",
   "Container": {
     "Capacity": 18,
-    "ItemTag": "Type=Soil"
+    "ItemTag": "Type=Wood"
   },
   "Recipe": {
     "Input": [
@@ -21,7 +21,7 @@
         "Quantity": 2
       },
       {
-        "ItemId": "Soil_Dirt",
+        "ResourceTypeId": "Wood_Trunk",
         "Quantity": 2
       }
     ],

@@ -44,6 +44,7 @@ public final class TalentItemRestrictionSystem extends EntityEventSystem<EntityS
         Map.entry("Bag_Crop_Lesser",                      new Rule(Profession.FERMIER,   "16", "Besace du Paysan",          1)),
         Map.entry("Bag_Ore_Lesser",                       new Rule(Profession.MINEUR,    "13", "Besace du Foreur",          1)),
         Map.entry("Bag_Potion_Lesser",                    new Rule(Profession.CHASSEUR,  "13", "Bourse du Traqueur",        1)),
+        Map.entry("Bag_Wood_Lesser",                      new Rule(Profession.FORESTIER, "13", "Besace du Forestier",       1)),
         Map.entry("SanAndreaP_Sprinkler_Funnel",          new Rule(Profession.FERMIER,   "10", "Crop Circles",              1)),
         Map.entry("Miner_Drill_Kart",                     new Rule(Profession.MINEUR,    "11", "Wagon Express",             1)),
         Map.entry("Grappling_Hook_Iron",                  new Rule(Profession.FORESTIER, "9",  "Équipement Tridimensionnel", 1)),

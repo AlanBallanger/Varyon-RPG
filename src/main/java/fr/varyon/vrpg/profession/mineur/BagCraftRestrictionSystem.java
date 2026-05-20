@@ -37,6 +37,11 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         "NoCube_Bag_Plant", "NoCube_Bag_Plant_Lesser", "NoCube_Bag_Plant_Greater"
     );
 
+    public static final Set<String> WOOD_BAG_IDS = Set.of(
+        "Bag_Wood_Lesser",
+        "NoCube_Bag_Wood", "NoCube_Bag_Wood_Lesser", "NoCube_Bag_Wood_Greater"
+    );
+
     private final ProfessionManager professionManager;
     private final ComponentType<EntityStore, PlayerRef> playerRefType = PlayerRef.getComponentType();
 
@@ -66,7 +71,8 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
 
         boolean isOreBag = ORE_BAG_IDS.contains(outputId);
         boolean isCropBag = CROP_BAG_IDS.contains(outputId);
-        if (!isOreBag && !isCropBag) return;
+        boolean isWoodBag = WOOD_BAG_IDS.contains(outputId);
+        if (!isOreBag && !isCropBag && !isWoodBag) return;
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) {
@@ -86,6 +92,9 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         if (isOreBag) {
             allowed = acc != null && acc.isActive(Profession.MINEUR) && acc.getTalentRank(Profession.MINEUR, "13") > 0;
             message = "Besace du Foreur — talent Mineur (nœud 13) requis.";
+        } else if (isWoodBag) {
+            allowed = acc != null && acc.isActive(Profession.FORESTIER) && acc.getTalentRank(Profession.FORESTIER, "13") > 0;
+            message = "Besace du Forestier — talent Forestier (nœud 13) requis.";
         } else {
             allowed = acc != null && acc.isActive(Profession.FERMIER) && acc.getTalentRank(Profession.FERMIER, "16") > 0;
             message = "Besace du Paysan — talent Fermier (nœud 16) requis.";
