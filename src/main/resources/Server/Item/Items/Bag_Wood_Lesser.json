@@ -1,5 +1,5 @@
 {
-  "Parent": "NoCube_Bag_Potion_Lesser",
+  "Parent": "Bag_Potion_Lesser",
   "TranslationProperties": {
     "Name": "server.items.Bag_Wood_Lesser.name",
     "Description": "server.items.Bag_Wood_Lesser.description"
