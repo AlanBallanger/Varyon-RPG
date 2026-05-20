@@ -1,6 +1,7 @@
 package fr.varyon.vrpg.profession.mineur;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
@@ -23,6 +24,8 @@ import java.awt.Color;
 import java.util.Set;
 
 public final class BagCraftRestrictionSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent.Pre> {
+
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     public static final Set<String> ORE_BAG_IDS = Set.of(
         "Bag_Ore_Lesser",
@@ -67,9 +70,15 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) {
+            LOGGER.atWarning().log("[BagRestrict] BLOCKED outputId=" + outputId + " — playerRef null");
             event.setCancelled(true);
             return;
         }
+
+        String playerName = playerRef.getUsername() != null ? playerRef.getUsername() : playerRef.getUuid().toString().substring(0, 8);
+        Player player = null;
+        try { player = playerRef.getComponent(Player.getComponentType()); } catch (Exception ignored) {}
+        boolean hasPermStar = player != null && player.hasPermission("*");
 
         PlayerAccount acc = professionManager.getAccount(playerRef.getUuid());
         boolean allowed;
@@ -82,10 +91,16 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
             message = "Besace du Paysan — talent Fermier (nœud 16) requis.";
         }
 
+        LOGGER.atInfo().log("[BagRestrict] craft player=" + playerName
+            + " outputId=" + outputId
+            + " hasPerm*=" + hasPermStar
+            + " acc=" + (acc != null ? "ok" : "null")
+            + " allowed=" + allowed
+            + " cancelled=" + !allowed);
+
         if (!allowed) {
             event.setCancelled(true);
             try {
-                Player player = playerRef.getComponent(Player.getComponentType());
                 if (player != null) {
                     player.sendMessage(Message.raw(message).color(new Color(200, 50, 50)));
                 }

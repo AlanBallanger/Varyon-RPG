@@ -311,7 +311,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {12},
     };
 
-    private static final int[] FERMIER_MAX_RANKS = {5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 1, 5, 1, 1};
+    private static final int[] FERMIER_MAX_RANKS = {5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 1, 5, 4, 1};
 
     private static final String[][] FERMIER_NODE_STAT_VALUES = {
         {"5% loot",              "10% loot",             "15% loot",             "20% loot",             "25% loot"},
@@ -326,7 +326,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"1% de chance",         "1.25% de chance",      "1.5% de chance",       "1.75% de chance",      "2% de chance"},
         {"Replantation auto arroseurs activée"},
         {"0.5% invocation",      "1% invocation",        "1.5% invocation",      "2% invocation",        "2.5% invocation"},
-        {"Fertilisants haute qualité débloqués"},
+        {"Fertilisant Chaux débloqué", "Fertilisant Osseux débloqué", "Fertilisant Coquillage débloqué", "Fertilisant Élite débloqué"},
         {"Besace du Paysan activée"},
     };
 
@@ -402,7 +402,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {8},
     };
 
-    private static final int[] FORESTIER_MAX_RANKS = {5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 1, 1, 5, 5};
+    private static final int[] FORESTIER_MAX_RANKS = {5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 1, 1, 5, 5};
 
     private static final String[][] FORESTIER_NODE_STAT_VALUES = {
         {"5% loot",              "10% loot",              "15% loot",              "20% loot",              "25% loot"},
@@ -414,7 +414,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"4% vit / 10% chute",   "8% vit / 20% chute",   "12% vit / 30% chute",  "16% vit / 40% chute",  "20% vit / 50% chute"},
         {"5% loot rare",         "10% loot rare",         "15% loot rare",         "20% loot rare",         "25% loot rare"},
         {"Vision faible",        "Vision modérée",        "Vision renforcée",      "Vision avancée",        "Vision parfaite"},
-        {"Grappin forestier débloqué"},
+        {"Grappin Fer, Émeraude, Diamant, Rubis, Saphir, Topaze, Zéphyr débloqués", "Grappin Thorium & Cobalt débloqués", "Grappin Adamantite débloqué"},
         {"0.5% invocation",      "1% invocation",         "1.5% invocation",       "2% invocation",         "2.5% invocation"},
         {"Replantation auto activée"},
         {"Déracinage total activé"},
@@ -631,13 +631,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set(p + "Icon.ItemId", active.getIconItemId());
                 uiBuilder.set(p + "LevelBadge.TextSpans",
                     Message.raw(("Niveau " + prog.getLevel()).toUpperCase(Locale.FRENCH)));
-                uiBuilder.set(p + "LevelXp.TextSpans",
-                    Message.raw(prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP"));
+                if (prog.isMaxLevel()) {
+                    uiBuilder.set(p + "LevelXp.TextSpans", Message.raw("MAX"));
+                    uiBuilder.set(p + "ProgBarFill.Value", 1.0);
+                } else {
+                    uiBuilder.set(p + "LevelXp.TextSpans",
+                        Message.raw(prog.getXpInLevel() + " / " + prog.getXpToNextLevel() + " XP"));
+                    applyGaugeBar(uiBuilder, p + "ProgBarFill", prog.getXpInLevel(), prog.getXpToNextLevel());
+                }
                 uiBuilder.set(p + "Reconvert.Visible", true);
                 uiBuilder.set(p + "ViewTalents.Visible", true);
-                applyGaugeBar(uiBuilder,
-                    p + "ProgBarFill",
-                    prog.getXpInLevel(), prog.getXpToNextLevel());
                 eventBuilder.addEventBinding(
                     CustomUIEventBindingType.Activating,
                     p + "Reconvert",
@@ -670,10 +673,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             uiBuilder.set(id + "Icon.ItemId", p.getIconItemId());
             ProfessionProgress catProg = acc == null ? null : acc.getProgress(p);
             int level = catProg == null ? 1 : catProg.getLevel();
-            uiBuilder.set(id + "Level.TextSpans", Message.raw(("Niveau " + level).toUpperCase(Locale.FRENCH)));
-            long catXpInLevel = catProg == null ? 0L : catProg.getXpInLevel();
-            long catXpToNext = catProg == null ? 0L : catProg.getXpToNextLevel();
-            applyGaugeBar(uiBuilder, id + "ProgBarFill", catXpInLevel, catXpToNext);
+            boolean catMax = catProg != null && catProg.isMaxLevel();
+            uiBuilder.set(id + "Level.TextSpans", Message.raw((catMax ? "MAX" : "Niveau " + level).toUpperCase(Locale.FRENCH)));
+            if (catMax) {
+                uiBuilder.set(id + "ProgBarFill.Value", 1.0);
+            } else {
+                long catXpInLevel = catProg == null ? 0L : catProg.getXpInLevel();
+                long catXpToNext = catProg == null ? 0L : catProg.getXpToNextLevel();
+                applyGaugeBar(uiBuilder, id + "ProgBarFill", catXpInLevel, catXpToNext);
+            }
 
             boolean selectable = selectMode
                 && !p.isSpecialized()

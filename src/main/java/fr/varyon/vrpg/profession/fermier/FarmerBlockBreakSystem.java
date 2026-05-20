@@ -126,7 +126,7 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
 
         int xpRank = acc.getTalentRank(Profession.FERMIER, "1");
         double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
-        long finalXp = Math.round(FarmerXpTable.BASE_HARVEST_XP * xpMult);
+        double finalXp = FarmerXpTable.BASE_HARVEST_XP * xpMult;
         if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
             + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")"
             + (xpRank > 0 ? " [N1 MainsTerreuses rank=" + xpRank + "]" : ""));
@@ -249,13 +249,14 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                     + " sickle=" + isSickle
                     + " dur=" + (held != null ? held.getDurability() : "?")
                     + "/" + (held != null ? held.getMaxDurability() : "?"));
-                if (isSickle) {
+                if (isSickle && held.getMaxDurability() > 0) {
                     int faucilleRank = acc.getTalentRank(Profession.FERMIER, "8");
                     boolean skipLoss = faucilleRank > 0 && RANDOM.nextDouble() < faucilleRank * 0.15;
                     if (dbg) LOGGER.atInfo().log(dbgId + "N8 FaucilleEternelle rank=" + faucilleRank + " proc=" + skipLoss);
-                    if (!skipLoss) {
+                    double delta = skipLoss ? 0.0 : -1.0;
+                    if (delta != 0.0) {
                         inventory.getHotbar().setItemStackForSlot((short) slot,
-                            held.withIncreasedDurability(-1.0));
+                            held.withIncreasedDurability(delta));
                     }
                 }
             } catch (Exception ignored) {}

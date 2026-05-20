@@ -34,6 +34,7 @@ public final class ProfessionManager {
     private final ConcurrentHashMap<UUID, PlayerAccount> cache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<UUID, ReentrantLock> locks = new ConcurrentHashMap<>();
     private final Set<UUID> dirty = ConcurrentHashMap.newKeySet();
+    private final ConcurrentHashMap<UUID, Map<Profession, Double>> xpFractionBank = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduler;
 
     public ProfessionManager(@Nonnull Path dataDirectory) {
@@ -90,13 +91,17 @@ public final class ProfessionManager {
         dirty.add(uuid);
     }
 
-    public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, long amount) {
-        if (amount <= 0L) return 0;
+    public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, double amount) {
+        if (amount <= 0.0) return 0;
         ReentrantLock lock = lockFor(uuid);
         lock.lock();
         try {
+            Map<Profession, Double> bank = xpFractionBank.computeIfAbsent(uuid, k -> new HashMap<>());
+            double banked = bank.getOrDefault(profession, 0.0) + amount;
+            long wholeXp = (long) banked;
+            bank.put(profession, banked - wholeXp);
             PlayerAccount acc = getOrLoad(uuid);
-            int levelsGained = acc.getProgress(profession).addXp(amount);
+            int levelsGained = wholeXp > 0 ? acc.getProgress(profession).addXp(wholeXp) : 0;
             dirty.add(uuid);
             return levelsGained;
         } finally {
@@ -104,7 +109,7 @@ public final class ProfessionManager {
         }
     }
 
-    public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, long amount, @Nonnull PlayerRef playerRef) {
+    public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, double amount, @Nonnull PlayerRef playerRef) {
         int levelsGained = addXp(uuid, profession, amount);
         if (amount > 0) {
             scheduleXpNotif(uuid, playerRef, profession, amount);
@@ -114,7 +119,7 @@ public final class ProfessionManager {
     }
 
     private static final class NotifState {
-        long total;
+        double total;
         PlayerRef playerRef;
         ScheduledFuture<?> pending;
     }
@@ -122,7 +127,7 @@ public final class ProfessionManager {
     private final ConcurrentHashMap<UUID, ConcurrentHashMap<Profession, NotifState>> xpNotifMap = new ConcurrentHashMap<>();
 
     private void scheduleXpNotif(@Nonnull UUID uuid, @Nonnull PlayerRef playerRef,
-                                  @Nonnull Profession profession, long amount) {
+                                  @Nonnull Profession profession, double amount) {
         ConcurrentHashMap<Profession, NotifState> byProf = xpNotifMap.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>());
         NotifState state = byProf.computeIfAbsent(profession, k -> new NotifState());
         synchronized (state) {
@@ -138,18 +143,21 @@ public final class ProfessionManager {
         if (byProf == null) return;
         NotifState state = byProf.get(profession);
         if (state == null) return;
-        long toSend;
+        double toSend;
         PlayerRef playerRef;
         synchronized (state) {
             toSend = state.total;
-            state.total = 0;
+            state.total = 0.0;
             state.pending = null;
             playerRef = state.playerRef;
         }
         if (toSend <= 0 || playerRef == null) return;
-        LOGGER.at(Level.INFO).log("[XpNotif] %s %s +%d XP", playerRef.getUsername(), profession.name(), toSend);
+        String xpStr = (toSend == Math.floor(toSend))
+            ? String.valueOf((long) toSend)
+            : String.valueOf(Math.round(toSend * 10.0) / 10.0);
+        LOGGER.at(Level.INFO).log("[XpNotif] %s %s +%s XP", playerRef.getUsername(), profession.name(), xpStr);
         try {
-            Message msg = Message.raw("+" + toSend + " XP").color(new Color(0x5BFF7F));
+            Message msg = Message.raw("+" + xpStr + " XP").color(new Color(0x5BFF7F));
             NotificationUtil.sendNotification(playerRef.getPacketHandler(), msg, null, profession.getIconPath());
         } catch (Exception ignored) {}
     }
@@ -276,6 +284,7 @@ public final class ProfessionManager {
         }
         locks.remove(uuid);
         cache.remove(uuid);
+        xpFractionBank.remove(uuid);
         ConcurrentHashMap<Profession, NotifState> notifByProf = xpNotifMap.remove(uuid);
         if (notifByProf != null) {
             for (NotifState s : notifByProf.values()) {
