@@ -5,7 +5,7 @@ import java.util.Set;
 public final class ChasseurXpTable {
 
     public static final double BASE_KILL_XP = 10.0;
-    public static final String ESSENCE_ITEM_ID = "Chasseur_Essence";
+    public static final String ESSENCE_ITEM_ID = "Ingredient_Hide_Ghost";
 
     public static final Set<String> MEAT_HIDE_FEATHER = Set.of(
         "Food_Wildmeat_Raw",

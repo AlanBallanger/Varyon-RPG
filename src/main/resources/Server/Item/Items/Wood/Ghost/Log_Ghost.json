@@ -32,5 +32,5 @@
     ]
   },
   "MaxStack": 25,
-  "DropOnDeath": true
+  "DropOnDeath": false
 }

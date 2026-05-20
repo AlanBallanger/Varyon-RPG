@@ -33,5 +33,5 @@
   },
   "MaxStack": 25,
   "ItemSoundSetId": "ISS_Blocks_Stone",
-  "DropOnDeath": true
+  "DropOnDeath": false
 }

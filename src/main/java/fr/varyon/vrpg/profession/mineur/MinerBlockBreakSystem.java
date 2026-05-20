@@ -138,6 +138,27 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                 }
             }
 
+            int ghostOreRank = acc.getTalentRank(Profession.MINEUR, "2");
+            if (ghostOreRank > 0 && event.getTargetBlock() != null) {
+                double ghostChance = 0.01 + (ghostOreRank - 1) * 0.005;
+                if (RANDOM.nextDouble() < ghostChance) {
+                    if (dbg) LOGGER.atInfo().log(dbgId + "N2 MineraiFantomatique PROC");
+                    try {
+                        Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+                        if (ref != null && ref.isValid()) {
+                            Vector3d blockCenter = new Vector3d(
+                                event.getTargetBlock().x + 0.5,
+                                event.getTargetBlock().y + 0.5,
+                                event.getTargetBlock().z + 0.5
+                            );
+                            dropOreAtBlock(commandBuffer, "Ore_Ghost", blockCenter);
+                        }
+                    } catch (Exception e) {
+                        LOGGER.atWarning().withCause(e).log(dbgId + "N2 MineraiFantomatique drop ERREUR");
+                    }
+                }
+            }
+
             int xpRank = acc.getTalentRank(Profession.MINEUR, "1");
             double xpRankMult = 1.0 + xpRank * 0.05;
             double xpMult = xpRankMult;

@@ -4,7 +4,7 @@ public final class ForestierXpTable {
 
     public static final long BASE_LOG_XP = 1L;
     public static final long BASE_FORAGE_XP = 1L;
-    public static final String ESSENCE_ITEM_ID = "Forestier_Essence";
+    public static final String ESSENCE_ITEM_ID = "Log_Ghost";
 
     private ForestierXpTable() {}
 

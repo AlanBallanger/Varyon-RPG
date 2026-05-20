@@ -188,7 +188,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] TREE_NODES = {
         {"0",  "Poches Pleines",           "Passif", "Un vrai mineur ne repart jamais avec un seul caillou.",                    "Chance de doubler les ressources obtenues en minant.",                             "Jobs_Icons/Ore_Loot.png"},
         {"1",  "Front Poussiereux",        "Passif", "Chaque coup de pioche laisse une marque. Certaines deviennent du savoir.", "Augmente l’expérience gagnée en minant.",                                          "Jobs_Icons/Xp_Boost.png"},
-        {"2",  "Appel des Profondeurs",    "Passif", "Les galeries offrent parfois leurs secrets aux plus obstiés.",             "Chance d’obtenir des Essences de Mineur en récoltant du minerai.",                "Jobs_Icons/Ore_Special.png"},
+        {"2",  "Minerai Fantomatique",      "Passif", "Au fond des galeries, certains minerais brillent d’une lueur qui n’appartient pas à ce monde.", "Chance d’obtenir un Minerai Fantomatique en récoltant.", "Jobs_Icons/Ore_Special.png"},
         {"3",  "Pioche de Vétéran",        "Passif", "Les outils bien entretenus survivent aux mineurs.",                       "Réduit les pertes de durabilité de votre pioche.",                                 "Jobs_Icons/Pickaxe_Durability.png"},
         {"4",  "Minerai Immortel",         "Passif", "Certaines veines refusent simplement de disparaître.",                    "Chance qu’un minerai réapparaîsse immédiatement après récolte.",                  "Jobs_Icons/Ore_Respawn.png"},
         {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Enchainer les minerais rapport de l'XP et du minerai bonus par combo (Max 10 combo)",    "Jobs_Icons/Combo_Mining.png"},
@@ -207,7 +207,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] MINEUR_NODE_STAT_VALUES = {
         {"5% loot",        "10% loot",        "15% loot",        "20% loot",        "25% loot"},           // 0
         {"5% XP",          "10% XP",          "15% XP",          "20% XP",          "25% XP"},             // 1
-        {"1% essence",     "1.5% essence",    "2% essence",      "2.5% essence",    "3% essence"},          // 2
+        {"1% minerai",     "1.5% minerai",    "2% minerai",      "2.5% minerai",    "3% minerai"},          // 2
         {"7% durabilité",  "14% durabilité",  "21% durabilité",  "28% durabilité",  "35% durabilité"},      // 3
         {"4% repop",       "8% repop",        "12% repop",       "16% repop",       "20% repop"},           // 4
         {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"}, // 5
@@ -264,7 +264,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"0",  "Paniers Trop Pleins",    "Passif", "Les champs donnent davantage à ceux qui savent les écouter.",                     "Chance de doubler les récoltes obtenues.",                                        "Jobs_Icons/Crops_Loot.png"},
         {"1",  "Mains Terreuses",        "Passif", "Plus tes bottes sont sales, plus tu progresses.",                                  "Augmente l'expérience gagnée en récoltant.",                                      "Jobs_Icons/Xp_Boost.png"},
         {"2",  "Maître Arroseur",        "Passif", "Un vrai fermier hydrate ses cultures avec style.",                                  "Débloque les arroseurs automatiques.",                                            "Jobs_Icons/Sprinkler.png"},
-        {"3",  "Graines Fantomatiques",  "Passif", "Ces semences translucides ne poussent que pour les fermiers les plus aguerris.", "Chance d'obtenir des Graines Fantomatiques lors des récoltes.",                   "Jobs_Icons/Seed_Special.png"},
+        {"3",  "Graines Fantomatiques",  "Passif", "Ces semences translucides ne se révèlent qu'aux mains qui ont vraiment travaillé la terre.", "Chance d'obtenir des Graines Fantomatiques lors des récoltes.",         "Jobs_Icons/Seed_Special.png"},
         {"4",  "Bras Long",              "Passif", "Pourquoi marcher jusqu'au champ quand le champ est déjà à portée ?",           "Plante sur 5 blocs de long.",                                                     "Jobs_Icons/Multiple_Crop.png"},
         {"5",  "Grains Sans Fin",        "Passif", "Le stock de graines devient un concept théorique.",                                "Chance d'obtenir une Graine Éternelle en récoltant n'importe quelle culture.",    "Jobs_Icons/Eternal_Seed_Plus.png"},
         {"6",  "C-C-Combo",              "Passif", "Plus tu récoltes vite, plus les champs te récompensent.",                         "Enchainer les récoltes rapporte de l'XP et du loot bonus par combo (Max 10 combo).", "Jobs_Icons/Combo_Harvsting.png"},
@@ -351,7 +351,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] FORESTIER_TREE_NODES = {
         {"0",  "Bûches Bien Lourdes",       "Passif", "Un arbre vide, c'est juste du mobilier.",                           "Chance de doubler les ressources obtenues en coupant des arbres.",                                           "Jobs_Icons/Logs_Loot.png"},
         {"1",  "Mains Écorchées",           "Passif", "L'expérience pousse rarement sans échardes.",                       "Augmente l'expérience gagnée en coupant des arbres et en récoltant dans la nature.",                        "Jobs_Icons/Xp_Boost.png"},
-        {"2",  "Sève Primordiale",          "Passif", "Certains troncs saignent encore une magie ancienne.",               "Chance d'obtenir des Essences de Forestier en coupant des arbres.",                                          "Jobs_Icons/Log_Special.png"},
+        {"2",  "Bûches Fantomatiques",       "Passif", "Certains arbres anciens laissent derrière eux plus que du bois.",    "Chance d'obtenir une Bûche Fantomatique en coupant des arbres.",                                              "Jobs_Icons/Log_Special.png"},
         {"3",  "Hache du Survivant",        "Passif", "Elle coupe encore. Toujours.",                                      "Réduit l'usure de votre hache.",                                                                              "Jobs_Icons/Hatchet_Durability.png"},
         {"4",  "Cueilleur des Sous-Bois",   "Passif", "Les meilleures trouvailles poussent loin des chemins.",             "Augmente les ressources obtenues sur les fleurs et champignons.",                                             "Jobs_Icons/Mushroom_Loot.png"},
         {"5",  "C-C-Combo",                  "Passif", "Quand le rythme part, la forêt suit.",                             "Couper plusieurs arbres rapidement déclenche un combo augmentant les gains.",                                  "Jobs_Icons/Combo_Logging.png"},
@@ -407,7 +407,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] FORESTIER_NODE_STAT_VALUES = {
         {"5% loot",              "10% loot",              "15% loot",              "20% loot",              "25% loot"},
         {"5% XP",                "10% XP",                "15% XP",                "20% XP",                "25% XP"},
-        {"1% essence",           "1.5% essence",          "2% essence",            "2.5% essence",          "3% essence"},
+        {"1% bûche",             "1.5% bûche",            "2% bûche",              "2.5% bûche",            "3% bûche"},
         {"15% durabilité",       "30% durabilité",        "45% durabilité",        "60% durabilité",        "75% durabilité"},
         {"5% fleurs/champi",     "10% fleurs/champi",     "15% fleurs/champi",     "20% fleurs/champi",     "25% fleurs/champi"},
         {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"},
@@ -441,7 +441,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] CHASSEUR_TREE_NODES = {
         {"0",  "Mains du Boucher",     "Passif", "Un vrai chasseur sait où couper.",                                          "Augmente les ressources obtenues sur la viande, le cuir et les plumes.",                        "Jobs_Icons/Leather_Loot.png"},
         {"1",  "Instinct Sauvage",     "Passif", "Plus la traque dure, plus le prédateur apprend.",                           "Augmente l'expérience gagnée en chassant.",                                                      "Jobs_Icons/Xp_Boost.png"},
-        {"2",  "Marque du Prédateur",  "Passif", "Certaines créatures laissent derrière elles plus que des carcasses.",       "Chance d'obtenir des Essences de Chasseur sur les créatures.",                                   "Jobs_Icons/Hide_Special.png"},
+        {"2",  "Cuir Fantomatique",    "Passif", "Les créatures les plus rares laissent parfois une dépouille translucide.", "Chance d'obtenir du Cuir Fantomatique sur les créatures.",                                       "Jobs_Icons/Hide_Special.png"},
         {"3",  "Kit Renforcé",         "Passif", "Un bon arc encaisse autant que son porteur.",                               "Réduit l'usure de vos armes de chasse.",                                                         "Jobs_Icons/Hunter_Weapon_Durability.png"},
         {"4",  "Dépouilleur",          "Passif", "Les meilleures prises ne se laissent jamais partir sans récompense.",       "Chance de doubler les ressources obtenues sur les créatures.",                                   "Jobs_Icons/Monster_Loot.png"},
         {"5",  "Chasse Frénétique",    "Passif", "Quand la poursuite commence, difficile de s'arrêter.",                     "Éliminer plusieurs créatures rapidement déclenche un combo augmentant les gains.",               "Jobs_Icons/Combo_Killing.png"},
@@ -500,7 +500,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String[][] CHASSEUR_NODE_STAT_VALUES = {
         {"5% viande/cuir/plumes",      "10% viande/cuir/plumes",      "15% viande/cuir/plumes",      "20% viande/cuir/plumes",      "25% viande/cuir/plumes"},
         {"5% XP",                      "10% XP",                      "15% XP",                      "20% XP",                      "25% XP"},
-        {"1% essence",                 "1.5% essence",                "2% essence",                  "2.5% essence",                "3% essence"},
+        {"1% cuir",                    "1.5% cuir",                   "2% cuir",                     "2.5% cuir",                   "3% cuir"},
         {"15% durabilité",             "30% durabilité",              "45% durabilité",              "60% durabilité",              "75% durabilité"},
         {"5% loot",                    "10% loot",                    "15% loot",                    "20% loot",                    "25% loot"},
         {"5% XP & loot",               "10% XP & loot",               "15% XP & loot",               "20% XP & loot",               "25% XP & loot"},
