@@ -34,6 +34,9 @@ import fr.varyon.vrpg.profession.fermier.GuardianCropTickSystem;
 import fr.varyon.vrpg.profession.forestier.ForestierBlockBreakSystem;
 import fr.varyon.vrpg.profession.forestier.ForestierComboTracker;
 import fr.varyon.vrpg.profession.forestier.ForestierPickupSystem;
+import fr.varyon.vrpg.profession.forestier.PoumonLoutreTickSystem;
+import fr.varyon.vrpg.profession.forestier.RodeurSylvestreTickSystem;
+import fr.varyon.vrpg.profession.forestier.RodeurSylvestreFallSystem;
 import fr.varyon.vrpg.profession.mineur.BagCraftRestrictionSystem;
 import fr.varyon.vrpg.profession.mineur.ExplosionTalentSystem;
 import fr.varyon.vrpg.profession.mineur.MinerComboTracker;
@@ -70,6 +73,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private VpaBlastCommand blastCommand;
     private ExplosionTalentSystem explosionTalentSystem;
     private ForestierComboTracker forestierComboTracker;
+    private PoumonLoutreTickSystem poumonLoutreTickSystem;
+    private RodeurSylvestreTickSystem rodeurSylvestreTickSystem;
 
     private final ConcurrentHashMap<UUID, PlayerRef> pendingProfessionHudInit = new ConcurrentHashMap<>();
 
@@ -107,6 +112,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
             this.forestierComboTracker = new ForestierComboTracker();
+            this.poumonLoutreTickSystem = new PoumonLoutreTickSystem(professionManager);
+            this.rodeurSylvestreTickSystem = new RodeurSylvestreTickSystem(professionManager);
             this.surfaceCommand = new VpaSurfaceCommand();
             this.blastCommand = new VpaBlastCommand(explosionTalentSystem);
         } catch (Exception e) {
@@ -236,6 +243,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());
                     if (farmerComboTracker != null) farmerComboTracker.remove(ref.getUuid());
                     if (forestierComboTracker != null) forestierComboTracker.remove(ref.getUuid());
+                    if (poumonLoutreTickSystem != null) poumonLoutreTickSystem.removePlayer(ref.getUuid());
+                    if (rodeurSylvestreTickSystem != null) rodeurSylvestreTickSystem.removePlayer(ref.getUuid());
                     if (farmerPickupHarvestSystem != null) farmerPickupHarvestSystem.removePlayer(ref.getUuid());
                     if (farmerAnimalDropSystem != null) farmerAnimalDropSystem.removePlayer(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
@@ -293,6 +302,24 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new ForestierPickupSystem(professionManager));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ForestierPickupSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(poumonLoutreTickSystem);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register PoumonLoutreTickSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(rodeurSylvestreTickSystem);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register RodeurSylvestreTickSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new RodeurSylvestreFallSystem(rodeurSylvestreTickSystem));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register RodeurSylvestreFallSystem");
         }
 
         try {

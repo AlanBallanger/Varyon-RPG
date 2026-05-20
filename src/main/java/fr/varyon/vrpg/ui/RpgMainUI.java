@@ -362,7 +362,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"10", "Gardien Sylvestre",         "Passif", "Les forêts anciennes n'abandonnent jamais leurs protecteurs.",      "Chance d'invoquer un Gardien Sylvestre laissant un objet légendaire à sa mort.",                              "Jobs_Icons/Wolf.png"},
         {"12", "Retour aux Racines",        "Passif", "Chaque arbre tombé mérite un héritier.",                            "Replante automatiquement un arbre après l'avoir coupé.",                                                      "Jobs_Icons/Tree_Regrowth.png"},
         {"13", "Besace du Forestier",       "Passif", "Le bois coupé ne se perd pas avec le souffle.",                     "Un sac renforcé permettant de transporter du bois sans le perdre à la mort.",                                 "Jobs_Icons/Bag_Wood.png"},
-        {"14", "Poumons de Loutre",         "Passif", "Tu passes plus de temps sous l'eau qu'au sec.",                     "Augmente le temps de respiration sous l'eau.",                                                                "Jobs_Icons/Water_Breathing.png"},
+        {"14", "Poumons de Loutre",         "Passif", "Tu passes plus de temps sous l'eau qu'au sec.",                     "Augmente le temps de respiration sous l'eau. Rang max : durée doublée (+100%).",                              "Jobs_Icons/Water_Breathing.png"},
         {"15", "Lit de Fortune",            "Passif", "Même les rôdeurs doivent dormir un jour.",                          "Les lits d'appoint restaurent davantage de vie et d'énergie.",                                               "Jobs_Icons/Bed_Regen.png"},
     };
 
@@ -418,7 +418,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"0.5% invocation",      "1% invocation",         "1.5% invocation",       "2% invocation",         "2.5% invocation"},
         {"Replantation auto activée"},
         {"Déracinage total activé"},
-        {"10% respiration",      "20% respiration",       "30% respiration",       "40% respiration",       "50% respiration"},
+        {"+20% respiration",     "+40% respiration",      "+60% respiration",      "+80% respiration",      "+100% respiration"},
         {"5% récupération",      "10% récupération",      "15% récupération",      "20% récupération",      "25% récupération"},
     };
 
