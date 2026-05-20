@@ -56,10 +56,10 @@ Group {
 
         Group {
           LayoutMode: Full;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 60);
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 70);
 
           Group {
-            Anchor: (Left: 0, Top: 0, Width: 44, Height: 44);
+            Anchor: (Left: 0, Top: 0, Width: 60, Height: 60);
             LayoutMode: Full;
             Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
             Padding: (Full: 3);
@@ -70,23 +70,23 @@ Group {
               Background: #141820(0.82);
 
               ItemIcon #ProfessionActiveCard0Icon {
-                Anchor: (Width: 32, Height: 32);
+                Anchor: (Width: 48, Height: 48);
               }
             }
           }
 
           Label #ProfessionActiveCard0Name {
-            Anchor: (Left: 54, Right: 0, Top: 0, Height: 36);
+            Anchor: (Left: 70, Right: 0, Top: 0, Height: 36);
             Style: (FontSize: 22, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
             Text: "";
           }
 
           Group {
-            Anchor: (Left: 54, Right: 0, Top: 36, Height: 22);
+            Anchor: (Left: 70, Right: 0, Top: 36, Height: 22);
             LayoutMode: Left;
 
             Group {
-              Background: #31C677(1.0);
+              Background: #25793C(1.0);
               Padding: (Horizontal: 6, Vertical: 2);
 
               Label #ProfessionActiveCard0LevelBadge {
@@ -106,7 +106,7 @@ Group {
         }
 
         Group #ProfessionActiveCard0ProgBar {
-          Anchor: (Left: 0, Right: 0, Top: 62, Bottom: 32);
+          Anchor: (Left: 0, Right: 0, Top: 72, Bottom: 32);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard0ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -159,10 +159,10 @@ Group {
 
         Group {
           LayoutMode: Full;
-          Anchor: (Left: 0, Right: 0, Top: 0, Height: 60);
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 70);
 
           Group {
-            Anchor: (Left: 0, Top: 0, Width: 44, Height: 44);
+            Anchor: (Left: 0, Top: 0, Width: 60, Height: 60);
             LayoutMode: Full;
             Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 6);
             Padding: (Full: 3);
@@ -173,23 +173,23 @@ Group {
               Background: #141820(0.82);
 
               ItemIcon #ProfessionActiveCard1Icon {
-                Anchor: (Width: 32, Height: 32);
+                Anchor: (Width: 48, Height: 48);
               }
             }
           }
 
           Label #ProfessionActiveCard1Name {
-            Anchor: (Left: 54, Right: 0, Top: 0, Height: 36);
+            Anchor: (Left: 70, Right: 0, Top: 0, Height: 36);
             Style: (FontSize: 22, TextColor: #F2E8D8, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: Start);
             Text: "";
           }
 
           Group {
-            Anchor: (Left: 54, Right: 0, Top: 36, Height: 22);
+            Anchor: (Left: 70, Right: 0, Top: 36, Height: 22);
             LayoutMode: Left;
 
             Group {
-              Background: #31C677(1.0);
+              Background: #25793C(1.0);
               Padding: (Horizontal: 6, Vertical: 2);
 
               Label #ProfessionActiveCard1LevelBadge {
@@ -209,7 +209,7 @@ Group {
         }
 
         Group #ProfessionActiveCard1ProgBar {
-          Anchor: (Left: 0, Right: 0, Top: 62, Bottom: 32);
+          Anchor: (Left: 0, Right: 0, Top: 72, Bottom: 32);
           Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
           ProgressBar #ProfessionActiveCard1ProgBarFill {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);

@@ -1,126 +1,165 @@
 Group {
   Group #XPPanel {
-    Anchor: (Top: 130, Left: 12, Width: 198, Height: 96);
-    Background: (TexturePath: "Common/DropdownBox.png", Border: 16, Color: #00000052);
-    LayoutMode: Top;
-    Padding: (Horizontal: 8, Vertical: 6);
+    Anchor: (Top: 130, Left: 12, Width: 240, Height: 127);
+    Background: PatchStyle(TexturePath: "Elements/HudPanel.png", Border: 10);
+    LayoutMode: Full;
 
-    Group #Job1Row {
-      Anchor: (Height: 40);
-      LayoutMode: Top;
+    Group #HudBorder {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+      LayoutMode: Full;
 
-      Group {
-        Anchor: (Height: 22);
-        LayoutMode: Left;
-
-        Group #Job1LevelBg {
-          Anchor: (Width: 48, Height: 20);
-          Background: #2E7D4FFF;
-          LayoutMode: Middle;
-          Label #Job1Level {
-            Text: " ";
-            Style: (FontSize: 10, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-          }
-        }
-
-        Group { Anchor: (Width: 4); }
-
-        ItemGrid #Job1Icon {
-          SlotsPerRow: 1;
-          AreItemsDraggable: false;
-          DisplayItemQuantity: false;
-          Anchor: (Width: 20, Height: 20);
-        }
-
-        Group { Anchor: (Width: 4); }
-
-        Label #Job1Name {
-          Anchor: (Height: 20, Width: 47);
-          Text: " ";
-          Style: (FontSize: 11, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
-        }
-
-        Label #Job1XPText {
-          Anchor: (Height: 20, Width: 65);
-          Text: " ";
-          Style: (FontSize: 9, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
-        }
+      Group #CornerTL {
+        Anchor: (Left: 2, Top: 2, Width: 14, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Decorated_Border.png", Border: 0);
       }
-
-      Group { Anchor: (Height: 4); }
-
-      Group #Job1ProgBar {
-        Anchor: (Left: 0, Right: 0, Height: 14);
-        Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
-        ProgressBar #Job1ProgBarFill {
-          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-          Value: 0.0;
-          BarTexturePath: "Elements/Gauge_Fill.png";
-        }
+      Group #CornerTR {
+        Anchor: (Right: 2, Top: 2, Width: 14, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Decorated_Border_TR.png", Border: 0);
+      }
+      Group #CornerBL {
+        Anchor: (Left: 2, Bottom: 2, Width: 14, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Decorated_Border_BL.png", Border: 0);
+      }
+      Group #CornerBR {
+        Anchor: (Right: 2, Bottom: 2, Width: 14, Height: 14);
+        Background: PatchStyle(TexturePath: "Elements/Decorated_Border_BR.png", Border: 0);
       }
     }
 
-    Group #JobSeparator {
-      Anchor: (Height: 6);
-      LayoutMode: Middle;
-
-      Group {
-        Anchor: (Left: 0, Right: 0, Height: 1);
-        Background: #7A5A10;
-      }
-    }
-
-    Group #Job2Row {
-      Anchor: (Height: 40);
+    Group #HudContent {
+      Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
       LayoutMode: Top;
+      Padding: (Horizontal: 12, Vertical: 8);
 
-      Group {
-        Anchor: (Height: 22);
-        LayoutMode: Left;
+      Group #Job1Row {
+        Anchor: (Height: 48);
+        LayoutMode: Top;
 
-        Group #Job2LevelBg {
-          Anchor: (Width: 48, Height: 20);
-          Background: #2E7D4FFF;
-          LayoutMode: Middle;
-          Label #Job2Level {
-            Text: " ";
-            Style: (FontSize: 10, TextColor: #FFFFFF, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Group {
+          Anchor: (Height: 26);
+          LayoutMode: Left;
+
+          Group #Job1LevelBg {
+            Anchor: (Width: 50, Height: 26);
+            LayoutMode: Middle;
+            Label #Job1Level {
+              Text: " ";
+              Style: (FontSize: 14, TextColor: #E8C84A, RenderBold: true, HorizontalAlignment: Start, VerticalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 5); }
+
+          Group #Job1Icon {
+            Anchor: (Width: 25, Height: 25);
+          }
+
+          Group { Anchor: (Width: 5); }
+
+          Group {
+            FlexWeight: 1;
+            Anchor: (Height: 24);
+            Label #Job1Name {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Text: " ";
+              Style: (FontSize: 13, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Start, VerticalAlignment: Center);
+            }
+          }
+
+          Group {
+            Anchor: (Height: 24, Width: 80);
+            LayoutMode: Left;
+            Padding: (Left: 5);
+
+            Label #Job1XPText {
+              Anchor: (Height: 24, Width: 75);
+              Text: " ";
+              Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
           }
         }
 
-        Group { Anchor: (Width: 4); }
+        Group { Anchor: (Height: 5); }
 
-        ItemGrid #Job2Icon {
-          SlotsPerRow: 1;
-          AreItemsDraggable: false;
-          DisplayItemQuantity: false;
-          Anchor: (Width: 20, Height: 20);
-        }
-
-        Group { Anchor: (Width: 4); }
-
-        Label #Job2Name {
-          Anchor: (Height: 20, Width: 47);
-          Text: " ";
-          Style: (FontSize: 11, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center);
-        }
-
-        Label #Job2XPText {
-          Anchor: (Height: 20, Width: 65);
-          Text: " ";
-          Style: (FontSize: 9, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+        Group #Job1ProgBar {
+          Anchor: (Left: 0, Right: 0, Height: 17);
+          Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+          ProgressBar #Job1ProgBarFill {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Value: 0.0;
+            BarTexturePath: "Elements/Gauge_Fill.png";
+          }
         }
       }
 
-      Group { Anchor: (Height: 4); }
+      Group #JobSeparator {
+        Anchor: (Height: 15);
+        LayoutMode: Middle;
 
-      Group #Job2ProgBar {
-        Anchor: (Left: 0, Right: 0, Height: 14);
-        Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
-        ProgressBar #Job2ProgBarFill {
-          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-          Value: 0.0;
-          BarTexturePath: "Elements/Gauge_Fill.png";
+        Group {
+          Anchor: (Left: 0, Right: 0, Height: 1);
+          Background: #443C23;
+        }
+      }
+
+      Group #Job2Row {
+        Anchor: (Height: 48);
+        LayoutMode: Top;
+
+        Group {
+          Anchor: (Height: 26);
+          LayoutMode: Left;
+
+          Group #Job2LevelBg {
+            Anchor: (Width: 50, Height: 26);
+            LayoutMode: Middle;
+            Label #Job2Level {
+              Text: " ";
+              Style: (FontSize: 14, TextColor: #E8C84A, RenderBold: true, HorizontalAlignment: Start, VerticalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 5); }
+
+          Group #Job2Icon {
+            Anchor: (Width: 25, Height: 25);
+          }
+
+          Group { Anchor: (Width: 5); }
+
+          Group {
+            FlexWeight: 1;
+            Anchor: (Height: 24);
+            Label #Job2Name {
+              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+              Text: " ";
+              Style: (FontSize: 13, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Start, VerticalAlignment: Center);
+            }
+          }
+
+          Group {
+            Anchor: (Height: 24, Width: 80);
+            LayoutMode: Left;
+            Padding: (Left: 5);
+
+            Label #Job2XPText {
+              Anchor: (Height: 24, Width: 75);
+              Text: " ";
+              Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+        }
+
+        Group { Anchor: (Height: 5); }
+
+        Group #Job2ProgBar {
+          Anchor: (Left: 0, Right: 0, Height: 17);
+          Background: PatchStyle(TexturePath: "Elements/Gauge.png", Border: 0);
+          ProgressBar #Job2ProgBarFill {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Value: 0.0;
+            BarTexturePath: "Elements/Gauge_Fill.png";
+          }
         }
       }
     }
