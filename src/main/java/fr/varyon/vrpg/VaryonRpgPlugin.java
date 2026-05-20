@@ -37,6 +37,12 @@ import fr.varyon.vrpg.profession.forestier.ForestierPickupSystem;
 import fr.varyon.vrpg.profession.forestier.PoumonLoutreTickSystem;
 import fr.varyon.vrpg.profession.forestier.RodeurSylvestreTickSystem;
 import fr.varyon.vrpg.profession.forestier.RodeurSylvestreFallSystem;
+import fr.varyon.vrpg.profession.chasseur.ChasseurComboTracker;
+import fr.varyon.vrpg.profession.chasseur.ChasseurKillSystem;
+import fr.varyon.vrpg.profession.chasseur.ChasseurPickupSystem;
+import fr.varyon.vrpg.profession.chasseur.RodeurDunesTickSystem;
+import fr.varyon.vrpg.profession.chasseur.RodeurDunesFallSystem;
+import fr.varyon.vrpg.profession.chasseur.SecondSouffleTickSystem;
 import fr.varyon.vrpg.profession.chasseur.YeuxLynxTickSystem;
 import fr.varyon.vrpg.profession.forestier.GuardianWoodManager;
 import fr.varyon.vrpg.profession.forestier.GuardianWoodTickSystem;
@@ -81,6 +87,10 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private GuardianWoodManager guardianWoodManager;
     private PoumonLoutreTickSystem poumonLoutreTickSystem;
     private RodeurSylvestreTickSystem rodeurSylvestreTickSystem;
+    private ChasseurComboTracker chasseurComboTracker;
+    private ChasseurKillSystem chasseurKillSystem;
+    private RodeurDunesTickSystem rodeurDunesTickSystem;
+    private SecondSouffleTickSystem secondSouffleTickSystem;
     private YeuxLynxTickSystem yeuxLynxTickSystem;
     private YeuxHibouTickSystem yeuxHibouTickSystem;
     private LitDeFortuneTickSystem litDeFortuneTickSystem;
@@ -124,6 +134,10 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.guardianWoodManager = new GuardianWoodManager();
             this.poumonLoutreTickSystem = new PoumonLoutreTickSystem(professionManager);
             this.rodeurSylvestreTickSystem = new RodeurSylvestreTickSystem(professionManager);
+            this.chasseurComboTracker = new ChasseurComboTracker();
+            this.chasseurKillSystem = new ChasseurKillSystem(professionManager, chasseurComboTracker);
+            this.rodeurDunesTickSystem = new RodeurDunesTickSystem(professionManager);
+            this.secondSouffleTickSystem = new SecondSouffleTickSystem(professionManager);
             this.yeuxLynxTickSystem = new YeuxLynxTickSystem(professionManager);
             this.yeuxHibouTickSystem = new YeuxHibouTickSystem(professionManager);
             this.litDeFortuneTickSystem = new LitDeFortuneTickSystem(professionManager);
@@ -261,6 +275,9 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                     if (yeuxLynxTickSystem != null) yeuxLynxTickSystem.removePlayer(ref.getUuid());
                     if (yeuxHibouTickSystem != null) yeuxHibouTickSystem.removePlayer(ref.getUuid());
                     if (litDeFortuneTickSystem != null) litDeFortuneTickSystem.removePlayer(ref.getUuid());
+                    if (chasseurComboTracker != null) chasseurComboTracker.remove(ref.getUuid());
+                    if (rodeurDunesTickSystem != null) rodeurDunesTickSystem.removePlayer(ref.getUuid());
+                    if (secondSouffleTickSystem != null) secondSouffleTickSystem.removePlayer(ref.getUuid());
                     if (farmerPickupHarvestSystem != null) farmerPickupHarvestSystem.removePlayer(ref.getUuid());
                     if (farmerAnimalDropSystem != null) farmerAnimalDropSystem.removePlayer(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
@@ -410,6 +427,37 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register FarmerAnimalDropSystem");
         }
+
+        try {
+            getEntityStoreRegistry().registerSystem(chasseurKillSystem.new AttackTagger());
+            getEntityStoreRegistry().registerSystem(chasseurKillSystem.new DropOnDeath());
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ChasseurKillSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new ChasseurPickupSystem(professionManager, chasseurComboTracker));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ChasseurPickupSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(rodeurDunesTickSystem);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register RodeurDunesTickSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new RodeurDunesFallSystem(rodeurDunesTickSystem));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register RodeurDunesFallSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(secondSouffleTickSystem);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register SecondSouffleTickSystem");
+        }
     }
 
     @Override
@@ -428,6 +476,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         if (comboTracker != null) comboTracker.clear();
         if (farmerComboTracker != null) farmerComboTracker.clear();
         if (forestierComboTracker != null) forestierComboTracker.clear();
+        if (chasseurComboTracker != null) chasseurComboTracker.clear();
         instance = null;
     }
 }

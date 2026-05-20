@@ -411,7 +411,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"15% durabilité",       "30% durabilité",        "45% durabilité",        "60% durabilité",        "75% durabilité"},
         {"5% fleurs/champi",     "10% fleurs/champi",     "15% fleurs/champi",     "20% fleurs/champi",     "25% fleurs/champi"},
         {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"},
-        {"4% vit / 10% chute",   "8% vit / 20% chute",   "12% vit / 30% chute",  "16% vit / 40% chute",  "20% vit / 50% chute"},
+        {"10% vit / 10% chute",  "15% vit / 15% chute",  "20% vit / 20% chute",  "25% vit / 25% chute",  "30% vit / 30% chute"},
         {"5% loot rare",         "10% loot rare",         "15% loot rare",         "20% loot rare",         "25% loot rare"},
         {"Vision faible",        "Vision modérée",        "Vision renforcée",      "Vision avancée",        "Vision parfaite"},
         {"Grappin Fer, Émeraude, Diamant, Rubis, Saphir, Topaze, Zéphyr débloqués", "Grappin Thorium & Cobalt débloqués", "Grappin Adamantite débloqué"},
@@ -439,11 +439,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     );
 
     private static final String[][] CHASSEUR_TREE_NODES = {
-        {"0",  "Poches Pleines",       "Passif", "Une chasse rentable est une chasse réussie.",                                "Chance de doubler les ressources obtenues sur les créatures.",                                   "Jobs_Icons/Monster_Loot.png"},
+        {"0",  "Mains du Boucher",     "Passif", "Un vrai chasseur sait où couper.",                                          "Augmente les ressources obtenues sur la viande, le cuir et les plumes.",                        "Jobs_Icons/Leather_Loot.png"},
         {"1",  "Instinct Sauvage",     "Passif", "Plus la traque dure, plus le prédateur apprend.",                           "Augmente l'expérience gagnée en chassant.",                                                      "Jobs_Icons/Xp_Boost.png"},
-        {"2",  "Sang de Bête",         "Passif", "Certaines créatures laissent derrière elles plus que des carcasses.",       "Chance d'obtenir des Essences de Chasseur sur les créatures.",                                   "Jobs_Icons/Hide_Special.png"},
+        {"2",  "Marque du Prédateur",  "Passif", "Certaines créatures laissent derrière elles plus que des carcasses.",       "Chance d'obtenir des Essences de Chasseur sur les créatures.",                                   "Jobs_Icons/Hide_Special.png"},
         {"3",  "Kit Renforcé",         "Passif", "Un bon arc encaisse autant que son porteur.",                               "Réduit l'usure de vos armes de chasse.",                                                         "Jobs_Icons/Hunter_Weapon_Durability.png"},
-        {"4",  "Mains du Boucher",     "Passif", "Un vrai chasseur sait où couper.",                                          "Augmente les ressources obtenues sur la viande, le cuir et les plumes.",                        "Jobs_Icons/Leather_Loot.png"},
+        {"4",  "Dépouilleur",          "Passif", "Les meilleures prises ne se laissent jamais partir sans récompense.",       "Chance de doubler les ressources obtenues sur les créatures.",                                   "Jobs_Icons/Monster_Loot.png"},
         {"5",  "Chasse Frénétique",    "Passif", "Quand la poursuite commence, difficile de s'arrêter.",                     "Éliminer plusieurs créatures rapidement déclenche un combo augmentant les gains.",               "Jobs_Icons/Combo_Killing.png"},
         {"6",  "Rôdeur des Dunes",     "Passif", "Le désert finit toujours par respecter ceux qui le traversent.",           "Augmente votre vitesse dans les zones désertiques et réduit les dégâts de chute.",               "Jobs_Icons/Forest_Runner.png"},
         {"7",  "Matériaux Exotiques",  "Passif", "Les créatures rares laissent rarement des matériaux ordinaires.",          "Augmente les chances d'obtenir de la chitine, du venin, des os et de la laine.",                 "Jobs_Icons/Exotic_Loot.png"},
@@ -498,11 +498,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int[] CHASSEUR_MAX_RANKS = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 1, 1, 1, 1};
 
     private static final String[][] CHASSEUR_NODE_STAT_VALUES = {
-        {"5% loot",                    "10% loot",                    "15% loot",                    "20% loot",                    "25% loot"},
+        {"5% viande/cuir/plumes",      "10% viande/cuir/plumes",      "15% viande/cuir/plumes",      "20% viande/cuir/plumes",      "25% viande/cuir/plumes"},
         {"5% XP",                      "10% XP",                      "15% XP",                      "20% XP",                      "25% XP"},
         {"1% essence",                 "1.5% essence",                "2% essence",                  "2.5% essence",                "3% essence"},
         {"15% durabilité",             "30% durabilité",              "45% durabilité",              "60% durabilité",              "75% durabilité"},
-        {"5% viande/cuir/plumes",      "10% viande/cuir/plumes",      "15% viande/cuir/plumes",      "20% viande/cuir/plumes",      "25% viande/cuir/plumes"},
+        {"5% loot",                    "10% loot",                    "15% loot",                    "20% loot",                    "25% loot"},
         {"5% XP & loot",               "10% XP & loot",               "15% XP & loot",               "20% XP & loot",               "25% XP & loot"},
         {"4% vit / 10% chute",         "8% vit / 20% chute",          "12% vit / 30% chute",         "16% vit / 40% chute",         "20% vit / 50% chute"},
         {"5% exotiques",               "10% exotiques",               "15% exotiques",               "20% exotiques",               "25% exotiques"},

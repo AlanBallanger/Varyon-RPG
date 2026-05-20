@@ -1,4 +1,4 @@
-package fr.varyon.vrpg.profession.forestier;
+package fr.varyon.vrpg.profession.chasseur;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -13,12 +13,12 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nullable;
 
-public final class RodeurSylvestreFallSystem extends DamageEventSystem {
+public final class RodeurDunesFallSystem extends DamageEventSystem {
 
-    private final RodeurSylvestreTickSystem tickSystem;
+    private final RodeurDunesTickSystem tickSystem;
     private final ComponentType<EntityStore, PlayerRef> playerRefType = PlayerRef.getComponentType();
 
-    public RodeurSylvestreFallSystem(RodeurSylvestreTickSystem tickSystem) {
+    public RodeurDunesFallSystem(RodeurDunesTickSystem tickSystem) {
         this.tickSystem = tickSystem;
     }
 

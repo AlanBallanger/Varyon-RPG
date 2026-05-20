@@ -1,4 +1,4 @@
-package fr.varyon.vrpg.profession.forestier;
+package fr.varyon.vrpg.profession.chasseur;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityStore> {
+public final class RodeurDunesTickSystem extends EntityTickingSystem<EntityStore> {
 
     private static final int CHECK_INTERVAL = 20;
     private static final String NODE_ID = "6";
@@ -37,7 +37,7 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
     private Method getZoneNameMethod;
     private Object zoneConfig;
 
-    public RodeurSylvestreTickSystem(ProfessionManager professionManager) {
+    public RodeurDunesTickSystem(ProfessionManager professionManager) {
         this.professionManager = professionManager;
     }
 
@@ -61,12 +61,12 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
 
         try {
             PlayerAccount acc = professionManager.getAccount(uuid);
-            if (acc == null || !acc.isActive(Profession.FORESTIER)) {
+            if (acc == null || !acc.isActive(Profession.CHASSEUR)) {
                 deactivate(uuid, chunk, index, store);
                 return;
             }
 
-            int rank = acc.getTalentRank(Profession.FORESTIER, NODE_ID);
+            int rank = acc.getTalentRank(Profession.CHASSEUR, NODE_ID);
             if (rank == 0) {
                 deactivate(uuid, chunk, index, store);
                 return;
@@ -74,15 +74,15 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
 
             Ref<EntityStore> ref = chunk.getReferenceTo(index);
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
-            boolean inForest = false;
+            boolean inDesert = false;
             if (transform != null) {
                 var pos = transform.getPosition();
-                inForest = isInForestZone(pos.x, pos.z);
+                inDesert = isInDesertZone(pos.x, pos.z);
             }
 
             int prev = activeRanks.getOrDefault(uuid, 0);
 
-            if (!inForest) {
+            if (!inDesert) {
                 if (prev != 0) deactivate(uuid, chunk, index, store);
                 return;
             }
@@ -99,7 +99,6 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
         try {
             MovementManager mm = store.getComponent(ref, MovementManager.getComponentType());
             if (mm == null) return;
-
             float defaultSpeed = mm.getDefaultSettings().baseSpeed;
             mm.getSettings().baseSpeed = defaultSpeed * (1.0f + (rank + 1) * 0.05f);
             mm.update(playerRef.getPacketHandler());
@@ -118,15 +117,14 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
         }
     }
 
-    private boolean isInForestZone(double x, double z) {
+    private boolean isInDesertZone(double x, double z) {
         try {
             if (!zoneReflectionInit) initZoneReflection();
             if (!zoneReflectionAvailable) return false;
-
             Object zone = getZoneAtPositionMethod.invoke(null, x, z, zoneConfig);
             if (zone == null) return false;
             String name = (String) getZoneNameMethod.invoke(zone);
-            return name != null && name.contains("Forest");
+            return name != null && name.contains("Desert");
         } catch (Exception ignored) {}
         return false;
     }
@@ -138,13 +136,10 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
             Class<?> pluginClass = Class.forName("com.varyon.VaryonPlugin");
             Object varyonPlugin = pluginClass.getMethod("getInstance").invoke(null);
             if (varyonPlugin == null) return;
-
             Object configManager = pluginClass.getMethod("getConfigManager").invoke(varyonPlugin);
             if (configManager == null) return;
-
             zoneConfig = configManager.getClass().getMethod("getZoneConfig").invoke(configManager);
             if (zoneConfig == null) return;
-
             Class<?> zoneConfigClass = Class.forName("com.varyon.config.ZoneConfig");
             getZoneAtPositionMethod = Class.forName("com.varyon.util.ZoneCalculator")
                 .getMethod("getZoneAtPosition", double.class, double.class, zoneConfigClass);
