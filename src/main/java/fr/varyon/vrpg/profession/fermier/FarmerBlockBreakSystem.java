@@ -83,19 +83,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         String id = rawId.startsWith("hytale:") ? rawId.substring(7) : rawId;
         if (id.startsWith("*")) id = id.substring(1);
 
-        if (event.getTargetBlock() != null) {
-            int gx = event.getTargetBlock().x;
-            int gy = event.getTargetBlock().y;
-            int gz = event.getTargetBlock().z;
-            boolean isGuard = guardianCropManager.isGuardian(gx, gy, gz);
-            if (dbg) LOGGER.atInfo().log("[GardienChamps] breakCheck pos(" + gx + "," + gy + "," + gz + ") isGuardian=" + isGuard + " id=" + rawId);
-            if (isGuard) {
-                PlayerRef pr = archetypeChunk.getComponent(index, playerRefType);
-                if (pr != null) handleGuardianCropBreak(event, pr, store, gx, gy, gz);
-                return;
-            }
-        }
-
         if (!FarmerXpTable.isCrop(id)) {
             if (dbg) LOGGER.atInfo().log("[Fermier-DBG] bloc ignoré (pas une culture) id=" + id);
             return;
@@ -210,27 +197,11 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         // Node 11 — Gardiens des Champs : chance de faire apparaître un gardien (0.5% par rang)
         int guardianRank = acc.getTalentRank(Profession.FERMIER, "11");
         if (guardianRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < guardianRank * 0.005) {
-            Player player = null;
-            try { player = playerRef.getComponent(Player.getComponentType()); } catch (Exception ignored) {}
-            if (player != null) {
-                World world = player.getWorld();
-                if (world != null) {
-                    int bx = event.getTargetBlock().x;
-                    int by = event.getTargetBlock().y;
-                    int bz = event.getTargetBlock().z;
-                    if (dbg) LOGGER.atInfo().log(dbgId + "N11 GardienDesChamps PROC — pos(" + bx + "," + by + "," + bz + ") block=" + rawId);
-                    final World w = world;
-                    final String guardianBlockId = rawId;
-                    guardianCropManager.queueRepop(() -> {
-                        try {
-                            w.setBlock(bx, by, bz, guardianBlockId);
-                            guardianCropManager.track(bx, by, bz);
-                        } catch (Exception e) {
-                            LOGGER.atWarning().withCause(e).log("[GardienChamps] setBlock ERREUR pos=" + bx + "," + by + "," + bz);
-                        }
-                    });
-                }
-            }
+            int bx = event.getTargetBlock().x;
+            int by = event.getTargetBlock().y;
+            int bz = event.getTargetBlock().z;
+            if (dbg) LOGGER.atInfo().log(dbgId + "N11 GardienDesChamps PROC — pos(" + bx + "," + by + "," + bz + ")");
+            spawnCowUndead(store, new Vector3d(bx + 0.5, by, bz + 0.5));
         }
 
         Inventory inventory = null;

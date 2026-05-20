@@ -1,0 +1,36 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Log_Ghost.name",
+    "Description": "server.items.Log_Ghost.description"
+  },
+  "Parent": "Wood_Oak_Trunk",
+  "Quality": "Uncommon",
+  "ItemLevel": 10,
+  "Icon": "Icons/ItemsGenerated/Log_Ghost.png",
+  "BlockType": {
+    "Gathering": {
+      "Breaking": {
+        "ItemId": "Log_Ghost",
+        "GatherType": "Woods"
+      }
+    },
+    "Textures": [
+      {
+        "Sides": "Resources/Logs/Logs_Textures/Ghost.png",
+        "UpDown": "Resources/Logs/Logs_Textures/Ghost.png",
+        "Weight": 1
+      }
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Wood",
+      "Trunk"
+    ],
+    "Family": [
+      "Ghost"
+    ]
+  },
+  "MaxStack": 25,
+  "DropOnDeath": true
+}

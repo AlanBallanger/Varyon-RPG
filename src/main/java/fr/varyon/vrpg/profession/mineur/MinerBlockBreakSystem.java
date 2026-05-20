@@ -89,21 +89,15 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
         if (blockType == null) return;
 
         String rawId = String.valueOf(blockType.getId());
-        boolean isGuardian = GuardianStoneManager.GUARDIAN_BLOCK_ID.equals(rawId);
         String xpKey = MinerXpTable.resolveXpKey(rawId);
         long baseXp = MinerXpTable.getXp(xpKey);
         boolean isOre = baseXp > 0;
-        boolean isRock = !isGuardian && rawId.toLowerCase().contains("rock");
-        if (!isOre && !isRock && !isGuardian) return;
+        boolean isRock = rawId.toLowerCase().contains("rock");
+        if (!isOre && !isRock) return;
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) return;
         UUID playerUuid = playerRef.getUuid();
-
-        if (isGuardian) {
-            handleGuardianBreak(event, playerRef, store);
-            return;
-        }
 
         PlayerAccount acc = professionManager.getAccount(playerUuid);
         if (acc == null) return;
@@ -258,25 +252,13 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
 
             int guardianRank = acc.getTalentRank(Profession.MINEUR, "9");
             double guardianChance = Math.min(guardianRank * GUARDIAN_SPAWN_RATE_PER_RANK * GUARDIAN_SPAWN_MULTIPLIER_TEMP, GUARDIAN_SPAWN_RATE_MAX);
-            if (guardianRank > 0 && event.getTargetBlock() != null && player != null
+            if (guardianRank > 0 && event.getTargetBlock() != null
                     && RANDOM.nextDouble() < guardianChance) {
                 int bx = event.getTargetBlock().x;
                 int by = event.getTargetBlock().y;
                 int bz = event.getTargetBlock().z;
-                World gw = player.getWorld();
-                if (dbg) LOGGER.atInfo().log(dbgId + "N9 GardienDePierre PROC — spawn shell pos(" + bx + "," + by + "," + bz + ")");
-                if (gw != null) {
-                    final World wGuard = gw;
-                    final int gx = bx, gy = by, gz = bz;
-                    guardianManager.queueRepop(() -> {
-                        try {
-                            wGuard.setBlock(gx, gy, gz, GuardianStoneManager.GUARDIAN_BLOCK_ID);
-                            guardianManager.trackShellForParticles(gx, gy, gz);
-                        } catch (Exception e) {
-                            LOGGER.atWarning().withCause(e).log("[GardienPierre] setBlock/trackShell pos=" + gx + "," + gy + "," + gz);
-                        }
-                    });
-                }
+                if (dbg) LOGGER.atInfo().log(dbgId + "N9 GardienDePierre PROC — pos(" + bx + "," + by + "," + bz + ")");
+                spawnGuardianGolem(store, new Vector3d(bx + 0.5, by, bz + 0.5));
             }
         }
 

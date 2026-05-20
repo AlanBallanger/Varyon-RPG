@@ -19,9 +19,14 @@ import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.npc.NPCPlugin;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -71,15 +76,20 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
         return dirs;
     }
 
+    private static final String GUARDIAN_NPC_ID = "Wolf_Black";
+
     private final ProfessionManager professionManager;
     private final ForestierComboTracker comboTracker;
+    private final GuardianWoodManager guardianWoodManager;
     private final ComponentType<EntityStore, PlayerRef> playerRefType = PlayerRef.getComponentType();
 
     public ForestierBlockBreakSystem(@Nonnull ProfessionManager professionManager,
-                                     @Nonnull ForestierComboTracker comboTracker) {
+                                     @Nonnull ForestierComboTracker comboTracker,
+                                     @Nonnull GuardianWoodManager guardianWoodManager) {
         super(BreakBlockEvent.class);
         this.professionManager = professionManager;
         this.comboTracker = comboTracker;
+        this.guardianWoodManager = guardianWoodManager;
     }
 
     @Override
@@ -99,6 +109,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
         if (blockType == null) return;
 
         String rawId = String.valueOf(blockType.getId());
+
         boolean isLog    = ForestierXpTable.isLog(rawId);
         boolean isForage = ForestierXpTable.isForageBlock(rawId);
         if (!isLog && !isForage) return;
@@ -215,6 +226,16 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                 } catch (Exception ignored) {}
             }
 
+            // Node 10 — Gardien Sylvestre : chance d'invoquer un Wolf_Black (0.5% par rang)
+            int gardienRank = acc.getTalentRank(Profession.FORESTIER, "10");
+            if (gardienRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < gardienRank * 0.005) {
+                int bx = event.getTargetBlock().x;
+                int by = event.getTargetBlock().y;
+                int bz = event.getTargetBlock().z;
+                if (dbg) LOGGER.atInfo().log(dbgId + "N10 GardienSylvestre PROC — pos(" + bx + "," + by + "," + bz + ")");
+                spawnWolfBlack(store, new Vector3d(bx + 0.5, by, bz + 0.5));
+            }
+
             // Node 12 — Retour aux Racines : abat l'arbre quand la coupe sectionne le tronc du sol
             int racinRank = acc.getTalentRank(Profession.FORESTIER, "12");
             if (racinRank > 0 && event.getTargetBlock() != null) {
@@ -328,6 +349,30 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                     }
                 }
             }
+        }
+    }
+
+    private static void spawnWolfBlack(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
+        LOGGER.atInfo().log("[GardienSylvestre] spawnNPC Wolf_Black — pos=" + pos);
+        try {
+            var pair = NPCPlugin.get().spawnNPC(store, GUARDIAN_NPC_ID, null, pos, new Vector3f(0f, 0f, 0f));
+            if (pair == null) {
+                LOGGER.atWarning().log("[GardienSylvestre] spawnNPC retourné null — vérifier le role name 'Wolf_Black'");
+                return;
+            }
+            com.hypixel.hytale.component.Ref<EntityStore> wolfRef = pair.left();
+            EntityStatMap statMap = store.getComponent(wolfRef, EntityStatMap.getComponentType());
+            if (statMap == null) {
+                LOGGER.atWarning().log("[GardienSylvestre] EntityStatMap null sur Wolf_Black");
+                return;
+            }
+            int healthIdx = DefaultEntityStatTypes.getHealth();
+            statMap.putModifier(healthIdx, "guardian_wood_hp",
+                new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.MULTIPLICATIVE, 2.0f));
+            statMap.maximizeStatValue(healthIdx);
+            LOGGER.atInfo().log("[GardienSylvestre] Wolf_Black spawned OK pos=" + pos);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[GardienSylvestre] spawnNPC ERREUR pos=" + pos);
         }
     }
 
