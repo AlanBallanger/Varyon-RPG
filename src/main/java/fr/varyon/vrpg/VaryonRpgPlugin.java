@@ -31,6 +31,9 @@ import fr.varyon.vrpg.profession.fermier.FarmerPlaceCropSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerPickupHarvestSystem;
 import fr.varyon.vrpg.profession.fermier.GuardianCropManager;
 import fr.varyon.vrpg.profession.fermier.GuardianCropTickSystem;
+import fr.varyon.vrpg.profession.forestier.ForestierBlockBreakSystem;
+import fr.varyon.vrpg.profession.forestier.ForestierComboTracker;
+import fr.varyon.vrpg.profession.forestier.ForestierPickupSystem;
 import fr.varyon.vrpg.profession.mineur.BagCraftRestrictionSystem;
 import fr.varyon.vrpg.profession.mineur.ExplosionTalentSystem;
 import fr.varyon.vrpg.profession.mineur.MinerComboTracker;
@@ -66,6 +69,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private VpaSurfaceCommand surfaceCommand;
     private VpaBlastCommand blastCommand;
     private ExplosionTalentSystem explosionTalentSystem;
+    private ForestierComboTracker forestierComboTracker;
 
     private final ConcurrentHashMap<UUID, PlayerRef> pendingProfessionHudInit = new ConcurrentHashMap<>();
 
@@ -102,6 +106,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.guardianCropManager = new GuardianCropManager();
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
+            this.forestierComboTracker = new ForestierComboTracker();
             this.surfaceCommand = new VpaSurfaceCommand();
             this.blastCommand = new VpaBlastCommand(explosionTalentSystem);
         } catch (Exception e) {
@@ -157,7 +162,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                 if (itemId == null) return;
                 boolean isOreBag = BagCraftRestrictionSystem.ORE_BAG_IDS.contains(itemId);
                 boolean isCropBag = BagCraftRestrictionSystem.CROP_BAG_IDS.contains(itemId);
-                if (!isOreBag && !isCropBag) return;
+                boolean isWoodBag = BagCraftRestrictionSystem.WOOD_BAG_IDS.contains(itemId);
+                if (!isOreBag && !isCropBag && !isWoodBag) return;
                 Player player = event.getPlayer();
                 if (player == null) return;
                 PlayerRef ref = player.getPlayerRef();
@@ -169,6 +175,10 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                     ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.MINEUR)
                         && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.MINEUR, "13") > 0;
                     msg = "Besace du Foreur — talent Mineur (nœud 13) requis.";
+                } else if (isWoodBag) {
+                    ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.FORESTIER)
+                        && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.FORESTIER, "13") > 0;
+                    msg = "Besace du Forestier — talent Forestier (nœud 13) requis.";
                 } else {
                     ok = acc != null && acc.isActive(fr.varyon.vrpg.rpg.Profession.FERMIER)
                         && acc.getTalentRank(fr.varyon.vrpg.rpg.Profession.FERMIER, "16") > 0;
@@ -225,6 +235,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
                     professionManager.onPlayerDisconnect(ref.getUuid());
                     if (comboTracker != null) comboTracker.remove(ref.getUuid());
                     if (farmerComboTracker != null) farmerComboTracker.remove(ref.getUuid());
+                    if (forestierComboTracker != null) forestierComboTracker.remove(ref.getUuid());
                     if (farmerPickupHarvestSystem != null) farmerPickupHarvestSystem.removePlayer(ref.getUuid());
                     if (farmerAnimalDropSystem != null) farmerAnimalDropSystem.removePlayer(ref.getUuid());
                     if (veinCooldownTracker != null) veinCooldownTracker.remove(ref.getUuid());
@@ -270,6 +281,18 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(explosionTalentSystem);
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ExplosionTalentSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new ForestierBlockBreakSystem(professionManager, forestierComboTracker));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ForestierBlockBreakSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new ForestierPickupSystem(professionManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ForestierPickupSystem");
         }
 
         try {
@@ -336,6 +359,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         if (veinCooldownTracker != null) veinCooldownTracker.clear();
         if (comboTracker != null) comboTracker.clear();
         if (farmerComboTracker != null) farmerComboTracker.clear();
+        if (forestierComboTracker != null) forestierComboTracker.clear();
         instance = null;
     }
 }
