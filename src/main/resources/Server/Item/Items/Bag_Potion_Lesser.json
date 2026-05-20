@@ -1,0 +1,86 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Bag_Potion_Lesser.name",
+    "Description": "server.items.Bag_Potion_Lesser.description"
+  },
+  "PlayerAnimationsId": "Item",
+  "Categories": [
+    "Items.Tools"
+  ],
+  "MaxStack": 1,
+  "IconProperties": {
+    "Scale": 1,
+    "Rotation": [
+      327,
+      162,
+      0
+    ],
+    "Translation": [
+      2,
+      -10
+    ]
+  },
+  "Model": "Items/NoCube_Bag_Resource_Lesser.blockymodel",
+  "Texture": "Items/NoCube_Bag_Potion.png",
+  "Scale": 1.5,
+  "Tags": {
+    "Type": [
+      "Utility"
+    ]
+  },
+  "Container": {
+    "Capacity": 18,
+    "ItemTag": "Type=Potion"
+  },
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenItemStackContainer"
+        },
+        {
+          "Type": "Simple",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Drop_Armor_Cloth"
+          }
+        }
+      ]
+    }
+  },
+  "Icon": "Icons/Items/NoCube_Bag_Potion_Lesser.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Fibre",
+        "Quantity": 10
+      },
+      {
+        "ItemId": "Ingredient_Hide_Light",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Workbench",
+        "Categories": [
+          "Workbench_Tinkering"
+        ]
+      }
+    ]
+  },
+  "ItemLevel": 10,
+  "ItemSoundSetId": "ISS_Items_Cloth",
+  "DropOnDeath": false
+}

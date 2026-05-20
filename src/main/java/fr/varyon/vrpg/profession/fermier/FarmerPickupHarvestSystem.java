@@ -37,6 +37,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
     private static final long COMBO_DEBOUNCE_MS = 300L;
     private static final Random RANDOM = new Random();
     private static final double[] ETERNAL_SEED_CHANCES = {0.005, 0.0075, 0.01, 0.0125, 0.015};
+    private static final double[] GHOST_SEED_CHANCES   = {0.005, 0.0075, 0.01, 0.0125, 0.015};
     private static final double[] SNACK_CHANCES = {0.01, 0.0125, 0.015, 0.0175, 0.02};
 
     private final ProfessionManager professionManager;
@@ -98,7 +99,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
 
         int xpRank = acc.getTalentRank(Profession.FERMIER, "1");
         double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
-        long finalXp = Math.round(FarmerXpTable.BASE_HARVEST_XP * xpMult);
+        double finalXp = FarmerXpTable.BASE_HARVEST_XP * xpMult;
         if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
             + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")");
         professionManager.addXp(uuid, Profession.FERMIER, finalXp, playerRef);
@@ -122,6 +123,16 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
             if (dbg) LOGGER.atInfo().log(dbgId + "N6 CCombo loot PROC — item=" + itemId);
             try { dropItemNearPlayer(commandBuffer, itemId, dropPos); }
             catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N6 loot ERREUR"); }
+        }
+
+        int ghostRank = acc.getTalentRank(Profession.FERMIER, "3");
+        if (ghostRank > 0 && firstOfHarvest) {
+            double chance = GHOST_SEED_CHANCES[Math.min(ghostRank, GHOST_SEED_CHANCES.length) - 1];
+            if (RANDOM.nextDouble() < chance) {
+                if (dbg) LOGGER.atInfo().log(dbgId + "N3 GrainesFantomatiques PROC");
+                try { dropItemNearPlayer(commandBuffer, "Plant_Seeds_Ghost", dropPos); }
+                catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N3 ERREUR"); }
+            }
         }
 
         int grainRank = acc.getTalentRank(Profession.FERMIER, "5");

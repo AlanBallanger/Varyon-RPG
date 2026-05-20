@@ -1,6 +1,7 @@
 package fr.varyon.vrpg.profession.mineur;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
@@ -24,6 +25,8 @@ import java.util.Set;
 
 public final class BagCraftRestrictionSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent.Pre> {
 
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
     public static final Set<String> ORE_BAG_IDS = Set.of(
         "Bag_Ore_Lesser",
         "NoCube_Bag_Ore", "NoCube_Bag_Ore_Lesser", "NoCube_Bag_Ore_Greater"
@@ -32,6 +35,11 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
     public static final Set<String> CROP_BAG_IDS = Set.of(
         "Bag_Crop_Lesser",
         "NoCube_Bag_Plant", "NoCube_Bag_Plant_Lesser", "NoCube_Bag_Plant_Greater"
+    );
+
+    public static final Set<String> WOOD_BAG_IDS = Set.of(
+        "Bag_Wood_Lesser",
+        "NoCube_Bag_Wood", "NoCube_Bag_Wood_Lesser", "NoCube_Bag_Wood_Greater"
     );
 
     private final ProfessionManager professionManager;
@@ -63,13 +71,20 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
 
         boolean isOreBag = ORE_BAG_IDS.contains(outputId);
         boolean isCropBag = CROP_BAG_IDS.contains(outputId);
-        if (!isOreBag && !isCropBag) return;
+        boolean isWoodBag = WOOD_BAG_IDS.contains(outputId);
+        if (!isOreBag && !isCropBag && !isWoodBag) return;
 
         PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
         if (playerRef == null) {
+            LOGGER.atWarning().log("[BagRestrict] BLOCKED outputId=" + outputId + " — playerRef null");
             event.setCancelled(true);
             return;
         }
+
+        String playerName = playerRef.getUsername() != null ? playerRef.getUsername() : playerRef.getUuid().toString().substring(0, 8);
+        Player player = null;
+        try { player = playerRef.getComponent(Player.getComponentType()); } catch (Exception ignored) {}
+        boolean hasPermStar = player != null && player.hasPermission("*");
 
         PlayerAccount acc = professionManager.getAccount(playerRef.getUuid());
         boolean allowed;
@@ -77,15 +92,24 @@ public final class BagCraftRestrictionSystem extends EntityEventSystem<EntitySto
         if (isOreBag) {
             allowed = acc != null && acc.isActive(Profession.MINEUR) && acc.getTalentRank(Profession.MINEUR, "13") > 0;
             message = "Besace du Foreur — talent Mineur (nœud 13) requis.";
+        } else if (isWoodBag) {
+            allowed = acc != null && acc.isActive(Profession.FORESTIER) && acc.getTalentRank(Profession.FORESTIER, "13") > 0;
+            message = "Besace du Forestier — talent Forestier (nœud 13) requis.";
         } else {
             allowed = acc != null && acc.isActive(Profession.FERMIER) && acc.getTalentRank(Profession.FERMIER, "16") > 0;
             message = "Besace du Paysan — talent Fermier (nœud 16) requis.";
         }
 
+        LOGGER.atInfo().log("[BagRestrict] craft player=" + playerName
+            + " outputId=" + outputId
+            + " hasPerm*=" + hasPermStar
+            + " acc=" + (acc != null ? "ok" : "null")
+            + " allowed=" + allowed
+            + " cancelled=" + !allowed);
+
         if (!allowed) {
             event.setCancelled(true);
             try {
-                Player player = playerRef.getComponent(Player.getComponentType());
                 if (player != null) {
                     player.sendMessage(Message.raw(message).color(new Color(200, 50, 50)));
                 }

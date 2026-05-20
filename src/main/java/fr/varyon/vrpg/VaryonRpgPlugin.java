@@ -22,6 +22,7 @@ import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.commands.VpaCommand;
 import fr.varyon.vrpg.commands.VpaAdminCommand;
 import fr.varyon.vrpg.commands.VpaSurfaceCommand;
+import fr.varyon.vrpg.restriction.TalentItemPlaceRestrictionSystem;
 import fr.varyon.vrpg.restriction.TalentItemRestrictionSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerAnimalDropSystem;
 import fr.varyon.vrpg.profession.fermier.FarmerBlockBreakSystem;
@@ -305,6 +306,12 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new TalentItemRestrictionSystem(professionManager));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register TalentItemRestrictionSystem");
+        }
+
+        try {
+            getEntityStoreRegistry().registerSystem(new TalentItemPlaceRestrictionSystem(professionManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register TalentItemPlaceRestrictionSystem");
         }
 
         try {
