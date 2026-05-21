@@ -77,6 +77,11 @@ public final class FarmerAnimalDropSystem {
             if (player == null) player = commandBuffer.getComponent(attackerRef, Player.getComponentType());
             if (player == null) return;
 
+            PlayerRef playerRef = player.getPlayerRef();
+            if (playerRef == null) return;
+            PlayerAccount acc = professionManager.getAccount(playerRef.getUuid());
+            if (acc == null || !acc.isActive(Profession.FERMIER)) return;
+
             NPCEntity npc = chunk.getComponent(index, NPCEntity.getComponentType());
             if (npc == null) return;
             String role = npc.getRoleName();

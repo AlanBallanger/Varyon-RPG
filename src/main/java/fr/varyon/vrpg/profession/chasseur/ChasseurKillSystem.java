@@ -106,8 +106,18 @@ public final class ChasseurKillSystem {
                 if (held == null || held.getMaxDurability() <= 0) return;
                 String heldId = held.getItemId();
                 if (!ChasseurXpTable.isHuntingWeapon(heldId)) return;
-                if (RANDOM.nextDouble() >= kitRank * 0.15) {
-                    inventory.getHotbar().setItemStackForSlot((short) slot, held.withIncreasedDurability(-1.0));
+                boolean proc = RANDOM.nextDouble() < kitRank * 0.15;
+                boolean dbg = VrpgConfig.isDebugTalents();
+                if (proc) {
+                    if (dbg) LOGGER.atInfo().log("[ChasseurN3] KitRenforce PROC (annulé) rank=" + kitRank
+                        + " item=" + heldId + " dura=" + held.getDurability() + "/" + held.getMaxDurability());
+                } else {
+                    double duraBefore = held.getDurability();
+                    ItemStack after = held.withIncreasedDurability(-1.0);
+                    inventory.getHotbar().setItemStackForSlot((short) slot, after);
+                    if (dbg) LOGGER.atInfo().log("[ChasseurN3] KitRenforce dura normale (-1) rank=" + kitRank
+                        + " item=" + heldId + " dura=" + duraBefore + "/" + held.getMaxDurability()
+                        + " → " + after.getDurability() + "/" + after.getMaxDurability());
                 }
             } catch (Exception ignored) {}
         }

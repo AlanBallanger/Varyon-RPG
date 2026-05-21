@@ -14,7 +14,9 @@ import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.console.ConsoleSender;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.InteractivelyPickupItemEvent;
+import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
@@ -35,6 +37,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static final long COMBO_DEBOUNCE_MS = 300L;
+    private static final long SICKLE_DEBOUNCE_MS = 50L;
     private static final Random RANDOM = new Random();
     private static final double[] ETERNAL_SEED_CHANCES = {0.005, 0.0075, 0.01, 0.0125, 0.015};
     private static final double[] GHOST_SEED_CHANCES   = {0.005, 0.0075, 0.01, 0.0125, 0.015};
@@ -43,6 +46,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
     private final ProfessionManager professionManager;
     private final FarmerComboTracker comboTracker;
     private final ConcurrentHashMap<UUID, Long> lastHarvestMillis = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, Long> lastSickleCheckMillis = new ConcurrentHashMap<>();
 
     public FarmerPickupHarvestSystem(@Nonnull ProfessionManager professionManager,
                                      @Nonnull FarmerComboTracker comboTracker) {
@@ -161,10 +165,57 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
                 }
             }
         }
+
+        Long lastSickleMs = lastSickleCheckMillis.get(uuid);
+        boolean firstSickleCheck = (lastSickleMs == null || now - lastSickleMs > SICKLE_DEBOUNCE_MS);
+        if (firstSickleCheck) {
+            lastSickleCheckMillis.put(uuid, now);
+            Inventory inventory = null;
+            try {
+                Player player = playerRef.getComponent(Player.getComponentType());
+                if (player != null) inventory = player.getInventory();
+            } catch (Exception ignored) {}
+            if (inventory != null) {
+                try {
+                    byte slot = inventory.getActiveHotbarSlot();
+                    ItemStack held = inventory.getHotbar().getItemStack((short) slot);
+                    String heldId = held != null ? held.getItemId() : null;
+                    if (dbg) LOGGER.atInfo().log(dbgId + "N8 item tenu=" + heldId
+                        + " maxDura=" + (held != null ? held.getMaxDurability() : "null"));
+                    boolean isSickle = heldId != null && heldId.toLowerCase().contains("sickle");
+                    if (isSickle && held.getMaxDurability() > 0) {
+                        int faucilleRank = acc.getTalentRank(Profession.FERMIER, "8");
+                        boolean proc = faucilleRank > 0 && RANDOM.nextDouble() < faucilleRank * 0.15;
+                        double delta = proc ? 0.0 : -1.0;
+                        if (dbg) {
+                            double duraBefore = held.getDurability();
+                            double duraMax = held.getMaxDurability();
+                            String action = proc ? "N8 FaucilleEternelle PROC (annulé)" : "dura normale (-1)";
+                            if (delta != 0.0) {
+                                ItemStack after = held.withIncreasedDurability(delta);
+                                LOGGER.atInfo().log(dbgId + action + " rank=" + faucilleRank
+                                    + " dura=" + duraBefore + "/" + duraMax
+                                    + " → " + after.getDurability() + "/" + after.getMaxDurability());
+                                inventory.getHotbar().setItemStackForSlot((short) slot, after);
+                            } else {
+                                LOGGER.atInfo().log(dbgId + action + " rank=" + faucilleRank
+                                    + " dura=" + duraBefore + "/" + duraMax + " (inchangé)");
+                            }
+                        } else if (delta != 0.0) {
+                            inventory.getHotbar().setItemStackForSlot((short) slot,
+                                held.withIncreasedDurability(delta));
+                        }
+                    } else if (dbg && held != null && held.getMaxDurability() > 0) {
+                        LOGGER.atInfo().log(dbgId + "N8 ignoré — item=" + heldId + " ne contient pas 'sickle'");
+                    }
+                } catch (Exception ignored) {}
+            }
+        }
     }
 
     public void removePlayer(@Nonnull UUID uuid) {
         lastHarvestMillis.remove(uuid);
+        lastSickleCheckMillis.remove(uuid);
     }
 
     private static void dropItemNearPlayer(@Nonnull ComponentAccessor<EntityStore> accessor,

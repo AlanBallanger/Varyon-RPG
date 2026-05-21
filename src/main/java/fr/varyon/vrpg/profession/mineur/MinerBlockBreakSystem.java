@@ -240,13 +240,28 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                         int incassableRank = acc.getTalentRank(Profession.MINEUR, "6");
                         boolean veranProc = veranRank > 0 && RANDOM.nextDouble() < veranRank * 0.07;
                         boolean incassableProc = !veranProc && incassableRank > 0 && RANDOM.nextDouble() < incassableRank * 0.05;
-                        if (dbg && veranProc) LOGGER.atInfo().log(dbgId + "N3 PiocheVeteran PROC");
-                        if (dbg && incassableProc) LOGGER.atInfo().log(dbgId + "N6 Incassable PROC");
                         double delta = incassableProc ? 1.0 : veranProc ? 0.0 : -1.0;
-                        if (delta != 0.0) {
+                        if (dbg) {
+                            double duraBefore = held.getDurability();
+                            double duraMax = held.getMaxDurability();
+                            String action = veranProc ? "N3 PiocheVeteran PROC (annulé)" : incassableProc ? "N6 Incassable PROC (+1)" : "dura normale (-1)";
+                            if (delta != 0.0) {
+                                ItemStack after = held.withIncreasedDurability(delta);
+                                LOGGER.atInfo().log(dbgId + action + " item=" + held.getItemId()
+                                    + " dura=" + duraBefore + "/" + duraMax
+                                    + " → " + after.getDurability() + "/" + after.getMaxDurability());
+                                inventory.getHotbar().setItemStackForSlot((short) slot, after);
+                            } else {
+                                LOGGER.atInfo().log(dbgId + action + " item=" + held.getItemId()
+                                    + " dura=" + duraBefore + "/" + duraMax + " (inchangé)");
+                            }
+                        } else if (delta != 0.0) {
                             inventory.getHotbar().setItemStackForSlot((short) slot,
                                 held.withIncreasedDurability(delta));
                         }
+                    } else if (dbg && held != null) {
+                        LOGGER.atInfo().log(dbgId + "dura ignorée — item=" + held.getItemId()
+                            + " maxDura=" + held.getMaxDurability() + " (pas de durabilité)");
                     }
                 } catch (Exception ignored) {}
             }
@@ -423,19 +438,26 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
     }
 
     private void spawnGuardianGolem(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
+        LOGGER.atInfo().log("[GardienPierre] spawnNPC Golem_Crystal_Earth — pos=" + pos);
         try {
             var pair = NPCPlugin.get().spawnNPC(store, "Golem_Crystal_Earth", null, pos, new Vector3f(0f, 0f, 0f));
             if (pair == null) {
-                LOGGER.atWarning().log("[GardienPierre] spawnNPC Golem_Crystal_Earth a retourné null pos=" + pos);
+                LOGGER.atWarning().log("[GardienPierre] spawnNPC retourné null — vérifier le role name 'Golem_Crystal_Earth'");
                 return;
             }
             Ref<EntityStore> golemRef = pair.left();
             EntityStatMap statMap = store.getComponent(golemRef, EntityStatMap.getComponentType());
-            if (statMap == null) return;
+            if (statMap == null) {
+                LOGGER.atWarning().log("[GardienPierre] EntityStatMap null sur Golem_Crystal_Earth");
+                return;
+            }
             int healthIdx = DefaultEntityStatTypes.getHealth();
             statMap.putModifier(healthIdx, "guardian_hp_bonus",
                     new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE, 160f));
             statMap.maximizeStatValue(healthIdx);
-        } catch (Exception ignored) {}
+            LOGGER.atInfo().log("[GardienPierre] Golem_Crystal_Earth spawned OK pos=" + pos);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[GardienPierre] spawnNPC ERREUR pos=" + pos);
+        }
     }
 }

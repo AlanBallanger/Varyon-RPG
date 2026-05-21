@@ -16,7 +16,6 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
-import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -77,6 +76,13 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         BlockType blockType = event.getBlockType();
         if (blockType == null) return;
 
+        PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
+        if (playerRef == null) return;
+        UUID uuid = playerRef.getUuid();
+
+        PlayerAccount acc = professionManager.getAccount(uuid);
+        if (acc == null || !acc.isActive(Profession.FERMIER)) return;
+
         boolean dbg = VrpgConfig.isDebugTalents();
 
         String rawId = String.valueOf(blockType.getId());
@@ -88,18 +94,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             return;
         }
         if (id.toLowerCase().contains("eternal")) return;
-
-        PlayerRef playerRef = archetypeChunk.getComponent(index, playerRefType);
-        if (playerRef == null) return;
-        UUID uuid = playerRef.getUuid();
-
-        PlayerAccount acc = professionManager.getAccount(uuid);
-        if (acc == null || !acc.isActive(Profession.FERMIER)) {
-            if (dbg) LOGGER.atInfo().log("[Fermier-DBG] joueur non actif fermier id=" + id
-                + " active0=" + (acc == null ? "null" : acc.getActiveSlot0())
-                + " active1=" + (acc == null ? "null" : acc.getActiveSlot1()));
-            return;
-        }
 
         String dbgId = dbg ? "[" + uuid.toString().substring(0, 8) + "|" + id + "] " : null;
 
@@ -202,35 +196,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             int bz = event.getTargetBlock().z;
             if (dbg) LOGGER.atInfo().log(dbgId + "N11 GardienDesChamps PROC — pos(" + bx + "," + by + "," + bz + ")");
             spawnCowUndead(store, new Vector3d(bx + 0.5, by, bz + 0.5));
-        }
-
-        Inventory inventory = null;
-        try {
-            Player player = playerRef.getComponent(Player.getComponentType());
-            if (player != null) inventory = player.getInventory();
-        } catch (Exception ignored) {}
-
-        if (inventory != null) {
-            try {
-                byte slot = inventory.getActiveHotbarSlot();
-                ItemStack held = inventory.getHotbar().getItemStack((short) slot);
-                String heldId = held != null ? held.getItemId() : null;
-                boolean isSickle = heldId != null && heldId.toLowerCase().contains("sickle");
-                if (dbg) LOGGER.atInfo().log(dbgId + "N8 check item=" + heldId
-                    + " sickle=" + isSickle
-                    + " dur=" + (held != null ? held.getDurability() : "?")
-                    + "/" + (held != null ? held.getMaxDurability() : "?"));
-                if (isSickle && held.getMaxDurability() > 0) {
-                    int faucilleRank = acc.getTalentRank(Profession.FERMIER, "8");
-                    boolean skipLoss = faucilleRank > 0 && RANDOM.nextDouble() < faucilleRank * 0.15;
-                    if (dbg) LOGGER.atInfo().log(dbgId + "N8 FaucilleEternelle rank=" + faucilleRank + " proc=" + skipLoss);
-                    double delta = skipLoss ? 0.0 : -1.0;
-                    if (delta != 0.0) {
-                        inventory.getHotbar().setItemStackForSlot((short) slot,
-                            held.withIncreasedDurability(delta));
-                    }
-                }
-            } catch (Exception ignored) {}
         }
 
         // Node 9 — Casse-Croûte Fermier : chance de restaurer faim ou soif (1/1.25/1.5/1.75/2% par rang)
