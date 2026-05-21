@@ -17,6 +17,7 @@ public final class PlayerAccount {
 
     private final EnumMap<Profession, ProfessionProgress> progress = new EnumMap<>(Profession.class);
     private final EnumMap<Profession, Map<String, Integer>> talents = new EnumMap<>(Profession.class);
+    private final Map<String, Boolean> talentSoundEnabled = new HashMap<>();
 
     public PlayerAccount(@Nonnull UUID uuid, @Nullable String playerName) {
         this.uuid = uuid;
@@ -92,5 +93,36 @@ public final class PlayerAccount {
     public int availableTalentPoints(@Nonnull Profession p) {
         int earned = XpCurve.talentPointsAtLevel(progress.get(p).getLevel());
         return Math.max(0, earned - totalTalentRanks(p));
+    }
+
+    @Nonnull
+    public static String talentSoundKey(@Nonnull Profession p, @Nonnull String nodeId) {
+        return p.getId() + ":" + nodeId;
+    }
+
+    public boolean isTalentSoundEnabled(@Nonnull Profession p, @Nonnull String nodeId) {
+        return talentSoundEnabled.getOrDefault(talentSoundKey(p, nodeId), true);
+    }
+
+    public void setTalentSoundEnabled(@Nonnull Profession p, @Nonnull String nodeId, boolean enabled) {
+        String key = talentSoundKey(p, nodeId);
+        if (enabled) {
+            talentSoundEnabled.remove(key);
+        } else {
+            talentSoundEnabled.put(key, false);
+        }
+    }
+
+    @Nonnull
+    public Map<String, Boolean> getTalentSoundPrefs() {
+        return talentSoundEnabled;
+    }
+
+    public void applyTalentSoundPref(@Nonnull String key, boolean enabled) {
+        if (enabled) {
+            talentSoundEnabled.remove(key);
+        } else {
+            talentSoundEnabled.put(key, false);
+        }
     }
 }

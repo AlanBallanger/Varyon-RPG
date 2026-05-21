@@ -80,6 +80,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     };
 
     private static final String ICON_BASE = "Pages/VaryonRpg/Icons/";
+    private static final String TALENT_SOUND_ICON_ON = "Elements/Sound.png";
+    private static final String TALENT_SOUND_ICON_OFF = "Elements/No_Sound.png";
+    private static final String POCHES_PLEINES_NODE_ID = "0";
+    private static final String MINERAI_FANTOMATIQUE_NODE_ID = "2";
 
     private static final String NODE_FILL = "#1A1F29FF";
     private static final String NODE_BORDER = "#4E576DFF";
@@ -871,6 +875,18 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             EventData.of("Action", "resetSkills"),
             false
         );
+        eventBuilder.addEventBinding(
+            CustomUIEventBindingType.Activating,
+            "#SkillTreeSoundToggle",
+            EventData.of("Action", "toggleTalentSound").append("Node", POCHES_PLEINES_NODE_ID),
+            false
+        );
+        eventBuilder.addEventBinding(
+            CustomUIEventBindingType.Activating,
+            "#SkillTreeSoundToggleLeft",
+            EventData.of("Action", "toggleTalentSound").append("Node", MINERAI_FANTOMATIQUE_NODE_ID),
+            false
+        );
     }
 
     private void applySkillTreeSelectionAndHoverChrome(@Nonnull UICommandBuilder uiBuilder) {
@@ -934,6 +950,26 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         uiBuilder.set("#SkillTreeTypePassif.Visible", "Passif".equals(type));
         uiBuilder.set("#SkillTreeTypeActif.Visible",  "Actif".equals(type));
         uiBuilder.set("#SkillTreeTypeObjet.Visible",  "Objet".equals(type));
+
+        applyTalentSoundToggle(uiBuilder, sel[0], POCHES_PLEINES_NODE_ID,
+            "#SkillTreeSoundToggle", "#SkillTreeSoundToggleIcon");
+        applyTalentSoundToggle(uiBuilder, sel[0], MINERAI_FANTOMATIQUE_NODE_ID,
+            "#SkillTreeSoundToggleLeft", "#SkillTreeSoundToggleLeftIcon");
+    }
+
+    private void applyTalentSoundToggle(@Nonnull UICommandBuilder uiBuilder,
+                                        @Nonnull String panelNodeId,
+                                        @Nonnull String toggleNodeId,
+                                        @Nonnull String buttonSelector,
+                                        @Nonnull String iconSelector) {
+        boolean show = currentTalentProfession() == Profession.MINEUR && toggleNodeId.equals(panelNodeId);
+        uiBuilder.set(buttonSelector + ".Visible", show);
+        if (!show) return;
+        PlayerAccount acc = currentAccount();
+        boolean soundOn = acc == null || acc.isTalentSoundEnabled(Profession.MINEUR, toggleNodeId);
+        String icon = soundOn ? TALENT_SOUND_ICON_ON : TALENT_SOUND_ICON_OFF;
+        uiBuilder.setObject(iconSelector + ".Background",
+            new PatchStyle().setTexturePath(Value.of(icon)));
     }
 
     private void sendSkillTreeHoverChromeUpdate() {
@@ -1232,6 +1268,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 if (tree.nodes[i][0].equals(data.node)) {
                     hoveredNode = i;
                     break;
+                }
+            }
+            sendSkillTreeHoverChromeUpdate();
+        } else if ("toggleTalentSound".equals(data.action) && data.node != null) {
+            if (currentTalentProfession() == Profession.MINEUR) {
+                ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+                if (mgr != null) {
+                    mgr.toggleTalentSound(playerRef.getUuid(), Profession.MINEUR, data.node);
                 }
             }
             sendSkillTreeHoverChromeUpdate();

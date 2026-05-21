@@ -1318,9 +1318,13 @@ Group {
 
       Group {
         Anchor: (Left: 2, Right: 2, Top: 2, Bottom: 2);
-        LayoutMode: Top;
+        LayoutMode: Full;
         Background: #16191F;
         Padding: (Full: 10);
+
+        Group {
+          Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+          LayoutMode: Top;
 
       Label {
         Style: @SectionTitleStyle;
@@ -1453,6 +1457,47 @@ Group {
           }
         }
       }
+        }
+
+        Button #SkillTreeSoundToggle {
+          Anchor: (Width: 26, Height: 26, Right: 0, Bottom: 0);
+          Style: @SkillNodeButtonStyle;
+          Visible: false;
+
+          Group #SkillTreeSoundToggleFrame {
+            Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0);
+            Background: #FFFFFFFF;
+
+            Group #SkillTreeSoundToggleInner {
+              Anchor: (Left: 1, Top: 1, Right: 1, Bottom: 1);
+              Background: #16191F;
+
+              Group #SkillTreeSoundToggleIcon {
+                Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0);
+              }
+            }
+          }
+        }
+
+        Button #SkillTreeSoundToggleLeft {
+          Anchor: (Width: 26, Height: 26, Left: 0, Bottom: 0);
+          Style: @SkillNodeButtonStyle;
+          Visible: false;
+
+          Group #SkillTreeSoundToggleLeftFrame {
+            Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0);
+            Background: #FFFFFFFF;
+
+            Group #SkillTreeSoundToggleLeftInner {
+              Anchor: (Left: 1, Top: 1, Right: 1, Bottom: 1);
+              Background: #16191F;
+
+              Group #SkillTreeSoundToggleLeftIcon {
+                Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0);
+              }
+            }
+          }
+        }
       }
     }
   }

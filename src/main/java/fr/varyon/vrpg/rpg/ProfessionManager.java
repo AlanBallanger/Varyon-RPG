@@ -235,6 +235,20 @@ public final class ProfessionManager {
         }
     }
 
+    public boolean toggleTalentSound(@Nonnull UUID uuid, @Nonnull Profession profession, @Nonnull String nodeId) {
+        ReentrantLock lock = lockFor(uuid);
+        lock.lock();
+        try {
+            PlayerAccount acc = getOrLoad(uuid);
+            boolean next = !acc.isTalentSoundEnabled(profession, nodeId);
+            acc.setTalentSoundEnabled(profession, nodeId, next);
+            dirty.add(uuid);
+            return next;
+        } finally {
+            lock.unlock();
+        }
+    }
+
     public enum ReconvertResult { SUCCESS, COOLDOWN_ACTIVE, INVALID_SLOT, NOT_UNLOCKED, SAME_PROFESSION, NO_CHANGE }
 
     public ReconvertResult setActiveSlot(@Nonnull UUID uuid, int slotIndex, @Nullable Profession newProfession) {

@@ -110,6 +110,14 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                   PRIMARY KEY (uuid, profession_id, node_id)
                 )
             """);
+            st.execute("""
+                CREATE TABLE IF NOT EXISTS player_talent_sound (
+                  uuid     TEXT NOT NULL,
+                  pref_key TEXT NOT NULL,
+                  enabled  INTEGER NOT NULL DEFAULT 1,
+                  PRIMARY KEY (uuid, pref_key)
+                )
+            """);
         }
     }
 
@@ -166,6 +174,15 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                         Profession p = Profession.fromId(rs.getString("profession_id"));
                         if (p == null) continue;
                         account.setTalentRank(p, rs.getString("node_id"), rs.getInt("rank"));
+                    }
+                }
+            }
+            try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT pref_key, enabled FROM player_talent_sound WHERE uuid = ?")) {
+                ps.setString(1, uuid.toString());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        account.applyTalentSoundPref(rs.getString("pref_key"), rs.getInt("enabled") != 0);
                     }
                 }
             }
@@ -269,6 +286,21 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                 }
                 ins.executeBatch();
             }
+            try (PreparedStatement del = connection.prepareStatement(
+                "DELETE FROM player_talent_sound WHERE uuid = ?")) {
+                del.setString(1, uuid.toString());
+                del.executeUpdate();
+            }
+            try (PreparedStatement ins = connection.prepareStatement(
+                "INSERT INTO player_talent_sound (uuid, pref_key, enabled) VALUES (?,?,?)")) {
+                for (Map.Entry<String, Boolean> e : account.getTalentSoundPrefs().entrySet()) {
+                    ins.setString(1, uuid.toString());
+                    ins.setString(2, e.getKey());
+                    ins.setInt(3, Boolean.TRUE.equals(e.getValue()) ? 1 : 0);
+                    ins.addBatch();
+                }
+                ins.executeBatch();
+            }
             connection.commit();
         } catch (SQLException e) {
             LOGGER.at(Level.SEVERE).log("savePlayer(%s) failed: %s", uuid, e.getMessage());
@@ -311,7 +343,7 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
         return CompletableFuture.runAsync(() -> {
             try {
                 connection.setAutoCommit(false);
-                for (String table : new String[]{"player_talent", "player_profession", "player_account"}) {
+                for (String table : new String[]{"player_talent_sound", "player_talent", "player_profession", "player_account"}) {
                     try (PreparedStatement ps = connection.prepareStatement(
                         "DELETE FROM " + table + " WHERE uuid = ?")) {
                         ps.setString(1, uuid.toString());

@@ -1,7 +1,12 @@
 package fr.varyon.vrpg.profession.mineur;
 
+import com.hypixel.hytale.math.vector.Vector3d;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -10,7 +15,18 @@ public final class GuardianStoneManager {
     public static final String GUARDIAN_BLOCK_ID = "Varyon_Guardian_Ore";
 
     private final Set<String> positions = ConcurrentHashMap.newKeySet();
-    private final ConcurrentLinkedQueue<Runnable> pendingRepops = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<DelayedRepop> pendingDelayedRepops = new ConcurrentLinkedQueue<>();
+    private final ConcurrentHashMap<UUID, ConcurrentLinkedQueue<Vector3d>> pendingGuardianSpawns = new ConcurrentHashMap<>();
+
+    private static final class DelayedRepop {
+        final long executeAtMs;
+        final Runnable action;
+
+        DelayedRepop(long executeAtMs, Runnable action) {
+            this.executeAtMs = executeAtMs;
+            this.action = action;
+        }
+    }
 
     private static String key(int x, int y, int z) {
         return x + "," + y + "," + z;
@@ -28,19 +44,42 @@ public final class GuardianStoneManager {
         return Collections.unmodifiableSet(positions);
     }
 
-    public void queueRepop(Runnable action) {
-        pendingRepops.add(action);
+    public void queueDelayedRepop(@Nonnull Runnable action, long delayMs) {
+        pendingDelayedRepops.add(new DelayedRepop(System.currentTimeMillis() + delayMs, action));
+    }
+
+    public void queueRepop(@Nonnull Runnable action) {
+        queueDelayedRepop(action, 0L);
     }
 
     public void drainRepops() {
-        Runnable r;
-        while ((r = pendingRepops.poll()) != null) {
-            try { r.run(); } catch (Exception ignored) {}
+        long now = System.currentTimeMillis();
+        int pending = pendingDelayedRepops.size();
+        for (int i = 0; i < pending; i++) {
+            DelayedRepop repop = pendingDelayedRepops.poll();
+            if (repop == null) break;
+            if (repop.executeAtMs <= now) {
+                try { repop.action.run(); } catch (Exception ignored) {}
+            } else {
+                pendingDelayedRepops.add(repop);
+            }
         }
+    }
+
+    public void queueGuardianSpawn(@Nonnull UUID playerUuid, @Nonnull Vector3d pos) {
+        pendingGuardianSpawns.computeIfAbsent(playerUuid, u -> new ConcurrentLinkedQueue<>())
+                .add(new Vector3d(pos.x, pos.y, pos.z));
+    }
+
+    @Nullable
+    public Vector3d pollGuardianSpawn(@Nonnull UUID playerUuid) {
+        ConcurrentLinkedQueue<Vector3d> q = pendingGuardianSpawns.get(playerUuid);
+        return q == null ? null : q.poll();
     }
 
     public void clear() {
         positions.clear();
-        pendingRepops.clear();
+        pendingDelayedRepops.clear();
+        pendingGuardianSpawns.clear();
     }
 }
