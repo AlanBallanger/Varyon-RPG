@@ -84,6 +84,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String TALENT_SOUND_ICON_OFF = "Elements/No_Sound.png";
     private static final String POCHES_PLEINES_NODE_ID = "0";
     private static final String MINERAI_FANTOMATIQUE_NODE_ID = "2";
+    private static final String MINERAI_IMMORTEL_NODE_ID = "4";
+    private static final String CC_COMBO_NODE_ID = "5";
+    private static final String CHANT_VEINE_NODE_ID = "8";
+    private static final java.util.Set<String> MINEUR_SOUND_TOGGLE_NODE_IDS = java.util.Set.of(
+        POCHES_PLEINES_NODE_ID,
+        MINERAI_FANTOMATIQUE_NODE_ID,
+        MINERAI_IMMORTEL_NODE_ID,
+        CC_COMBO_NODE_ID,
+        CHANT_VEINE_NODE_ID
+    );
 
     private static final String NODE_FILL = "#1A1F29FF";
     private static final String NODE_BORDER = "#4E576DFF";
@@ -195,7 +205,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"2",  "Minerai Fantomatique",      "Passif", "Au fond des galeries, certains minerais brillent d’une lueur qui n’appartient pas à ce monde.", "Chance d’obtenir un Minerai Fantomatique en récoltant.", "Jobs_Icons/Ore_Special.png"},
         {"3",  "Pioche de Vétéran",        "Passif", "Les outils bien entretenus survivent aux mineurs.",                       "Réduit les pertes de durabilité de votre pioche.",                                 "Jobs_Icons/Pickaxe_Durability.png"},
         {"4",  "Minerai Immortel",         "Passif", "Certaines veines refusent simplement de disparaître.",                    "Chance qu’un minerai réapparaîsse immédiatement après récolte.",                  "Jobs_Icons/Ore_Respawn.png"},
-        {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Enchainer les minerais rapport de l'XP et du minerai bonus par combo (Max 10 combo)",    "Jobs_Icons/Combo_Mining.png"},
+        {"5",  "C-C-Combo",                "Passif", "Plus tu frappes vite, plus la montagne te récompense.",                   "Enchainer les minerais rapport de l'XP et du minerai bonus par combo (Max 8 combo)",    "Jobs_Icons/Combo_Mining.png"},
         {"6",  "Incassable !",             "Passif", "Ta pioche a vu pire.",                                                    "Chaque coup a une chance de gagner un point de durabilité plutôt que d’en perdre un.", "Jobs_Icons/Unbreakable.png"},
         {"7",  "Briseur de Roche",         "Passif", "Terre et pierre ne sont plus qu’un simple obstacle.",                    "Chance que les coups sur la roche ne consomment pas la durabilité de votre pioche.", "Jobs_Icons/Pickaxe_Durability_Stone.png"},
         {"8",  "Chant de la Veine",        "Actif",  "Une frappe parfaite suffit à réveiller tout le filon.",                  "Permet de miner instantanément toute une veine de minerai.",                      "Jobs_Icons/Vein_Sing.png"},
@@ -214,7 +224,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"1% minerai",     "1.5% minerai",    "2% minerai",      "2.5% minerai",    "3% minerai"},          // 2
         {"7% durabilité",  "14% durabilité",  "21% durabilité",  "28% durabilité",  "35% durabilité"},      // 3
         {"4% repop",       "8% repop",        "12% repop",       "16% repop",       "20% repop"},           // 4
-        {"1% / combo (max +10%)", "1.5% / combo (max +15%)", "2% / combo (max +20%)", "2.5% / combo (max +25%)", "3% / combo (max +30%)"}, // 5
+        {"1% / combo (max +8%)", "1.5% / combo (max +12%)", "2% / combo (max +16%)", "2.5% / combo (max +20%)", "3% / combo (max +24%)"}, // 5
         {"5% gain dura",   "10% gain dura",   "15% gain dura",   "20% gain dura",   "25% gain dura"},       // 6
         {"15% durabilité", "30% durabilité",  "45% durabilité",  "60% durabilité",  "75% durabilité"},      // 7
         {"4min 20s recharge", "3min 20s recharge", "2min 20s recharge", "1min 40s recharge", "1min recharge"},  // 8
@@ -878,13 +888,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         eventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
             "#SkillTreeSoundToggle",
-            EventData.of("Action", "toggleTalentSound").append("Node", POCHES_PLEINES_NODE_ID),
-            false
-        );
-        eventBuilder.addEventBinding(
-            CustomUIEventBindingType.Activating,
-            "#SkillTreeSoundToggleLeft",
-            EventData.of("Action", "toggleTalentSound").append("Node", MINERAI_FANTOMATIQUE_NODE_ID),
+            EventData.of("Action", "toggleTalentSound"),
             false
         );
     }
@@ -951,24 +955,19 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         uiBuilder.set("#SkillTreeTypeActif.Visible",  "Actif".equals(type));
         uiBuilder.set("#SkillTreeTypeObjet.Visible",  "Objet".equals(type));
 
-        applyTalentSoundToggle(uiBuilder, sel[0], POCHES_PLEINES_NODE_ID,
-            "#SkillTreeSoundToggle", "#SkillTreeSoundToggleIcon");
-        applyTalentSoundToggle(uiBuilder, sel[0], MINERAI_FANTOMATIQUE_NODE_ID,
-            "#SkillTreeSoundToggleLeft", "#SkillTreeSoundToggleLeftIcon");
+        applyTalentSoundToggle(uiBuilder, sel[0]);
     }
 
     private void applyTalentSoundToggle(@Nonnull UICommandBuilder uiBuilder,
-                                        @Nonnull String panelNodeId,
-                                        @Nonnull String toggleNodeId,
-                                        @Nonnull String buttonSelector,
-                                        @Nonnull String iconSelector) {
-        boolean show = currentTalentProfession() == Profession.MINEUR && toggleNodeId.equals(panelNodeId);
-        uiBuilder.set(buttonSelector + ".Visible", show);
+                                        @Nonnull String panelNodeId) {
+        boolean show = currentTalentProfession() == Profession.MINEUR
+            && MINEUR_SOUND_TOGGLE_NODE_IDS.contains(panelNodeId);
+        uiBuilder.set("#SkillTreeSoundToggle.Visible", show);
         if (!show) return;
         PlayerAccount acc = currentAccount();
-        boolean soundOn = acc == null || acc.isTalentSoundEnabled(Profession.MINEUR, toggleNodeId);
+        boolean soundOn = acc == null || acc.isTalentSoundEnabled(Profession.MINEUR, panelNodeId);
         String icon = soundOn ? TALENT_SOUND_ICON_ON : TALENT_SOUND_ICON_OFF;
-        uiBuilder.setObject(iconSelector + ".Background",
+        uiBuilder.setObject("#SkillTreeSoundToggleIcon.Background",
             new PatchStyle().setTexturePath(Value.of(icon)));
     }
 
@@ -1271,11 +1270,16 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 }
             }
             sendSkillTreeHoverChromeUpdate();
-        } else if ("toggleTalentSound".equals(data.action) && data.node != null) {
+        } else if ("toggleTalentSound".equals(data.action)) {
             if (currentTalentProfession() == Profession.MINEUR) {
-                ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
-                if (mgr != null) {
-                    mgr.toggleTalentSound(playerRef.getUuid(), Profession.MINEUR, data.node);
+                SkillTreeDef tree = currentSkillTree();
+                int panelNode = hoveredNode >= 0 && hoveredNode < tree.nodes.length ? hoveredNode : selectedNode;
+                String nodeId = tree.nodes[panelNode][0];
+                if (MINEUR_SOUND_TOGGLE_NODE_IDS.contains(nodeId)) {
+                    ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+                    if (mgr != null) {
+                        mgr.toggleTalentSound(playerRef.getUuid(), Profession.MINEUR, nodeId);
+                    }
                 }
             }
             sendSkillTreeHoverChromeUpdate();

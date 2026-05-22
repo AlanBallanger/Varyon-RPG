@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class MinerComboTracker {
 
-    public static final int MAX_COMBO = 10;
+    public static final int MAX_COMBO = 8;
     public static final long COMBO_TIMEOUT_MS = 5_000L;
 
     private static final class State {
@@ -20,9 +20,8 @@ public final class MinerComboTracker {
         State s = states.computeIfAbsent(uuid, k -> new State());
         if (now - s.lastMineMs > COMBO_TIMEOUT_MS) {
             s.count = 0;
-        } else {
-            s.count = Math.min(s.count + 1, MAX_COMBO);
         }
+        s.count = s.count >= MAX_COMBO ? 1 : s.count + 1;
         s.lastMineMs = now;
         return s.count;
     }
