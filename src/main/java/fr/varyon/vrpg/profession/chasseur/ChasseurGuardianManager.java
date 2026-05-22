@@ -1,15 +1,11 @@
-package fr.varyon.vrpg.profession.fermier;
+package fr.varyon.vrpg.profession.chasseur;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.annotation.Nonnull;
 
-public final class GuardianCropManager {
+public final class ChasseurGuardianManager {
 
-    private final Set<String> positions = ConcurrentHashMap.newKeySet();
     private final ConcurrentLinkedQueue<DelayedRepop> pendingDelayedRepops = new ConcurrentLinkedQueue<>();
 
     private static final class DelayedRepop {
@@ -22,32 +18,8 @@ public final class GuardianCropManager {
         }
     }
 
-    private static String key(int x, int y, int z) {
-        return x + "," + y + "," + z;
-    }
-
-    public boolean isGuardian(int x, int y, int z) {
-        return positions.contains(key(x, y, z));
-    }
-
-    public Set<String> getPositions() {
-        return Collections.unmodifiableSet(positions);
-    }
-
-    public void track(int x, int y, int z) {
-        positions.add(key(x, y, z));
-    }
-
-    public void untrack(int x, int y, int z) {
-        positions.remove(key(x, y, z));
-    }
-
     public void queueDelayedRepop(@Nonnull Runnable action, long delayMs) {
         pendingDelayedRepops.add(new DelayedRepop(System.currentTimeMillis() + delayMs, action));
-    }
-
-    public void queueRepop(@Nonnull Runnable action) {
-        queueDelayedRepop(action, 0L);
     }
 
     public void drainRepops() {
@@ -65,7 +37,6 @@ public final class GuardianCropManager {
     }
 
     public void clear() {
-        positions.clear();
         pendingDelayedRepops.clear();
     }
 }

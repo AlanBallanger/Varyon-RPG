@@ -22,14 +22,11 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
-import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
-import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -46,16 +43,17 @@ public final class ChasseurKillSystem {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static final Random RANDOM = new Random();
 
-    private static final String PREDATEUR_ALPHA_NPC_ID = "Rex_Caven";
-
     private final ProfessionManager professionManager;
     private final ChasseurComboTracker comboTracker;
+    private final ChasseurGuardianManager guardianManager;
     private final ConcurrentHashMap<Integer, Ref<EntityStore>> lastAttackerByVictim = new ConcurrentHashMap<>();
 
     public ChasseurKillSystem(@Nonnull ProfessionManager professionManager,
-                               @Nonnull ChasseurComboTracker comboTracker) {
+                               @Nonnull ChasseurComboTracker comboTracker,
+                               @Nonnull ChasseurGuardianManager guardianManager) {
         this.professionManager = professionManager;
         this.comboTracker = comboTracker;
+        this.guardianManager = guardianManager;
     }
 
     public final class AttackTagger extends DamageEventSystem {
@@ -162,6 +160,14 @@ public final class ChasseurKillSystem {
                 if (dbg && comboRank > 0) LOGGER.atInfo().log("[ChasseurKill] N5 ChasseFrenetique combo="
                     + comboCount + " bonus=" + String.format("%.3f%%", comboBonus * 100));
 
+                Ref<EntityStore> killerEntityRef = resolveKillerRef(store, commandBuffer, attackerRef, death);
+                if (killerEntityRef != null && killerEntityRef.isValid() && pos != null) {
+                    if (comboRank > 0 && comboCount > 0) {
+                        TalentProcSounds.playCombo(acc, Profession.CHASSEUR, comboRank, comboCount,
+                            playerRef, killerEntityRef, commandBuffer, pos);
+                    }
+                }
+
                 int xpRank = acc.getTalentRank(Profession.CHASSEUR, "1");
                 double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
                 double finalXp = ChasseurXpTable.BASE_KILL_XP * xpMult;
@@ -175,6 +181,10 @@ public final class ChasseurKillSystem {
                     double essenceChance = 0.01 + (essenceRank - 1) * 0.005;
                     if (RANDOM.nextDouble() < essenceChance) {
                         if (dbg) LOGGER.atInfo().log("[ChasseurKill] N2 MarqueduPredateur PROC");
+                        if (killerEntityRef != null && killerEntityRef.isValid()) {
+                            TalentProcSounds.playFantomatique(acc, Profession.CHASSEUR, playerRef,
+                                killerEntityRef, commandBuffer, pos);
+                        }
                         try {
                             Holder[] drops = ItemComponent.generateItemDrops(store, List.of(new ItemStack(ChasseurXpTable.ESSENCE_ITEM_ID, 1)), pos, rot);
                             commandBuffer.addEntities(drops, AddReason.SPAWN);
@@ -186,15 +196,35 @@ public final class ChasseurKillSystem {
 
                 int alphaRank = acc.getTalentRank(Profession.CHASSEUR, "11");
                 if (alphaRank > 0 && pos != null) {
-                    double alphaChance = alphaRank * 0.005;
+                    double alphaChance = alphaRank * 0.05;
                     if (RANDOM.nextDouble() < alphaChance) {
-                        if (dbg) LOGGER.atInfo().log("[ChasseurKill] N11 PredateurAlpha PROC — spawning " + PREDATEUR_ALPHA_NPC_ID);
-                        spawnRexCaven(store, pos);
+                        if (dbg) LOGGER.atInfo().log("[ChasseurKill] N11 PredateurAlpha PROC — spawning Rex_Caven");
+                        try {
+                            World world = killer.getWorld();
+                            if (world != null) {
+                                boolean soundOn = acc.isTalentSoundEnabled(Profession.CHASSEUR, "11");
+                                ChasseurGuardianSpawner.scheduleSpawn(guardianManager, world, pos, soundOn);
+                            }
+                        } catch (Exception e) {
+                            LOGGER.atWarning().withCause(e).log("[ChasseurKill] N11 PredateurAlpha schedule ERREUR");
+                        }
                     }
                 }
             } catch (Exception e) {
                 LOGGER.atWarning().withCause(e).log("[ChasseurKill] DropOnDeath error");
             }
+        }
+
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        private Ref<EntityStore> resolveKillerRef(@Nonnull Store store, @Nonnull CommandBuffer commandBuffer,
+                                                  Ref<EntityStore> lastAttacker, @Nonnull DeathComponent death) {
+            Damage deathInfo = death.getDeathInfo();
+            if (deathInfo != null && deathInfo.getSource() instanceof Damage.EntitySource es) {
+                Ref<EntityStore> killerRef = es.getRef();
+                if (killerRef != null && killerRef.isValid()) return killerRef;
+            }
+            if (lastAttacker != null && lastAttacker.isValid()) return lastAttacker;
+            return null;
         }
 
         @SuppressWarnings({"rawtypes", "unchecked"})
@@ -215,30 +245,6 @@ public final class ChasseurKillSystem {
                 return p;
             }
             return null;
-        }
-    }
-
-    private static void spawnRexCaven(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
-        LOGGER.atInfo().log("[PredateurAlpha] spawnNPC " + PREDATEUR_ALPHA_NPC_ID + " — pos=" + pos);
-        try {
-            var pair = NPCPlugin.get().spawnNPC(store, PREDATEUR_ALPHA_NPC_ID, null, pos, new Vector3f(0f, 0f, 0f));
-            if (pair == null) {
-                LOGGER.atWarning().log("[PredateurAlpha] spawnNPC retourné null — vérifier le role name '" + PREDATEUR_ALPHA_NPC_ID + "'");
-                return;
-            }
-            Ref<EntityStore> rexRef = pair.left();
-            EntityStatMap statMap = store.getComponent(rexRef, EntityStatMap.getComponentType());
-            if (statMap == null) {
-                LOGGER.atWarning().log("[PredateurAlpha] EntityStatMap null sur " + PREDATEUR_ALPHA_NPC_ID);
-                return;
-            }
-            int healthIdx = DefaultEntityStatTypes.getHealth();
-            statMap.putModifier(healthIdx, "predateur_alpha_hp",
-                new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.MULTIPLICATIVE, 2.0f));
-            statMap.maximizeStatValue(healthIdx);
-            LOGGER.atInfo().log("[PredateurAlpha] " + PREDATEUR_ALPHA_NPC_ID + " spawned OK pos=" + pos);
-        } catch (Exception e) {
-            LOGGER.atWarning().withCause(e).log("[PredateurAlpha] spawnNPC ERREUR pos=" + pos);
         }
     }
 }

@@ -23,6 +23,7 @@ import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
 import fr.varyon.vrpg.rpg.ProfessionProgress;
+import fr.varyon.vrpg.rpg.TalentSoundNodes;
 import fr.varyon.vrpg.rpg.XpCurve;
 
 import javax.annotation.Nonnull;
@@ -82,18 +83,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final String ICON_BASE = "Pages/VaryonRpg/Icons/";
     private static final String TALENT_SOUND_ICON_ON = "Elements/Sound.png";
     private static final String TALENT_SOUND_ICON_OFF = "Elements/No_Sound.png";
-    private static final String POCHES_PLEINES_NODE_ID = "0";
-    private static final String MINERAI_FANTOMATIQUE_NODE_ID = "2";
-    private static final String MINERAI_IMMORTEL_NODE_ID = "4";
-    private static final String CC_COMBO_NODE_ID = "5";
-    private static final String CHANT_VEINE_NODE_ID = "8";
-    private static final java.util.Set<String> MINEUR_SOUND_TOGGLE_NODE_IDS = java.util.Set.of(
-        POCHES_PLEINES_NODE_ID,
-        MINERAI_FANTOMATIQUE_NODE_ID,
-        MINERAI_IMMORTEL_NODE_ID,
-        CC_COMBO_NODE_ID,
-        CHANT_VEINE_NODE_ID
-    );
 
     private static final String NODE_FILL = "#1A1F29FF";
     private static final String NODE_BORDER = "#4E576DFF";
@@ -311,9 +300,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final int[][] FERMIER_PARENT_GROUPS = {
         {},
         {},
-        {0},
         {0, 1},
-        {1},
+        {0, 1},
+        {0, 1},
         {3},
         {4},
         {5},
@@ -339,7 +328,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"15% durabilité",       "30% durabilité",       "45% durabilité",       "60% durabilité",       "75% durabilité"},
         {"1% de chance",         "1.25% de chance",      "1.5% de chance",       "1.75% de chance",      "2% de chance"},
         {"Replantation auto arroseurs activée"},
-        {"0.5% invocation",      "1% invocation",        "1.5% invocation",      "2% invocation",        "2.5% invocation"},
+        {"5% invocation",      "10% invocation",       "15% invocation",       "20% invocation",       "25% invocation"},
         {"Fertilisant Chaux débloqué", "Fertilisant Osseux débloqué", "Fertilisant Coquillage débloqué", "Fertilisant Élite débloqué"},
         {"Besace du Paysan activée"},
     };
@@ -429,7 +418,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"5% loot rare",         "10% loot rare",         "15% loot rare",         "20% loot rare",         "25% loot rare"},
         {"Vision faible",        "Vision modérée",        "Vision renforcée",      "Vision avancée",        "Vision parfaite"},
         {"Grappin Fer, Émeraude, Diamant, Rubis, Saphir, Topaze, Zéphyr débloqués", "Grappin Thorium & Cobalt débloqués", "Grappin Adamantite débloqué"},
-        {"0.5% invocation",      "1% invocation",         "1.5% invocation",       "2% invocation",         "2.5% invocation"},
+        {"5% invocation",      "10% invocation",        "15% invocation",        "20% invocation",         "25% invocation"},
         {"Replantation auto activée"},
         {"Déracinage total activé"},
         {"+20% respiration",     "+40% respiration",      "+60% respiration",      "+80% respiration",      "+100% respiration"},
@@ -523,7 +512,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         {"5% endurance",               "10% endurance",               "15% endurance",               "20% endurance",               "25% endurance"},
         {"Vision faible",              "Vision modérée",              "Vision renforcée",            "Vision avancée",              "Vision parfaite"},
         {"Apprivoisement activé"},
-        {"0.5% invocation",            "1% invocation",               "1.5% invocation",             "2% invocation",               "2.5% invocation"},
+        {"5% invocation",            "10% invocation",              "15% invocation",              "20% invocation",              "25% invocation"},
         {"À définir"},
         {"Bourse de chasse activée"},
         {"À définir"},
@@ -960,12 +949,12 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private void applyTalentSoundToggle(@Nonnull UICommandBuilder uiBuilder,
                                         @Nonnull String panelNodeId) {
-        boolean show = currentTalentProfession() == Profession.MINEUR
-            && MINEUR_SOUND_TOGGLE_NODE_IDS.contains(panelNodeId);
+        Profession profession = currentTalentProfession();
+        boolean show = TalentSoundNodes.hasSoundToggle(profession, panelNodeId);
         uiBuilder.set("#SkillTreeSoundToggle.Visible", show);
         if (!show) return;
         PlayerAccount acc = currentAccount();
-        boolean soundOn = acc == null || acc.isTalentSoundEnabled(Profession.MINEUR, panelNodeId);
+        boolean soundOn = acc == null || acc.isTalentSoundEnabled(profession, panelNodeId);
         String icon = soundOn ? TALENT_SOUND_ICON_ON : TALENT_SOUND_ICON_OFF;
         uiBuilder.setObject("#SkillTreeSoundToggleIcon.Background",
             new PatchStyle().setTexturePath(Value.of(icon)));
@@ -1271,15 +1260,14 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
             sendSkillTreeHoverChromeUpdate();
         } else if ("toggleTalentSound".equals(data.action)) {
-            if (currentTalentProfession() == Profession.MINEUR) {
-                SkillTreeDef tree = currentSkillTree();
-                int panelNode = hoveredNode >= 0 && hoveredNode < tree.nodes.length ? hoveredNode : selectedNode;
-                String nodeId = tree.nodes[panelNode][0];
-                if (MINEUR_SOUND_TOGGLE_NODE_IDS.contains(nodeId)) {
-                    ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
-                    if (mgr != null) {
-                        mgr.toggleTalentSound(playerRef.getUuid(), Profession.MINEUR, nodeId);
-                    }
+            Profession profession = currentTalentProfession();
+            SkillTreeDef tree = currentSkillTree();
+            int panelNode = hoveredNode >= 0 && hoveredNode < tree.nodes.length ? hoveredNode : selectedNode;
+            String nodeId = tree.nodes[panelNode][0];
+            if (TalentSoundNodes.hasSoundToggle(profession, nodeId)) {
+                ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+                if (mgr != null) {
+                    mgr.toggleTalentSound(playerRef.getUuid(), profession, nodeId);
                 }
             }
             sendSkillTreeHoverChromeUpdate();

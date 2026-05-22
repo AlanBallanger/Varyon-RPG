@@ -66,7 +66,10 @@ public final class YeuxLynxTickSystem extends EntityTickingSystem<EntityStore> {
 
         try {
             EntityTrackerSystems.EntityViewer viewer = chunk.getComponent(index, viewerType);
-            if (viewer == null) return;
+            if (viewer == null) {
+                appliedRanks.remove(uuid);
+                return;
+            }
 
             PlayerAccount acc = professionManager.getAccount(uuid);
             if (acc == null || !acc.isActive(Profession.CHASSEUR)) {

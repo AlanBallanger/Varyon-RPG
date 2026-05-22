@@ -21,7 +21,9 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -36,7 +38,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntityStore, InteractivelyPickupItemEvent> {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final long COMBO_DEBOUNCE_MS = 300L;
     private static final long SICKLE_DEBOUNCE_MS = 50L;
     private static final Random RANDOM = new Random();
     private static final double[] ETERNAL_SEED_CHANCES = {0.005, 0.0075, 0.01, 0.0125, 0.015};
@@ -45,14 +46,16 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
 
     private final ProfessionManager professionManager;
     private final FarmerComboTracker comboTracker;
-    private final ConcurrentHashMap<UUID, Long> lastHarvestMillis = new ConcurrentHashMap<>();
+    private final GuardianCropManager guardianCropManager;
     private final ConcurrentHashMap<UUID, Long> lastSickleCheckMillis = new ConcurrentHashMap<>();
 
     public FarmerPickupHarvestSystem(@Nonnull ProfessionManager professionManager,
-                                     @Nonnull FarmerComboTracker comboTracker) {
+                                     @Nonnull FarmerComboTracker comboTracker,
+                                     @Nonnull GuardianCropManager guardianCropManager) {
         super(InteractivelyPickupItemEvent.class);
         this.professionManager = professionManager;
         this.comboTracker = comboTracker;
+        this.guardianCropManager = guardianCropManager;
     }
 
     @Nullable
@@ -86,19 +89,12 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
         String dbgId = dbg ? "[" + uuid.toString().substring(0, 8) + "|Pickup|" + itemId + "] " : null;
 
         long now = System.currentTimeMillis();
-        Long lastMs = lastHarvestMillis.put(uuid, now);
-        boolean firstOfHarvest = (lastMs == null || now - lastMs > COMBO_DEBOUNCE_MS);
 
         int comboRank = acc.getTalentRank(Profession.FERMIER, "6");
-        int comboCount;
-        if (firstOfHarvest) {
-            comboCount = comboTracker.onCropHarvested(uuid);
-        } else {
-            comboCount = comboTracker.getCurrentCombo(uuid);
-        }
+        int comboCount = comboTracker.onCropHarvested(uuid);
         double comboPercent = comboRank > 0 ? (0.01 + (comboRank - 1) * 0.005) : 0.0;
         double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
-        if (dbg && comboRank > 0 && firstOfHarvest) LOGGER.atInfo().log(dbgId
+        if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId
             + "N6 CCombo combo=" + comboCount + " bonus=" + String.format("%.3f%%", comboBonus * 100));
 
         int xpRank = acc.getTalentRank(Profession.FERMIER, "1");
@@ -116,9 +112,15 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
             tcmp.getPosition().z
         );
 
+        if (comboRank > 0 && comboCount > 0) {
+            TalentProcSounds.playCombo(acc, Profession.FERMIER, comboRank, comboCount,
+                playerRef, ref, commandBuffer, dropPos);
+        }
+
         int lootRank = acc.getTalentRank(Profession.FERMIER, "0");
         if (lootRank > 0 && RANDOM.nextDouble() < lootRank * 0.05) {
             if (dbg) LOGGER.atInfo().log(dbgId + "N0 PaniersTropPleins PROC — item=" + itemId);
+            TalentProcSounds.playLootDouble(acc, Profession.FERMIER, playerRef, ref, commandBuffer, dropPos);
             try { dropItemNearPlayer(commandBuffer, itemId, dropPos); }
             catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N0 drop ERREUR"); }
         }
@@ -130,36 +132,60 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
         }
 
         int ghostRank = acc.getTalentRank(Profession.FERMIER, "3");
-        if (ghostRank > 0 && firstOfHarvest) {
+        if (ghostRank > 0) {
             double chance = GHOST_SEED_CHANCES[Math.min(ghostRank, GHOST_SEED_CHANCES.length) - 1];
             if (RANDOM.nextDouble() < chance) {
                 if (dbg) LOGGER.atInfo().log(dbgId + "N3 GrainesFantomatiques PROC");
+                TalentProcSounds.playFantomatique(acc, Profession.FERMIER, playerRef, ref, commandBuffer, dropPos);
                 try { dropItemNearPlayer(commandBuffer, "Plant_Seeds_Ghost", dropPos); }
                 catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N3 ERREUR"); }
             }
         }
 
         int grainRank = acc.getTalentRank(Profession.FERMIER, "5");
-        if (grainRank > 0 && firstOfHarvest) {
+        if (grainRank > 0) {
             double chance = ETERNAL_SEED_CHANCES[Math.min(grainRank, ETERNAL_SEED_CHANCES.length) - 1];
             if (RANDOM.nextDouble() < chance) {
                 String eternalSeedId = FarmerXpTable.resolveEternalSeedFromItem(itemId);
                 if (dbg) LOGGER.atInfo().log(dbgId + "N5 GrainsSansFin PROC — seed=" + eternalSeedId);
                 if (eternalSeedId != null) {
+                    TalentProcSounds.playTalent(acc, Profession.FERMIER, "5", TalentProcSounds.IMMORTEL_SOUND_ID,
+                        playerRef, ref, commandBuffer, dropPos);
                     try { dropItemNearPlayer(commandBuffer, eternalSeedId, dropPos); }
                     catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N5 ERREUR"); }
                 }
             }
         }
 
+        int guardianRank = acc.getTalentRank(Profession.FERMIER, "11");
+        if (guardianRank > 0) {
+            double guardianChance = guardianRank * 0.05;
+            if (RANDOM.nextDouble() < guardianChance) {
+                if (dbg) LOGGER.atInfo().log(dbgId + "N11 GardienDesChamps PROC — pos=" + dropPos
+                    + " chance=" + String.format("%.1f%%", guardianChance * 100));
+                try {
+                    Player player = playerRef.getComponent(Player.getComponentType());
+                    World world = player != null ? player.getWorld() : null;
+                    if (world != null) {
+                        boolean soundOn = acc.isTalentSoundEnabled(Profession.FERMIER, "11");
+                        FarmerGuardianSpawner.scheduleSpawn(guardianCropManager, world, dropPos, soundOn);
+                    }
+                } catch (Exception e) {
+                    LOGGER.atWarning().withCause(e).log(dbgId + "N11 GardienDesChamps schedule ERREUR");
+                }
+            }
+        }
+
         int snackRank = acc.getTalentRank(Profession.FERMIER, "9");
-        if (snackRank > 0 && firstOfHarvest) {
+        if (snackRank > 0) {
             double snackChance = SNACK_CHANCES[Math.min(snackRank, SNACK_CHANCES.length) - 1];
             if (RANDOM.nextDouble() < snackChance) {
                 String username = playerRef.getUsername();
                 if (username != null) {
                     String cmd = RANDOM.nextBoolean() ? "hset " + username + " 100" : "wset " + username + " 100";
                     if (dbg) LOGGER.atInfo().log(dbgId + "N9 CasseCroute PROC — cmd=" + cmd);
+                    TalentProcSounds.playTalent(acc, Profession.FERMIER, "9", TalentProcSounds.REFEED_SOUND_ID,
+                        playerRef, ref, commandBuffer, dropPos);
                     try { CommandManager.get().handleCommand(ConsoleSender.INSTANCE, cmd); }
                     catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N9 ERREUR"); }
                 }
@@ -214,7 +240,6 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
     }
 
     public void removePlayer(@Nonnull UUID uuid) {
-        lastHarvestMillis.remove(uuid);
         lastSickleCheckMillis.remove(uuid);
     }
 

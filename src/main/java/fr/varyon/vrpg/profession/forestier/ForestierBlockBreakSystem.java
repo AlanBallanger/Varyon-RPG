@@ -19,14 +19,10 @@ import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
-import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
-import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.server.npc.NPCPlugin;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -75,8 +71,6 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                         dirs[i++] = new int[]{dx, dy, dz};
         return dirs;
     }
-
-    private static final String GUARDIAN_NPC_ID = "Wolf_Black";
 
     private final ProfessionManager professionManager;
     private final ForestierComboTracker comboTracker;
@@ -144,6 +138,16 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
             if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N5 CCombo combo=" + comboCount
                 + " bonus=" + String.format("%.3f%%", comboBonus * 100));
 
+            if (comboRank > 0 && comboCount > 0 && blockCenter != null) {
+                try {
+                    if (entityRef == null) entityRef = archetypeChunk.getReferenceTo(index);
+                    if (entityRef != null && entityRef.isValid()) {
+                        TalentProcSounds.playCombo(acc, Profession.FORESTIER, comboRank, comboCount,
+                            playerRef, entityRef, commandBuffer, blockCenter);
+                    }
+                } catch (Exception ignored) {}
+            }
+
             // Node 1 ÔÇö Mains ├ëcorch├®es : +5% XP par rang
             int xpRank = acc.getTalentRank(Profession.FORESTIER, "1");
             double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
@@ -162,6 +166,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                     try {
                         if (entityRef == null) entityRef = archetypeChunk.getReferenceTo(index);
                         if (entityRef != null && entityRef.isValid()) {
+                            TalentProcSounds.playLootDouble(acc, Profession.FORESTIER, playerRef, entityRef, commandBuffer, blockCenter);
                             dropItemAtBlock(commandBuffer, logItemId, blockCenter);
                         }
                     } catch (Exception e) {
@@ -195,6 +200,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                     try {
                         if (entityRef == null) entityRef = archetypeChunk.getReferenceTo(index);
                         if (entityRef != null && entityRef.isValid()) {
+                            TalentProcSounds.playFantomatique(acc, Profession.FORESTIER, playerRef, entityRef, commandBuffer, blockCenter);
                             dropItemAtBlock(commandBuffer, ForestierXpTable.ESSENCE_ITEM_ID, blockCenter);
                         }
                     } catch (Exception e) {
@@ -226,14 +232,24 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                 } catch (Exception ignored) {}
             }
 
-            // Node 10 — Gardien Sylvestre : chance d'invoquer un Wolf_Black (0.5% par rang)
+            // Node 10 — Gardien Sylvestre : chance d'invoquer un Wolf_Black (5% par rang)
             int gardienRank = acc.getTalentRank(Profession.FORESTIER, "10");
-            if (gardienRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < gardienRank * 0.005) {
+            if (gardienRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < gardienRank * 0.05) {
                 int bx = event.getTargetBlock().x;
                 int by = event.getTargetBlock().y;
                 int bz = event.getTargetBlock().z;
                 if (dbg) LOGGER.atInfo().log(dbgId + "N10 GardienSylvestre PROC — pos(" + bx + "," + by + "," + bz + ")");
-                spawnWolfBlack(store, new Vector3d(bx + 0.5, by, bz + 0.5));
+                try {
+                    Player player = playerRef.getComponent(Player.getComponentType());
+                    World world = player != null ? player.getWorld() : null;
+                    if (world != null) {
+                        boolean soundOn = acc.isTalentSoundEnabled(Profession.FORESTIER, "10");
+                        ForestierGuardianSpawner.scheduleSpawn(guardianWoodManager, world,
+                            new Vector3d(bx + 0.5, by, bz + 0.5), soundOn);
+                    }
+                } catch (Exception e) {
+                    LOGGER.atWarning().withCause(e).log(dbgId + "N10 GardienSylvestre schedule ERREUR");
+                }
             }
 
             // Node 12 — Retour aux Racines : abat l'arbre quand la coupe sectionne le tronc du sol
@@ -276,6 +292,15 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                                 if (dbg) LOGGER.atInfo().log(dbgId + "N12 ignoré — arbre encore relié au sol");
                             } else {
                                 if (dbg) LOGGER.atInfo().log(dbgId + "N12 arbre sectionné — abattage de " + treeBlocks.size() + " blocs");
+                                try {
+                                    if (entityRef == null) entityRef = archetypeChunk.getReferenceTo(index);
+                                    if (entityRef != null && entityRef.isValid()) {
+                                        Vector3d soundPos = new Vector3d(bx + 0.5, by + 0.5, bz + 0.5);
+                                        TalentProcSounds.playTalent(acc, Profession.FORESTIER, "12",
+                                            TalentProcSounds.TREE_REGROWTH_SOUND_ID,
+                                            playerRef, entityRef, commandBuffer, soundPos);
+                                    }
+                                } catch (Exception ignored) {}
                                 Map<Long, int[]> lowestByXZ = new HashMap<>();
                                 int extraLogs = 0;
                                 for (Map.Entry<Long, String> entry : treeBlocks.entrySet()) {
@@ -349,30 +374,6 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                     }
                 }
             }
-        }
-    }
-
-    private static void spawnWolfBlack(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
-        LOGGER.atInfo().log("[GardienSylvestre] spawnNPC Wolf_Black — pos=" + pos);
-        try {
-            var pair = NPCPlugin.get().spawnNPC(store, GUARDIAN_NPC_ID, null, pos, new Vector3f(0f, 0f, 0f));
-            if (pair == null) {
-                LOGGER.atWarning().log("[GardienSylvestre] spawnNPC retourné null — vérifier le role name 'Wolf_Black'");
-                return;
-            }
-            com.hypixel.hytale.component.Ref<EntityStore> wolfRef = pair.left();
-            EntityStatMap statMap = store.getComponent(wolfRef, EntityStatMap.getComponentType());
-            if (statMap == null) {
-                LOGGER.atWarning().log("[GardienSylvestre] EntityStatMap null sur Wolf_Black");
-                return;
-            }
-            int healthIdx = DefaultEntityStatTypes.getHealth();
-            statMap.putModifier(healthIdx, "guardian_wood_hp",
-                new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.MULTIPLICATIVE, 2.0f));
-            statMap.maximizeStatValue(healthIdx);
-            LOGGER.atInfo().log("[GardienSylvestre] Wolf_Black spawned OK pos=" + pos);
-        } catch (Exception e) {
-            LOGGER.atWarning().withCause(e).log("[GardienSylvestre] spawnNPC ERREUR pos=" + pos);
         }
     }
 

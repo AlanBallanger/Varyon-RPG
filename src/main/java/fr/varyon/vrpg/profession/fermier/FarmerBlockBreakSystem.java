@@ -28,6 +28,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -105,6 +106,22 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
         if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N6 CCombo combo=" + comboCount
             + " bonus=" + String.format("%.3f%%", comboBonus * 100));
 
+        Ref<EntityStore> ref = null;
+        if (comboRank > 0 && comboCount > 0 && event.getTargetBlock() != null) {
+            try {
+                ref = archetypeChunk.getReferenceTo(index);
+                if (ref != null && ref.isValid()) {
+                    Vector3d blockCenter = new Vector3d(
+                        event.getTargetBlock().x + 0.5,
+                        event.getTargetBlock().y + 0.5,
+                        event.getTargetBlock().z + 0.5
+                    );
+                    TalentProcSounds.playCombo(acc, Profession.FERMIER, comboRank, comboCount,
+                        playerRef, ref, commandBuffer, blockCenter);
+                }
+            } catch (Exception ignored) {}
+        }
+
         int xpRank = acc.getTalentRank(Profession.FERMIER, "1");
         double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
         double finalXp = FarmerXpTable.BASE_HARVEST_XP * xpMult;
@@ -112,8 +129,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             + " (base=" + FarmerXpTable.BASE_HARVEST_XP + " × " + String.format("%.3f", xpMult) + ")"
             + (xpRank > 0 ? " [N1 MainsTerreuses rank=" + xpRank + "]" : ""));
         professionManager.addXp(uuid, Profession.FERMIER, finalXp, playerRef);
-
-        Ref<EntityStore> ref = null;
 
         // Node 0 — Paniers Trop Pleins : chance de doubler les récoltes (5% par rang, max 25%)
         int lootRank = acc.getTalentRank(Profession.FERMIER, "0");
@@ -129,6 +144,7 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                             event.getTargetBlock().y + 0.5,
                             event.getTargetBlock().z + 0.5
                         );
+                        TalentProcSounds.playLootDouble(acc, Profession.FERMIER, playerRef, ref, commandBuffer, blockCenter);
                         dropItemAtBlock(commandBuffer, extraItemId, blockCenter);
                     } else {
                         if (dbg) LOGGER.atWarning().log(dbgId + "N0 PaniersTropPleins ref null/invalid");
@@ -177,6 +193,8 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                                 event.getTargetBlock().y + 0.5,
                                 event.getTargetBlock().z + 0.5
                             );
+                            TalentProcSounds.playTalent(acc, Profession.FERMIER, "5", TalentProcSounds.IMMORTEL_SOUND_ID,
+                                playerRef, ref, commandBuffer, blockCenter);
                             dropItemAtBlock(commandBuffer, eternalSeedId, blockCenter);
                         } else {
                             if (dbg) LOGGER.atWarning().log(dbgId + "N5 GrainsSansFin ref null/invalid");
@@ -188,14 +206,24 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             }
         }
 
-        // Node 11 — Gardiens des Champs : chance de faire apparaître un gardien (0.5% par rang)
+        // Node 11 — Gardiens des Champs : chance de faire apparaître un gardien (5% par rang)
         int guardianRank = acc.getTalentRank(Profession.FERMIER, "11");
-        if (guardianRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < guardianRank * 0.005) {
+        if (guardianRank > 0 && event.getTargetBlock() != null && RANDOM.nextDouble() < guardianRank * 0.05) {
             int bx = event.getTargetBlock().x;
             int by = event.getTargetBlock().y;
             int bz = event.getTargetBlock().z;
             if (dbg) LOGGER.atInfo().log(dbgId + "N11 GardienDesChamps PROC — pos(" + bx + "," + by + "," + bz + ")");
-            spawnCowUndead(store, new Vector3d(bx + 0.5, by, bz + 0.5));
+            Vector3d spawnPos = new Vector3d(bx + 0.5, by, bz + 0.5);
+            try {
+                Player player = playerRef.getComponent(Player.getComponentType());
+                World world = player != null ? player.getWorld() : null;
+                if (world != null) {
+                    boolean soundOn = acc.isTalentSoundEnabled(Profession.FERMIER, "11");
+                    FarmerGuardianSpawner.scheduleSpawn(guardianCropManager, world, spawnPos, soundOn);
+                }
+            } catch (Exception e) {
+                if (dbg) LOGGER.atWarning().withCause(e).log(dbgId + "N11 GardienDesChamps schedule ERREUR");
+            }
         }
 
         // Node 9 — Casse-Croûte Fermier : chance de restaurer faim ou soif (1/1.25/1.5/1.75/2% par rang)
@@ -208,6 +236,16 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                     String cmd = RANDOM.nextBoolean() ? "hset " + username + " 100" : "wset " + username + " 100";
                     if (dbg) LOGGER.atInfo().log(dbgId + "N9 CasseCroute PROC — cmd=" + cmd);
                     try {
+                        if (ref == null) ref = archetypeChunk.getReferenceTo(index);
+                        if (ref != null && ref.isValid() && event.getTargetBlock() != null) {
+                            Vector3d blockCenter = new Vector3d(
+                                event.getTargetBlock().x + 0.5,
+                                event.getTargetBlock().y + 0.5,
+                                event.getTargetBlock().z + 0.5
+                            );
+                            TalentProcSounds.playTalent(acc, Profession.FERMIER, "9", TalentProcSounds.REFEED_SOUND_ID,
+                                playerRef, ref, commandBuffer, blockCenter);
+                        }
                         CommandManager.get().handleCommand(ConsoleSender.INSTANCE, cmd);
                     } catch (Exception e) {
                         LOGGER.atWarning().withCause(e).log(dbgId + "N9 CasseCroute cmd ERREUR cmd=" + cmd);
@@ -230,7 +268,7 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
                 return;
             }
 
-            spawnCowUndead(store, new Vector3d(bx + 0.5, by, bz + 0.5));
+            FarmerGuardianSpawner.scheduleSpawn(guardianCropManager, world, new Vector3d(bx + 0.5, by, bz + 0.5), true);
             try {
                 world.setBlock(bx, by, bz, "Empty");
             } catch (Exception e) {
@@ -240,30 +278,6 @@ public final class FarmerBlockBreakSystem extends EntityEventSystem<EntityStore,
             event.setCancelled(true);
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[GardienChamps] handleGuardianCropBreak ERREUR pos=" + bx + "," + by + "," + bz);
-        }
-    }
-
-    private static void spawnCowUndead(@Nonnull Store<EntityStore> store, @Nonnull Vector3d pos) {
-        LOGGER.atInfo().log("[GardienChamps] spawnNPC Cow_Undead — pos=" + pos);
-        try {
-            var pair = NPCPlugin.get().spawnNPC(store, "Cow_Undead", null, pos, new Vector3f(0f, 0f, 0f));
-            if (pair == null) {
-                LOGGER.atWarning().log("[GardienChamps] spawnNPC retourné null — vérifier le role name 'Cow_Undead'");
-                return;
-            }
-            Ref<EntityStore> cowRef = pair.left();
-            EntityStatMap statMap = store.getComponent(cowRef, EntityStatMap.getComponentType());
-            if (statMap == null) {
-                LOGGER.atWarning().log("[GardienChamps] EntityStatMap null sur Cow_Undead");
-                return;
-            }
-            int healthIdx = DefaultEntityStatTypes.getHealth();
-            statMap.putModifier(healthIdx, "guardian_crop_hp",
-                new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.MULTIPLICATIVE, 3.0f));
-            statMap.maximizeStatValue(healthIdx);
-            LOGGER.atInfo().log("[GardienChamps] Cow_Undead spawned OK pos=" + pos);
-        } catch (Exception e) {
-            LOGGER.atWarning().withCause(e).log("[GardienChamps] spawnNPC ERREUR pos=" + pos);
         }
     }
 

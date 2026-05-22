@@ -1,0 +1,13 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Gardien_Scarecrow.ogg"
+      ]
+    }
+  ],
+  "PreventSoundInterruption": false,
+  "MaxInstance": 4,
+  "Volume": -5.0,
+  "Parent": "SFX_Attn_Moderate"
+}

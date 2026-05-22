@@ -38,6 +38,8 @@ import fr.varyon.vrpg.profession.forestier.PoumonLoutreTickSystem;
 import fr.varyon.vrpg.profession.forestier.RodeurSylvestreTickSystem;
 import fr.varyon.vrpg.profession.forestier.RodeurSylvestreFallSystem;
 import fr.varyon.vrpg.profession.chasseur.ChasseurComboTracker;
+import fr.varyon.vrpg.profession.chasseur.ChasseurGuardianManager;
+import fr.varyon.vrpg.profession.chasseur.ChasseurGuardianTickSystem;
 import fr.varyon.vrpg.profession.chasseur.ChasseurKillSystem;
 import fr.varyon.vrpg.profession.chasseur.ChasseurPickupSystem;
 import fr.varyon.vrpg.profession.chasseur.RodeurDunesTickSystem;
@@ -88,6 +90,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
     private PoumonLoutreTickSystem poumonLoutreTickSystem;
     private RodeurSylvestreTickSystem rodeurSylvestreTickSystem;
     private ChasseurComboTracker chasseurComboTracker;
+    private ChasseurGuardianManager chasseurGuardianManager;
     private ChasseurKillSystem chasseurKillSystem;
     private RodeurDunesTickSystem rodeurDunesTickSystem;
     private SecondSouffleTickSystem secondSouffleTickSystem;
@@ -126,8 +129,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.comboTracker = new MinerComboTracker();
             this.farmerComboTracker = new FarmerComboTracker();
             this.farmerAnimalDropSystem = new FarmerAnimalDropSystem(professionManager);
-            this.farmerPickupHarvestSystem = new FarmerPickupHarvestSystem(professionManager, farmerComboTracker);
             this.guardianCropManager = new GuardianCropManager();
+            this.farmerPickupHarvestSystem = new FarmerPickupHarvestSystem(professionManager, farmerComboTracker, guardianCropManager);
             this.veinCooldownTracker = new VeinCooldownTracker();
             this.explosionTalentSystem = new ExplosionTalentSystem();
             this.forestierComboTracker = new ForestierComboTracker();
@@ -135,7 +138,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
             this.poumonLoutreTickSystem = new PoumonLoutreTickSystem(professionManager);
             this.rodeurSylvestreTickSystem = new RodeurSylvestreTickSystem(professionManager);
             this.chasseurComboTracker = new ChasseurComboTracker();
-            this.chasseurKillSystem = new ChasseurKillSystem(professionManager, chasseurComboTracker);
+            this.chasseurGuardianManager = new ChasseurGuardianManager();
+            this.chasseurKillSystem = new ChasseurKillSystem(professionManager, chasseurComboTracker, chasseurGuardianManager);
             this.rodeurDunesTickSystem = new RodeurDunesTickSystem(professionManager);
             this.secondSouffleTickSystem = new SecondSouffleTickSystem(professionManager);
             this.yeuxLynxTickSystem = new YeuxLynxTickSystem(professionManager);
@@ -436,6 +440,12 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         }
 
         try {
+            getEntityStoreRegistry().registerSystem(new ChasseurGuardianTickSystem(chasseurGuardianManager));
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ChasseurGuardianTickSystem");
+        }
+
+        try {
             getEntityStoreRegistry().registerSystem(new ChasseurPickupSystem(professionManager, chasseurComboTracker));
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ChasseurPickupSystem");
@@ -472,6 +482,7 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         if (guardianManager != null) guardianManager.clear();
         if (guardianCropManager != null) guardianCropManager.clear();
         if (guardianWoodManager != null) guardianWoodManager.clear();
+        if (chasseurGuardianManager != null) chasseurGuardianManager.clear();
         if (veinCooldownTracker != null) veinCooldownTracker.clear();
         if (comboTracker != null) comboTracker.clear();
         if (farmerComboTracker != null) farmerComboTracker.clear();

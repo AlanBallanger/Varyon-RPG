@@ -14,9 +14,9 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
+import fr.varyon.vrpg.world.EnvironmentUtil;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,12 +30,6 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
     private final ComponentType<EntityStore, PlayerRef> playerRefType = PlayerRef.getComponentType();
     private final Map<UUID, Integer> tickCounters = new ConcurrentHashMap<>();
     final Map<UUID, Integer> activeRanks = new ConcurrentHashMap<>();
-
-    private boolean zoneReflectionInit = false;
-    private boolean zoneReflectionAvailable = false;
-    private Method getZoneAtPositionMethod;
-    private Method getZoneNameMethod;
-    private Object zoneConfig;
 
     public RodeurSylvestreTickSystem(ProfessionManager professionManager) {
         this.professionManager = professionManager;
@@ -74,24 +68,34 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
 
             Ref<EntityStore> ref = chunk.getReferenceTo(index);
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
-            boolean inForest = false;
-            if (transform != null) {
-                var pos = transform.getPosition();
-                inForest = isInForestZone(pos.x, pos.z);
-            }
+            String environmentId = transform != null
+                ? EnvironmentUtil.getEnvironmentId(ref, transform, store) : null;
 
             int prev = activeRanks.getOrDefault(uuid, 0);
+            boolean shouldBeActive = EnvironmentUtil.isForest(environmentId)
+                || (environmentId == null && prev != 0);
 
-            if (!inForest) {
+            if (EnvironmentUtil.isKnownNonForest(environmentId)) {
+                shouldBeActive = false;
+            }
+
+            if (!shouldBeActive) {
                 if (prev != 0) deactivate(uuid, chunk, index, store);
                 return;
             }
 
-            if (prev != rank) {
+            MovementManager mm = store.getComponent(ref, MovementManager.getComponentType());
+            if (prev != rank || prev == 0 || needsSpeedBoost(mm, rank)) {
                 activeRanks.put(uuid, rank);
                 applySpeedBoost(rank, ref, store, playerRef);
             }
         } catch (Exception ignored) {}
+    }
+
+    private static boolean needsSpeedBoost(@Nullable MovementManager mm, int rank) {
+        if (mm == null) return true;
+        float expected = mm.getDefaultSettings().baseSpeed * (1.0f + (rank + 1) * 0.05f);
+        return Math.abs(mm.getSettings().baseSpeed - expected) > 0.01f;
     }
 
     private void applySpeedBoost(int rank, Ref<EntityStore> ref,
@@ -116,41 +120,6 @@ public final class RodeurSylvestreTickSystem extends EntityTickingSystem<EntityS
                 if (mm != null) mm.resetDefaultsAndUpdate(ref, store);
             } catch (Exception ignored) {}
         }
-    }
-
-    private boolean isInForestZone(double x, double z) {
-        try {
-            if (!zoneReflectionInit) initZoneReflection();
-            if (!zoneReflectionAvailable) return false;
-
-            Object zone = getZoneAtPositionMethod.invoke(null, x, z, zoneConfig);
-            if (zone == null) return false;
-            String name = (String) getZoneNameMethod.invoke(zone);
-            return name != null && name.contains("Forest");
-        } catch (Exception ignored) {}
-        return false;
-    }
-
-    private synchronized void initZoneReflection() {
-        if (zoneReflectionInit) return;
-        zoneReflectionInit = true;
-        try {
-            Class<?> pluginClass = Class.forName("com.varyon.VaryonPlugin");
-            Object varyonPlugin = pluginClass.getMethod("getInstance").invoke(null);
-            if (varyonPlugin == null) return;
-
-            Object configManager = pluginClass.getMethod("getConfigManager").invoke(varyonPlugin);
-            if (configManager == null) return;
-
-            zoneConfig = configManager.getClass().getMethod("getZoneConfig").invoke(configManager);
-            if (zoneConfig == null) return;
-
-            Class<?> zoneConfigClass = Class.forName("com.varyon.config.ZoneConfig");
-            getZoneAtPositionMethod = Class.forName("com.varyon.util.ZoneCalculator")
-                .getMethod("getZoneAtPosition", double.class, double.class, zoneConfigClass);
-            getZoneNameMethod = Class.forName("com.varyon.config.DifficultyZone").getMethod("getName");
-            zoneReflectionAvailable = true;
-        } catch (Exception ignored) {}
     }
 
     public void removePlayer(UUID uuid) {

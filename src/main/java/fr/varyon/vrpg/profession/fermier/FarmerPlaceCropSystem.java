@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -137,6 +138,11 @@ public final class FarmerPlaceCropSystem extends EntityEventSystem<EntityStore, 
         }
 
         if (consumed > 0) {
+            if (ref != null && ref.isValid()) {
+                Vector3d at = new Vector3d(bx + 0.5, by + 0.5, bz + 0.5);
+                TalentProcSounds.playTalent(acc, Profession.FERMIER, "4", TalentProcSounds.MULTI_SEEDS_SOUND_ID,
+                    playerRef, ref, commandBuffer, at);
+            }
             try {
                 byte slot = inventory.getActiveHotbarSlot();
                 ItemStack held = inventory.getHotbar().getItemStack((short) slot);

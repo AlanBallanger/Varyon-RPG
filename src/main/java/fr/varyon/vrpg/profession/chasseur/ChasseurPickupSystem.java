@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -101,6 +102,7 @@ public final class ChasseurPickupSystem extends EntityEventSystem<EntityStore, I
         double lootChance = lootRank * 0.05 + comboBonus;
         if (lootRank > 0 && RANDOM.nextDouble() < lootChance) {
             if (dbg) LOGGER.atInfo().log(dbgId + "N4 Depouillleur PROC — item=" + itemId);
+            TalentProcSounds.playLootDouble(acc, Profession.CHASSEUR, playerRef, ref, commandBuffer, dropPos);
             try { dropItemNearPlayer(commandBuffer, itemId, dropPos); }
             catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N4 drop ERREUR"); }
         }

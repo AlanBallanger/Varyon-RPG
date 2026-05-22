@@ -32,6 +32,7 @@ import com.hypixel.hytale.protocol.ToClientPacket;
 import com.hypixel.hytale.protocol.packets.world.PlaySoundEvent2D;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import fr.varyon.vrpg.audio.TalentProcSounds;
 import fr.varyon.vrpg.config.VrpgConfig;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.Profession;
@@ -60,14 +61,12 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
         {1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}
     };
 
-    private static final String POCHES_PLEINES_SOUND_ID = "SFX_Vrpg_PochesPleines";
-    private static final String MINERAI_FANTOMATIQUE_SOUND_ID = "SFX_Vrpg_MineraiFantomatique";
     private static final String MINERAI_IMMORTEL_SOUND_ID = "SFX_Vrpg_MineraiImmortel";
     private static final String CHANT_VEINE_SOUND_ID = "SFX_Vrpg_ChantVeine";
     private static final String GARDIEN_PIERRE_SOUND_ID = "SFX_Vrpg_GardienPierre";
     private static final String MINERAI_IMMORTEL_NODE_ID = "4";
-    private static final String CC_COMBO_NODE_ID = "5";
     private static final String CHANT_VEINE_NODE_ID = "8";
+    private static final String GARDIEN_PIERRE_NODE_ID = "9";
     private static final long MINERAI_IMMORTEL_REPOP_DELAY_MS = 300L;
     private static final long GARDIEN_PIERRE_SPAWN_DELAY_MS = 500L;
 
@@ -144,9 +143,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                                 event.getTargetBlock().y + 0.5,
                                 event.getTargetBlock().z + 0.5
                             );
-                            if (acc.isTalentSoundEnabled(Profession.MINEUR, "0")) {
-                                playTalentProcSound(POCHES_PLEINES_SOUND_ID, playerRef, ref, commandBuffer, blockCenter, dbg, dbgId, "N0 PochesPleines");
-                            }
+                            TalentProcSounds.playLootDouble(acc, Profession.MINEUR, playerRef, ref, commandBuffer, blockCenter);
                             dropOreAtBlock(commandBuffer, extraItemId, blockCenter);
                         } else {
                             if (dbg) LOGGER.atWarning().log(dbgId + "N0 PochesPleines ref null/invalid");
@@ -170,9 +167,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                                 event.getTargetBlock().y + 0.5,
                                 event.getTargetBlock().z + 0.5
                             );
-                            if (acc.isTalentSoundEnabled(Profession.MINEUR, "2")) {
-                                playTalentProcSound(MINERAI_FANTOMATIQUE_SOUND_ID, playerRef, ref, commandBuffer, blockCenter, dbg, dbgId, "N2 MineraiFantomatique");
-                            }
+                            TalentProcSounds.playFantomatique(acc, Profession.MINEUR, playerRef, ref, commandBuffer, blockCenter);
                             dropOreAtBlock(commandBuffer, "Ore_Ghost", blockCenter);
                         }
                     } catch (Exception e) {
@@ -186,7 +181,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
             double xpMult = xpRankMult;
 
             // Node 5 — C-C-Combo : +rankPercent% XP et loot par combo (max 8)
-            int comboRank = acc.getTalentRank(Profession.MINEUR, CC_COMBO_NODE_ID);
+            int comboRank = acc.getTalentRank(Profession.MINEUR, "5");
             int comboCount = comboTracker.onOreMined(playerUuid);
             double comboPercent = comboRank > 0 ? (0.005 + (comboRank - 1) * 0.005) : 0.0;
             double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
@@ -203,7 +198,8 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                             event.getTargetBlock().y + 0.5,
                             event.getTargetBlock().z + 0.5
                         );
-                        playComboSound(acc, comboRank, comboCount, playerRef, ref, commandBuffer, blockCenter, dbg, dbgId);
+                        TalentProcSounds.playCombo(acc, Profession.MINEUR, comboRank, comboCount,
+                            playerRef, ref, commandBuffer, blockCenter);
                     }
                 } catch (Exception ignored) {}
             }
@@ -356,9 +352,12 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                         final double sx = bx + 0.5;
                         final double sy = by;
                         final double sz = bz + 0.5;
+                        final boolean gardienSound = acc.isTalentSoundEnabled(Profession.MINEUR, GARDIEN_PIERRE_NODE_ID);
                         guardianManager.queueDelayedRepop(() -> w.execute(() -> {
                             try {
-                                playGardienPierreSpawnSound(w, sx, sy, sz, dbg, dbgId);
+                                if (gardienSound) {
+                                    playGardienPierreSpawnSound(w, sx, sy, sz, dbg, dbgId);
+                                }
                                 Store<EntityStore> entityStore = w.getEntityStore().getStore();
                                 spawnGuardianGolem(entityStore, new Vector3d(sx, sy, sz));
                             } catch (Exception e) {
@@ -482,7 +481,8 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
 
         Vector3d center = new Vector3d(pos[0] + 0.5, pos[1] + 0.5, pos[2] + 0.5);
         if (comboRank > 0 && comboCount > 0) {
-            playComboSound(acc, comboRank, comboCount, playerRef, playerEntityRef, buffer, center, dbg, dbgId);
+            TalentProcSounds.playCombo(acc, Profession.MINEUR, comboRank, comboCount,
+                playerRef, playerEntityRef, buffer, center);
         }
         try { dropOreAtBlock(buffer, oreItemId, center); } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log("[ChantVeine] dropOreAtBlock ERREUR item=" + oreItemId);
@@ -490,9 +490,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
 
         int lootRank = acc.getTalentRank(Profession.MINEUR, "0");
         if (lootRank > 0 && RANDOM.nextDouble() < lootRank * 0.05) {
-            if (acc.isTalentSoundEnabled(Profession.MINEUR, "0")) {
-                playTalentProcSound(POCHES_PLEINES_SOUND_ID, playerRef, playerEntityRef, buffer, center, dbg, dbgId, "[ChantVeine] N0 PochesPleines");
-            }
+            TalentProcSounds.playLootDouble(acc, Profession.MINEUR, playerRef, playerEntityRef, buffer, center);
             try { dropOreAtBlock(buffer, oreItemId, center); } catch (Exception e) {
                 LOGGER.atWarning().withCause(e).log("[ChantVeine] N0 dropOreAtBlock ERREUR item=" + oreItemId);
             }
@@ -502,9 +500,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
         if (ghostOreRank > 0) {
             double ghostChance = 0.01 + (ghostOreRank - 1) * 0.005;
             if (RANDOM.nextDouble() < ghostChance) {
-                if (acc.isTalentSoundEnabled(Profession.MINEUR, "2")) {
-                    playTalentProcSound(MINERAI_FANTOMATIQUE_SOUND_ID, playerRef, playerEntityRef, buffer, center, dbg, dbgId, "[ChantVeine] N2 MineraiFantomatique");
-                }
+                TalentProcSounds.playFantomatique(acc, Profession.MINEUR, playerRef, playerEntityRef, buffer, center);
                 try { dropOreAtBlock(buffer, "Ore_Ghost", center); } catch (Exception e) {
                     LOGGER.atWarning().withCause(e).log("[ChantVeine] N2 dropOreAtBlock ERREUR");
                 }
@@ -596,21 +592,6 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
         } catch (Exception e) {
             LOGGER.atWarning().withCause(e).log((dbgId != null ? dbgId : "") + "N9 GardienDePierre son ERREUR");
         }
-    }
-
-    private static void playComboSound(@Nonnull PlayerAccount acc,
-                                       int comboRank,
-                                       int comboCount,
-                                       @Nonnull PlayerRef playerRef,
-                                       @Nonnull Ref<EntityStore> ref,
-                                       @Nonnull CommandBuffer<EntityStore> commandBuffer,
-                                       @Nonnull Vector3d at,
-                                       boolean dbg,
-                                       @Nullable String dbgId) {
-        if (comboRank <= 0 || comboCount <= 0 || comboCount > MinerComboTracker.MAX_COMBO) return;
-        if (!acc.isTalentSoundEnabled(Profession.MINEUR, CC_COMBO_NODE_ID)) return;
-        playTalentProcSound("SFX_Vrpg_Combo_" + comboCount, playerRef, ref, commandBuffer, at, dbg, dbgId,
-                "N5 CCombo x" + comboCount);
     }
 
     private static void playTalentProcSound(@Nonnull String soundEventId,

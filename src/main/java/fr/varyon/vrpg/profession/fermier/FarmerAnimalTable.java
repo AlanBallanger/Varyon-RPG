@@ -8,7 +8,7 @@ import java.util.Set;
 public final class FarmerAnimalTable {
 
     public static final String GUARDIAN_CROP_ROLE = "cow_undead";
-    public static final String GUARDIAN_CROP_DROP = "Plant_Seeds_Phantom";
+    public static final String GUARDIAN_CROP_DROP = "Plant_Seeds_Ghost";
 
     public static final long BASE_ANIMAL_KILL_XP = 30L;
     public static final long BASE_MILK_XP = 15L;

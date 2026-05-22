@@ -20,9 +20,8 @@ public final class ForestierComboTracker {
         State s = states.computeIfAbsent(uuid, k -> new State());
         if (now - s.lastChopMs > COMBO_TIMEOUT_MS) {
             s.count = 0;
-        } else {
-            s.count = Math.min(s.count + 1, MAX_COMBO);
         }
+        s.count = s.count >= MAX_COMBO ? 0 : s.count + 1;
         s.lastChopMs = now;
         return s.count;
     }
