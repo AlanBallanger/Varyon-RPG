@@ -137,7 +137,7 @@ public final class FarmerPickupHarvestSystem extends EntityEventSystem<EntitySto
             if (RANDOM.nextDouble() < chance) {
                 if (dbg) LOGGER.atInfo().log(dbgId + "N3 GrainesFantomatiques PROC");
                 TalentProcSounds.playFantomatique(acc, Profession.FERMIER, playerRef, ref, commandBuffer, dropPos);
-                try { dropItemNearPlayer(commandBuffer, "Plant_Seeds_Ghost", dropPos); }
+                try { dropItemNearPlayer(commandBuffer, "Plant_Seeds_Corrupted", dropPos); }
                 catch (Exception e) { LOGGER.atWarning().withCause(e).log(dbgId + "N3 ERREUR"); }
             }
         }

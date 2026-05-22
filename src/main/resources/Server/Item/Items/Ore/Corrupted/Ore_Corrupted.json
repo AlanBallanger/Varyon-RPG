@@ -1,13 +1,14 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Ore_Ghost.name",
-    "Description": "server.items.Ore_Ghost.description"
+    "Name": "server.items.Ore_Corrupted.name",
+    "Description": "server.items.Ore_Corrupted.description"
   },
+  "Quality": "Uncommon",
   "Categories": [
     "Blocks.Ores"
   ],
   "Model": "Resources/Ores/Ore_Large.blockymodel",
-  "Texture": "Resources/Ores/Ore_Textures/Ghost.png",
+  "Texture": "Resources/Ores/Ore_Textures/Corrupted.png",
   "ItemLevel": 10,
   "PlayerAnimationsId": "Block",
   "IconProperties": {
@@ -22,7 +23,7 @@
       22.5
     ]
   },
-  "Icon": "Icons/ItemsGenerated/Ore_Ghost.png",
+  "Icon": "Icons/ItemsGenerated/Ore_Corrupted.png",
   "Tags": {
     "Type": [
       "Ore"

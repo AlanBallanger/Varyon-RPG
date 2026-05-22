@@ -5,14 +5,14 @@ import java.util.Set;
 public final class ChasseurXpTable {
 
     public static final double BASE_KILL_XP = 10.0;
-    public static final String ESSENCE_ITEM_ID = "Ingredient_Hide_Ghost";
+    public static final String ESSENCE_ITEM_ID = "Ingredient_Hide_Corrupted";
 
     public static final Set<String> MEAT_HIDE_FEATHER = Set.of(
         "Food_Wildmeat_Raw",
         "Ingredient_Hide_Light",
         "Ingredient_Hide_Medium",
         "Ingredient_Hide_Heavy",
-        "Ingredient_Hide_Ghost",
+        "Ingredient_Hide_Corrupted",
         "Ingredient_Feathers_Light"
     );
 

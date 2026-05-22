@@ -1,13 +1,13 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Ingredient_Hide_Ghost.name",
-    "Description": "server.items.Ingredient_Hide_Ghost.description"
+    "Name": "server.items.Ingredient_Hide_Corrupted.name",
+    "Description": "server.items.Ingredient_Hide_Corrupted.description"
   },
   "Categories": [
     "Items.Ingredients"
   ],
   "Model": "Resources/Materials/Hide.blockymodel",
-  "Texture": "Resources/Hide/Ghost.png",
+  "Texture": "Resources/Hide/Corrupted.png",
   "Quality": "Uncommon",
   "ItemLevel": 10,
   "PlayerAnimationsId": "Item",
@@ -23,7 +23,7 @@
       22.5
     ]
   },
-  "Icon": "Icons/ItemsGenerated/Hide_Ghost.png",
+  "Icon": "Icons/ItemsGenerated/Hide_Corrupted.png",
   "Tags": {
     "Type": [
       "Ingredient"

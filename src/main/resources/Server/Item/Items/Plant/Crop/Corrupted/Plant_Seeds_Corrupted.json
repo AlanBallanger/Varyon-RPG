@@ -1,11 +1,11 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Plant_Seeds_Ghost.name",
-    "Description": "server.items.Plant_Seeds_Ghost.description"
+    "Name": "server.items.Plant_Seeds_Corrupted.name",
+    "Description": "server.items.Plant_Seeds_Corrupted.description"
   },
   "Quality": "Uncommon",
-  "Texture": "Resources/Plants/Seedbag_Textures/Ghost.png",
-  "Icon": "Icons/ItemsGenerated/Crop_Ghost.png",
+  "Texture": "Resources/Plants/Seedbag_Textures/Corrupted.png",
+  "Icon": "Icons/ItemsGenerated/Crop_Corrupted.png",
   "IconProperties": {
     "Scale": 1.1,
     "Rotation": [

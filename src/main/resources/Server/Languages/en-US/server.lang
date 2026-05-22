@@ -1,7 +1,16 @@
 # Varyon-RPG (en-US)
 
-items.Ore_Ghost.name = Ghost Ore
-items.Ore_Ghost.description = This ghostly-looking ore seems highly prized among traders.
+items.Ore_Corrupted.name = Corrupted Ore
+items.Ore_Corrupted.description = This corrupted-looking ore seems highly prized among traders.
+
+items.Log_Corrupted.name = Corrupted Log
+items.Log_Corrupted.description = This corrupted wood seems highly prized among traders.
+
+items.Plant_Seeds_Corrupted.name = Corrupted Seed Bag
+items.Plant_Seeds_Corrupted.description = Corrupted-looking seeds that seem highly prized among traders.
+
+items.Ingredient_Hide_Corrupted.name = Corrupted Hide
+items.Ingredient_Hide_Corrupted.description = Corrupted-looking hide that seems highly prized among traders.
 
 items.Bag_Ore_Lesser.name = Lesser Foreur Satchel
 items.Bag_Ore_Lesser.description = A reinforced bag for carrying ores without losing them on death.
@@ -18,4 +27,4 @@ items.Varyon_Miners_Helmet.description = Reinforced headgear for hostile galleri
 items.Varyon_Guardian_Ore.name = Mineral Guardian Core
 items.Varyon_Guardian_Ore.description = Extremely tough: with comparable pickaxe, expect about five times longer to break than adamantite magma ore.
 
-resourceType.Salvage_Ghost.name = Any metallic ingot
+resourceType.Salvage_Corrupted.name = Any metallic ingot

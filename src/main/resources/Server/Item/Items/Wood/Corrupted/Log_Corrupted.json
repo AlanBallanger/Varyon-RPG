@@ -1,23 +1,23 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Log_Ghost.name",
-    "Description": "server.items.Log_Ghost.description"
+    "Name": "server.items.Log_Corrupted.name",
+    "Description": "server.items.Log_Corrupted.description"
   },
   "Parent": "Wood_Oak_Trunk",
   "Quality": "Uncommon",
   "ItemLevel": 10,
-  "Icon": "Icons/ItemsGenerated/Log_Ghost.png",
+  "Icon": "Icons/ItemsGenerated/Log_Corrupted.png",
   "BlockType": {
     "Gathering": {
       "Breaking": {
-        "ItemId": "Log_Ghost",
+        "ItemId": "Log_Corrupted",
         "GatherType": "Woods"
       }
     },
     "Textures": [
       {
-        "Sides": "Resources/Logs/Logs_Textures/Ghost.png",
-        "UpDown": "Resources/Logs/Logs_Textures/Ghost.png",
+        "Sides": "Resources/Logs/Logs_Textures/Corrupted.png",
+        "UpDown": "Resources/Logs/Logs_Textures/Corrupted.png",
         "Weight": 1
       }
     ]
@@ -28,7 +28,7 @@
       "Trunk"
     ],
     "Family": [
-      "Ghost"
+      "Corrupted"
     ]
   },
   "MaxStack": 25,

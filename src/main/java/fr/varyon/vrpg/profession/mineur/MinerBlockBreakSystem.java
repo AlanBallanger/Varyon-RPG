@@ -168,7 +168,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
                                 event.getTargetBlock().z + 0.5
                             );
                             TalentProcSounds.playFantomatique(acc, Profession.MINEUR, playerRef, ref, commandBuffer, blockCenter);
-                            dropOreAtBlock(commandBuffer, "Ore_Ghost", blockCenter);
+                            dropOreAtBlock(commandBuffer, "Ore_Corrupted", blockCenter);
                         }
                     } catch (Exception e) {
                         LOGGER.atWarning().withCause(e).log(dbgId + "N2 MineraiFantomatique drop ERREUR");
@@ -501,7 +501,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
             double ghostChance = 0.01 + (ghostOreRank - 1) * 0.005;
             if (RANDOM.nextDouble() < ghostChance) {
                 TalentProcSounds.playFantomatique(acc, Profession.MINEUR, playerRef, playerEntityRef, buffer, center);
-                try { dropOreAtBlock(buffer, "Ore_Ghost", center); } catch (Exception e) {
+                try { dropOreAtBlock(buffer, "Ore_Corrupted", center); } catch (Exception e) {
                     LOGGER.atWarning().withCause(e).log("[ChantVeine] N2 dropOreAtBlock ERREUR");
                 }
             }

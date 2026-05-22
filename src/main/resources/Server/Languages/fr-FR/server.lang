@@ -1,7 +1,16 @@
 # Varyon-RPG (fr-FR)
 
-items.Ore_Ghost.name = Minerai fantôme
-items.Ore_Ghost.description = Ce minerai à l'apparence fantomatique semble être très prisé des marchands.
+items.Ore_Corrupted.name = Minerai corrompu
+items.Ore_Corrupted.description = Ce minerai à l'apparence corrompue semble être très prisé des marchands.
+
+items.Log_Corrupted.name = Bûche corrompue
+items.Log_Corrupted.description = Ce bois corrompu semble très prisé des marchands.
+
+items.Plant_Seeds_Corrupted.name = Sac de graines corrompues
+items.Plant_Seeds_Corrupted.description = Des graines à l'apparence corrompue, très prisées des marchands.
+
+items.Ingredient_Hide_Corrupted.name = Peau corrompue
+items.Ingredient_Hide_Corrupted.description = Une peau à l'apparence corrompue, très prisée des marchands.
 
 items.Bag_Ore_Lesser.name = Petite Besace du Foreur
 items.Bag_Ore_Lesser.description = Un sac renforcé permettant de transporter des minerais sans les perdre à la mort.
@@ -18,4 +27,4 @@ items.Varyon_Miners_Helmet.description = Casque renforcé pour galeries hostiles
 items.Varyon_Guardian_Ore.name = Cœur de gardien minéral
 items.Varyon_Guardian_Ore.description = Extrêmement résistant : à pioche équivalente, il demande environ cinq fois plus longtemps qu'un magma adamantite.
 
-resourceType.Salvage_Ghost.name = Tout lingot métallique
+resourceType.Salvage_Corrupted.name = Tout lingot métallique
