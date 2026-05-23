@@ -398,7 +398,7 @@ Group {
       Label #ProfessionCatalogBaseTitle {
         Anchor: (Top: 0);
         Style: (FontSize: 21, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true);
-        Text: "METIERS DE BASE";
+        Text: "MÉTIERS DE RÉCOLTE";
       }
 
       Group {
@@ -744,7 +744,7 @@ Group {
       Label #ProfessionCatalogSpecTitle {
         Anchor: (Top: 18);
         Style: (FontSize: 21, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true);
-        Text: "METIERS SPECIALISES";
+        Text: "MÉTIERS DE CRAFT";
       }
 
       Group {
@@ -786,7 +786,7 @@ Group {
 
           Label #ProfessionCatalogCard4Prereq {
             Anchor: (Top: 32, Left: 0, Right: 0, Bottom: 70);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
             Text: "";
             Visible: true;
           }
@@ -870,7 +870,7 @@ Group {
 
           Label #ProfessionCatalogCard5Prereq {
             Anchor: (Top: 32, Left: 0, Right: 0, Bottom: 70);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
             Text: "";
             Visible: true;
           }
@@ -954,7 +954,7 @@ Group {
 
           Label #ProfessionCatalogCard6Prereq {
             Anchor: (Top: 32, Left: 0, Right: 0, Bottom: 70);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
             Text: "";
             Visible: true;
           }
@@ -1038,7 +1038,7 @@ Group {
 
           Label #ProfessionCatalogCard7Prereq {
             Anchor: (Top: 32, Left: 0, Right: 0, Bottom: 70);
-            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center);
+            Style: (FontSize: 14, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
             Text: "";
             Visible: true;
           }

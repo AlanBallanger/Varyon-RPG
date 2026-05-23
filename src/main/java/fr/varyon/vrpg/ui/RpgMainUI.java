@@ -706,7 +706,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 String parentName = parent == null ? "?" : parent.getDisplayName();
                 uiBuilder.set(id + "Prereq.Visible", true);
                 uiBuilder.set(id + "Prereq.TextSpans",
-                    Message.raw("Pr\u00e9requis : niveau " + need + " " + parentName));
+                    Message.raw("Pr\u00e9requis :\nniveau " + need + " " + parentName));
                 boolean unlocked = acc != null && acc.isUnlocked(p);
                 uiBuilder.set(id + "Lock.Visible", !unlocked);
                 if (!unlocked) {
