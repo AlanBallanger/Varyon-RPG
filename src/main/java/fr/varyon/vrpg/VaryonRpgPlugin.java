@@ -62,7 +62,9 @@ import fr.varyon.vrpg.profession.mineur.MiningHelmet;
 import fr.varyon.vrpg.profession.mineur.MiningHelmetTickSystem;
 import fr.varyon.vrpg.rpg.PlayerAccount;
 import fr.varyon.vrpg.rpg.ProfessionManager;
+import fr.varyon.vrpg.item.ProfessionXpPotionInteraction;
 import fr.varyon.vrpg.ui.ProfessionXpHud;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -121,6 +123,15 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         instance = this;
 
         VrpgConfig.load(getDataDirectory());
+
+        try {
+            getCodecRegistry(Interaction.CODEC)
+                .register(ProfessionXpPotionInteraction.TYPE_NAME,
+                    ProfessionXpPotionInteraction.class,
+                    ProfessionXpPotionInteraction.CODEC);
+        } catch (Exception e) {
+            LOGGER.atWarning().withCause(e).log("[VaryonRPG] register ProfessionXpPotionInteraction");
+        }
 
         try {
             this.professionManager = new ProfessionManager(getDataDirectory());

@@ -1,4 +1,4 @@
-/*  */// Metiers tab - aucun alias @ partage avec CharacterPage (eviter collision merge).
+$C = "Common.ui";
 
 @ProfessionTabViewTalentsButton = (
   Default: (
@@ -12,7 +12,8 @@
   ),
   Disabled: (
     Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 @ProfessionTabSecondaryButton = (
@@ -27,7 +28,8 @@
   ),
   Disabled: (
     Background: (TexturePath: "Common/Buttons/Disabled.png", Border: 8)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 

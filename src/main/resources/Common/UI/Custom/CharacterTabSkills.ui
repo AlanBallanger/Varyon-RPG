@@ -81,7 +81,8 @@ $C = "Common.ui";
   ),
   Disabled: (
     Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 @BlockedButtonStyle = (
@@ -96,7 +97,8 @@ $C = "Common.ui";
   ),
   Disabled: (
     Background: #6B4E2E(0.06)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 @TabButtonStyle = (
@@ -111,7 +113,8 @@ $C = "Common.ui";
   ),
   Disabled: (
     Background: PatchStyle(TexturePath: "Common/Buttons/Disabled.png", Border: 8)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 @TabLabelStyle = (
@@ -164,7 +167,8 @@ $C = "Common.ui";
   ),
   Disabled: (
     Background: #6B4E2E(0.06)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 @SkillNodeButtonStyle = (
@@ -179,7 +183,8 @@ $C = "Common.ui";
   ),
   Disabled: (
     Background: #000000(0.0)
-  )
+  ),
+  Sounds: $C.@ButtonSounds
 );
 
 

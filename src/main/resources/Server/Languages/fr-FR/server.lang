@@ -27,4 +27,52 @@ items.Varyon_Miners_Helmet.description = Casque renforcé pour galeries hostiles
 items.Varyon_Guardian_Ore.name = Cœur de gardien minéral
 items.Varyon_Guardian_Ore.description = Extrêmement résistant : à pioche équivalente, il demande environ cinq fois plus longtemps qu'un magma adamantite.
 
+items.Varyon_Miner_Xp_Potion_Lesser.name = Petite potion d'xp de Mineur
+items.Varyon_Miner_Xp_Potion_Lesser.description = Donne 100 points d'expérience dans le métier Mineur.
+
+items.Varyon_Miner_Xp_Potion_Medium.name = Moyenne potion d'xp de Mineur
+items.Varyon_Miner_Xp_Potion_Medium.description = Donne 500 points d'expérience dans le métier Mineur.
+
+items.Varyon_Miner_Xp_Potion_Large.name = Grande potion d'xp de Mineur
+items.Varyon_Miner_Xp_Potion_Large.description = Donne 2 500 points d'expérience dans le métier Mineur.
+
+items.Varyon_Miner_Xp_Potion_Gigantic.name = Gigantesque potion d'xp de Mineur
+items.Varyon_Miner_Xp_Potion_Gigantic.description = Donne 10 000 points d'expérience dans le métier Mineur.
+
+items.Varyon_Fermier_Xp_Potion_Lesser.name = Petite potion d'xp de Fermier
+items.Varyon_Fermier_Xp_Potion_Lesser.description = Donne 100 points d'expérience dans le métier Fermier.
+
+items.Varyon_Fermier_Xp_Potion_Medium.name = Moyenne potion d'xp de Fermier
+items.Varyon_Fermier_Xp_Potion_Medium.description = Donne 500 points d'expérience dans le métier Fermier.
+
+items.Varyon_Fermier_Xp_Potion_Large.name = Grande potion d'xp de Fermier
+items.Varyon_Fermier_Xp_Potion_Large.description = Donne 2 500 points d'expérience dans le métier Fermier.
+
+items.Varyon_Fermier_Xp_Potion_Gigantic.name = Gigantesque potion d'xp de Fermier
+items.Varyon_Fermier_Xp_Potion_Gigantic.description = Donne 10 000 points d'expérience dans le métier Fermier.
+
+items.Varyon_Forestier_Xp_Potion_Lesser.name = Petite potion d'xp de Forestier
+items.Varyon_Forestier_Xp_Potion_Lesser.description = Donne 100 points d'expérience dans le métier Forestier.
+
+items.Varyon_Forestier_Xp_Potion_Medium.name = Moyenne potion d'xp de Forestier
+items.Varyon_Forestier_Xp_Potion_Medium.description = Donne 500 points d'expérience dans le métier Forestier.
+
+items.Varyon_Forestier_Xp_Potion_Large.name = Grande potion d'xp de Forestier
+items.Varyon_Forestier_Xp_Potion_Large.description = Donne 2 500 points d'expérience dans le métier Forestier.
+
+items.Varyon_Forestier_Xp_Potion_Gigantic.name = Gigantesque potion d'xp de Forestier
+items.Varyon_Forestier_Xp_Potion_Gigantic.description = Donne 10 000 points d'expérience dans le métier Forestier.
+
+items.Varyon_Chasseur_Xp_Potion_Lesser.name = Petite potion d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Potion_Lesser.description = Donne 100 points d'expérience dans le métier Chasseur.
+
+items.Varyon_Chasseur_Xp_Potion_Medium.name = Moyenne potion d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Potion_Medium.description = Donne 500 points d'expérience dans le métier Chasseur.
+
+items.Varyon_Chasseur_Xp_Potion_Large.name = Grande potion d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Potion_Large.description = Donne 2 500 points d'expérience dans le métier Chasseur.
+
+items.Varyon_Chasseur_Xp_Potion_Gigantic.name = Gigantesque potion d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Potion_Gigantic.description = Donne 10 000 points d'expérience dans le métier Chasseur.
+
 resourceType.Salvage_Corrupted.name = Tout lingot métallique
