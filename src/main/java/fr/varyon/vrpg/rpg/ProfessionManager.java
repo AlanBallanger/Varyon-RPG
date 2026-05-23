@@ -323,6 +323,34 @@ public final class ProfessionManager {
         });
     }
 
+    public double getXpBoostMultiplier(@Nonnull UUID uuid, @Nonnull Profession profession) {
+        PlayerAccount acc = cache.get(uuid);
+        return acc != null ? acc.getBoostMultiplier(profession) : 0.0;
+    }
+
+    public void applyXpBoost(@Nonnull UUID uuid, @Nonnull Profession profession,
+                              int tier, double bonus, long durationMs) {
+        ReentrantLock lock = lockFor(uuid);
+        lock.lock();
+        try {
+            PlayerAccount acc = getOrLoad(uuid);
+            XpBoost existing = acc.getBoost(profession);
+            long now = System.currentTimeMillis();
+            if (existing != null) {
+                if (tier == existing.getTier()) {
+                    existing.setExpiryMs(existing.getExpiryMs() + durationMs);
+                } else if (tier > existing.getTier()) {
+                    acc.setBoost(profession, new XpBoost(tier, bonus, now + durationMs));
+                }
+            } else {
+                acc.setBoost(profession, new XpBoost(tier, bonus, now + durationMs));
+            }
+            dirty.add(uuid);
+        } finally {
+            lock.unlock();
+        }
+    }
+
     public void forceSave() {
         flushDirty();
     }

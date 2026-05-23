@@ -169,7 +169,7 @@ public final class ChasseurKillSystem {
                 }
 
                 int xpRank = acc.getTalentRank(Profession.CHASSEUR, "1");
-                double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
+                double xpMult = 1.0 + xpRank * 0.05 + comboBonus + professionManager.getXpBoostMultiplier(uuid, Profession.CHASSEUR);
                 double finalXp = ChasseurXpTable.BASE_KILL_XP * xpMult;
                 if (dbg) LOGGER.atInfo().log("[ChasseurKill] XP +" + finalXp
                     + " (base=" + ChasseurXpTable.BASE_KILL_XP + " × " + String.format("%.3f", xpMult) + ")"

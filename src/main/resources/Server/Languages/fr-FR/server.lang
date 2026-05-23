@@ -75,4 +75,52 @@ items.Varyon_Chasseur_Xp_Potion_Large.description = Donne 2 500 points d'expéri
 items.Varyon_Chasseur_Xp_Potion_Gigantic.name = Gigantesque potion d'xp de Chasseur
 items.Varyon_Chasseur_Xp_Potion_Gigantic.description = Donne 10 000 points d'expérience dans le métier Chasseur.
 
+items.Varyon_Miner_Xp_Boost_Lesser.name = Petite potion de boost d'xp de Mineur
+items.Varyon_Miner_Xp_Boost_Lesser.description = Augmente les gains d'xp du métier Mineur de +25% pendant 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Medium.name = Moyenne potion de boost d'xp de Mineur
+items.Varyon_Miner_Xp_Boost_Medium.description = Augmente les gains d'xp du métier Mineur de +50% pendant 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Large.name = Grande potion de boost d'xp de Mineur
+items.Varyon_Miner_Xp_Boost_Large.description = Augmente les gains d'xp du métier Mineur de +100% pendant 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Gigantic.name = Gigantesque potion de boost d'xp de Mineur
+items.Varyon_Miner_Xp_Boost_Gigantic.description = Augmente les gains d'xp du métier Mineur de +200% pendant 30 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Lesser.name = Petite potion de boost d'xp de Fermier
+items.Varyon_Fermier_Xp_Boost_Lesser.description = Augmente les gains d'xp du métier Fermier de +25% pendant 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Medium.name = Moyenne potion de boost d'xp de Fermier
+items.Varyon_Fermier_Xp_Boost_Medium.description = Augmente les gains d'xp du métier Fermier de +50% pendant 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Large.name = Grande potion de boost d'xp de Fermier
+items.Varyon_Fermier_Xp_Boost_Large.description = Augmente les gains d'xp du métier Fermier de +100% pendant 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Gigantic.name = Gigantesque potion de boost d'xp de Fermier
+items.Varyon_Fermier_Xp_Boost_Gigantic.description = Augmente les gains d'xp du métier Fermier de +200% pendant 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Lesser.name = Petite potion de boost d'xp de Forestier
+items.Varyon_Forestier_Xp_Boost_Lesser.description = Augmente les gains d'xp du métier Forestier de +25% pendant 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Medium.name = Moyenne potion de boost d'xp de Forestier
+items.Varyon_Forestier_Xp_Boost_Medium.description = Augmente les gains d'xp du métier Forestier de +50% pendant 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Large.name = Grande potion de boost d'xp de Forestier
+items.Varyon_Forestier_Xp_Boost_Large.description = Augmente les gains d'xp du métier Forestier de +100% pendant 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Gigantic.name = Gigantesque potion de boost d'xp de Forestier
+items.Varyon_Forestier_Xp_Boost_Gigantic.description = Augmente les gains d'xp du métier Forestier de +200% pendant 10 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Lesser.name = Petite potion de boost d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Boost_Lesser.description = Augmente les gains d'xp du métier Chasseur de +25% pendant 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Medium.name = Moyenne potion de boost d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Boost_Medium.description = Augmente les gains d'xp du métier Chasseur de +50% pendant 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Large.name = Grande potion de boost d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Boost_Large.description = Augmente les gains d'xp du métier Chasseur de +100% pendant 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Gigantic.name = Gigantesque potion de boost d'xp de Chasseur
+items.Varyon_Chasseur_Xp_Boost_Gigantic.description = Augmente les gains d'xp du métier Chasseur de +200% pendant 30 minutes.
+
 resourceType.Salvage_Corrupted.name = Tout lingot métallique

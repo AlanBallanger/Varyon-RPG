@@ -27,4 +27,52 @@ items.Varyon_Miners_Helmet.description = Reinforced headgear for hostile galleri
 items.Varyon_Guardian_Ore.name = Mineral Guardian Core
 items.Varyon_Guardian_Ore.description = Extremely tough: with comparable pickaxe, expect about five times longer to break than adamantite magma ore.
 
+items.Varyon_Miner_Xp_Boost_Lesser.name = Lesser Mining XP Boost Potion
+items.Varyon_Miner_Xp_Boost_Lesser.description = Increases Mining profession XP gains by +25% for 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Medium.name = Medium Mining XP Boost Potion
+items.Varyon_Miner_Xp_Boost_Medium.description = Increases Mining profession XP gains by +50% for 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Large.name = Large Mining XP Boost Potion
+items.Varyon_Miner_Xp_Boost_Large.description = Increases Mining profession XP gains by +100% for 30 minutes.
+
+items.Varyon_Miner_Xp_Boost_Gigantic.name = Gigantic Mining XP Boost Potion
+items.Varyon_Miner_Xp_Boost_Gigantic.description = Increases Mining profession XP gains by +200% for 30 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Lesser.name = Lesser Farmer XP Boost Potion
+items.Varyon_Fermier_Xp_Boost_Lesser.description = Increases Farmer profession XP gains by +25% for 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Medium.name = Medium Farmer XP Boost Potion
+items.Varyon_Fermier_Xp_Boost_Medium.description = Increases Farmer profession XP gains by +50% for 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Large.name = Large Farmer XP Boost Potion
+items.Varyon_Fermier_Xp_Boost_Large.description = Increases Farmer profession XP gains by +100% for 10 minutes.
+
+items.Varyon_Fermier_Xp_Boost_Gigantic.name = Gigantic Farmer XP Boost Potion
+items.Varyon_Fermier_Xp_Boost_Gigantic.description = Increases Farmer profession XP gains by +200% for 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Lesser.name = Lesser Forester XP Boost Potion
+items.Varyon_Forestier_Xp_Boost_Lesser.description = Increases Forester profession XP gains by +25% for 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Medium.name = Medium Forester XP Boost Potion
+items.Varyon_Forestier_Xp_Boost_Medium.description = Increases Forester profession XP gains by +50% for 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Large.name = Large Forester XP Boost Potion
+items.Varyon_Forestier_Xp_Boost_Large.description = Increases Forester profession XP gains by +100% for 10 minutes.
+
+items.Varyon_Forestier_Xp_Boost_Gigantic.name = Gigantic Forester XP Boost Potion
+items.Varyon_Forestier_Xp_Boost_Gigantic.description = Increases Forester profession XP gains by +200% for 10 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Lesser.name = Lesser Hunter XP Boost Potion
+items.Varyon_Chasseur_Xp_Boost_Lesser.description = Increases Hunter profession XP gains by +25% for 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Medium.name = Medium Hunter XP Boost Potion
+items.Varyon_Chasseur_Xp_Boost_Medium.description = Increases Hunter profession XP gains by +50% for 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Large.name = Large Hunter XP Boost Potion
+items.Varyon_Chasseur_Xp_Boost_Large.description = Increases Hunter profession XP gains by +100% for 30 minutes.
+
+items.Varyon_Chasseur_Xp_Boost_Gigantic.name = Gigantic Hunter XP Boost Potion
+items.Varyon_Chasseur_Xp_Boost_Gigantic.description = Increases Hunter profession XP gains by +200% for 30 minutes.
+
 resourceType.Salvage_Corrupted.name = Any metallic ingot

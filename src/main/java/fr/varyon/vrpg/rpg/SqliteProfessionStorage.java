@@ -118,6 +118,16 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                   PRIMARY KEY (uuid, pref_key)
                 )
             """);
+            st.execute("""
+                CREATE TABLE IF NOT EXISTS player_xp_boost (
+                  uuid          TEXT NOT NULL,
+                  profession_id TEXT NOT NULL,
+                  tier          INTEGER NOT NULL,
+                  bonus         REAL NOT NULL,
+                  remaining_ms  INTEGER NOT NULL,
+                  PRIMARY KEY (uuid, profession_id)
+                )
+            """);
         }
     }
 
@@ -183,6 +193,20 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         account.applyTalentSoundPref(rs.getString("pref_key"), rs.getInt("enabled") != 0);
+                    }
+                }
+            }
+            long now = System.currentTimeMillis();
+            try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT profession_id, tier, bonus, remaining_ms FROM player_xp_boost WHERE uuid = ?")) {
+                ps.setString(1, uuid.toString());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Profession p = Profession.fromId(rs.getString("profession_id"));
+                        if (p == null) continue;
+                        long remaining = rs.getLong("remaining_ms");
+                        if (remaining <= 0) continue;
+                        account.setBoost(p, new XpBoost(rs.getInt("tier"), rs.getDouble("bonus"), now + remaining));
                     }
                 }
             }
@@ -301,6 +325,25 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
                 }
                 ins.executeBatch();
             }
+            try (PreparedStatement del = connection.prepareStatement(
+                "DELETE FROM player_xp_boost WHERE uuid = ?")) {
+                del.setString(1, uuid.toString());
+                del.executeUpdate();
+            }
+            try (PreparedStatement ins = connection.prepareStatement(
+                "INSERT INTO player_xp_boost (uuid, profession_id, tier, bonus, remaining_ms) VALUES (?,?,?,?,?)")) {
+                for (Map.Entry<Profession, XpBoost> e : account.getActiveBoosts().entrySet()) {
+                    long remaining = e.getValue().getRemainingMs();
+                    if (remaining <= 0) continue;
+                    ins.setString(1, uuid.toString());
+                    ins.setString(2, e.getKey().getId());
+                    ins.setInt(3, e.getValue().getTier());
+                    ins.setDouble(4, e.getValue().getBonus());
+                    ins.setLong(5, remaining);
+                    ins.addBatch();
+                }
+                ins.executeBatch();
+            }
             connection.commit();
         } catch (SQLException e) {
             LOGGER.at(Level.SEVERE).log("savePlayer(%s) failed: %s", uuid, e.getMessage());
@@ -343,7 +386,7 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
         return CompletableFuture.runAsync(() -> {
             try {
                 connection.setAutoCommit(false);
-                for (String table : new String[]{"player_talent_sound", "player_talent", "player_profession", "player_account"}) {
+                for (String table : new String[]{"player_xp_boost", "player_talent_sound", "player_talent", "player_profession", "player_account"}) {
                     try (PreparedStatement ps = connection.prepareStatement(
                         "DELETE FROM " + table + " WHERE uuid = ?")) {
                         ps.setString(1, uuid.toString());

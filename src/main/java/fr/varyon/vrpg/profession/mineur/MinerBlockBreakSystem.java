@@ -188,6 +188,7 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
             if (dbg && comboRank > 0) LOGGER.atInfo().log(dbgId + "N5 CCombo combo=" + comboCount
                 + " bonus=" + String.format("%.3f%%", comboBonus * 100));
             xpMult += comboBonus;
+            xpMult += professionManager.getXpBoostMultiplier(playerUuid, Profession.MINEUR);
 
             if (comboRank > 0 && comboCount > 0 && event.getTargetBlock() != null) {
                 try {
@@ -474,7 +475,8 @@ public final class MinerBlockBreakSystem extends EntityEventSystem<EntityStore, 
         int comboCount = comboTracker.onOreMined(playerUuid);
         double comboPercent = comboRank > 0 ? (0.005 + (comboRank - 1) * 0.005) : 0.0;
         double comboBonus = comboRank > 0 ? comboCount * comboPercent : 0.0;
-        professionManager.addXp(playerUuid, Profession.MINEUR, baseXp * (xpRankMult + comboBonus), playerRef);
+        double boostMult = professionManager.getXpBoostMultiplier(playerUuid, Profession.MINEUR);
+        professionManager.addXp(playerUuid, Profession.MINEUR, baseXp * (xpRankMult + comboBonus + boostMult), playerRef);
 
         String oreItemId = MinerXpTable.resolveOreItemId(rawId);
         if (oreItemId == null || playerEntityRef == null || !playerEntityRef.isValid()) return;

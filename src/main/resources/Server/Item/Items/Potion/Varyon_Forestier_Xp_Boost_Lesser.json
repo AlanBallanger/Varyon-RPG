@@ -1,0 +1,95 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "server.items.Varyon_Forestier_Xp_Boost_Lesser.name",
+    "Description": "server.items.Varyon_Forestier_Xp_Boost_Lesser.description"
+  },
+  "Quality": "Common",
+  "ItemLevel": 2,
+  "Categories": [
+    "Items.Potions"
+  ],
+  "Icon": "Icons/ItemsGenerated/Potion_Stamina_Lesser.png",
+  "IconProperties": {
+    "Scale": 0.8,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -10
+    ]
+  },
+  "Consumable": true,
+  "MaxStack": 10,
+  "DropOnDeath": true,
+  "PlayerAnimationsId": {
+    "Parent": "Item",
+    "Animations": {
+      "Consume": {
+        "FirstPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink_FPS.blockyanim",
+        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink.blockyanim",
+        "Speed": 1,
+        "Looping": true
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": {
+      "RequireNewClick": true,
+      "Interactions": [
+        {
+          "Type": "Condition",
+          "RequiredGameMode": "Adventure",
+          "Crouching": false,
+          "Next": {
+            "Type": "Charging",
+            "FailOnDamage": true,
+            "Effects": {
+              "ItemAnimationId": "Consume",
+              "LocalSoundEventId": "SFX_Health_Potion_Low_Drink",
+              "ClearAnimationOnFinish": true,
+              "ClearSoundEventOnFinish": true
+            },
+            "HorizontalSpeedMultiplier": 0.4,
+            "Next": {
+              "1.5": {
+                "Type": "vrpg_xp_boost_potion",
+                "Next": {
+                  "Type": "ModifyInventory",
+                  "AdjustHeldItemQuantity": -1
+                }
+              }
+            },
+            "Failed": {
+              "Type": "Simple"
+            }
+          },
+          "Failed": "Block_Secondary"
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Lesser.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consumables/Potions/Potion_Textures/Yellow.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassSmall",
+    "ParticleColor": "#fdd540",
+    "Light": {
+      "Color": "#431"
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Potion"
+    ]
+  }
+}

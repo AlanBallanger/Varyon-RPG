@@ -251,45 +251,133 @@ Group {
       }
 
 
-      Group #ProfessionAboutBox {
+      Group #BoostsBox {
         Anchor: (Top: 14, Height: 208);
-        LayoutMode: Top;
+        LayoutMode: Full;
         Padding: (Full: 12);
         Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
 
-        Label #ProfessionAboutTitle {
-          Anchor: (Height: 24);
-          Style: (FontSize: 14, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center);
-          Text: "À PROPOS DES MÉTIERS";
+        Label {
+          Anchor: (Left: 0, Right: 0, Top: 0, Height: 24);
+          Style: (FontSize: 14, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Text: "BOOSTS ACTIFS";
         }
 
-        Group { Anchor: (Height: 8); }
+        Group #BoostCard0 {
+          Anchor: (Left: 0, Right: 0, Top: 32, Height: 28);
+          LayoutMode: Left;
 
-        Group #ProfessionAboutBody {
-          LayoutMode: Top;
-
-          Label #ProfessionAboutBullet0 {
-            Anchor: (Left: 0, Right: 0, Height: 38);
-            Style: (FontSize: 12, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
-            Text: "- Sélectionnez 2 métiers actifs parmi les 8 disponibles.";
+          ItemIcon #BoostCard0Icon { Anchor: (Width: 24, Height: 24); }
+          Group { Anchor: (Width: 6); }
+          Label #BoostCard0Name {
+            FlexWeight: 1;
+            Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
           }
-
-          Label #ProfessionAboutBullet1 {
-            Anchor: (Left: 0, Right: 0, Height: 38);
-            Style: (FontSize: 12, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
-            Text: "- Gagnez de l’XP en réalisant des actions liées à vos métiers.";
+          Group #BoostCard0Info {
+            LayoutMode: Left;
+            Visible: false;
+            Label #BoostCard0Multiplier {
+              Anchor: (Width: 66, Height: 28);
+              Style: (FontSize: 12, TextColor: #5BFF7F, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+            Group { Anchor: (Width: 4); }
+            Label #BoostCard0Timer {
+              Anchor: (Width: 68, Height: 28);
+              Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
           }
+        }
 
-          Label #ProfessionAboutBullet2 {
-            Anchor: (Left: 0, Right: 0, Height: 38);
-            Style: (FontSize: 12, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
-            Text: "- Montez de niveau pour obtenir des points de talent dans l’arbre dédié à chaque métier.";
+        Group { Anchor: (Left: 0, Right: 0, Top: 61, Height: 1); Background: #E8DCC8(0.22); }
+
+        Group #BoostCard1 {
+          Anchor: (Left: 0, Right: 0, Top: 64, Height: 28);
+          LayoutMode: Left;
+
+          ItemIcon #BoostCard1Icon { Anchor: (Width: 24, Height: 24); }
+          Group { Anchor: (Width: 6); }
+          Label #BoostCard1Name {
+            FlexWeight: 1;
+            Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
           }
+          Group #BoostCard1Info {
+            LayoutMode: Left;
+            Visible: false;
+            Label #BoostCard1Multiplier {
+              Anchor: (Width: 66, Height: 28);
+              Style: (FontSize: 12, TextColor: #5BFF7F, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+            Group { Anchor: (Width: 4); }
+            Label #BoostCard1Timer {
+              Anchor: (Width: 68, Height: 28);
+              Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+          }
+        }
 
-          Label #ProfessionAboutBullet3 {
-            Anchor: (Left: 0, Right: 0, Height: 38);
-            Style: (FontSize: 12, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
-            Text: "- Changez de métier avec un temps de recharge de 12 heures.";
+        Group { Anchor: (Left: 0, Right: 0, Top: 93, Height: 1); Background: #E8DCC8(0.22); }
+
+        Group #BoostCard2 {
+          Anchor: (Left: 0, Right: 0, Top: 96, Height: 28);
+          LayoutMode: Left;
+
+          ItemIcon #BoostCard2Icon { Anchor: (Width: 24, Height: 24); }
+          Group { Anchor: (Width: 6); }
+          Label #BoostCard2Name {
+            FlexWeight: 1;
+            Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
+          }
+          Group #BoostCard2Info {
+            LayoutMode: Left;
+            Visible: false;
+            Label #BoostCard2Multiplier {
+              Anchor: (Width: 66, Height: 28);
+              Style: (FontSize: 12, TextColor: #5BFF7F, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+            Group { Anchor: (Width: 4); }
+            Label #BoostCard2Timer {
+              Anchor: (Width: 68, Height: 28);
+              Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+          }
+        }
+
+        Group { Anchor: (Left: 0, Right: 0, Top: 125, Height: 1); Background: #E8DCC8(0.22); }
+
+        Group #BoostCard3 {
+          Anchor: (Left: 0, Right: 0, Top: 128, Height: 28);
+          LayoutMode: Left;
+
+          ItemIcon #BoostCard3Icon { Anchor: (Width: 24, Height: 24); }
+          Group { Anchor: (Width: 6); }
+          Label #BoostCard3Name {
+            FlexWeight: 1;
+            Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: Start);
+            Text: "";
+          }
+          Group #BoostCard3Info {
+            LayoutMode: Left;
+            Visible: false;
+            Label #BoostCard3Multiplier {
+              Anchor: (Width: 66, Height: 28);
+              Style: (FontSize: 12, TextColor: #5BFF7F, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
+            Group { Anchor: (Width: 4); }
+            Label #BoostCard3Timer {
+              Anchor: (Width: 68, Height: 28);
+              Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: End, VerticalAlignment: Center);
+              Text: "";
+            }
           }
         }
       }
@@ -997,6 +1085,49 @@ Group {
           }
         }
 
+      }
+
+      Group #ProfessionAboutBox {
+        Anchor: (Top: 18, Left: 0, Right: 0);
+        LayoutMode: Top;
+        Padding: (Full: 12);
+        Background: (TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
+
+        Label #ProfessionAboutTitle {
+          Anchor: (Height: 20);
+          Style: (FontSize: 13, TextColor: #C8A96E, RenderUppercase: true, RenderBold: true, HorizontalAlignment: Center);
+          Text: "À PROPOS DES MÉTIERS";
+        }
+
+        Group { Anchor: (Height: 6); }
+
+        Group #ProfessionAboutBody {
+          LayoutMode: Top;
+
+          Label #ProfessionAboutBullet0 {
+            Anchor: (Left: 0, Right: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
+            Text: "- Sélectionnez 2 métiers actifs parmi les 8 disponibles.";
+          }
+
+          Label #ProfessionAboutBullet1 {
+            Anchor: (Left: 0, Right: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
+            Text: "- Gagnez de l'XP en réalisant des actions liées à vos métiers.";
+          }
+
+          Label #ProfessionAboutBullet2 {
+            Anchor: (Left: 0, Right: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
+            Text: "- Montez de niveau pour obtenir des points de talent dans l'arbre dédié à chaque métier.";
+          }
+
+          Label #ProfessionAboutBullet3 {
+            Anchor: (Left: 0, Right: 0, Height: 22);
+            Style: (FontSize: 11, TextColor: #C8BEB0, HorizontalAlignment: Start, VerticalAlignment: Center, Wrap: true);
+            Text: "- Changez de métier avec un temps de recharge de 12 heures.";
+          }
+        }
       }
 
       Group { FlexWeight: 1; }

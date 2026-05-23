@@ -18,6 +18,7 @@ public final class PlayerAccount {
     private final EnumMap<Profession, ProfessionProgress> progress = new EnumMap<>(Profession.class);
     private final EnumMap<Profession, Map<String, Integer>> talents = new EnumMap<>(Profession.class);
     private final Map<String, Boolean> talentSoundEnabled = new HashMap<>();
+    private final EnumMap<Profession, XpBoost> activeBoosts = new EnumMap<>(Profession.class);
 
     public PlayerAccount(@Nonnull UUID uuid, @Nullable String playerName) {
         this.uuid = uuid;
@@ -124,5 +125,29 @@ public final class PlayerAccount {
         } else {
             talentSoundEnabled.put(key, false);
         }
+    }
+
+    @Nullable
+    public XpBoost getBoost(@Nonnull Profession p) {
+        XpBoost b = activeBoosts.get(p);
+        return (b != null && b.isActive()) ? b : null;
+    }
+
+    public void setBoost(@Nonnull Profession p, @Nonnull XpBoost boost) {
+        activeBoosts.put(p, boost);
+    }
+
+    public void removeBoost(@Nonnull Profession p) {
+        activeBoosts.remove(p);
+    }
+
+    public double getBoostMultiplier(@Nonnull Profession p) {
+        XpBoost b = getBoost(p);
+        return b != null ? b.getBonus() : 0.0;
+    }
+
+    @Nonnull
+    public Map<Profession, XpBoost> getActiveBoosts() {
+        return activeBoosts;
     }
 }

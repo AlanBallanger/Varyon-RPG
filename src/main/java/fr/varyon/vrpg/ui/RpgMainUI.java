@@ -24,6 +24,7 @@ import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
 import fr.varyon.vrpg.rpg.ProfessionProgress;
 import fr.varyon.vrpg.rpg.TalentSoundNodes;
+import fr.varyon.vrpg.rpg.XpBoost;
 import fr.varyon.vrpg.rpg.XpCurve;
 
 import javax.annotation.Nonnull;
@@ -718,6 +719,37 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             boolean isActive = p == activeSlots[0] || p == activeSlots[1];
             uiBuilder.set(id + "Active.Visible", isActive);
         }
+
+        for (int i = 0; i < BOOST_PROFESSION_ORDER.length; i++) {
+            Profession bp = BOOST_PROFESSION_ORDER[i];
+            String bid = "#BoostCard" + i;
+            XpBoost boost = acc != null ? acc.getBoost(bp) : null;
+            uiBuilder.set(bid + "Icon.ItemId", bp.getIconItemId());
+            uiBuilder.set(bid + "Name.TextSpans", Message.raw(bp.getDisplayName()));
+            uiBuilder.set(bid + "Info.Visible", boost != null);
+            if (boost != null) {
+                uiBuilder.set(bid + "Multiplier.TextSpans", Message.raw(formatBoostMultiplier(boost.getBonus())));
+                uiBuilder.set(bid + "Timer.TextSpans", Message.raw(formatBoostTime(boost.getRemainingMs())));
+            }
+        }
+    }
+
+    private static final Profession[] BOOST_PROFESSION_ORDER = {
+        Profession.MINEUR, Profession.FERMIER, Profession.FORESTIER, Profession.CHASSEUR
+    };
+
+    private static String formatBoostMultiplier(double bonus) {
+        int pct = (int) Math.round(bonus * 100);
+        return "+" + pct + "% XP";
+    }
+
+    private static String formatBoostTime(long ms) {
+        long s = ms / 1000;
+        long m = s / 60;
+        long h = m / 60;
+        if (h > 0) return h + "h " + (m % 60) + "min";
+        if (m > 0) return m + "min " + (s % 60) + "s";
+        return s + "s";
     }
 
     private void syncTalentTreeSlotIndex(@Nullable PlayerAccount acc) {

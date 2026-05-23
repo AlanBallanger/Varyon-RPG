@@ -150,7 +150,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
 
             // Node 1 ÔÇö Mains ├ëcorch├®es : +5% XP par rang
             int xpRank = acc.getTalentRank(Profession.FORESTIER, "1");
-            double xpMult = 1.0 + xpRank * 0.05 + comboBonus;
+            double xpMult = 1.0 + xpRank * 0.05 + comboBonus + professionManager.getXpBoostMultiplier(uuid, Profession.FORESTIER);
             double finalXp = ForestierXpTable.BASE_LOG_XP * xpMult;
             if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
                 + " (base=" + ForestierXpTable.BASE_LOG_XP + " ├ù " + String.format("%.3f", xpMult) + ")"
@@ -352,7 +352,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
         if (isForage) {
             // Node 1 ÔÇö Mains ├ëcorch├®es : +5% XP par rang (s'applique aussi aux r├®coltes en nature)
             int xpRank = acc.getTalentRank(Profession.FORESTIER, "1");
-            double xpMult = 1.0 + xpRank * 0.05;
+            double xpMult = 1.0 + xpRank * 0.05 + professionManager.getXpBoostMultiplier(uuid, Profession.FORESTIER);
             double finalXp = ForestierXpTable.BASE_FORAGE_XP * xpMult;
             if (dbg) LOGGER.atInfo().log(dbgId + "XP forage +" + finalXp
                 + " (base=" + ForestierXpTable.BASE_FORAGE_XP + " ├ù " + String.format("%.3f", xpMult) + ")");
