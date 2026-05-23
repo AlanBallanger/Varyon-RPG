@@ -1,0 +1,72 @@
+Group {
+  Anchor: (Left: 0, Right: 0, Height: 34);
+  LayoutMode: Full;
+
+  Group #BgEven {
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+    Background: #141C28;
+  }
+
+  Group #BgOdd {
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+    Background: #1B2438;
+    Visible: false;
+  }
+
+  Group {
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+    LayoutMode: Left;
+    Padding: (Left: 8, Right: 4);
+
+    Group {
+      Anchor: (Width: 44, Height: 34);
+      LayoutMode: Middle;
+
+      Label #RankGold {
+        Style: (FontSize: 14, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Text: "";
+        Visible: false;
+      }
+
+      Label #RankSilver {
+        Style: (FontSize: 14, TextColor: #B0C0CC, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Text: "";
+        Visible: false;
+      }
+
+      Label #RankBronze {
+        Style: (FontSize: 14, TextColor: #C07840, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Text: "";
+        Visible: false;
+      }
+
+      Label #Rank {
+        Style: (FontSize: 13, TextColor: #786860, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Text: "";
+      }
+    }
+
+    Label #PlayerName {
+      FlexWeight: 1;
+      Anchor: (Height: 34);
+      Style: (FontSize: 13, TextColor: #F2E8D8, VerticalAlignment: Center);
+      Text: "";
+    }
+
+    Label #Level {
+      Anchor: (Width: 72, Height: 34);
+      Style: (FontSize: 13, TextColor: #31C677, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center);
+      Text: "";
+    }
+
+    Group { Anchor: (Width: 8); }
+
+    Label #XpTotal {
+      Anchor: (Width: 96, Height: 34);
+      Style: (FontSize: 12, TextColor: #C8BEB0, HorizontalAlignment: End, VerticalAlignment: Center);
+      Text: "";
+    }
+
+    Group { Anchor: (Width: 16); }
+  }
+}

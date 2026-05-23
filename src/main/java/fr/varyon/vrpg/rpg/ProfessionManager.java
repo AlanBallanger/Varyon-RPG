@@ -351,6 +351,13 @@ public final class ProfessionManager {
         }
     }
 
+    public java.util.List<LeaderboardEntry> getLeaderboard(@Nonnull Profession profession) {
+        if (storage instanceof SqliteProfessionStorage sql) {
+            return sql.leaderboardEntriesForProfession(profession);
+        }
+        return java.util.Collections.emptyList();
+    }
+
     public void forceSave() {
         flushDirty();
     }

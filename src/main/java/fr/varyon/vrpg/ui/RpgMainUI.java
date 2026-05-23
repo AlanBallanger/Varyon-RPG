@@ -24,12 +24,16 @@ import fr.varyon.vrpg.rpg.Profession;
 import fr.varyon.vrpg.rpg.ProfessionManager;
 import fr.varyon.vrpg.rpg.ProfessionProgress;
 import fr.varyon.vrpg.rpg.TalentSoundNodes;
+import fr.varyon.vrpg.rpg.LeaderboardEntry;
 import fr.varyon.vrpg.rpg.XpBoost;
 import fr.varyon.vrpg.rpg.XpCurve;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -539,6 +543,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
     private final PlayerRef playerRef;
     private String activeTab = "character";
+    private Profession classementFilter = Profession.MINEUR;
+    private boolean classementAsc = false;
     private int selectedNode = 0;
     private int hoveredNode = -1;
     private final int[] skillRanks = new int[32];
@@ -583,6 +589,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             populateCharacterProfessions(uiBuilder, eventBuilder);
         } else if ("skills".equals(activeTab)) {
             populateSketchSkillTree(uiBuilder, eventBuilder);
+        } else if ("classement".equals(activeTab)) {
+            populateClassement(uiBuilder, eventBuilder);
         }
     }
 
@@ -750,6 +758,63 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         if (h > 0) return h + "h " + (m % 60) + "min";
         if (m > 0) return m + "min " + (s % 60) + "s";
         return s + "s";
+    }
+
+    private void populateClassement(@Nonnull UICommandBuilder uiBuilder, @Nonnull UIEventBuilder eventBuilder) {
+        for (Profession p : Profession.values()) {
+            String capId = capitalize(p.getId());
+            uiBuilder.set("#ClassementUnderline" + capId + ".Visible", p == classementFilter);
+            eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ClassementBtn" + capId,
+                EventData.of("Action", "classementFilter").append("ProfessionId", p.getId()), false);
+        }
+
+        uiBuilder.set("#ClassementOrderLabel.Text", classementAsc ? "Ordre : ASC" : "Ordre : DESC");
+        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ClassementOrderBtn",
+            EventData.of("Action", "classementOrder"), false);
+
+        ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+        List<LeaderboardEntry> entries = mgr != null ? mgr.getLeaderboard(classementFilter) : Collections.emptyList();
+        if (classementAsc) {
+            entries = new ArrayList<>(entries);
+            Collections.reverse(entries);
+        }
+
+        uiBuilder.clear("#ClassementListContainer");
+        for (int i = 0; i < entries.size(); i++) {
+            LeaderboardEntry entry = entries.get(i);
+            uiBuilder.append("#ClassementListContainer", "CharacterTabClassementEntry.ui");
+            String eid = "#ClassementListContainer[" + i + "]";
+            uiBuilder.set(eid + " #BgOdd.Visible", i % 2 == 1);
+            if (i == 0) {
+                uiBuilder.set(eid + " #Rank.Visible", false);
+                uiBuilder.set(eid + " #RankGold.Text", "1");
+                uiBuilder.set(eid + " #RankGold.Visible", true);
+            } else if (i == 1) {
+                uiBuilder.set(eid + " #Rank.Visible", false);
+                uiBuilder.set(eid + " #RankSilver.Text", "2");
+                uiBuilder.set(eid + " #RankSilver.Visible", true);
+            } else if (i == 2) {
+                uiBuilder.set(eid + " #Rank.Visible", false);
+                uiBuilder.set(eid + " #RankBronze.Text", "3");
+                uiBuilder.set(eid + " #RankBronze.Visible", true);
+            } else {
+                uiBuilder.set(eid + " #Rank.Text", String.valueOf(i + 1));
+            }
+            uiBuilder.set(eid + " #PlayerName.Text", entry.playerName());
+            uiBuilder.set(eid + " #Level.Text", "Niv. " + entry.level());
+            uiBuilder.set(eid + " #XpTotal.Text", formatXp(XpCurve.cumulativeXp(entry.level(), entry.xpInLevel())));
+        }
+    }
+
+    private static String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+
+    private static String formatXp(long xp) {
+        if (xp >= 1_000_000) return String.format("%.1fM", xp / 1_000_000.0);
+        if (xp >= 1_000) return String.format("%.1fK", xp / 1_000.0);
+        return String.valueOf(xp);
     }
 
     private void syncTalentTreeSlotIndex(@Nullable PlayerAccount acc) {
@@ -1237,6 +1302,19 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                                 @Nonnull Data data) {
         super.handleDataEvent(ref, store, data);
         if (data.action == null) return;
+
+        if ("classementFilter".equals(data.action) && data.professionId != null) {
+            Profession p = Profession.fromId(data.professionId);
+            if (p != null) {
+                classementFilter = p;
+                rebuild();
+            }
+            return;
+        } else if ("classementOrder".equals(data.action)) {
+            classementAsc = !classementAsc;
+            rebuild();
+            return;
+        }
 
         if ("tab".equals(data.action) && data.tab != null) {
             activeTab = data.tab;

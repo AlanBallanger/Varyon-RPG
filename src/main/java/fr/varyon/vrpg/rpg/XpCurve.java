@@ -14,6 +14,14 @@ public final class XpCurve {
         return BASE_COEF * (long) level * (long) level;
     }
 
+    public static long cumulativeXp(int level, long xpInLevel) {
+        long total = xpInLevel;
+        for (int i = 1; i < Math.min(level, MAX_LEVEL); i++) {
+            total += xpForLevel(i);
+        }
+        return total;
+    }
+
     public static int talentPointsAtLevel(int level) {
         if (level <= 1) return 0;
         int points = 0;

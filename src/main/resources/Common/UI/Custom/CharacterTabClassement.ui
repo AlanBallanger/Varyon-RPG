@@ -1,9 +1,210 @@
+$C = "Common.ui";
+
+@ClassementFilterBtnStyle = (
+  Default: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8)
+  ),
+  Hovered: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Hovered.png", Border: 8)
+  ),
+  Pressed: (
+    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8)
+  ),
+  Sounds: $C.@ButtonSounds
+);
+
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-  LayoutMode: Middle;
+  LayoutMode: Top;
+  Padding: (Full: 12);
 
-  Label {
-    Style: (FontSize: 16, TextColor: #e8dcc8);
-    Text: "Classement — bientot.";
+  Group {
+    Anchor: (Left: 0, Right: 0, Height: 42);
+    LayoutMode: Left;
+
+    Label {
+      Anchor: (Height: 42);
+      Style: (FontSize: 12, TextColor: #A09080, VerticalAlignment: Center);
+      Text: "Filtre :";
+    }
+
+    Group { Anchor: (Width: 8); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnMineur {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Mineur"; }
+      }
+      Group #ClassementUnderlineMineur { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnFermier {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Fermier"; }
+      }
+      Group #ClassementUnderlineFermier { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnForestier {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Forestier"; }
+      }
+      Group #ClassementUnderlineForestier { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnChasseur {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Chasseur"; }
+      }
+      Group #ClassementUnderlineChasseur { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnForgeron {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Forgeron"; }
+      }
+      Group #ClassementUnderlineForgeron { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnAlchimiste {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Alchimiste"; }
+      }
+      Group #ClassementUnderlineAlchimiste { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnArtisan {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Artisan"; }
+      }
+      Group #ClassementUnderlineArtisan { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { Anchor: (Width: 4); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 86);
+      Button #ClassementBtnCuisinier {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label { Style: (FontSize: 12, TextColor: #F2E8D8, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "Cuisinier"; }
+      }
+      Group #ClassementUnderlineCuisinier { Anchor: (Height: 3); Background: #C8A96E; Visible: false; }
+    }
+
+    Group { FlexWeight: 1; }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 116);
+      Button #ClassementOrderBtn {
+        Anchor: (Height: 32);
+        Style: @ClassementFilterBtnStyle;
+        LayoutMode: Middle;
+        Label #ClassementOrderLabel {
+          Style: (FontSize: 12, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          Text: "Ordre : DESC";
+        }
+      }
+      Group { Anchor: (Height: 3); }
+    }
+  }
+
+  Group { Anchor: (Height: 8); }
+
+  Group {
+    Anchor: (Left: 0, Right: 0, Height: 28);
+    LayoutMode: Left;
+    Background: #1A2030;
+    Padding: (Left: 8, Right: 4);
+
+    Label {
+      Anchor: (Width: 44, Height: 28);
+      Style: (FontSize: 11, TextColor: #A09080, RenderBold: true, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+      Text: "Rang";
+    }
+
+    Label {
+      FlexWeight: 1;
+      Anchor: (Height: 28);
+      Style: (FontSize: 11, TextColor: #A09080, RenderBold: true, RenderUppercase: true, VerticalAlignment: Center);
+      Text: "Joueur";
+    }
+
+    Label {
+      Anchor: (Width: 72, Height: 28);
+      Style: (FontSize: 11, TextColor: #A09080, RenderBold: true, RenderUppercase: true, HorizontalAlignment: End, VerticalAlignment: Center);
+      Text: "Niveau";
+    }
+
+    Group { Anchor: (Width: 8); }
+
+    Label {
+      Anchor: (Width: 96, Height: 28);
+      Style: (FontSize: 11, TextColor: #A09080, RenderBold: true, RenderUppercase: true, HorizontalAlignment: End, VerticalAlignment: Center);
+      Text: "XP Total";
+    }
+
+    Group { Anchor: (Width: 28); }
+  }
+
+  Group { Anchor: (Height: 2); }
+
+  Group #ClassementListScroll {
+    FlexWeight: 1;
+    LayoutMode: TopScrolling;
+    ScrollbarStyle: $C.@DefaultScrollbarStyle;
+
+    Group #ClassementListContainer {
+      LayoutMode: Top;
+    }
   }
 }

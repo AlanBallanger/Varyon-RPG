@@ -482,4 +482,26 @@ public final class SqliteProfessionStorage implements ProfessionStorage {
         }
         return result;
     }
+
+    public List<LeaderboardEntry> leaderboardEntriesForProfession(@Nonnull Profession p) {
+        List<LeaderboardEntry> result = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(
+            "SELECT a.player_name, pp.level, pp.xp_in_level " +
+            "FROM player_profession pp " +
+            "JOIN player_account a ON a.uuid = pp.uuid " +
+            "WHERE pp.profession_id = ? " +
+            "ORDER BY pp.level DESC, pp.xp_in_level DESC")) {
+            ps.setString(1, p.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String name = rs.getString(1);
+                    if (name == null) name = "?";
+                    result.add(new LeaderboardEntry(name, rs.getInt(2), rs.getLong(3)));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.at(Level.WARNING).log("leaderboardEntriesForProfession failed: %s", e.getMessage());
+        }
+        return result;
+    }
 }
