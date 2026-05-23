@@ -61,6 +61,18 @@ public enum Profession {
             case CUISINIER  -> "Icons/ItemsGenerated/Food_Pie_Pumpkin.png";
         };
     }
+    @Nonnull public String getDescription() {
+        return switch (this) {
+            case MINEUR     -> "Récupère des minerais et des gemmes.";
+            case FERMIER    -> "Cultive et récolte des plantes dans la nature.";
+            case FORESTIER  -> "Abat des arbres et construit des cabanes.";
+            case CHASSEUR   -> "Chasse des créatures.";
+            case FORGERON   -> "Fabrique des armes et des armures.";
+            case ALCHIMISTE -> "Crée des potions et des élixirs de combat.";
+            case ARTISAN    -> "Travaille le bois et crée des objets utiles.";
+            case CUISINIER  -> "Prépare des plats revigorants.";
+        };
+    }
     public boolean isBase()                  { return base; }
     public boolean isSpecialized()           { return !base; }
     public int getPrereqLevel()              { return prereqLevel; }

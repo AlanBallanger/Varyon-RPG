@@ -102,6 +102,11 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private static final PatchStyle NODE_VEIL_STYLE =
         new PatchStyle().setColor(Value.of(NODE_VEIL));
 
+    private static final PatchStyle CARD_BG_ACTIVE_STYLE =
+        new PatchStyle(Value.of("Elements/HudPanelActive.png"), Value.of(10));
+    private static final PatchStyle CARD_BG_INACTIVE_STYLE =
+        new PatchStyle(Value.of("Elements/HudPanel.png"), Value.of(10));
+
     private static final String[] LEGACY_STATIC_EDGE_IDS = {
         "#SkillTreeEdgeRootStem",
         "#SkillTreeEdgeRootBranch",
@@ -708,6 +713,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                     false);
             }
 
+            boolean isActive = p == activeSlots[0] || p == activeSlots[1];
+            uiBuilder.set(id + "Active.Visible", isActive);
+            uiBuilder.setObject(id + ".Background", isActive ? CARD_BG_ACTIVE_STYLE : CARD_BG_INACTIVE_STYLE);
+
             if (p.isSpecialized()) {
                 Profession parent = p.getPrereq();
                 int need = p.getPrereqLevel();
@@ -724,8 +733,6 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set(id + "Prereq.Visible", false);
                 uiBuilder.set(id + "Lock.Visible", false);
             }
-            boolean isActive = p == activeSlots[0] || p == activeSlots[1];
-            uiBuilder.set(id + "Active.Visible", isActive);
         }
 
         for (int i = 0; i < BOOST_PROFESSION_ORDER.length; i++) {
