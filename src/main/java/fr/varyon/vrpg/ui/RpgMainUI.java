@@ -701,7 +701,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
 
             boolean selectable = selectMode
-                && !p.isSpecialized()
+                && (!p.isSpecialized() || (acc != null && acc.isUnlocked(p)))
                 && p != activeSlots[0]
                 && p != activeSlots[1];
             uiBuilder.set(id + "Select.Visible", selectable);
@@ -715,23 +715,27 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
 
             boolean isActive = p == activeSlots[0] || p == activeSlots[1];
             uiBuilder.set(id + "Active.Visible", isActive);
+            uiBuilder.set(id + "Inactive.Visible", !isActive);
             uiBuilder.setObject(id + ".Background", isActive ? CARD_BG_ACTIVE_STYLE : CARD_BG_INACTIVE_STYLE);
 
             if (p.isSpecialized()) {
                 Profession parent = p.getPrereq();
                 int need = p.getPrereqLevel();
                 String parentName = parent == null ? "?" : parent.getDisplayName();
-                uiBuilder.set(id + "Prereq.Visible", true);
-                uiBuilder.set(id + "Prereq.TextSpans",
-                    Message.raw("Pr\u00e9requis :\nniveau " + need + " " + parentName));
                 boolean unlocked = acc != null && acc.isUnlocked(p);
-                uiBuilder.set(id + "Lock.Visible", !unlocked);
+                uiBuilder.set(id + "Prereq.Visible", !unlocked);
                 if (!unlocked) {
-                    uiBuilder.set(id + "Lock.TextSpans", Message.raw("Verrouill\u00e9"));
+                    uiBuilder.set(id + "PrereqText.TextSpans",
+                        Message.raw("Pr\u00e9requis : niveau " + need + " " + parentName));
+                }
+                uiBuilder.set(id + "Desc.Visible", unlocked);
+                if (unlocked) {
+                    uiBuilder.set(id + "Desc.TextSpans", Message.raw(p.getDescription()));
                 }
             } else {
                 uiBuilder.set(id + "Prereq.Visible", false);
-                uiBuilder.set(id + "Lock.Visible", false);
+                uiBuilder.set(id + "Desc.Visible", true);
+                uiBuilder.set(id + "Desc.TextSpans", Message.raw(p.getDescription()));
             }
         }
 

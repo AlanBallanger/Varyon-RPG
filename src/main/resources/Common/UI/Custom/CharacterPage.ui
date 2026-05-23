@@ -249,57 +249,96 @@ Group {
 
       Group #Tabs {
         LayoutMode: Left;
-        Anchor: (Height: 34);
+        Anchor: (Height: 46);
 
         Button #TabCharacterButton {
-          Anchor: (Width: 140, Height: 30);
+          Anchor: (Width: 144, Height: 43);
           Style: @TabButtonStyle;
 
           Group #TabCharacterUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @SelectedButtonFill;
+            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8, Color: #D4AF37(0.72));
             Visible: true;
           }
 
-          Label {
-            Style: @TabLabelStyle;
-            Text: "Métiers";
+          Group {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            LayoutMode: Middle;
+            Padding: (Left: 10);
+            Group {
+              LayoutMode: Left;
+              Group {
+                Anchor: (Width: 16, Height: 16);
+                Background: PatchStyle(TexturePath: "Elements/Tools.png", Border: 0);
+              }
+              Group { Anchor: (Width: 6); }
+              Label {
+                Style: @TabLabelStyle;
+                Text: "Métiers";
+              }
+            }
           }
         }
 
         Group { Anchor: (Width: 10); }
 
         Button #TabArtisansButton {
-          Anchor: (Width: 140, Height: 30);
+          Anchor: (Width: 144, Height: 43);
           Style: @TabButtonStyle;
 
           Group #TabArtisansUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @SelectedButtonFill;
+            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8, Color: #D4AF37(0.72));
             Visible: false;
           }
 
-          Label {
-            Style: @TabLabelStyle;
-            Text: "Artisans";
+          Group {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            LayoutMode: Middle;
+            Padding: (Left: 10);
+            Group {
+              LayoutMode: Left;
+              Group {
+                Anchor: (Width: 16, Height: 16);
+                Background: PatchStyle(TexturePath: "Elements/People.png", Border: 0);
+              }
+              Group { Anchor: (Width: 6); }
+              Label {
+                Style: @TabLabelStyle;
+                Text: "Artisans";
+              }
+            }
           }
         }
 
         Group { Anchor: (Width: 10); }
 
         Button #TabClassementButton {
-          Anchor: (Width: 140, Height: 30);
+          Anchor: (Width: 144, Height: 43);
           Style: @TabButtonStyle;
 
           Group #TabClassementUnderline {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-            Background: @SelectedButtonFill;
+            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8, Color: #D4AF37(0.72));
             Visible: false;
           }
 
-          Label {
-            Style: @TabLabelStyle;
-            Text: "Classement";
+          Group {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            LayoutMode: Middle;
+            Padding: (Left: 10);
+            Group {
+              LayoutMode: Left;
+              Group {
+                Anchor: (Width: 16, Height: 16);
+                Background: PatchStyle(TexturePath: "Elements/Leaderboard.png", Border: 0);
+              }
+              Group { Anchor: (Width: 6); }
+              Label {
+                Style: @TabLabelStyle;
+                Text: "Classement";
+              }
+            }
           }
         }
 
@@ -315,7 +354,6 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #CharacterTabMount {
@@ -334,7 +372,6 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #SkillsTabMount {
@@ -353,7 +390,6 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #ArtisansTabMount {
@@ -372,7 +408,6 @@ Group {
         Group {
           FlexWeight: 1;
           LayoutMode: Full;
-          Background: @PanelShade;
           Padding: (Full: 12);
 
           Group #ClassementTabMount {
