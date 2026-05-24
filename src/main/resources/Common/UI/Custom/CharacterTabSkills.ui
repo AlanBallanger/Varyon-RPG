@@ -210,40 +210,37 @@ $C = "Common.ui";
 
 Group {
   Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-  LayoutMode: Left;
+  LayoutMode: Top;
 
   Group {
-    FlexWeight: 1;
-    LayoutMode: Top;
-
-  Group {
-    LayoutMode: Left;
     Anchor: (Left: 0, Right: 0, Height: 48);
-    Padding: (Left: 8, Top: 2, Right: 8);
+    LayoutMode: Full;
+    Padding: (Left: 8, Top: 4, Right: 8);
 
     Group {
-      LayoutMode: Top;
+      Anchor: (Left: 0, Top: 0, Width: 400, Height: 44);
+      LayoutMode: Full;
 
       Label {
+        Anchor: (Left: 0, Top: 0, Right: 0, Height: 22);
         Style: @SectionTitleStyle;
         Text: "Arbre de talents";
       }
 
       Label #SkillTreePointsValue {
-        Anchor: (Top: 2);
+        Anchor: (Left: 0, Top: 24, Right: 0, Height: 18);
         Style: (...@MetaStyle, FontSize: 13, TextColor: @InkMuted, RenderBold: true);
         Text: "Points restants : 0";
       }
     }
 
-    Group { FlexWeight: 1; }
-
     Group #SkillTreeProfessionPickerRow {
-      LayoutMode: Left;
+      Anchor: (Right: 0, Top: 11, Width: 140, Height: 26);
+      LayoutMode: Full;
       Visible: true;
 
       Button #SkillTreeBackButton {
-        Anchor: (Width: 140, Height: 26);
+        Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0);
         Style: @CycleSlotButtonStyle;
         LayoutMode: Middle;
         Label {
@@ -254,9 +251,14 @@ Group {
     }
   }
 
-    Group #SkillTreeCanvas {
-      FlexWeight: 1;
-      LayoutMode: Full;
+  Group {
+    FlexWeight: 1;
+    Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+    LayoutMode: Full;
+
+  Group #SkillTreeCanvas {
+    Anchor: (Left: 0, Top: 0, Bottom: 0, Right: 298);
+    LayoutMode: Full;
 
       Group #SkillTreePager {
         Anchor: (Right: 0, Top: 0, Width: 64, Height: 90);
@@ -1309,23 +1311,77 @@ Group {
       }
     }
 
-  }
+    Group #BonusTreePanel {
+      Anchor: (Left: 550, Top: 0, Bottom: 0, Width: 90);
+      LayoutMode: Full;
+      Visible: false;
 
-  Group { Anchor: (Width: 16); }
+      Group #BonusTreeNode0Connector {
+        Anchor: (Left: 44, Top: 186, Width: 4, Height: 123);
+        Background: #E8DCC8(0.16);
+        Visible: false;
+      }
+
+      Group #BonusTreeNode1Connector {
+        Anchor: (Left: 44, Top: 370, Width: 4, Height: 125);
+        Background: #E8DCC8(0.16);
+        Visible: false;
+      }
+
+      Label #BonusTreeNode0RankText { Anchor: (Left: 53, Top: 186, Width: 44, Height: 14); Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; Visible: false; }
+
+      Group #BonusTreeNode0Container {
+        Anchor: (Left: 14, Top: 125, Width: 61, Height: 61);
+        LayoutMode: Full;
+        Visible: false;
+
+        Group #BonusTreeNode0Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
+        Group #BonusTreeNode0Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
+        Group #BonusTreeNode0BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode0Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
+        Label #BonusTreeNode0Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "I"; }
+        Button #BonusTreeNode0 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;
+        }
+      }
+
+      Label #BonusTreeNode1RankText { Anchor: (Left: 53, Top: 370, Width: 44, Height: 14); Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; Visible: false; }
+
+      Group #BonusTreeNode1Container {
+        Anchor: (Left: 14, Top: 309, Width: 61, Height: 61);
+        LayoutMode: Full;
+        Visible: false;
+
+        Group #BonusTreeNode1Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
+        Group #BonusTreeNode1Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
+        Group #BonusTreeNode1BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode1Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
+        Label #BonusTreeNode1Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "II"; }
+        Button #BonusTreeNode1 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;
+        }
+      }
+
+      Label #BonusTreeNode2RankText { Anchor: (Left: 53, Top: 556, Width: 44, Height: 14); Style: (...@MetaStyle, FontSize: 11, TextColor: @InkStrong, RenderBold: true, HorizontalAlignment: Start); Text: "0/1"; Visible: false; }
+
+      Group #BonusTreeNode2Container {
+        Anchor: (Left: 14, Top: 495, Width: 61, Height: 61);
+        LayoutMode: Full;
+        Visible: false;
+
+        Group #BonusTreeNode2Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
+        Group #BonusTreeNode2Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
+        Group #BonusTreeNode2BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode2Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
+        Label #BonusTreeNode2Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "III"; }
+        Button #BonusTreeNode2 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;
+        }
+      }
+    }
 
   Group {
-    Anchor: (Top: 0, Bottom: 0, Width: 290);
-    Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary.png", Border: 8);
-
-    Group {
-      Anchor: (Left: 3, Right: 3, Top: 3, Bottom: 3);
-      Background: @Gold;
-
-      Group {
-        Anchor: (Left: 2, Right: 2, Top: 2, Bottom: 2);
-        LayoutMode: Full;
-        Background: #16191F;
-        Padding: (Full: 10);
+    Anchor: (Right: 0, Top: 0, Bottom: 0, Width: 290);
+    Background: PatchStyle(TexturePath: "Elements/HudPanel.png", Border: 10);
+    LayoutMode: Full;
+    Padding: (Full: 10);
 
         Group {
           Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
@@ -1462,7 +1518,6 @@ Group {
           }
         }
       }
-        }
 
         Button #SkillTreeSoundToggle {
           Anchor: (Width: 26, Height: 26, Right: 0, Bottom: 0);
@@ -1483,7 +1538,7 @@ Group {
             }
           }
         }
-      }
     }
+  }
   }
 }
