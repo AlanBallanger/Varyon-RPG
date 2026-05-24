@@ -54,6 +54,11 @@ Group {
           Style: (FontSize: 21, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
           Text: "Métier principal";
         }
+        Group { Anchor: (Width: 10); }
+        Label {
+          Style: (FontSize: 14, TextColor: #6BCB7A, RenderBold: true, VerticalAlignment: Center);
+          Text: "(100% XP)";
+        }
       }
 
       Group #ProfessionActiveCard0 {
@@ -161,6 +166,11 @@ Group {
         Label {
           Style: (FontSize: 21, TextColor: #C8A96E, RenderBold: true, HorizontalAlignment: Start, RenderUppercase: true);
           Text: "Métier secondaire";
+        }
+        Group { Anchor: (Width: 10); }
+        Label {
+          Style: (FontSize: 14, TextColor: #C8A96E, RenderBold: true, VerticalAlignment: Center);
+          Text: "(70% XP)";
         }
       }
 
@@ -875,17 +885,11 @@ Group {
               Visible: false;
             }
 
-            Group #ProfessionCatalogCard4Prereq {
-              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-              LayoutMode: Full;
-              Background: #000000(0.52);
+            Label #ProfessionCatalogCard4PrereqText {
+              Anchor: (Left: 0, Right: 0, Height: 28);
+              Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
+              Text: "";
               Visible: false;
-
-              Label #ProfessionCatalogCard4PrereqText {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
-                Text: "";
-              }
             }
 
             Group { FlexWeight: 1; }
@@ -972,17 +976,11 @@ Group {
               Visible: false;
             }
 
-            Group #ProfessionCatalogCard5Prereq {
-              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-              LayoutMode: Full;
-              Background: #000000(0.52);
+            Label #ProfessionCatalogCard5PrereqText {
+              Anchor: (Left: 0, Right: 0, Height: 28);
+              Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
+              Text: "";
               Visible: false;
-
-              Label #ProfessionCatalogCard5PrereqText {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
-                Text: "";
-              }
             }
 
             Group { FlexWeight: 1; }
@@ -1069,17 +1067,11 @@ Group {
               Visible: false;
             }
 
-            Group #ProfessionCatalogCard6Prereq {
-              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-              LayoutMode: Full;
-              Background: #000000(0.52);
+            Label #ProfessionCatalogCard6PrereqText {
+              Anchor: (Left: 0, Right: 0, Height: 28);
+              Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
+              Text: "";
               Visible: false;
-
-              Label #ProfessionCatalogCard6PrereqText {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
-                Text: "";
-              }
             }
 
             Group { FlexWeight: 1; }
@@ -1166,17 +1158,11 @@ Group {
               Visible: false;
             }
 
-            Group #ProfessionCatalogCard7Prereq {
-              Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-              LayoutMode: Full;
-              Background: #000000(0.52);
+            Label #ProfessionCatalogCard7PrereqText {
+              Anchor: (Left: 0, Right: 0, Height: 28);
+              Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
+              Text: "";
               Visible: false;
-
-              Label #ProfessionCatalogCard7PrereqText {
-                Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
-                Style: (FontSize: 10, TextColor: #C8BEB0, VerticalAlignment: Center, HorizontalAlignment: Center, Wrap: true);
-                Text: "";
-              }
             }
 
             Group { FlexWeight: 1; }

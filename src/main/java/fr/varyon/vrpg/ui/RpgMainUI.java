@@ -28,6 +28,10 @@ import fr.varyon.vrpg.rpg.LeaderboardEntry;
 import fr.varyon.vrpg.rpg.XpBoost;
 import fr.varyon.vrpg.rpg.XpCurve;
 
+import com.hypixel.hytale.protocol.GameMode;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.Universe;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
@@ -558,6 +563,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
     private String reconvertSourceId = null;
     private int talentTreeSlotIndex = 0;
 
+    private int adminPlayerIndex = 0;
+    private int adminProfIndex = 0;
+
     public RpgMainUI(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, Data.CODEC);
         this.playerRef = playerRef;
@@ -568,20 +576,28 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                       @Nonnull UICommandBuilder uiBuilder,
                       @Nonnull UIEventBuilder eventBuilder,
                       @Nonnull Store<EntityStore> store) {
+        boolean isAdmin = isAdmin();
+
         uiBuilder.append("CharacterPage.ui");
         uiBuilder.append("#CharacterTabMount", "CharacterTabProfession.ui");
         uiBuilder.append("#SkillsTabMount", "CharacterTabSkills.ui");
         uiBuilder.append("#ArtisansTabMount", "CharacterTabArtisans.ui");
         uiBuilder.append("#ClassementTabMount", "CharacterTabClassement.ui");
+        if (isAdmin) {
+            uiBuilder.append("#AdminTabMount", "CharacterTabAdmin.ui");
+        }
 
         uiBuilder.set("#CharacterTabContent.Visible", "character".equals(activeTab));
         uiBuilder.set("#SkillsTabContent.Visible", "skills".equals(activeTab));
         uiBuilder.set("#ArtisansTabContent.Visible", "artisans".equals(activeTab));
         uiBuilder.set("#ClassementTabContent.Visible", "classement".equals(activeTab));
+        uiBuilder.set("#AdminTabContent.Visible", "admin".equals(activeTab));
 
         uiBuilder.set("#TabCharacterUnderline.Visible", "character".equals(activeTab));
         uiBuilder.set("#TabArtisansUnderline.Visible", "artisans".equals(activeTab));
         uiBuilder.set("#TabClassementUnderline.Visible", "classement".equals(activeTab));
+        uiBuilder.set("#TabAdminUnderline.Visible", "admin".equals(activeTab));
+        uiBuilder.set("#TabAdminButton.Visible", isAdmin);
 
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabCharacterButton",
             EventData.of("Action", "tab").append("Tab", "character"), false);
@@ -589,6 +605,10 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             EventData.of("Action", "tab").append("Tab", "artisans"), false);
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabClassementButton",
             EventData.of("Action", "tab").append("Tab", "classement"), false);
+        if (isAdmin) {
+            eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#TabAdminButton",
+                EventData.of("Action", "tab").append("Tab", "admin"), false);
+        }
 
         if ("character".equals(activeTab)) {
             populateCharacterProfessions(uiBuilder, eventBuilder);
@@ -596,6 +616,8 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             populateSketchSkillTree(uiBuilder, eventBuilder);
         } else if ("classement".equals(activeTab)) {
             populateClassement(uiBuilder, eventBuilder);
+        } else if ("admin".equals(activeTab) && isAdmin) {
+            populateAdmin(uiBuilder, eventBuilder);
         }
     }
 
@@ -617,6 +639,122 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         if (m == null) return null;
         m.ensureAccount(playerRef.getUuid(), playerRef.getUsername());
         return m.getAccount(playerRef.getUuid());
+    }
+
+    private boolean isAdmin() {
+        try {
+            List<com.hypixel.hytale.server.core.universe.PlayerRef> players = new ArrayList<>(Universe.get().getPlayers());
+            for (com.hypixel.hytale.server.core.universe.PlayerRef pr : players) {
+                if (pr.getUuid().equals(playerRef.getUuid())) {
+                    com.hypixel.hytale.server.core.entity.entities.Player p =
+                        pr.getReference().getStore().getComponent(
+                            pr.getReference(), com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                    return p != null && p.getGameMode() == GameMode.Creative;
+                }
+            }
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    private List<com.hypixel.hytale.server.core.universe.PlayerRef> getOnlinePlayers() {
+        try {
+            return new ArrayList<>(Universe.get().getPlayers());
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    private @Nullable com.hypixel.hytale.server.core.universe.PlayerRef adminTargetRef() {
+        List<com.hypixel.hytale.server.core.universe.PlayerRef> players = getOnlinePlayers();
+        if (players.isEmpty()) return null;
+        adminPlayerIndex = Math.max(0, Math.min(adminPlayerIndex, players.size() - 1));
+        return players.get(adminPlayerIndex);
+    }
+
+    private void populateAdmin(@Nonnull UICommandBuilder ui, @Nonnull UIEventBuilder ev) {
+        List<com.hypixel.hytale.server.core.universe.PlayerRef> players = getOnlinePlayers();
+        com.hypixel.hytale.server.core.universe.PlayerRef target = adminTargetRef();
+
+        String targetName = target != null ? target.getUsername() : "—";
+        ui.set("#AdminTargetName.TextSpans", Message.raw(targetName));
+        ui.set("#AdminPlayerCount.TextSpans", Message.raw("(" + players.size() + " en ligne)"));
+
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminPlayerPrev",
+            EventData.of("Action", "adminPlayerNav").append("Dir", "-1"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminPlayerNext",
+            EventData.of("Action", "adminPlayerNav").append("Dir", "1"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminPlayerSelf",
+            EventData.of("Action", "adminPlayerSelf"), false);
+
+        Profession prof = CATALOG_ORDER[adminProfIndex];
+        ui.set("#AdminProfName.TextSpans", Message.raw(prof.getDisplayName()));
+
+        ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+        if (mgr != null && target != null) {
+            mgr.ensureAccount(target.getUuid(), target.getUsername());
+            PlayerAccount acc = mgr.getAccount(target.getUuid());
+            if (acc != null) {
+                ProfessionProgress prog = acc.getProgress(prof);
+                ui.set("#AdminProfLevel.TextSpans", Message.raw(String.valueOf(prog.getLevel())));
+                ui.set("#AdminProfXp.TextSpans", Message.raw(prog.getXpInLevel() + " / " + prog.getXpToNextLevel()));
+
+                ui.set("#AdminStatsContainer.Visible", true);
+                ui.clear("#AdminStatsContainer");
+                for (int i = 0; i < CATALOG_ORDER.length; i++) {
+                    Profession p = CATALOG_ORDER[i];
+                    ProfessionProgress pp = acc.getProgress(p);
+                    ui.append("#AdminStatsContainer", "CharacterTabAdminStatRow.ui");
+                    ui.set("#AdminStatsContainer[" + i + "] #AdminStatRowName.TextSpans", Message.raw(p.getDisplayName()));
+                    ui.set("#AdminStatsContainer[" + i + "] #AdminStatRowLevel.TextSpans",
+                        Message.raw("Nv " + pp.getLevel()));
+                }
+            } else {
+                ui.set("#AdminProfLevel.TextSpans", Message.raw("—"));
+                ui.set("#AdminProfXp.TextSpans", Message.raw("—"));
+            }
+        } else {
+            ui.set("#AdminProfLevel.TextSpans", Message.raw("—"));
+            ui.set("#AdminProfXp.TextSpans", Message.raw("—"));
+        }
+
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminProfPrev",
+            EventData.of("Action", "adminProfNav").append("Dir", "-1"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminProfNext",
+            EventData.of("Action", "adminProfNav").append("Dir", "1"), false);
+
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXp100",
+            EventData.of("Action", "adminXp").append("Amount", "100"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXp1k",
+            EventData.of("Action", "adminXp").append("Amount", "1000"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXp5k",
+            EventData.of("Action", "adminXp").append("Amount", "5000"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXp10k",
+            EventData.of("Action", "adminXp").append("Amount", "10000"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXp50k",
+            EventData.of("Action", "adminXp").append("Amount", "50000"), false);
+
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminLvlMinus5",
+            EventData.of("Action", "adminLevel").append("Delta", "-5"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminLvlMinus1",
+            EventData.of("Action", "adminLevel").append("Delta", "-1"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminLvlPlus1",
+            EventData.of("Action", "adminLevel").append("Delta", "1"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminLvlPlus5",
+            EventData.of("Action", "adminLevel").append("Delta", "5"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminLvlMax",
+            EventData.of("Action", "adminLevel").append("Delta", "max"), false);
+
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminResetTalents",
+            EventData.of("Action", "adminResetTalents"), false);
+        ev.addEventBinding(CustomUIEventBindingType.Activating, "#AdminResetAll",
+            EventData.of("Action", "adminResetAll"), false);
+
+        ui.set("#AdminFeedback.Visible", false);
+    }
+
+    private void adminFeedback(@Nonnull UICommandBuilder ui, @Nonnull String msg) {
+        ui.set("#AdminFeedback.TextSpans", Message.raw(msg));
+        ui.set("#AdminFeedback.Visible", true);
     }
 
     private static void applyGaugeBar(@Nonnull UICommandBuilder ui,
@@ -646,8 +784,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set(p + ".Visible", true);
                 uiBuilder.set(p + "Name.TextSpans", Message.raw(active.getDisplayName().toUpperCase(Locale.FRENCH)));
                 uiBuilder.set(p + "Icon.ItemId", active.getIconItemId());
-                uiBuilder.set(p + "LevelBadge.TextSpans",
-                    Message.raw(("Niveau " + prog.getLevel()).toUpperCase(Locale.FRENCH)));
+                String levelBadge = "Niveau " + prog.getLevel();
+                if (acc.availableTalentPoints(active) > 0) levelBadge += " *";
+                uiBuilder.set(p + "LevelBadge.TextSpans", Message.raw(levelBadge.toUpperCase(Locale.FRENCH)));
                 if (prog.isMaxLevel()) {
                     uiBuilder.set(p + "LevelXp.TextSpans", Message.raw("MAX"));
                     uiBuilder.set(p + "ProgBarFill.Value", 1.0);
@@ -723,7 +862,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 int need = p.getPrereqLevel();
                 String parentName = parent == null ? "?" : parent.getDisplayName();
                 boolean unlocked = acc != null && acc.isUnlocked(p);
-                uiBuilder.set(id + "Prereq.Visible", !unlocked);
+                uiBuilder.set(id + "PrereqText.Visible", !unlocked);
                 if (!unlocked) {
                     uiBuilder.set(id + "PrereqText.TextSpans",
                         Message.raw("Pr\u00e9requis : niveau " + need + " " + parentName));
@@ -733,7 +872,7 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                     uiBuilder.set(id + "Desc.TextSpans", Message.raw(p.getDescription()));
                 }
             } else {
-                uiBuilder.set(id + "Prereq.Visible", false);
+                uiBuilder.set(id + "PrereqText.Visible", false);
                 uiBuilder.set(id + "Desc.Visible", true);
                 uiBuilder.set(id + "Desc.TextSpans", Message.raw(p.getDescription()));
             }
@@ -1443,6 +1582,79 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             }
             reconvertSourceId = null;
             rebuild();
+        } else if ("adminPlayerNav".equals(data.action) && data.dir != null) {
+            if (!isAdmin()) return;
+            List<com.hypixel.hytale.server.core.universe.PlayerRef> players = getOnlinePlayers();
+            if (!players.isEmpty()) {
+                int dir = "1".equals(data.dir) ? 1 : -1;
+                adminPlayerIndex = Math.floorMod(adminPlayerIndex + dir, players.size());
+            }
+            rebuild();
+        } else if ("adminPlayerSelf".equals(data.action)) {
+            if (!isAdmin()) return;
+            List<com.hypixel.hytale.server.core.universe.PlayerRef> players = getOnlinePlayers();
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).getUuid().equals(playerRef.getUuid())) {
+                    adminPlayerIndex = i;
+                    break;
+                }
+            }
+            rebuild();
+        } else if ("adminProfNav".equals(data.action) && data.dir != null) {
+            if (!isAdmin()) return;
+            int dir = "1".equals(data.dir) ? 1 : -1;
+            adminProfIndex = Math.floorMod(adminProfIndex + dir, CATALOG_ORDER.length);
+            rebuild();
+        } else if ("adminXp".equals(data.action) && data.amount != null) {
+            if (!isAdmin()) return;
+            com.hypixel.hytale.server.core.universe.PlayerRef target = adminTargetRef();
+            if (target == null) return;
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr == null) return;
+            Profession prof = CATALOG_ORDER[adminProfIndex];
+            try {
+                int amount = Integer.parseInt(data.amount);
+                mgr.addXp(target.getUuid(), prof, amount);
+            } catch (NumberFormatException ignored) {}
+            rebuild();
+        } else if ("adminLevel".equals(data.action) && data.delta != null) {
+            if (!isAdmin()) return;
+            com.hypixel.hytale.server.core.universe.PlayerRef target = adminTargetRef();
+            if (target == null) return;
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr == null) return;
+            Profession prof = CATALOG_ORDER[adminProfIndex];
+            mgr.ensureAccount(target.getUuid(), target.getUsername());
+            PlayerAccount acc = mgr.getAccount(target.getUuid());
+            if (acc == null) return;
+            int currentLevel = acc.getProgress(prof).getLevel();
+            int newLevel;
+            if ("max".equals(data.delta)) {
+                newLevel = XpCurve.MAX_LEVEL;
+            } else {
+                try {
+                    newLevel = Math.max(1, Math.min(XpCurve.MAX_LEVEL, currentLevel + Integer.parseInt(data.delta)));
+                } catch (NumberFormatException ignored) { return; }
+            }
+            mgr.setLevel(target.getUuid(), prof, newLevel);
+            rebuild();
+        } else if ("adminResetTalents".equals(data.action)) {
+            if (!isAdmin()) return;
+            com.hypixel.hytale.server.core.universe.PlayerRef target = adminTargetRef();
+            if (target == null) return;
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr == null) return;
+            Profession prof = CATALOG_ORDER[adminProfIndex];
+            mgr.resetTalents(target.getUuid(), prof);
+            rebuild();
+        } else if ("adminResetAll".equals(data.action)) {
+            if (!isAdmin()) return;
+            com.hypixel.hytale.server.core.universe.PlayerRef target = adminTargetRef();
+            if (target == null) return;
+            ProfessionManager mgr = VaryonRpgPlugin.getInstance().getProfessionManager();
+            if (mgr == null) return;
+            mgr.resetAccount(target.getUuid());
+            rebuild();
         }
     }
 
@@ -1464,6 +1676,15 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 .addField(new KeyedCodec<>("TalentSlot", Codec.STRING),
                     (d, v) -> d.talentSlot = v,
                     d -> d.talentSlot)
+                .addField(new KeyedCodec<>("Dir", Codec.STRING),
+                    (d, v) -> d.dir = v,
+                    d -> d.dir)
+                .addField(new KeyedCodec<>("Amount", Codec.STRING),
+                    (d, v) -> d.amount = v,
+                    d -> d.amount)
+                .addField(new KeyedCodec<>("Delta", Codec.STRING),
+                    (d, v) -> d.delta = v,
+                    d -> d.delta)
                 .build();
 
         private String action;
@@ -1471,6 +1692,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
         private String node;
         private String professionId;
         private String talentSlot;
+        private String dir;
+        private String amount;
+        private String delta;
 
         public Data() {}
     }

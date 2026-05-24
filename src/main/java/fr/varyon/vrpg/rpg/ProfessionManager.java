@@ -110,12 +110,22 @@ public final class ProfessionManager {
     }
 
     public int addXp(@Nonnull UUID uuid, @Nonnull Profession profession, double amount, @Nonnull PlayerRef playerRef) {
-        int levelsGained = addXp(uuid, profession, amount);
-        if (amount > 0) {
-            scheduleXpNotif(uuid, playerRef, profession, amount);
+        double multiplier = slotMultiplier(uuid, profession);
+        double effective = amount * multiplier;
+        int levelsGained = addXp(uuid, profession, effective);
+        if (effective > 0) {
+            scheduleXpNotif(uuid, playerRef, profession, effective);
             ProfessionXpHud.refreshIfPresent(uuid);
         }
         return levelsGained;
+    }
+
+    private double slotMultiplier(@Nonnull UUID uuid, @Nonnull Profession profession) {
+        PlayerAccount acc = cache.get(uuid);
+        if (acc == null) return 1.0;
+        if (profession == acc.getActiveSlot0()) return 1.0;
+        if (profession == acc.getActiveSlot1()) return 0.7;
+        return 1.0;
     }
 
     private static final class NotifState {

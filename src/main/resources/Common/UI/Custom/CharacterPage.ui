@@ -342,6 +342,30 @@ Group {
           }
         }
 
+        Group { Anchor: (Width: 10); }
+
+        Button #TabAdminButton {
+          Anchor: (Width: 144, Height: 43);
+          Style: @TabButtonStyle;
+          Visible: false;
+
+          Group #TabAdminUnderline {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            Background: PatchStyle(TexturePath: "Common/Buttons/Tertiary_Pressed.png", Border: 8, Color: #D4AF37(0.72));
+            Visible: false;
+          }
+
+          Group {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            LayoutMode: Middle;
+            Padding: (Left: 10);
+            Label {
+              Style: @TabLabelStyle;
+              Text: "Admin";
+            }
+          }
+        }
+
 
       }
 
@@ -411,6 +435,24 @@ Group {
           Padding: (Full: 12);
 
           Group #ClassementTabMount {
+            Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
+            LayoutMode: Full;
+          }
+        }
+      }
+
+      Group #AdminTabContent {
+        LayoutMode: Top;
+        FlexWeight: 1;
+        Visible: false;
+        Anchor: (Top: 4);
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Full;
+          Padding: (Full: 12);
+
+          Group #AdminTabMount {
             Anchor: (Left: 0, Right: 0, Top: 0, Bottom: 0);
             LayoutMode: Full;
           }
