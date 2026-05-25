@@ -18,7 +18,9 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import fr.varyon.vrpg.commands.VpaBlastCommand;
+import fr.varyon.vrpg.config.MobCategoriesConfig;
 import fr.varyon.vrpg.config.VrpgConfig;
+import fr.varyon.vrpg.config.XpTableConfig;
 import fr.varyon.vrpg.commands.VpaCommand;
 import fr.varyon.vrpg.commands.VpaAdminCommand;
 import fr.varyon.vrpg.commands.VpaSurfaceCommand;
@@ -124,6 +126,8 @@ public final class VaryonRpgPlugin extends JavaPlugin {
         instance = this;
 
         VrpgConfig.load(getDataDirectory());
+        XpTableConfig.load(getDataDirectory());
+        MobCategoriesConfig.load(getDataDirectory());
 
         try {
             getCodecRegistry(Interaction.CODEC)

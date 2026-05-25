@@ -1226,6 +1226,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
                 uiBuilder.set("#SkillTreeNode" + id + "Veil.Visible", !nodeSelected && !nodeHovered && allocated == 0);
                 uiBuilder.setObject("#SkillTreeNode" + id + "Veil.Background", NODE_VEIL_STYLE);
             }
+            for (int i = 0; i < BONUS_NODE_IDS.length; i++) {
+                uiBuilder.set("#BonusTreeNode" + i + "BorderHovered.Visible", i == hoveredBonusNode);
+            }
             return;
         }
         String selectedId = tree.nodes[effectiveSelected][0];
@@ -1251,6 +1254,9 @@ public final class RpgMainUI extends InteractiveCustomUIPage<RpgMainUI.Data> {
             uiBuilder.set("#SkillTreeNode" + id + "Veil.Visible",
                 !nodeSelected && !nodeHovered && allocated == 0);
             uiBuilder.setObject("#SkillTreeNode" + id + "Veil.Background", NODE_VEIL_STYLE);
+        }
+        for (int i = 0; i < BONUS_NODE_IDS.length; i++) {
+            uiBuilder.set("#BonusTreeNode" + i + "BorderHovered.Visible", i == hoveredBonusNode);
         }
 
         int panelNode = hoverValid ? hoveredNode : effectiveSelected;

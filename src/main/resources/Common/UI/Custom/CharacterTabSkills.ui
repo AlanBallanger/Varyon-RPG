@@ -1338,6 +1338,7 @@ Group {
         Group #BonusTreeNode0Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
         Group #BonusTreeNode0Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
         Group #BonusTreeNode0BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode0BorderHovered { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #B0B8C8(1.0); Visible: false; }
         Group #BonusTreeNode0Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
         Label #BonusTreeNode0Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "I"; }
         Button #BonusTreeNode0 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;
@@ -1354,6 +1355,7 @@ Group {
         Group #BonusTreeNode1Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
         Group #BonusTreeNode1Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
         Group #BonusTreeNode1BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode1BorderHovered { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #B0B8C8(1.0); Visible: false; }
         Group #BonusTreeNode1Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
         Label #BonusTreeNode1Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "II"; }
         Button #BonusTreeNode1 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;
@@ -1370,6 +1372,7 @@ Group {
         Group #BonusTreeNode2Bg { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #1A1F29; }
         Group #BonusTreeNode2Border { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4E576D(0.8); }
         Group #BonusTreeNode2BorderAllocated { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #4A90D9(0.9); Visible: false; }
+        Group #BonusTreeNode2BorderHovered { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #B0B8C8(1.0); Visible: false; }
         Group #BonusTreeNode2Fill { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #1A1F29; }
         Label #BonusTreeNode2Label { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: (FontSize: 11, TextColor: #C8BEB0, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); Text: "III"; }
         Button #BonusTreeNode2 { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Style: @SkillNodeButtonStyle; LayoutMode: Top;

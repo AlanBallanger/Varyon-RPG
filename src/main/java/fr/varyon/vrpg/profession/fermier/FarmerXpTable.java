@@ -6,7 +6,11 @@ import java.util.Set;
 
 public final class FarmerXpTable {
 
-    public static final long BASE_HARVEST_XP = 1L;
+    /** @deprecated remplacé par getXp(rawId) — conservé pour compatibilité transitoire */
+    @Deprecated
+    public static double BASE_HARVEST_XP = 1.0;
+
+    public static java.util.Map<String, Double> CROP_XP = new java.util.HashMap<>();
 
     private static final Set<String> CROP_PREFIXES;
 
@@ -84,5 +88,21 @@ public final class FarmerXpTable {
         if (blockIdx < 0) return null;
         String cropName = id.substring("Plant_Crop_".length(), blockIdx);
         return "Plant_Seeds_" + cropName + "_Eternal";
+    }
+
+    public static String resolveCropKey(String rawId) {
+        String id = normalize(rawId);
+        if (id == null) return null;
+        String lower = id.toLowerCase();
+        if (!lower.startsWith("plant_crop_")) return null;
+        String without = lower.substring("plant_crop_".length());
+        int cut = without.indexOf('_');
+        return cut >= 0 ? without.substring(0, cut) : without;
+    }
+
+    public static double getXp(String rawId) {
+        String key = resolveCropKey(rawId);
+        if (key == null) return BASE_HARVEST_XP;
+        return CROP_XP.getOrDefault(key, BASE_HARVEST_XP);
     }
 }

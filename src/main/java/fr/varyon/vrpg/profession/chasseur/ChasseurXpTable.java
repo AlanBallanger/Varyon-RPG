@@ -4,7 +4,18 @@ import java.util.Set;
 
 public final class ChasseurXpTable {
 
-    public static final double BASE_KILL_XP = 10.0;
+    public static double BASE_KILL_XP = 1.0;
+    public static double MIN_KILL_XP = 0.5;
+    public static java.util.Map<String, String> MOB_TIERS = new java.util.HashMap<>();
+    public static java.util.Map<String, Double> TIER_WEIGHTS = new java.util.HashMap<>();
+
+    public static double getXp(String roleId) {
+        if (roleId == null) return MIN_KILL_XP;
+        String tier = MOB_TIERS.get(roleId.toLowerCase());
+        if (tier == null) return MIN_KILL_XP;
+        double weight = TIER_WEIGHTS.getOrDefault(tier.toLowerCase(), 0.0);
+        return Math.max(MIN_KILL_XP, weight * BASE_KILL_XP);
+    }
     public static final String ESSENCE_ITEM_ID = "Ingredient_Hide_Corrupted";
 
     public static final Set<String> MEAT_HIDE_FEATHER = Set.of(

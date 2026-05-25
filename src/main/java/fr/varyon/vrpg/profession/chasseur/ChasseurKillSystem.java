@@ -168,11 +168,15 @@ public final class ChasseurKillSystem {
                     }
                 }
 
+                NPCEntity npc = (NPCEntity) store.getComponent(ref, NPCEntity.getComponentType());
+                String roleName = npc != null ? npc.getRoleName() : null;
+                double baseXp = ChasseurXpTable.getXp(roleName);
+
                 int xpRank = acc.getTalentRank(Profession.CHASSEUR, "1");
                 double xpMult = 1.0 + xpRank * 0.05 + comboBonus + professionManager.getXpBoostMultiplier(uuid, Profession.CHASSEUR);
-                double finalXp = ChasseurXpTable.BASE_KILL_XP * xpMult;
+                double finalXp = baseXp * xpMult;
                 if (dbg) LOGGER.atInfo().log("[ChasseurKill] XP +" + finalXp
-                    + " (base=" + ChasseurXpTable.BASE_KILL_XP + " × " + String.format("%.3f", xpMult) + ")"
+                    + " (role=" + roleName + " base=" + baseXp + " × " + String.format("%.3f", xpMult) + ")"
                     + (xpRank > 0 ? " [N1 InstinctSauvage rank=" + xpRank + "]" : ""));
                 professionManager.addXp(uuid, Profession.CHASSEUR, finalXp, playerRef);
 

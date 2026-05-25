@@ -2,8 +2,37 @@ package fr.varyon.vrpg.profession.forestier;
 
 public final class ForestierXpTable {
 
-    public static final long BASE_LOG_XP = 1L;
-    public static final long BASE_FORAGE_XP = 1L;
+    public static long BASE_LOG_XP = 1L;
+    public static long BASE_FORAGE_XP = 1L;
+    public static java.util.Map<String, Double> LOG_XP = new java.util.HashMap<>();
+
+    public static String resolveLogXpKey(String rawId) {
+        String s = normalize(rawId);
+        if (s == null || s.isEmpty()) return null;
+        String lower = s.toLowerCase();
+        if (!lower.startsWith("wood_")) return null;
+        String[] parts = lower.split("_");
+        return parts.length >= 2 ? "wood_" + parts[1] : null;
+    }
+
+    public static double getLogXp(String rawId) {
+        String key = resolveLogXpKey(rawId);
+        if (key == null) return BASE_LOG_XP;
+        Double val = LOG_XP.get(key);
+        return val != null ? val : BASE_LOG_XP;
+    }
+
+    public static double getForageXp(String rawId) {
+        String s = normalize(rawId);
+        if (s == null) return BASE_FORAGE_XP;
+        String lower = s.toLowerCase();
+        String key = lower.startsWith("plant_flower_") ? "plant_flower"
+                   : lower.startsWith("plant_mushroom_") ? "plant_mushroom"
+                   : null;
+        if (key == null) return BASE_FORAGE_XP;
+        Double val = LOG_XP.get(key);
+        return val != null ? val : BASE_FORAGE_XP;
+    }
     public static final String ESSENCE_ITEM_ID = "Log_Corrupted";
 
     private ForestierXpTable() {}

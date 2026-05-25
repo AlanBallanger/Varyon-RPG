@@ -151,9 +151,10 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
             // Node 1 ÔÇö Mains ├ëcorch├®es : +5% XP par rang
             int xpRank = acc.getTalentRank(Profession.FORESTIER, "1");
             double xpMult = 1.0 + xpRank * 0.05 + comboBonus + professionManager.getXpBoostMultiplier(uuid, Profession.FORESTIER);
-            double finalXp = ForestierXpTable.BASE_LOG_XP * xpMult;
+            double baseLogXp = ForestierXpTable.getLogXp(rawId);
+            double finalXp = baseLogXp * xpMult;
             if (dbg) LOGGER.atInfo().log(dbgId + "XP +" + finalXp
-                + " (base=" + ForestierXpTable.BASE_LOG_XP + " ├ù " + String.format("%.3f", xpMult) + ")"
+                + " (base=" + baseLogXp + " × " + String.format("%.3f", xpMult) + ")"
                 + (xpRank > 0 ? " [N1 MainsEcorchees rank=" + xpRank + "]" : ""));
             professionManager.addXp(uuid, Profession.FORESTIER, finalXp, playerRef);
 
@@ -329,7 +330,7 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
                                     }
                                 }
                                 if (extraLogs > 0) {
-                                    professionManager.addXp(uuid, Profession.FORESTIER, ForestierXpTable.BASE_LOG_XP * xpMult * extraLogs, playerRef);
+                                    professionManager.addXp(uuid, Profession.FORESTIER, ForestierXpTable.getLogXp(rawId) * xpMult * extraLogs, playerRef);
                                 }
                                 if (!lowestByXZ.isEmpty()) {
                                     final Collection<int[]> finalLowest = new ArrayList<>(lowestByXZ.values());
@@ -353,9 +354,10 @@ public final class ForestierBlockBreakSystem extends EntityEventSystem<EntitySto
             // Node 1 ÔÇö Mains ├ëcorch├®es : +5% XP par rang (s'applique aussi aux r├®coltes en nature)
             int xpRank = acc.getTalentRank(Profession.FORESTIER, "1");
             double xpMult = 1.0 + xpRank * 0.05 + professionManager.getXpBoostMultiplier(uuid, Profession.FORESTIER);
-            double finalXp = ForestierXpTable.BASE_FORAGE_XP * xpMult;
+            double baseForageXp = ForestierXpTable.getForageXp(rawId);
+            double finalXp = baseForageXp * xpMult;
             if (dbg) LOGGER.atInfo().log(dbgId + "XP forage +" + finalXp
-                + " (base=" + ForestierXpTable.BASE_FORAGE_XP + " ├ù " + String.format("%.3f", xpMult) + ")");
+                + " (base=" + baseForageXp + " × " + String.format("%.3f", xpMult) + ")");
             professionManager.addXp(uuid, Profession.FORESTIER, finalXp, playerRef);
 
             // Node 4 ÔÇö Cueilleur des Sous-Bois : chance de doubler la r├®colte (5% par rang, max 25%)

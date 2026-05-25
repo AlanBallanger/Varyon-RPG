@@ -4,14 +4,13 @@ public final class XpCurve {
 
     public static final int MAX_LEVEL = 30;
 
-    private static final long BASE_COEF = 100L;
-
     private XpCurve() {}
 
     public static long xpForLevel(int level) {
         if (level >= MAX_LEVEL) return 0L;
-        if (level < 1) return BASE_COEF;
-        return BASE_COEF * (long) level * (long) level;
+        if (level < 1) level = 1;
+        long l = level;
+        return 50L * l * (75L + l * l) / 75L;
     }
 
     public static long cumulativeXp(int level, long xpInLevel) {

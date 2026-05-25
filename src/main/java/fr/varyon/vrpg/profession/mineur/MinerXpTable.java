@@ -1,44 +1,8 @@
 package fr.varyon.vrpg.profession.mineur;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import fr.varyon.vrpg.config.XpTableConfig;
 
 public final class MinerXpTable {
-
-    private static final int SCALE = 10;
-
-    public static final Map<String, Long> XP;
-
-    static {
-        Map<String, Long> m = new HashMap<>();
-        m.put("ore_adamantite",      2L * SCALE);
-        m.put("ore_cobalt",          2L * SCALE);
-        m.put("ore_copper",          1L * SCALE);
-        m.put("ore_gold",            1L * SCALE);
-        m.put("ore_iron",            1L * SCALE);
-        m.put("ore_mithril",         3L * SCALE);
-        m.put("ore_onyxium",         3L * SCALE);
-        m.put("ore_prisma",          3L * SCALE);
-        m.put("ore_silver",          1L * SCALE);
-        m.put("ore_thorium",         1L * SCALE);
-        m.put("rock_crystal_blue",   3L);
-        m.put("rock_crystal_cyan",   3L);
-        m.put("rock_crystal_green",  3L);
-        m.put("rock_crystal_pink",   3L);
-        m.put("rock_crystal_purple", 3L);
-        m.put("rock_crystal_red",    3L);
-        m.put("rock_crystal_white",  3L);
-        m.put("rock_crystal_yellow", 3L);
-        m.put("rock_gem_diamond",   25L * SCALE);
-        m.put("rock_gem_emerald",    8L * SCALE);
-        m.put("rock_gem_ruby",      12L * SCALE);
-        m.put("rock_gem_sapphire",  12L * SCALE);
-        m.put("rock_gem_topaz",     12L * SCALE);
-        m.put("rock_gem_voidstone", 25L * SCALE);
-        m.put("rock_gem_zephyr",    25L * SCALE);
-        XP = Collections.unmodifiableMap(m);
-    }
 
     private MinerXpTable() {}
 
@@ -91,6 +55,6 @@ public final class MinerXpTable {
     }
 
     public static long getXp(String xpKey) {
-        return XP.getOrDefault(xpKey, 0L);
+        return XpTableConfig.getMinerXp().getOrDefault(xpKey, 0L);
     }
 }
